@@ -1,16 +1,25 @@
-# turnero_taie_front
+# Turnero TAIE - Frontend Flutter
 
-A new Flutter project.
+Turnero TAIE es una aplicación de gestión de turnos para el programa de tutorías TAIE de la Universidad Católica de Córdoba.
 
-## Getting Started
+## Descripción
 
-This project is a starting point for a Flutter application.
+El frontend del proyecto Turnero TAIE está desarrollado en Flutter y tiene como objetivo principal proporcionar una interfaz de usuario intuitiva y eficiente para la gestión de turnos del programa de tutorías TAIE. La aplicación permite a los estudiantes del ciclo básico solicitar turnos con tutores del ciclo superior y a los tutores del ciclo superior aceptar y gestionar estos turnos.
 
-A few resources to get you started if this is your first Flutter project:
+## Características principales
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Registro e inicio de sesión de usuarios.
+- Búsqueda y selección de tutores disponibles.
+- Solicitud y confirmación de turnos.
+- Notificaciones y recordatorios de turnos próximos.
+- Calendario de turnos programados.
+- Interfaz de administración para tutores y coordinadores de TAIE.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Instalación y configuración
+
+Para instalar y configurar la aplicación Turnero TAIE frontend, sigue los siguientes pasos:
+
+1. Clona este repositorio en tu máquina local.
+2. Asegúrate de tener Flutter instalado en tu sistema.
+3. Ejecuta el comando `flutter pub get` para obtener las dependencias del proyecto.
+4. Ejecuta la aplicación utilizando el comando `flutter run`.
