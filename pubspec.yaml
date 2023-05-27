@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
   sign_in_button: ^3.0.0
+  flutter_appauth: ^6.0.0
+  http: ^0.13.6
+  flutter_secure_storage: ^8.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
