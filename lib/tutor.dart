@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TutorPage extends StatelessWidget {
-  TutorPage({Key? key}) : super(key: key);
+  final String userName;
+
+  TutorPage({Key? key, required this.userName}) : super(key: key);
 
   // Dummy list of tutorships
   final List<String> tutorships = [
@@ -15,7 +17,13 @@ class TutorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tutorias'),
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.grey[900]),
+        title: Text(
+          'Bienvenido, $userName',
+          style: TextStyle(color: Colors.grey[900]),
+        ),
       ),
       body: ListView.builder(
         itemCount: tutorships.length,
@@ -24,7 +32,7 @@ class TutorPage extends StatelessWidget {
           return ListTile(
             title: Text(tutorship),
             onTap: () {
-              print(' Tutoria seleccionada: $tutorship');
+              print('Tutoria seleccionada: $tutorship');
             },
           );
         },

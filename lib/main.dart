@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:turnero_taie_front/login_page.dart';
 import 'tutor.dart';
 
 void main() {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //revisar esto, parece q iphone tiene q tener wifi
+
   runApp(MaterialApp(
     title: "Turnero TAIE",
-    theme: ThemeData(primaryColor: Colors.blue),
+    theme: ThemeData(
+      fontFamily: GoogleFonts.lato().fontFamily,
+      primarySwatch: Colors.indigo,
+      primaryColor: const Color(0xFF243a6e),
+    ),
     home: const HomePage(),
   ));
 }
@@ -21,17 +29,20 @@ class HomePage extends StatelessWidget {
       try {
         final googleSignIn = GoogleSignIn();
         final account = await googleSignIn.signIn();
-        if (account != null) {
+        if (account != null && context.mounted) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TutorPage()),
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return TutorPage(userName: account.displayName ?? '');
+              },
+            ),
           );
         } else {
-          // Google sign-in was canceled
-          // Handle accordingly, e.g., show an error message
+          // Google sign-in was canceled manejar error REVISAR
         }
       } catch (e) {
-        // Handle sign-in error
+        // sign-in error
         print('Google sign-in error: $e');
       }
     }
@@ -59,8 +70,8 @@ class HomePage extends StatelessWidget {
                 child: Text(
                   'Turnero TAIE',
                   style: GoogleFonts.lato(
-                    textStyle: const TextStyle(
-                      color: Color(0xFF37364A),
+                    textStyle: TextStyle(
+                      color: Colors.grey[900],
                       fontSize: 38,
                       fontWeight: FontWeight.w500,
                     ),
@@ -76,8 +87,8 @@ class HomePage extends StatelessWidget {
                   Text(
                     'Iniciar sesión',
                     style: GoogleFonts.lato(
-                      textStyle: const TextStyle(
-                        color: Color(0xFF37364A),
+                      textStyle: TextStyle(
+                        color: Colors.grey[900],
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                       ),
@@ -89,7 +100,21 @@ class HomePage extends StatelessWidget {
                     onPressed: () async {
                       await signInWithGoogle();
                     },
+                    text: '   Sign in with Google',
                   ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Text('First Login'),
+                  )
                 ],
               ),
             ),
