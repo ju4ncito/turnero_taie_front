@@ -69,12 +69,10 @@ class HomePage extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Turnero TAIE',
-                  style: GoogleFonts.lato(
-                    textStyle: TextStyle(
-                      color: Colors.grey[900],
-                      fontSize: 38,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  style: TextStyle(
+                    color: Colors.grey[900],
+                    fontSize: 38,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -86,12 +84,10 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text(
                     'Iniciar sesión',
-                    style: GoogleFonts.lato(
-                      textStyle: TextStyle(
-                        color: Colors.grey[900],
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 20),

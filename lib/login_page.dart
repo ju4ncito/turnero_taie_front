@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'tutor.dart';
 
 class LoginPage extends StatelessWidget {
@@ -16,26 +17,41 @@ class LoginPage extends StatelessWidget {
           style: TextStyle(color: Colors.grey[900]),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(30.0),
+            width: 500,
+            child: Text(
+              'Registro',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.lato(
+                textStyle: TextStyle(
+                  color: Colors.grey[900],
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TutorPage(
-                            userName: 'Sinlogear',
-                          )),
-                );
-              },
-              child: Text('Continuar'),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 400),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TutorPage(
+                    userName: 'Sinlogear',
+                  ),
+                ),
+              );
+            },
+            child: Text('Continuar'),
+          ),
+        ],
       ),
     );
   }
