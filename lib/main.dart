@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
-// import 'main_tutor.dart';
-// import 'api/google_signin_api.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'tutor.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -17,6 +17,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> signInWithGoogle() async {
+      try {
+        final googleSignIn = GoogleSignIn();
+        final account = await googleSignIn.signIn();
+        if (account != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TutorPage()),
+          );
+        } else {
+          // Google sign-in was canceled
+          // Handle accordingly, e.g., show an error message
+        }
+      } catch (e) {
+        // Handle sign-in error
+        print('Google sign-in error: $e');
+      }
+    }
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -68,14 +87,7 @@ class HomePage extends StatelessWidget {
                   SignInButton(
                     Buttons.google,
                     onPressed: () async {
-                      // await signIn();
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const MainTutorPage(
-                      //               tutorName: 'Juan',
-                      // )));
-                      // print('Google button pressed');
+                      await signInWithGoogle();
                     },
                   ),
                 ],
