@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'tutor.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
