@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:turnero_taie_front/pages/login_page.dart';
+import 'package:turnero_taie_front/pages/api_test_page.dart';
+// import 'package:turnero_taie_front/pages/login_page.dart';
 import 'pages/tutor_page.dart';
 
 void main() {
@@ -106,7 +107,7 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => ApiPage()),
                       );
                     },
                     child: Text('First Login'),
