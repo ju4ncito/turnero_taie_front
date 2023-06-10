@@ -7,7 +7,7 @@ import 'tutor.dart';
 
 void main() {
   WidgetsFlutterBinding
-      .ensureInitialized(); //revisar esto, parece q iphone tiene q tener wifi
+      .ensureInitialized(); //revisar estos, parece q iphone tiene q tener wifi
 
   runApp(MaterialApp(
     title: "Turnero TAIE",
