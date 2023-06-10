@@ -7,7 +7,7 @@ import 'tutor.dart';
 
 void main() {
   WidgetsFlutterBinding
-      .ensureInitialized(); //revisar esto, parece q iphone tiene q tener wifi
+      .ensureInitialized(); //revisar estos, parece q iphone tiene q tener wifi
 
   runApp(MaterialApp(
     title: "Turnero TAIE",
@@ -57,8 +57,8 @@ class HomePage extends StatelessWidget {
               width: 130,
               height: 130,
               child: IconButton(
-                icon: Image.network(
-                  'https://www2.ucc.edu.ar/archivos/imagenes/Institucional/IDENTIDAD_VISUAL_2018/SIGLA_UCC.png',
+                icon: Image.asset(
+                  'assets/images/UCC_LOGO_WHITE.jpg',
                 ),
                 onPressed: () {},
               ),

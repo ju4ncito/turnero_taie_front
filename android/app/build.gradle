@@ -47,10 +47,15 @@ android {
         applicationId "com.example.turnero_taie_front"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [
+            'appAuthRedirectScheme': 'com.googleusercontent.apps.419989238117-gfr25u24k7bmi2l4qmk7ttk4cn11fi5r'
+        ]
+        // multiDexEnabled true
+
     }
 
     buildTypes {
