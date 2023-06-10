@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:turnero_taie_front/login_page.dart';
-import 'tutor.dart';
+import 'package:turnero_taie_front/pages/login_page.dart';
+import 'pages/tutor_page.dart';
 
 void main() {
   WidgetsFlutterBinding
