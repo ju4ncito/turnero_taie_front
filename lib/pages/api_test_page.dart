@@ -14,7 +14,7 @@ class ApiPage extends StatefulWidget {
 }
 
 class _ApiPageState extends State<ApiPage> {
-  List<Post>? posts;
+  List<User>? users;
   var isLoaded = false;
   @override
   void initState() {
@@ -23,8 +23,8 @@ class _ApiPageState extends State<ApiPage> {
   }
 
   getData() async {
-    posts = await RemoteService().getPosts();
-    if (posts != null) {
+    users = await RemoteService().getPosts();
+    if (users != null) {
       setState(() {
         isLoaded = true;
       });
@@ -43,7 +43,7 @@ class _ApiPageState extends State<ApiPage> {
           child: CircularProgressIndicator(),
         ),
         child: ListView.builder(
-          itemCount: posts?.length,
+          itemCount: users?.length,
           itemBuilder: (context, index) {
             return Container(
               padding: const EdgeInsets.all(16),
@@ -63,7 +63,7 @@ class _ApiPageState extends State<ApiPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          posts![index].title,
+                          users![index].name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -72,7 +72,7 @@ class _ApiPageState extends State<ApiPage> {
                           ),
                         ),
                         Text(
-                          posts![index].body,
+                          users![index].lastName,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
