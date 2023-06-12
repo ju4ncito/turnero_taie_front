@@ -7,7 +7,7 @@ import 'package:turnero_taie_front/services/remote_sv.dart';
 // https://app.quicktype.io/
 
 class ApiPage extends StatefulWidget {
-  const ApiPage({super.key});
+  const ApiPage({Key? key}) : super(key: key);
 
   @override
   State<ApiPage> createState() => _ApiPageState();
@@ -36,6 +36,7 @@ class _ApiPageState extends State<ApiPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ApiTest / Posts'),
+        backgroundColor: const Color(0xFF243a6e),
       ),
       body: Visibility(
         visible: isLoaded,
