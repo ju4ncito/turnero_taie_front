@@ -1,0 +1,1406 @@
+//Generated code
+
+part of 'api_model.swagger.dart';
+
+// **************************************************************************
+// ChopperGenerator
+// **************************************************************************
+
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_brace_in_string_interps
+class _$ApiModel extends ApiModel {
+  _$ApiModel([ChopperClient? client]) {
+    if (client == null) return;
+    this.client = client;
+  }
+
+  @override
+  final definitionType = ApiModel;
+
+  @override
+  Future<Response<List<AcademicUnit>>> _apiAcademicUnitsGet() {
+    final Uri $url = Uri.parse('/api/academic-units/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<AcademicUnit>, AcademicUnit>($request);
+  }
+
+  @override
+  Future<Response<AcademicUnit>> _apiAcademicUnitsPost(
+      {required AcademicUnitRequest? body}) {
+    final Uri $url = Uri.parse('/api/academic-units/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicUnit, AcademicUnit>($request);
+  }
+
+  @override
+  Future<Response<AcademicUnit>> _apiAcademicUnitsIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/academic-units/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<AcademicUnit, AcademicUnit>($request);
+  }
+
+  @override
+  Future<Response<AcademicUnit>> _apiAcademicUnitsIdPut({
+    required int? id,
+    required AcademicUnitRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/academic-units/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicUnit, AcademicUnit>($request);
+  }
+
+  @override
+  Future<Response<AcademicUnit>> _apiAcademicUnitsIdPatch({
+    required int? id,
+    required PatchedAcademicUnitRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/academic-units/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicUnit, AcademicUnit>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiAcademicUnitsIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/academic-units/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<AcademicYear>>> _apiAcademicYearsGet() {
+    final Uri $url = Uri.parse('/api/academic-years/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<AcademicYear>, AcademicYear>($request);
+  }
+
+  @override
+  Future<Response<AcademicYear>> _apiAcademicYearsPost(
+      {required AcademicYearRequest? body}) {
+    final Uri $url = Uri.parse('/api/academic-years/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicYear, AcademicYear>($request);
+  }
+
+  @override
+  Future<Response<AcademicYear>> _apiAcademicYearsIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<AcademicYear, AcademicYear>($request);
+  }
+
+  @override
+  Future<Response<AcademicYear>> _apiAcademicYearsIdPut({
+    required int? id,
+    required AcademicYearRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicYear, AcademicYear>($request);
+  }
+
+  @override
+  Future<Response<AcademicYear>> _apiAcademicYearsIdPatch({
+    required int? id,
+    required PatchedAcademicYearRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<AcademicYear, AcademicYear>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiAcademicYearsIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Area>>> _apiAreasGet() {
+    final Uri $url = Uri.parse('/api/areas/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Area>, Area>($request);
+  }
+
+  @override
+  Future<Response<Area>> _apiAreasPost({required AreaRequest? body}) {
+    final Uri $url = Uri.parse('/api/areas/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Area, Area>($request);
+  }
+
+  @override
+  Future<Response<Area>> _apiAreasIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/areas/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Area, Area>($request);
+  }
+
+  @override
+  Future<Response<Area>> _apiAreasIdPut({
+    required int? id,
+    required AreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/areas/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Area, Area>($request);
+  }
+
+  @override
+  Future<Response<Area>> _apiAreasIdPatch({
+    required int? id,
+    required PatchedAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/areas/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Area, Area>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiAreasIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/areas/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<CareerXArea>>> _apiCareerXAreaGet() {
+    final Uri $url = Uri.parse('/api/career-x-area/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<CareerXArea>, CareerXArea>($request);
+  }
+
+  @override
+  Future<Response<CareerXArea>> _apiCareerXAreaPost(
+      {required CareerXAreaRequest? body}) {
+    final Uri $url = Uri.parse('/api/career-x-area/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXArea, CareerXArea>($request);
+  }
+
+  @override
+  Future<Response<CareerXArea>> _apiCareerXAreaIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/career-x-area/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<CareerXArea, CareerXArea>($request);
+  }
+
+  @override
+  Future<Response<CareerXArea>> _apiCareerXAreaIdPut({
+    required int? id,
+    required CareerXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/career-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXArea, CareerXArea>($request);
+  }
+
+  @override
+  Future<Response<CareerXArea>> _apiCareerXAreaIdPatch({
+    required int? id,
+    required PatchedCareerXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/career-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXArea, CareerXArea>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiCareerXAreaIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/career-x-area/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<CareerXUser>>> _apiCareerXUserGet() {
+    final Uri $url = Uri.parse('/api/career-x-user/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<CareerXUser>, CareerXUser>($request);
+  }
+
+  @override
+  Future<Response<CareerXUser>> _apiCareerXUserPost(
+      {required CareerXUserRequest? body}) {
+    final Uri $url = Uri.parse('/api/career-x-user/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXUser, CareerXUser>($request);
+  }
+
+  @override
+  Future<Response<CareerXUser>> _apiCareerXUserIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/career-x-user/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<CareerXUser, CareerXUser>($request);
+  }
+
+  @override
+  Future<Response<CareerXUser>> _apiCareerXUserIdPut({
+    required int? id,
+    required CareerXUserRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/career-x-user/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXUser, CareerXUser>($request);
+  }
+
+  @override
+  Future<Response<CareerXUser>> _apiCareerXUserIdPatch({
+    required int? id,
+    required PatchedCareerXUserRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/career-x-user/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<CareerXUser, CareerXUser>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiCareerXUserIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/career-x-user/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Career>>> _apiCareersGet() {
+    final Uri $url = Uri.parse('/api/careers/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Career>, Career>($request);
+  }
+
+  @override
+  Future<Response<Career>> _apiCareersPost({required CareerRequest? body}) {
+    final Uri $url = Uri.parse('/api/careers/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Career, Career>($request);
+  }
+
+  @override
+  Future<Response<Career>> _apiCareersIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/careers/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Career, Career>($request);
+  }
+
+  @override
+  Future<Response<Career>> _apiCareersIdPut({
+    required int? id,
+    required CareerRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/careers/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Career, Career>($request);
+  }
+
+  @override
+  Future<Response<Career>> _apiCareersIdPatch({
+    required int? id,
+    required PatchedCareerRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/careers/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Career, Career>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiCareersIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/careers/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<PostulationXArea>>> _apiPostulationXAreaGet() {
+    final Uri $url = Uri.parse('/api/postulation-x-area/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<PostulationXArea>, PostulationXArea>($request);
+  }
+
+  @override
+  Future<Response<PostulationXArea>> _apiPostulationXAreaPost(
+      {required PostulationXAreaRequest? body}) {
+    final Uri $url = Uri.parse('/api/postulation-x-area/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<PostulationXArea, PostulationXArea>($request);
+  }
+
+  @override
+  Future<Response<PostulationXArea>> _apiPostulationXAreaIdGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/postulation-x-area/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<PostulationXArea, PostulationXArea>($request);
+  }
+
+  @override
+  Future<Response<PostulationXArea>> _apiPostulationXAreaIdPut({
+    required int? id,
+    required PostulationXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/postulation-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<PostulationXArea, PostulationXArea>($request);
+  }
+
+  @override
+  Future<Response<PostulationXArea>> _apiPostulationXAreaIdPatch({
+    required int? id,
+    required PatchedPostulationXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/postulation-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<PostulationXArea, PostulationXArea>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiPostulationXAreaIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/postulation-x-area/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Postulation>>> _apiPostulationsGet() {
+    final Uri $url = Uri.parse('/api/postulations/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Postulation>, Postulation>($request);
+  }
+
+  @override
+  Future<Response<Postulation>> _apiPostulationsPost(
+      {required PostulationRequest? body}) {
+    final Uri $url = Uri.parse('/api/postulations/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Postulation, Postulation>($request);
+  }
+
+  @override
+  Future<Response<Postulation>> _apiPostulationsIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/postulations/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Postulation, Postulation>($request);
+  }
+
+  @override
+  Future<Response<Postulation>> _apiPostulationsIdPut({
+    required int? id,
+    required PostulationRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/postulations/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Postulation, Postulation>($request);
+  }
+
+  @override
+  Future<Response<Postulation>> _apiPostulationsIdPatch({
+    required int? id,
+    required PatchedPostulationRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/postulations/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Postulation, Postulation>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiPostulationsIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/postulations/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<Role>>> _apiRolesGet() {
+    final Uri $url = Uri.parse('/api/roles/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Role>, Role>($request);
+  }
+
+  @override
+  Future<Response<Role>> _apiRolesPost({required RoleRequest? body}) {
+    final Uri $url = Uri.parse('/api/roles/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Role, Role>($request);
+  }
+
+  @override
+  Future<Response<Role>> _apiRolesIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Role, Role>($request);
+  }
+
+  @override
+  Future<Response<Role>> _apiRolesIdPut({
+    required int? id,
+    required RoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Role, Role>($request);
+  }
+
+  @override
+  Future<Response<Role>> _apiRolesIdPatch({
+    required int? id,
+    required PatchedRoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Role, Role>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiRolesIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<Object>> _apiSchemaGet({
+    String? format,
+    String? lang,
+  }) {
+    final Uri $url = Uri.parse('/api/schema/');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'format': format,
+      'lang': lang,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<Object, Object>($request);
+  }
+
+  @override
+  Future<Response<List<TutorUserReview>>> _apiTutorUserReviewsGet() {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<TutorUserReview>, TutorUserReview>($request);
+  }
+
+  @override
+  Future<Response<TutorUserReview>> _apiTutorUserReviewsPost(
+      {required TutorUserReviewRequest? body}) {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserReview, TutorUserReview>($request);
+  }
+
+  @override
+  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TutorUserReview, TutorUserReview>($request);
+  }
+
+  @override
+  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdPut({
+    required int? id,
+    required TutorUserReviewRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserReview, TutorUserReview>($request);
+  }
+
+  @override
+  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdPatch({
+    required int? id,
+    required PatchedTutorUserReviewRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserReview, TutorUserReview>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiTutorUserReviewsIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<TutorUserSchedule>>> _apiTutorUserSchedulesGet() {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<TutorUserSchedule>, TutorUserSchedule>($request);
+  }
+
+  @override
+  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesPost(
+      {required TutorUserScheduleRequest? body}) {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+  }
+
+  @override
+  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+  }
+
+  @override
+  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdPut({
+    required int? id,
+    required TutorUserScheduleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+  }
+
+  @override
+  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdPatch({
+    required int? id,
+    required PatchedTutorUserScheduleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiTutorUserSchedulesIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<TutorshipInstance>>> _apiTutorshipInstancesGet() {
+    final Uri $url = Uri.parse('/api/tutorship-instances/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<TutorshipInstance>, TutorshipInstance>($request);
+  }
+
+  @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesPost(
+      {required TutorshipInstanceRequest? body}) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
+  }
+
+  @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesIdGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
+  }
+
+  @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesIdPut({
+    required int? id,
+    required TutorshipInstanceRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
+  }
+
+  @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesIdPatch({
+    required int? id,
+    required PatchedTutorshipInstanceRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiTutorshipInstancesIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<TutorshipReport>>> _apiTutorshipReportsGet() {
+    final Uri $url = Uri.parse('/api/tutorship-reports/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<TutorshipReport>, TutorshipReport>($request);
+  }
+
+  @override
+  Future<Response<TutorshipReport>> _apiTutorshipReportsPost(
+      {required TutorshipReportRequest? body}) {
+    final Uri $url = Uri.parse('/api/tutorship-reports/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipReport, TutorshipReport>($request);
+  }
+
+  @override
+  Future<Response<TutorshipReport>> _apiTutorshipReportsIdGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<TutorshipReport, TutorshipReport>($request);
+  }
+
+  @override
+  Future<Response<TutorshipReport>> _apiTutorshipReportsIdPut({
+    required int? id,
+    required TutorshipReportRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipReport, TutorshipReport>($request);
+  }
+
+  @override
+  Future<Response<TutorshipReport>> _apiTutorshipReportsIdPatch({
+    required int? id,
+    required PatchedTutorshipReportRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<TutorshipReport, TutorshipReport>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiTutorshipReportsIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<UserXArea>>> _apiUserXAreaGet() {
+    final Uri $url = Uri.parse('/api/user-x-area/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<UserXArea>, UserXArea>($request);
+  }
+
+  @override
+  Future<Response<UserXArea>> _apiUserXAreaPost(
+      {required UserXAreaRequest? body}) {
+    final Uri $url = Uri.parse('/api/user-x-area/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXArea, UserXArea>($request);
+  }
+
+  @override
+  Future<Response<UserXArea>> _apiUserXAreaIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-area/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<UserXArea, UserXArea>($request);
+  }
+
+  @override
+  Future<Response<UserXArea>> _apiUserXAreaIdPut({
+    required int? id,
+    required UserXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXArea, UserXArea>($request);
+  }
+
+  @override
+  Future<Response<UserXArea>> _apiUserXAreaIdPatch({
+    required int? id,
+    required PatchedUserXAreaRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-area/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXArea, UserXArea>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiUserXAreaIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-area/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<UserXRole>>> _apiUserXRoleGet() {
+    final Uri $url = Uri.parse('/api/user-x-role/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<UserXRole>, UserXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXRole>> _apiUserXRolePost(
+      {required UserXRoleRequest? body}) {
+    final Uri $url = Uri.parse('/api/user-x-role/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXRole, UserXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXRole>> _apiUserXRoleIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-role/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<UserXRole, UserXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXRole>> _apiUserXRoleIdPut({
+    required int? id,
+    required UserXRoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-role/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXRole, UserXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXRole>> _apiUserXRoleIdPatch({
+    required int? id,
+    required PatchedUserXRoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-role/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXRole, UserXRole>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiUserXRoleIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-role/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<UserXTutorshipInstanceXRole>>>
+      _apiUserXTutorshipInstanceXRoleGet() {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<UserXTutorshipInstanceXRole>,
+        UserXTutorshipInstanceXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXTutorshipInstanceXRole>>
+      _apiUserXTutorshipInstanceXRolePost(
+          {required UserXTutorshipInstanceXRoleRequest? body}) {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXTutorshipInstanceXRole,
+        UserXTutorshipInstanceXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXTutorshipInstanceXRole>>
+      _apiUserXTutorshipInstanceXRoleIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<UserXTutorshipInstanceXRole,
+        UserXTutorshipInstanceXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXTutorshipInstanceXRole>>
+      _apiUserXTutorshipInstanceXRoleIdPut({
+    required int? id,
+    required UserXTutorshipInstanceXRoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXTutorshipInstanceXRole,
+        UserXTutorshipInstanceXRole>($request);
+  }
+
+  @override
+  Future<Response<UserXTutorshipInstanceXRole>>
+      _apiUserXTutorshipInstanceXRoleIdPatch({
+    required int? id,
+    required PatchedUserXTutorshipInstanceXRoleRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserXTutorshipInstanceXRole,
+        UserXTutorshipInstanceXRole>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiUserXTutorshipInstanceXRoleIdDelete(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/user-x-tutorship-instance-x-role/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<List<User>>> _apiUsersGet() {
+    final Uri $url = Uri.parse('/api/users/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<User>, User>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersPost({required UserRequest? body}) {
+    final Uri $url = Uri.parse('/api/users/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersIdGet({required int? id}) {
+    final Uri $url = Uri.parse('/api/users/${id}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersIdPut({
+    required int? id,
+    required UserRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/users/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersIdPatch({
+    required int? id,
+    required PatchedUserRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/users/${id}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiUsersIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/users/${id}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersIsUserPost(
+      {required EmailLookUpRequest? body}) {
+    final Uri $url = Uri.parse('/api/users/is-user/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<User, User>($request);
+  }
+}

@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turnero_taie_front/pages/api_test_page.dart';
 // import 'package:turnero_taie_front/pages/login_page.dart';
 import 'pages/tutor_page.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 void main() {
   WidgetsFlutterBinding
@@ -30,7 +31,29 @@ class HomePage extends StatelessWidget {
       try {
         final googleSignIn = GoogleSignIn();
         final account = await googleSignIn.signIn();
-        if (account != null && context.mounted) {
+        print(account?.email.length);
+        print(account?.email.substring(account.email.length - 10));
+        if (account != null) {
+          final String domain = account.email;
+        }
+        if (account != null &&
+            context.mounted &&
+            (account.email.substring(account.email.length - 10) ==
+                'ucc.edu.ar')) {
+          print(account);
+
+          final api_model =
+              ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
+
+          final postresult = await api_model.apiUsersIsUserPost(
+              body: EmailLookUpRequest(email: account.email));
+
+          print(postresult.statusCode);
+          // mandar el mail del account por el body
+          // si devuelve 200 en el body esta toda la info, 404 se tiene q registrar y 400 no valido
+
+          // agregar push a pagina de error de mail que permita volver atras
+
           Navigator.push(
             context,
             MaterialPageRoute(
