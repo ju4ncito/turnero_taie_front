@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TutorPage extends StatelessWidget {
-  final String userName;
+  final String? userName;
 
   TutorPage({Key? key, required this.userName}) : super(key: key);
 
