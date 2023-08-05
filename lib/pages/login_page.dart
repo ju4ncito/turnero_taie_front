@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'tutor_page.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 class LoginPage extends StatelessWidget {
   final String userName, userEmail;
@@ -15,26 +16,69 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.grey[50],
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.grey[900]),
+        automaticallyImplyLeading: false,
         title: Text(
-          'reg',
+          'A registrarse!',
           style: TextStyle(color: Colors.grey[900]),
         ),
       ),
       body: Column(
         children: [
           Container(
-            margin: const EdgeInsets.all(30.0),
+            margin: const EdgeInsets.all(35.0),
             width: 500,
-            child: Text(
-              'Registro',
-              textAlign: TextAlign.left,
-              style: GoogleFonts.lato(
-                textStyle: TextStyle(
-                  color: Colors.grey[900],
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
+            child: Column(
+              children: [
+                Text(
+                  '$userName, parece que es tu primera vez utilizando la app de Tutorias',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 50),
+                Text(
+                  'Por favor, rellena los siguientes datos:',
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.lato(
+                    textStyle: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                DropdownSearch<String>(
+                  popupProps: const PopupProps.menu(
+                    showSelectedItems: true,
+                  ),
+                  items: ["Ingenieria", "Medicina", 'Ciencias Quimicas'],
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Selecciona tu facultad",
+                      hintText: "Facultad",
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                DropdownSearch<String>(
+                  popupProps: const PopupProps.menu(
+                    showSelectedItems: true,
+                  ),
+                  items: ["Brazil", "Tunisia", 'Canada'],
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Selecciona tu carrera",
+                      hintText: "Carrera",
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 400),
@@ -56,28 +100,38 @@ class LoginPage extends StatelessWidget {
                           userEmail.substring(0, userEmail.length - 11))));
               print(postresult.statusCode);
               if (postresult.statusCode == 201) {
-                final resultCareer = await api_model.apiCareerXUserPost(
-                    body: CareerXUserRequest(
-                        career: 1, user: postresult.body!.id));
-                print(
-                    ' resultado de career ${resultCareer.statusCode} , ${resultCareer.body}');
+                // final resultCareer = await api_model.apiCareerXUserPost(
+                //     body: CareerXUserRequest(
+                //         career: 1, user: postresult.body!.id));
+                // print(
+                //     ' resultado de career ${resultCareer.statusCode} , ${resultCareer.body}');
 
-                final resultRole = await api_model.apiUserXRolePost(
-                    body: UserXRoleRequest(user: postresult.body!.id, role: 1));
+                // final resultRole = await api_model.apiUserXRolePost(
+                //     body: UserXRoleRequest(user: postresult.body!.id, role: 1));
 
-                print(
-                    ' resultado de ROLE ${resultRole.statusCode} , ${resultRole.body}');
+                // print(
+                //     ' resultado de ROLE ${resultRole.statusCode} , ${resultRole.body}');
               }
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TutorPage(
-                    userName: userName,
+              if (context.mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TutorPage(
+                        userName: userName, tutorId: postresult.body!.id),
                   ),
-                ),
-              );
+                );
+              }
             },
-            child: Text('Continuar'),
+            child: Text(
+              'Continuar',
+              style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
           ),
         ],
       ),

@@ -18,9 +18,6 @@ class HomePage extends StatelessWidget {
         final account = await googleSignIn.signIn();
         print(account?.email.length);
         print(account?.email.substring(account.email.length - 10));
-        if (account != null) {
-          final String domain = account.email;
-        }
         if (account != null &&
             context.mounted &&
             (account.email.substring(account.email.length - 10) ==
@@ -29,41 +26,54 @@ class HomePage extends StatelessWidget {
 
           final api_model =
               ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
-
-// hacer singleton de la api
+          // hacer singleton de la api
           final postresult = await api_model.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));
 
           print(postresult.statusCode);
+
           // mandar el mail del account por el body
           // si devuelve 200 en el body esta toda la info, 404 se tiene q registrar y 400 no valido
-
           // agregar push a pagina de error de mail que permita volver atras
 
           if (postresult.statusCode == 200) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return TutorPage(userName: postresult.body?.name ?? '');
-                },
-              ),
-            );
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return TutorPage(
+                      userName: postresult.body?.name ?? '',
+                      tutorId: postresult.body!.id,
+                    );
+                  },
+                ),
+              );
+            }
           } else if (postresult.statusCode == 404) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return LoginPage(
-                    userName: account.displayName ?? '',
-                    userEmail: account.email,
-                  );
-                },
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return LoginPage(
+                      userName: account.displayName ?? '',
+                      //   userName: firstName ?? '',
+                      userEmail: account.email,
+                    );
+                  },
+                ),
+              );
+            }
+          }
+        } else {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                    'Debe utilizar una cuenta institucional para utilizar la aplicacion.'),
+                duration: Duration(seconds: 5),
               ),
             );
           }
-        } else {
-          // Google sign-in was canceled manejar error REVISAR
         }
       } catch (e) {
         // sign-in error
@@ -130,10 +140,14 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ApiPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage(
+                                  userEmail: '',
+                                  userName: '',
+                                )),
                       );
                     },
-                    child: Text('First Login'),
+                    child: const Text('Api Test'),
                   )
                 ],
               ),

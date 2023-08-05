@@ -43,6 +43,8 @@ dependencies:
   swagger_dart_code_generator: ^2.11.8
   chopper: ^6.1.4
   chopper_generator: ^6.0.3
+  dropdown_search: ^5.0.6
+  dropdown_button2: ^2.1.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
