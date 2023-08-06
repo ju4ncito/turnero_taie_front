@@ -90,36 +90,32 @@ class LoginPage extends StatelessWidget {
               final api_model =
                   ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
 
-              final postresult = await api_model.apiUsersPost(
-                  body: UserRequest(
+              final postresult = await api_model.apiUsersNewUserPost(
+                  body: NewUserRequest(
+                      careers: [1],
+                      roles: ['STD'],
                       name: userName,
-                      email: userEmail,
                       lastName: userName,
-                      academicYear: 1,
                       uccKey: int.parse(
-                          userEmail.substring(0, userEmail.length - 11))));
-              print(postresult.statusCode);
+                          userEmail.substring(0, userEmail.length - 11)),
+                      email: userEmail,
+                      academicYear: 1));
+
+              print(postresult);
+
               if (postresult.statusCode == 201) {
-                // final resultCareer = await api_model.apiCareerXUserPost(
-                //     body: CareerXUserRequest(
-                //         career: 1, user: postresult.body!.id));
-                // print(
-                //     ' resultado de career ${resultCareer.statusCode} , ${resultCareer.body}');
-
-                // final resultRole = await api_model.apiUserXRolePost(
-                //     body: UserXRoleRequest(user: postresult.body!.id, role: 1));
-
-                // print(
-                //     ' resultado de ROLE ${resultRole.statusCode} , ${resultRole.body}');
-              }
-              if (context.mounted) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TutorPage(
-                        userName: userName, tutorId: postresult.body!.id),
-                  ),
-                );
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return TutorPage(
+                          userName: postresult.body?.name ?? '',
+                          tutorId: postresult.body!.id,
+                        );
+                      },
+                    ),
+                  );
+                }
               }
             },
             child: Text(

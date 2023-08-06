@@ -876,72 +876,74 @@ abstract class ApiModel extends ChopperService {
       {@Body() required RoleRequest? body});
 
   ///
-  ///@param id A unique integer value identifying this role.
-  Future<chopper.Response<Role>> apiRolesIdGet({required int? id}) {
+  ///@param type
+  Future<chopper.Response<Role>> apiRolesTypeGet({required String? type}) {
     generatedMapping.putIfAbsent(Role, () => Role.fromJsonFactory);
 
-    return _apiRolesIdGet(id: id);
+    return _apiRolesTypeGet(type: type);
   }
 
   ///
-  ///@param id A unique integer value identifying this role.
-  @Get(path: '/api/roles/{id}/')
-  Future<chopper.Response<Role>> _apiRolesIdGet({@Path('id') required int? id});
+  ///@param type
+  @Get(path: '/api/roles/{type}/')
+  Future<chopper.Response<Role>> _apiRolesTypeGet(
+      {@Path('type') required String? type});
 
   ///
-  ///@param id A unique integer value identifying this role.
-  Future<chopper.Response<Role>> apiRolesIdPut({
-    required int? id,
+  ///@param type
+  Future<chopper.Response<Role>> apiRolesTypePut({
+    required String? type,
     required RoleRequest? body,
   }) {
     generatedMapping.putIfAbsent(Role, () => Role.fromJsonFactory);
 
-    return _apiRolesIdPut(id: id, body: body);
+    return _apiRolesTypePut(type: type, body: body);
   }
 
   ///
-  ///@param id A unique integer value identifying this role.
+  ///@param type
   @Put(
-    path: '/api/roles/{id}/',
+    path: '/api/roles/{type}/',
     optionalBody: true,
   )
-  Future<chopper.Response<Role>> _apiRolesIdPut({
-    @Path('id') required int? id,
+  Future<chopper.Response<Role>> _apiRolesTypePut({
+    @Path('type') required String? type,
     @Body() required RoleRequest? body,
   });
 
   ///
-  ///@param id A unique integer value identifying this role.
-  Future<chopper.Response<Role>> apiRolesIdPatch({
-    required int? id,
+  ///@param type
+  Future<chopper.Response<Role>> apiRolesTypePatch({
+    required String? type,
     required PatchedRoleRequest? body,
   }) {
     generatedMapping.putIfAbsent(Role, () => Role.fromJsonFactory);
 
-    return _apiRolesIdPatch(id: id, body: body);
+    return _apiRolesTypePatch(type: type, body: body);
   }
 
   ///
-  ///@param id A unique integer value identifying this role.
+  ///@param type
   @Patch(
-    path: '/api/roles/{id}/',
+    path: '/api/roles/{type}/',
     optionalBody: true,
   )
-  Future<chopper.Response<Role>> _apiRolesIdPatch({
-    @Path('id') required int? id,
+  Future<chopper.Response<Role>> _apiRolesTypePatch({
+    @Path('type') required String? type,
     @Body() required PatchedRoleRequest? body,
   });
 
   ///
-  ///@param id A unique integer value identifying this role.
-  Future<chopper.Response> apiRolesIdDelete({required int? id}) {
-    return _apiRolesIdDelete(id: id);
+  ///@param type
+  Future<chopper.Response> apiRolesTypeDelete({required String? type}) {
+    return _apiRolesTypeDelete(type: type);
   }
 
   ///
-  ///@param id A unique integer value identifying this role.
-  @Delete(path: '/api/roles/{id}/')
-  Future<chopper.Response> _apiRolesIdDelete({@Path('id') required int? id});
+  ///@param type
+  @Delete(path: '/api/roles/{type}/')
+  Future<chopper.Response> _apiRolesTypeDelete(
+      {@Path('type') required String? type});
 
   ///
   ///@param format
@@ -964,106 +966,106 @@ abstract class ApiModel extends ChopperService {
   });
 
   ///
-  Future<chopper.Response<List<TutorUserReview>>> apiTutorUserReviewsGet() {
+  Future<chopper.Response<List<TutorUserReview>>> apiTutorUserReviewGet() {
     generatedMapping.putIfAbsent(
         TutorUserReview, () => TutorUserReview.fromJsonFactory);
 
-    return _apiTutorUserReviewsGet();
+    return _apiTutorUserReviewGet();
   }
 
   ///
-  @Get(path: '/api/tutor-user-reviews/')
-  Future<chopper.Response<List<TutorUserReview>>> _apiTutorUserReviewsGet();
+  @Get(path: '/api/tutor-user-review/')
+  Future<chopper.Response<List<TutorUserReview>>> _apiTutorUserReviewGet();
 
   ///
-  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewsPost(
+  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewPost(
       {required TutorUserReviewRequest? body}) {
     generatedMapping.putIfAbsent(
         TutorUserReview, () => TutorUserReview.fromJsonFactory);
 
-    return _apiTutorUserReviewsPost(body: body);
+    return _apiTutorUserReviewPost(body: body);
   }
 
   ///
   @Post(
-    path: '/api/tutor-user-reviews/',
+    path: '/api/tutor-user-review/',
     optionalBody: true,
   )
-  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewsPost(
+  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewPost(
       {@Body() required TutorUserReviewRequest? body});
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewsIdGet(
+  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewIdGet(
       {required int? id}) {
     generatedMapping.putIfAbsent(
         TutorUserReview, () => TutorUserReview.fromJsonFactory);
 
-    return _apiTutorUserReviewsIdGet(id: id);
+    return _apiTutorUserReviewIdGet(id: id);
   }
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  @Get(path: '/api/tutor-user-reviews/{id}/')
-  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewsIdGet(
+  @Get(path: '/api/tutor-user-review/{id}/')
+  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewIdGet(
       {@Path('id') required int? id});
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewsIdPut({
+  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewIdPut({
     required int? id,
     required TutorUserReviewRequest? body,
   }) {
     generatedMapping.putIfAbsent(
         TutorUserReview, () => TutorUserReview.fromJsonFactory);
 
-    return _apiTutorUserReviewsIdPut(id: id, body: body);
+    return _apiTutorUserReviewIdPut(id: id, body: body);
   }
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
   @Put(
-    path: '/api/tutor-user-reviews/{id}/',
+    path: '/api/tutor-user-review/{id}/',
     optionalBody: true,
   )
-  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewsIdPut({
+  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewIdPut({
     @Path('id') required int? id,
     @Body() required TutorUserReviewRequest? body,
   });
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewsIdPatch({
+  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewIdPatch({
     required int? id,
     required PatchedTutorUserReviewRequest? body,
   }) {
     generatedMapping.putIfAbsent(
         TutorUserReview, () => TutorUserReview.fromJsonFactory);
 
-    return _apiTutorUserReviewsIdPatch(id: id, body: body);
+    return _apiTutorUserReviewIdPatch(id: id, body: body);
   }
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
   @Patch(
-    path: '/api/tutor-user-reviews/{id}/',
+    path: '/api/tutor-user-review/{id}/',
     optionalBody: true,
   )
-  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewsIdPatch({
+  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewIdPatch({
     @Path('id') required int? id,
     @Body() required PatchedTutorUserReviewRequest? body,
   });
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  Future<chopper.Response> apiTutorUserReviewsIdDelete({required int? id}) {
-    return _apiTutorUserReviewsIdDelete(id: id);
+  Future<chopper.Response> apiTutorUserReviewIdDelete({required int? id}) {
+    return _apiTutorUserReviewIdDelete(id: id);
   }
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  @Delete(path: '/api/tutor-user-reviews/{id}/')
-  Future<chopper.Response> _apiTutorUserReviewsIdDelete(
+  @Delete(path: '/api/tutor-user-review/{id}/')
+  Future<chopper.Response> _apiTutorUserReviewIdDelete(
       {@Path('id') required int? id});
 
   ///
@@ -1790,6 +1792,22 @@ abstract class ApiModel extends ChopperService {
   )
   Future<chopper.Response<User>> _apiUsersIsUserPost(
       {@Body() required EmailLookUpRequest? body});
+
+  ///Create a new student user
+  Future<chopper.Response<User>> apiUsersNewUserPost(
+      {required NewUserRequest? body}) {
+    generatedMapping.putIfAbsent(User, () => User.fromJsonFactory);
+
+    return _apiUsersNewUserPost(body: body);
+  }
+
+  ///Create a new student user
+  @Post(
+    path: '/api/users/new-user/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<User>> _apiUsersNewUserPost(
+      {@Body() required NewUserRequest? body});
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2664,6 +2682,117 @@ extension $EmailLookUpRequestExtension on EmailLookUpRequest {
   EmailLookUpRequest copyWithWrapped({Wrapped<String>? email}) {
     return EmailLookUpRequest(
         email: (email != null ? email.value : this.email));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class NewUserRequest {
+  NewUserRequest({
+    required this.careers,
+    required this.roles,
+    required this.name,
+    required this.lastName,
+    required this.uccKey,
+    required this.email,
+    required this.academicYear,
+  });
+
+  factory NewUserRequest.fromJson(Map<String, dynamic> json) =>
+      _$NewUserRequestFromJson(json);
+
+  static const toJsonFactory = _$NewUserRequestToJson;
+  Map<String, dynamic> toJson() => _$NewUserRequestToJson(this);
+
+  @JsonKey(name: 'careers', defaultValue: <int>[])
+  final List<int> careers;
+  @JsonKey(name: 'roles', defaultValue: <String>[])
+  final List<String> roles;
+  @JsonKey(name: 'name')
+  final String name;
+  @JsonKey(name: 'last_name')
+  final String lastName;
+  @JsonKey(name: 'ucc_key')
+  final int uccKey;
+  @JsonKey(name: 'email')
+  final String email;
+  @JsonKey(name: 'academic_year')
+  final int academicYear;
+  static const fromJsonFactory = _$NewUserRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NewUserRequest &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality()
+                    .equals(other.careers, careers)) &&
+            (identical(other.roles, roles) ||
+                const DeepCollectionEquality().equals(other.roles, roles)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.uccKey, uccKey) ||
+                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.academicYear, academicYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.academicYear, academicYear)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(careers) ^
+      const DeepCollectionEquality().hash(roles) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(uccKey) ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(academicYear) ^
+      runtimeType.hashCode;
+}
+
+extension $NewUserRequestExtension on NewUserRequest {
+  NewUserRequest copyWith(
+      {List<int>? careers,
+      List<String>? roles,
+      String? name,
+      String? lastName,
+      int? uccKey,
+      String? email,
+      int? academicYear}) {
+    return NewUserRequest(
+        careers: careers ?? this.careers,
+        roles: roles ?? this.roles,
+        name: name ?? this.name,
+        lastName: lastName ?? this.lastName,
+        uccKey: uccKey ?? this.uccKey,
+        email: email ?? this.email,
+        academicYear: academicYear ?? this.academicYear);
+  }
+
+  NewUserRequest copyWithWrapped(
+      {Wrapped<List<int>>? careers,
+      Wrapped<List<String>>? roles,
+      Wrapped<String>? name,
+      Wrapped<String>? lastName,
+      Wrapped<int>? uccKey,
+      Wrapped<String>? email,
+      Wrapped<int>? academicYear}) {
+    return NewUserRequest(
+        careers: (careers != null ? careers.value : this.careers),
+        roles: (roles != null ? roles.value : this.roles),
+        name: (name != null ? name.value : this.name),
+        lastName: (lastName != null ? lastName.value : this.lastName),
+        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
+        email: (email != null ? email.value : this.email),
+        academicYear:
+            (academicYear != null ? academicYear.value : this.academicYear));
   }
 }
 
@@ -5097,6 +5226,8 @@ extension $TutorshipReportRequestExtension on TutorshipReportRequest {
 class User {
   User({
     required this.id,
+    required this.careers,
+    required this.roles,
     required this.name,
     required this.lastName,
     required this.uccKey,
@@ -5111,6 +5242,10 @@ class User {
 
   @JsonKey(name: 'id')
   final int id;
+  @JsonKey(name: 'careers', defaultValue: <String>[])
+  final List<String> careers;
+  @JsonKey(name: 'roles', defaultValue: <String>[])
+  final List<String> roles;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'last_name')
@@ -5129,6 +5264,11 @@ class User {
         (other is User &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality()
+                    .equals(other.careers, careers)) &&
+            (identical(other.roles, roles) ||
+                const DeepCollectionEquality().equals(other.roles, roles)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.lastName, lastName) ||
@@ -5149,6 +5289,8 @@ class User {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(careers) ^
+      const DeepCollectionEquality().hash(roles) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(uccKey) ^
@@ -5160,6 +5302,8 @@ class User {
 extension $UserExtension on User {
   User copyWith(
       {int? id,
+      List<String>? careers,
+      List<String>? roles,
       String? name,
       String? lastName,
       int? uccKey,
@@ -5167,6 +5311,8 @@ extension $UserExtension on User {
       int? academicYear}) {
     return User(
         id: id ?? this.id,
+        careers: careers ?? this.careers,
+        roles: roles ?? this.roles,
         name: name ?? this.name,
         lastName: lastName ?? this.lastName,
         uccKey: uccKey ?? this.uccKey,
@@ -5176,6 +5322,8 @@ extension $UserExtension on User {
 
   User copyWithWrapped(
       {Wrapped<int>? id,
+      Wrapped<List<String>>? careers,
+      Wrapped<List<String>>? roles,
       Wrapped<String>? name,
       Wrapped<String>? lastName,
       Wrapped<int>? uccKey,
@@ -5183,6 +5331,8 @@ extension $UserExtension on User {
       Wrapped<int>? academicYear}) {
     return User(
         id: (id != null ? id.value : this.id),
+        careers: (careers != null ? careers.value : this.careers),
+        roles: (roles != null ? roles.value : this.roles),
         name: (name != null ? name.value : this.name),
         lastName: (lastName != null ? lastName.value : this.lastName),
         uccKey: (uccKey != null ? uccKey.value : this.uccKey),

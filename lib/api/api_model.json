@@ -5,9 +5,6 @@
     "version": "1.0.0",
     "description": "API correspondiente al trabajo final \"Turnero TAIE\", realizado por los alumnos Juan Manuel Villarreal y Ghilino Ramiro"
   },
-  "servers": {
-    "url": "http://127.0.0.1:8000"
-  },
   "paths": {
     "/api/academic-units/": {
       "get": {
@@ -2208,17 +2205,16 @@
         }
       }
     },
-    "/api/roles/{id}/": {
+    "/api/roles/{type}/": {
       "get": {
         "operationId": "roles_retrieve",
         "parameters": [
           {
             "in": "path",
-            "name": "id",
+            "name": "type",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
-            "description": "A unique integer value identifying this role.",
             "required": true
           }
         ],
@@ -2252,11 +2248,10 @@
         "parameters": [
           {
             "in": "path",
-            "name": "id",
+            "name": "type",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
-            "description": "A unique integer value identifying this role.",
             "required": true
           }
         ],
@@ -2310,11 +2305,10 @@
         "parameters": [
           {
             "in": "path",
-            "name": "id",
+            "name": "type",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
-            "description": "A unique integer value identifying this role.",
             "required": true
           }
         ],
@@ -2367,11 +2361,10 @@
         "parameters": [
           {
             "in": "path",
-            "name": "id",
+            "name": "type",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
-            "description": "A unique integer value identifying this role.",
             "required": true
           }
         ],
@@ -2563,11 +2556,11 @@
         }
       }
     },
-    "/api/tutor-user-reviews/": {
+    "/api/tutor-user-review/": {
       "get": {
-        "operationId": "tutor_user_reviews_list",
+        "operationId": "tutor_user_review_list",
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "security": [
           {
@@ -2595,9 +2588,9 @@
         }
       },
       "post": {
-        "operationId": "tutor_user_reviews_create",
+        "operationId": "tutor_user_review_create",
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "requestBody": {
           "content": {
@@ -2642,9 +2635,9 @@
         }
       }
     },
-    "/api/tutor-user-reviews/{id}/": {
+    "/api/tutor-user-review/{id}/": {
       "get": {
-        "operationId": "tutor_user_reviews_retrieve",
+        "operationId": "tutor_user_review_retrieve",
         "parameters": [
           {
             "in": "path",
@@ -2657,7 +2650,7 @@
           }
         ],
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "security": [
           {
@@ -2682,7 +2675,7 @@
         }
       },
       "put": {
-        "operationId": "tutor_user_reviews_update",
+        "operationId": "tutor_user_review_update",
         "parameters": [
           {
             "in": "path",
@@ -2695,7 +2688,7 @@
           }
         ],
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "requestBody": {
           "content": {
@@ -2740,7 +2733,7 @@
         }
       },
       "patch": {
-        "operationId": "tutor_user_reviews_partial_update",
+        "operationId": "tutor_user_review_partial_update",
         "parameters": [
           {
             "in": "path",
@@ -2753,7 +2746,7 @@
           }
         ],
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "requestBody": {
           "content": {
@@ -2797,7 +2790,7 @@
         }
       },
       "delete": {
-        "operationId": "tutor_user_reviews_destroy",
+        "operationId": "tutor_user_review_destroy",
         "parameters": [
           {
             "in": "path",
@@ -2810,7 +2803,7 @@
           }
         ],
         "tags": [
-          "tutor-user-reviews"
+          "tutor-user-review"
         ],
         "security": [
           {
@@ -4753,6 +4746,66 @@
           }
         }
       }
+    },
+    "/api/users/new-user/": {
+      "post": {
+        "operationId": "users_new_user_create",
+        "summary": "Create a new student user",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "basicAuth": []
+          },
+          {}
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": ""
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404-serializer"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5048,6 +5101,56 @@
         },
         "required": [
           "email"
+        ]
+      },
+      "NewUserRequest": {
+        "type": "object",
+        "properties": {
+          "careers": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "last_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "ucc_key": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "minLength": 1,
+            "pattern": "^\\d{7}@ucc.edu.ar$",
+            "maxLength": 254
+          },
+          "academic_year": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "academic_year",
+          "careers",
+          "email",
+          "last_name",
+          "name",
+          "roles",
+          "ucc_key"
         ]
       },
       "PatchedAcademicUnitRequest": {
@@ -5773,6 +5876,20 @@
             "type": "integer",
             "readOnly": true
           },
+          "careers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "readOnly": true
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "readOnly": true
+          },
           "name": {
             "type": "string",
             "maxLength": 50
@@ -5796,10 +5913,12 @@
         },
         "required": [
           "academic_year",
+          "careers",
           "email",
           "id",
           "last_name",
           "name",
+          "roles",
           "ucc_key"
         ]
       },

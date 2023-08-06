@@ -199,6 +199,32 @@ Map<String, dynamic> _$EmailLookUpRequestToJson(EmailLookUpRequest instance) =>
       'email': instance.email,
     };
 
+NewUserRequest _$NewUserRequestFromJson(Map<String, dynamic> json) =>
+    NewUserRequest(
+      careers:
+          (json['careers'] as List<dynamic>?)?.map((e) => e as int).toList() ??
+              [],
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
+      name: json['name'] as String,
+      lastName: json['last_name'] as String,
+      uccKey: json['ucc_key'] as int,
+      email: json['email'] as String,
+      academicYear: json['academic_year'] as int,
+    );
+
+Map<String, dynamic> _$NewUserRequestToJson(NewUserRequest instance) =>
+    <String, dynamic>{
+      'careers': instance.careers,
+      'roles': instance.roles,
+      'name': instance.name,
+      'last_name': instance.lastName,
+      'ucc_key': instance.uccKey,
+      'email': instance.email,
+      'academic_year': instance.academicYear,
+    };
+
 PatchedAcademicUnitRequest _$PatchedAcademicUnitRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedAcademicUnitRequest(
@@ -736,6 +762,13 @@ Map<String, dynamic> _$TutorshipReportRequestToJson(
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
+      careers: (json['careers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       name: json['name'] as String,
       lastName: json['last_name'] as String,
       uccKey: json['ucc_key'] as int,
@@ -745,6 +778,8 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
+      'careers': instance.careers,
+      'roles': instance.roles,
       'name': instance.name,
       'last_name': instance.lastName,
       'ucc_key': instance.uccKey,

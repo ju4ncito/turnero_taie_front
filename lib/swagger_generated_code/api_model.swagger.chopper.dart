@@ -672,8 +672,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Role>> _apiRolesIdGet({required int? id}) {
-    final Uri $url = Uri.parse('/api/roles/${id}/');
+  Future<Response<Role>> _apiRolesTypeGet({required String? type}) {
+    final Uri $url = Uri.parse('/api/roles/${type}/');
     final Request $request = Request(
       'GET',
       $url,
@@ -683,11 +683,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Role>> _apiRolesIdPut({
-    required int? id,
+  Future<Response<Role>> _apiRolesTypePut({
+    required String? type,
     required RoleRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final Uri $url = Uri.parse('/api/roles/${type}/');
     final $body = body;
     final Request $request = Request(
       'PUT',
@@ -699,11 +699,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Role>> _apiRolesIdPatch({
-    required int? id,
+  Future<Response<Role>> _apiRolesTypePatch({
+    required String? type,
     required PatchedRoleRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/roles/${id}/');
+    final Uri $url = Uri.parse('/api/roles/${type}/');
     final $body = body;
     final Request $request = Request(
       'PATCH',
@@ -715,8 +715,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<dynamic>> _apiRolesIdDelete({required int? id}) {
-    final Uri $url = Uri.parse('/api/roles/${id}/');
+  Future<Response<dynamic>> _apiRolesTypeDelete({required String? type}) {
+    final Uri $url = Uri.parse('/api/roles/${type}/');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -745,8 +745,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<TutorUserReview>>> _apiTutorUserReviewsGet() {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/');
+  Future<Response<List<TutorUserReview>>> _apiTutorUserReviewGet() {
+    final Uri $url = Uri.parse('/api/tutor-user-review/');
     final Request $request = Request(
       'GET',
       $url,
@@ -756,9 +756,9 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorUserReview>> _apiTutorUserReviewsPost(
+  Future<Response<TutorUserReview>> _apiTutorUserReviewPost(
       {required TutorUserReviewRequest? body}) {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/');
+    final Uri $url = Uri.parse('/api/tutor-user-review/');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -770,9 +770,9 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdGet(
+  Future<Response<TutorUserReview>> _apiTutorUserReviewIdGet(
       {required int? id}) {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final Uri $url = Uri.parse('/api/tutor-user-review/${id}/');
     final Request $request = Request(
       'GET',
       $url,
@@ -782,11 +782,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdPut({
+  Future<Response<TutorUserReview>> _apiTutorUserReviewIdPut({
     required int? id,
     required TutorUserReviewRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final Uri $url = Uri.parse('/api/tutor-user-review/${id}/');
     final $body = body;
     final Request $request = Request(
       'PUT',
@@ -798,11 +798,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorUserReview>> _apiTutorUserReviewsIdPatch({
+  Future<Response<TutorUserReview>> _apiTutorUserReviewIdPatch({
     required int? id,
     required PatchedTutorUserReviewRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+    final Uri $url = Uri.parse('/api/tutor-user-review/${id}/');
     final $body = body;
     final Request $request = Request(
       'PATCH',
@@ -814,8 +814,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<dynamic>> _apiTutorUserReviewsIdDelete({required int? id}) {
-    final Uri $url = Uri.parse('/api/tutor-user-reviews/${id}/');
+  Future<Response<dynamic>> _apiTutorUserReviewIdDelete({required int? id}) {
+    final Uri $url = Uri.parse('/api/tutor-user-review/${id}/');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -1394,6 +1394,19 @@ class _$ApiModel extends ApiModel {
   Future<Response<User>> _apiUsersIsUserPost(
       {required EmailLookUpRequest? body}) {
     final Uri $url = Uri.parse('/api/users/is-user/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<User, User>($request);
+  }
+
+  @override
+  Future<Response<User>> _apiUsersNewUserPost({required NewUserRequest? body}) {
+    final Uri $url = Uri.parse('/api/users/new-user/');
     final $body = body;
     final Request $request = Request(
       'POST',
