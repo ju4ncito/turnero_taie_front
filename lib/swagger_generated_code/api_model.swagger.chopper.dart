@@ -726,15 +726,22 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Object>> _apiSchemaGet({
-    String? format,
-    String? lang,
-  }) {
-    final Uri $url = Uri.parse('/api/schema/');
-    final Map<String, dynamic> $params = <String, dynamic>{
-      'format': format,
-      'lang': lang,
-    };
+  Future<Response<Object>> _apiSchemaJsonGet({String? lang}) {
+    final Uri $url = Uri.parse('/api/schema/json');
+    final Map<String, dynamic> $params = <String, dynamic>{'lang': lang};
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<Object, Object>($request);
+  }
+
+  @override
+  Future<Response<Object>> _apiSchemaYamlGet({String? lang}) {
+    final Uri $url = Uri.parse('/api/schema/yaml');
+    final Map<String, dynamic> $params = <String, dynamic>{'lang': lang};
     final Request $request = Request(
       'GET',
       $url,
@@ -1405,7 +1412,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<User>> _apiUsersNewUserPost({required NewUserRequest? body}) {
+  Future<Response<NewUser>> _apiUsersNewUserPost(
+      {required NewUserRequest? body}) {
     final Uri $url = Uri.parse('/api/users/new-user/');
     final $body = body;
     final Request $request = Request(
@@ -1414,6 +1422,6 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<User, User>($request);
+    return client.send<NewUser, NewUser>($request);
   }
 }

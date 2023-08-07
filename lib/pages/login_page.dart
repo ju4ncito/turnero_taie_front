@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
                       email: userEmail,
                       academicYear: 1));
 
-              print(postresult);
+              print(postresult.statusCode);
 
               if (postresult.statusCode == 201) {
                 if (context.mounted) {

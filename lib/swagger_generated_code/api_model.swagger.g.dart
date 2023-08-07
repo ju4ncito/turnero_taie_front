@@ -6,22 +6,32 @@ part of 'api_model.swagger.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-$400Serializer _$$400SerializerFromJson(Map<String, dynamic> json) =>
-    $400Serializer(
+$400IsUser _$$400IsUserFromJson(Map<String, dynamic> json) => $400IsUser(
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$$400SerializerToJson($400Serializer instance) =>
+Map<String, dynamic> _$$400IsUserToJson($400IsUser instance) =>
     <String, dynamic>{
       'message': instance.message,
     };
 
-$404Serializer _$$404SerializerFromJson(Map<String, dynamic> json) =>
-    $404Serializer(
+$400NewUser _$$400NewUserFromJson(Map<String, dynamic> json) => $400NewUser(
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$$404SerializerToJson($404Serializer instance) =>
+Map<String, dynamic> _$$400NewUserToJson($400NewUser instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
+$404IsUserserializer _$$404IsUserserializerFromJson(
+        Map<String, dynamic> json) =>
+    $404IsUserserializer(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$$404IsUserserializerToJson(
+        $404IsUserserializer instance) =>
     <String, dynamic>{
       'message': instance.message,
     };
@@ -197,6 +207,32 @@ EmailLookUpRequest _$EmailLookUpRequestFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$EmailLookUpRequestToJson(EmailLookUpRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
+    };
+
+NewUser _$NewUserFromJson(Map<String, dynamic> json) => NewUser(
+      id: json['id'] as int,
+      careers:
+          (json['careers'] as List<dynamic>?)?.map((e) => e as int).toList() ??
+              [],
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
+      name: json['name'] as String,
+      lastName: json['last_name'] as String,
+      uccKey: json['ucc_key'] as int,
+      email: json['email'] as String,
+      academicYear: json['academic_year'] as int,
+    );
+
+Map<String, dynamic> _$NewUserToJson(NewUser instance) => <String, dynamic>{
+      'id': instance.id,
+      'careers': instance.careers,
+      'roles': instance.roles,
+      'name': instance.name,
+      'last_name': instance.lastName,
+      'ucc_key': instance.uccKey,
+      'email': instance.email,
+      'academic_year': instance.academicYear,
     };
 
 NewUserRequest _$NewUserRequestFromJson(Map<String, dynamic> json) =>

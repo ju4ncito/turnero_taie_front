@@ -946,24 +946,30 @@ abstract class ApiModel extends ChopperService {
       {@Path('type') required String? type});
 
   ///
-  ///@param format
   ///@param lang
-  Future<chopper.Response<Object>> apiSchemaGet({
-    enums.ApiSchemaGetFormat? format,
-    enums.ApiSchemaGetLang? lang,
-  }) {
-    return _apiSchemaGet(
-        format: format?.value?.toString(), lang: lang?.value?.toString());
+  Future<chopper.Response<Object>> apiSchemaJsonGet(
+      {enums.ApiSchemaJsonGetLang? lang}) {
+    return _apiSchemaJsonGet(lang: lang?.value?.toString());
   }
 
   ///
-  ///@param format
   ///@param lang
-  @Get(path: '/api/schema/')
-  Future<chopper.Response<Object>> _apiSchemaGet({
-    @Query('format') String? format,
-    @Query('lang') String? lang,
-  });
+  @Get(path: '/api/schema/json')
+  Future<chopper.Response<Object>> _apiSchemaJsonGet(
+      {@Query('lang') String? lang});
+
+  ///
+  ///@param lang
+  Future<chopper.Response<Object>> apiSchemaYamlGet(
+      {enums.ApiSchemaYamlGetLang? lang}) {
+    return _apiSchemaYamlGet(lang: lang?.value?.toString());
+  }
+
+  ///
+  ///@param lang
+  @Get(path: '/api/schema/yaml')
+  Future<chopper.Response<Object>> _apiSchemaYamlGet(
+      {@Query('lang') String? lang});
 
   ///
   Future<chopper.Response<List<TutorUserReview>>> apiTutorUserReviewGet() {
@@ -1794,9 +1800,9 @@ abstract class ApiModel extends ChopperService {
       {@Body() required EmailLookUpRequest? body});
 
   ///Create a new student user
-  Future<chopper.Response<User>> apiUsersNewUserPost(
+  Future<chopper.Response<NewUser>> apiUsersNewUserPost(
       {required NewUserRequest? body}) {
-    generatedMapping.putIfAbsent(User, () => User.fromJsonFactory);
+    generatedMapping.putIfAbsent(NewUser, () => NewUser.fromJsonFactory);
 
     return _apiUsersNewUserPost(body: body);
   }
@@ -1806,30 +1812,30 @@ abstract class ApiModel extends ChopperService {
     path: '/api/users/new-user/',
     optionalBody: true,
   )
-  Future<chopper.Response<User>> _apiUsersNewUserPost(
+  Future<chopper.Response<NewUser>> _apiUsersNewUserPost(
       {@Body() required NewUserRequest? body});
 }
 
 @JsonSerializable(explicitToJson: true)
-class $400Serializer {
-  $400Serializer({
+class $400IsUser {
+  $400IsUser({
     required this.message,
   });
 
-  factory $400Serializer.fromJson(Map<String, dynamic> json) =>
-      _$$400SerializerFromJson(json);
+  factory $400IsUser.fromJson(Map<String, dynamic> json) =>
+      _$$400IsUserFromJson(json);
 
-  static const toJsonFactory = _$$400SerializerToJson;
-  Map<String, dynamic> toJson() => _$$400SerializerToJson(this);
+  static const toJsonFactory = _$$400IsUserToJson;
+  Map<String, dynamic> toJson() => _$$400IsUserToJson(this);
 
   @JsonKey(name: 'message')
   final String message;
-  static const fromJsonFactory = _$$400SerializerFromJson;
+  static const fromJsonFactory = _$$400IsUserFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is $400Serializer &&
+        (other is $400IsUser &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality().equals(other.message, message)));
   }
@@ -1842,37 +1848,37 @@ class $400Serializer {
       const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
 }
 
-extension $$400SerializerExtension on $400Serializer {
-  $400Serializer copyWith({String? message}) {
-    return $400Serializer(message: message ?? this.message);
+extension $$400IsUserExtension on $400IsUser {
+  $400IsUser copyWith({String? message}) {
+    return $400IsUser(message: message ?? this.message);
   }
 
-  $400Serializer copyWithWrapped({Wrapped<String>? message}) {
-    return $400Serializer(
+  $400IsUser copyWithWrapped({Wrapped<String>? message}) {
+    return $400IsUser(
         message: (message != null ? message.value : this.message));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-class $404Serializer {
-  $404Serializer({
+class $400NewUser {
+  $400NewUser({
     required this.message,
   });
 
-  factory $404Serializer.fromJson(Map<String, dynamic> json) =>
-      _$$404SerializerFromJson(json);
+  factory $400NewUser.fromJson(Map<String, dynamic> json) =>
+      _$$400NewUserFromJson(json);
 
-  static const toJsonFactory = _$$404SerializerToJson;
-  Map<String, dynamic> toJson() => _$$404SerializerToJson(this);
+  static const toJsonFactory = _$$400NewUserToJson;
+  Map<String, dynamic> toJson() => _$$400NewUserToJson(this);
 
   @JsonKey(name: 'message')
   final String message;
-  static const fromJsonFactory = _$$404SerializerFromJson;
+  static const fromJsonFactory = _$$400NewUserFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is $404Serializer &&
+        (other is $400NewUser &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality().equals(other.message, message)));
   }
@@ -1885,13 +1891,56 @@ class $404Serializer {
       const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
 }
 
-extension $$404SerializerExtension on $404Serializer {
-  $404Serializer copyWith({String? message}) {
-    return $404Serializer(message: message ?? this.message);
+extension $$400NewUserExtension on $400NewUser {
+  $400NewUser copyWith({String? message}) {
+    return $400NewUser(message: message ?? this.message);
   }
 
-  $404Serializer copyWithWrapped({Wrapped<String>? message}) {
-    return $404Serializer(
+  $400NewUser copyWithWrapped({Wrapped<String>? message}) {
+    return $400NewUser(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class $404IsUserserializer {
+  $404IsUserserializer({
+    required this.message,
+  });
+
+  factory $404IsUserserializer.fromJson(Map<String, dynamic> json) =>
+      _$$404IsUserserializerFromJson(json);
+
+  static const toJsonFactory = _$$404IsUserserializerToJson;
+  Map<String, dynamic> toJson() => _$$404IsUserserializerToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$$404IsUserserializerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is $404IsUserserializer &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $$404IsUserserializerExtension on $404IsUserserializer {
+  $404IsUserserializer copyWith({String? message}) {
+    return $404IsUserserializer(message: message ?? this.message);
+  }
+
+  $404IsUserserializer copyWithWrapped({Wrapped<String>? message}) {
+    return $404IsUserserializer(
         message: (message != null ? message.value : this.message));
   }
 }
@@ -2682,6 +2731,127 @@ extension $EmailLookUpRequestExtension on EmailLookUpRequest {
   EmailLookUpRequest copyWithWrapped({Wrapped<String>? email}) {
     return EmailLookUpRequest(
         email: (email != null ? email.value : this.email));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class NewUser {
+  NewUser({
+    required this.id,
+    required this.careers,
+    required this.roles,
+    required this.name,
+    required this.lastName,
+    required this.uccKey,
+    required this.email,
+    required this.academicYear,
+  });
+
+  factory NewUser.fromJson(Map<String, dynamic> json) =>
+      _$NewUserFromJson(json);
+
+  static const toJsonFactory = _$NewUserToJson;
+  Map<String, dynamic> toJson() => _$NewUserToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'careers', defaultValue: <int>[])
+  final List<int> careers;
+  @JsonKey(name: 'roles', defaultValue: <String>[])
+  final List<String> roles;
+  @JsonKey(name: 'name')
+  final String name;
+  @JsonKey(name: 'last_name')
+  final String lastName;
+  @JsonKey(name: 'ucc_key')
+  final int uccKey;
+  @JsonKey(name: 'email')
+  final String email;
+  @JsonKey(name: 'academic_year')
+  final int academicYear;
+  static const fromJsonFactory = _$NewUserFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NewUser &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality()
+                    .equals(other.careers, careers)) &&
+            (identical(other.roles, roles) ||
+                const DeepCollectionEquality().equals(other.roles, roles)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.uccKey, uccKey) ||
+                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.academicYear, academicYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.academicYear, academicYear)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(careers) ^
+      const DeepCollectionEquality().hash(roles) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(uccKey) ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(academicYear) ^
+      runtimeType.hashCode;
+}
+
+extension $NewUserExtension on NewUser {
+  NewUser copyWith(
+      {int? id,
+      List<int>? careers,
+      List<String>? roles,
+      String? name,
+      String? lastName,
+      int? uccKey,
+      String? email,
+      int? academicYear}) {
+    return NewUser(
+        id: id ?? this.id,
+        careers: careers ?? this.careers,
+        roles: roles ?? this.roles,
+        name: name ?? this.name,
+        lastName: lastName ?? this.lastName,
+        uccKey: uccKey ?? this.uccKey,
+        email: email ?? this.email,
+        academicYear: academicYear ?? this.academicYear);
+  }
+
+  NewUser copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<List<int>>? careers,
+      Wrapped<List<String>>? roles,
+      Wrapped<String>? name,
+      Wrapped<String>? lastName,
+      Wrapped<int>? uccKey,
+      Wrapped<String>? email,
+      Wrapped<int>? academicYear}) {
+    return NewUser(
+        id: (id != null ? id.value : this.id),
+        careers: (careers != null ? careers.value : this.careers),
+        roles: (roles != null ? roles.value : this.roles),
+        name: (name != null ? name.value : this.name),
+        lastName: (lastName != null ? lastName.value : this.lastName),
+        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
+        email: (email != null ? email.value : this.email),
+        academicYear:
+            (academicYear != null ? academicYear.value : this.academicYear));
   }
 }
 
@@ -5802,101 +5972,103 @@ extension $UserXTutorshipInstanceXRoleRequestExtension
   }
 }
 
-String? apiSchemaGetFormatToJson(enums.ApiSchemaGetFormat? apiSchemaGetFormat) {
-  return apiSchemaGetFormat?.value;
+String? apiSchemaJsonGetLangToJson(
+    enums.ApiSchemaJsonGetLang? apiSchemaJsonGetLang) {
+  return apiSchemaJsonGetLang?.value;
 }
 
-enums.ApiSchemaGetFormat apiSchemaGetFormatFromJson(
-  Object? apiSchemaGetFormat, [
-  enums.ApiSchemaGetFormat? defaultValue,
+enums.ApiSchemaJsonGetLang apiSchemaJsonGetLangFromJson(
+  Object? apiSchemaJsonGetLang, [
+  enums.ApiSchemaJsonGetLang? defaultValue,
 ]) {
-  return enums.ApiSchemaGetFormat.values
-          .firstWhereOrNull((e) => e.value == apiSchemaGetFormat) ??
+  return enums.ApiSchemaJsonGetLang.values
+          .firstWhereOrNull((e) => e.value == apiSchemaJsonGetLang) ??
       defaultValue ??
-      enums.ApiSchemaGetFormat.swaggerGeneratedUnknown;
+      enums.ApiSchemaJsonGetLang.swaggerGeneratedUnknown;
 }
 
-List<String> apiSchemaGetFormatListToJson(
-    List<enums.ApiSchemaGetFormat>? apiSchemaGetFormat) {
-  if (apiSchemaGetFormat == null) {
+List<String> apiSchemaJsonGetLangListToJson(
+    List<enums.ApiSchemaJsonGetLang>? apiSchemaJsonGetLang) {
+  if (apiSchemaJsonGetLang == null) {
     return [];
   }
 
-  return apiSchemaGetFormat.map((e) => e.value!).toList();
+  return apiSchemaJsonGetLang.map((e) => e.value!).toList();
 }
 
-List<enums.ApiSchemaGetFormat> apiSchemaGetFormatListFromJson(
-  List? apiSchemaGetFormat, [
-  List<enums.ApiSchemaGetFormat>? defaultValue,
+List<enums.ApiSchemaJsonGetLang> apiSchemaJsonGetLangListFromJson(
+  List? apiSchemaJsonGetLang, [
+  List<enums.ApiSchemaJsonGetLang>? defaultValue,
 ]) {
-  if (apiSchemaGetFormat == null) {
+  if (apiSchemaJsonGetLang == null) {
     return defaultValue ?? [];
   }
 
-  return apiSchemaGetFormat
-      .map((e) => apiSchemaGetFormatFromJson(e.toString()))
+  return apiSchemaJsonGetLang
+      .map((e) => apiSchemaJsonGetLangFromJson(e.toString()))
       .toList();
 }
 
-List<enums.ApiSchemaGetFormat>? apiSchemaGetFormatNullableListFromJson(
-  List? apiSchemaGetFormat, [
-  List<enums.ApiSchemaGetFormat>? defaultValue,
+List<enums.ApiSchemaJsonGetLang>? apiSchemaJsonGetLangNullableListFromJson(
+  List? apiSchemaJsonGetLang, [
+  List<enums.ApiSchemaJsonGetLang>? defaultValue,
 ]) {
-  if (apiSchemaGetFormat == null) {
+  if (apiSchemaJsonGetLang == null) {
     return defaultValue;
   }
 
-  return apiSchemaGetFormat
-      .map((e) => apiSchemaGetFormatFromJson(e.toString()))
+  return apiSchemaJsonGetLang
+      .map((e) => apiSchemaJsonGetLangFromJson(e.toString()))
       .toList();
 }
 
-String? apiSchemaGetLangToJson(enums.ApiSchemaGetLang? apiSchemaGetLang) {
-  return apiSchemaGetLang?.value;
+String? apiSchemaYamlGetLangToJson(
+    enums.ApiSchemaYamlGetLang? apiSchemaYamlGetLang) {
+  return apiSchemaYamlGetLang?.value;
 }
 
-enums.ApiSchemaGetLang apiSchemaGetLangFromJson(
-  Object? apiSchemaGetLang, [
-  enums.ApiSchemaGetLang? defaultValue,
+enums.ApiSchemaYamlGetLang apiSchemaYamlGetLangFromJson(
+  Object? apiSchemaYamlGetLang, [
+  enums.ApiSchemaYamlGetLang? defaultValue,
 ]) {
-  return enums.ApiSchemaGetLang.values
-          .firstWhereOrNull((e) => e.value == apiSchemaGetLang) ??
+  return enums.ApiSchemaYamlGetLang.values
+          .firstWhereOrNull((e) => e.value == apiSchemaYamlGetLang) ??
       defaultValue ??
-      enums.ApiSchemaGetLang.swaggerGeneratedUnknown;
+      enums.ApiSchemaYamlGetLang.swaggerGeneratedUnknown;
 }
 
-List<String> apiSchemaGetLangListToJson(
-    List<enums.ApiSchemaGetLang>? apiSchemaGetLang) {
-  if (apiSchemaGetLang == null) {
+List<String> apiSchemaYamlGetLangListToJson(
+    List<enums.ApiSchemaYamlGetLang>? apiSchemaYamlGetLang) {
+  if (apiSchemaYamlGetLang == null) {
     return [];
   }
 
-  return apiSchemaGetLang.map((e) => e.value!).toList();
+  return apiSchemaYamlGetLang.map((e) => e.value!).toList();
 }
 
-List<enums.ApiSchemaGetLang> apiSchemaGetLangListFromJson(
-  List? apiSchemaGetLang, [
-  List<enums.ApiSchemaGetLang>? defaultValue,
+List<enums.ApiSchemaYamlGetLang> apiSchemaYamlGetLangListFromJson(
+  List? apiSchemaYamlGetLang, [
+  List<enums.ApiSchemaYamlGetLang>? defaultValue,
 ]) {
-  if (apiSchemaGetLang == null) {
+  if (apiSchemaYamlGetLang == null) {
     return defaultValue ?? [];
   }
 
-  return apiSchemaGetLang
-      .map((e) => apiSchemaGetLangFromJson(e.toString()))
+  return apiSchemaYamlGetLang
+      .map((e) => apiSchemaYamlGetLangFromJson(e.toString()))
       .toList();
 }
 
-List<enums.ApiSchemaGetLang>? apiSchemaGetLangNullableListFromJson(
-  List? apiSchemaGetLang, [
-  List<enums.ApiSchemaGetLang>? defaultValue,
+List<enums.ApiSchemaYamlGetLang>? apiSchemaYamlGetLangNullableListFromJson(
+  List? apiSchemaYamlGetLang, [
+  List<enums.ApiSchemaYamlGetLang>? defaultValue,
 ]) {
-  if (apiSchemaGetLang == null) {
+  if (apiSchemaYamlGetLang == null) {
     return defaultValue;
   }
 
-  return apiSchemaGetLang
-      .map((e) => apiSchemaGetLangFromJson(e.toString()))
+  return apiSchemaYamlGetLang
+      .map((e) => apiSchemaYamlGetLangFromJson(e.toString()))
       .toList();
 }
 
