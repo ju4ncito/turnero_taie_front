@@ -27,10 +27,12 @@ jobs:
           pip install -r requirements.txt
         
       - name: Create schema.json
-        run: python3 manage.py spectacular --format openapi-json --file schema.json
+        run: |
+          cd backend
+          python3 manage.py spectacular --format openapi-json --file schema.json
         
       - name: Copy schema.json
-        run: mv sample.txt $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend al directorio actual
+        run: mv ./backend/schema.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend al directorio actual
         
   update-api-with-codegen:
     runs-on: ubuntu-latest
@@ -41,6 +43,8 @@ jobs:
     steps:
       - name: Get Code
         uses: actions/checkout@v3
+        with:
+          ref: stage
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
