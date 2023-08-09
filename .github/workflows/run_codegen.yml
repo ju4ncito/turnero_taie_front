@@ -32,12 +32,12 @@ jobs:
           python3 manage.py spectacular --format openapi-json --file api_model.json
         
       - name: Copy schema.json
-        run: mv ./backend/api_model.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend al directorio actual
+        run: mv ./backend/api_model.json ../$GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend a un repo que perdure para el siguiente paso
       
-      - name: Debug step
+      - name: Check json file path
         run: |
+          cd ..
           ls -a
-          echo $GITHUB_WORKSPACE
           
   update-api-with-codegen:
     runs-on: ubuntu-latest
@@ -51,7 +51,9 @@ jobs:
           ref: stage
           
       - name: Check if api_model is still available
-        run: ls -a
+        run: |
+          cd ..
+          ls -a
       
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -65,7 +67,7 @@ jobs:
       - name: Move schema file
         run: |
           ls -a
-          mv $GITHUB_WORKSPACE/api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber 
+          mv ../api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber 
 
       - name: Run Codegen
         run: flutter pub run build_runner build --delete-conflicting-outputs    # Reemplaza con el comando que necesitas para ejecutar el codegen en el frontend
