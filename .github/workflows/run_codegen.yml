@@ -31,29 +31,12 @@ jobs:
         run: |
           cd backend
           python3 manage.py spectacular --format openapi-json --file api_model.json
-          
-      - name: Check file
-        run: |
-          cd backend
-          ls -a 
-          
-      - name: Check other folders
-        run: |
-          cd ..
-          ls -a
-          
-      - name: Check file
-        run: |
-          cd backend
-          ls -a 
-      
+        
       - name: Copy schema.json
-        run: mv ./backend/api_model.json ..$GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend a un repo que perdure para el siguiente paso
+        run: mv ./backend/api_model.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend a un repo que perdure para el siguiente paso
       
       - name: Check json file path
-        run: |
-          cd ..
-          ls -a
+        run: ls -a
           
   update-api-with-codegen:
     runs-on: ubuntu-latest
@@ -65,10 +48,15 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: stage
+          path: front/
           
       - name: Check if api_model is still available
         run: |
-          cd ..
+          ls -a
+          
+      - name: Check if front repo is still available
+        run: |
+          cd front/
           ls -a
       
       - name: Setup Flutter
@@ -92,5 +80,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: schema-test
+          repository: front/
           commit_message: Modified API model automatically
-          
