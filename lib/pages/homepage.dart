@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:turnero_taie_front/pages/api_test_page.dart';
 import 'package:turnero_taie_front/pages/login_page.dart';
 import 'tutor_page.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
