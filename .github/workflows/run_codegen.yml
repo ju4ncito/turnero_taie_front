@@ -1,6 +1,7 @@
 name: Update API class with codegen
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [api_schema_updated]
     
