@@ -29,17 +29,22 @@ jobs:
       - name: Create schema.json
         run: |
           cd backend
-          python3 manage.py spectacular --format openapi-json --file schema.json
+          python3 manage.py spectacular --format openapi-json --file api_model.json
         
       - name: Copy schema.json
-        run: mv ./backend/schema.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend al directorio actual
-        
+        run: mv ./backend/api_model.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend al directorio actual
+      
+      - name: Debug step
+        run: |
+          pwd
+          ls -a
+          echo $GITHUB_WORKSPACE
+          
   update-api-with-codegen:
     runs-on: ubuntu-latest
     needs: crete-new-schema-file
     permissions:
-      contents: write
-      # Give the default GITHUB_TOKEN write permission to commit and push the changed files back to the repository.
+      contents: write #Permiso para poder pushear al repo
     steps:
       - name: Get Code
         uses: actions/checkout@v3
@@ -49,10 +54,16 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: stable
+          flutter-version: 3.7.12
+          channel: 'stable'
           
       - name: Install dependencies
         run: flutter pub get
+        
+      - name: Move schema file
+        run: |
+          mv $GITHUB_WORKSPACE/api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber
+          pwd 
 
       - name: Run Codegen
         run: flutter pub run build_runner build --delete-conflicting-outputs    # Reemplaza con el comando que necesitas para ejecutar el codegen en el frontend
