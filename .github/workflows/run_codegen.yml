@@ -31,7 +31,22 @@ jobs:
         run: |
           cd backend
           python3 manage.py spectacular --format openapi-json --file api_model.json
-        
+          
+      - name: Check file
+        run: |
+          cd backend
+          ls -a 
+          
+      - name: Check other folders
+        run: |
+          cd ..
+          ls -a
+          
+      - name: Check file
+        run: |
+          cd backend
+          ls -a 
+      
       - name: Copy schema.json
         run: mv ./backend/api_model.json ..$GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend a un repo que perdure para el siguiente paso
       
