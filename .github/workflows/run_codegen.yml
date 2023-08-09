@@ -36,7 +36,6 @@ jobs:
       
       - name: Debug step
         run: |
-          pwd
           ls -a
           echo $GITHUB_WORKSPACE
           
@@ -50,7 +49,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: stage
-
+          
+      - name: Check if api_model is still available
+        run: ls -a
+      
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -62,8 +64,8 @@ jobs:
         
       - name: Move schema file
         run: |
-          mv $GITHUB_WORKSPACE/api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber
-          pwd 
+          ls -a
+          mv $GITHUB_WORKSPACE/api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber 
 
       - name: Run Codegen
         run: flutter pub run build_runner build --delete-conflicting-outputs    # Reemplaza con el comando que necesitas para ejecutar el codegen en el frontend
