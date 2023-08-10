@@ -31,12 +31,17 @@ jobs:
         run: |
           cd backend
           python3 manage.py spectacular --format openapi-json --file api_model.json
-        
-      - name: Copy schema.json
-        run: mv ./backend/api_model.json $GITHUB_WORKSPACE  # Copiar el archivo JSON de schema desde el repositorio de backend a un repo que perdure para el siguiente paso
+          
+      - name: Save schema file for next jobs
+        uses: actions/upload-artifact@v3
+        with:
+          name: api_model
+          path: ./backend/api_model.json
       
       - name: Check json file path
-        run: ls -a
+        run: |
+          cd backend
+          ls -a
           
   update-api-with-codegen:
     runs-on: ubuntu-latest
@@ -48,16 +53,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: stage
-          path: front/
-          
-      - name: Check if api_model is still available
-        run: |
-          ls -a
-          
-      - name: Check if front repo is still available
-        run: |
-          cd front/
-          ls -a
       
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -67,18 +62,24 @@ jobs:
           
       - name: Install dependencies
         run: flutter pub get
+      
+      - name: Check files
+        run: ls -a
         
-      - name: Move schema file
-        run: |
-          ls -a
-          mv ../api_model.json ./lib/api/ #Mueve y pisa archivo viejo de api que pueda haber 
-
+      - name: Retrive schema file
+        uses: actions/download-artifact@v3
+        with:
+          name: api_model
+          path: ./lib/api/
+          
+      - name: Check files
+        run: ls -a
+        
       - name: Run Codegen
-        run: flutter pub run build_runner build --delete-conflicting-outputs    # Reemplaza con el comando que necesitas para ejecutar el codegen en el frontend
+        run: flutter pub run build_runner build --delete-conflicting-outputs # Ejecutar codegen
       
       - name: Push New API class
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: schema-test
-          repository: front/
           commit_message: Modified API model automatically
