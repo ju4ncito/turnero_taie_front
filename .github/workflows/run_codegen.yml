@@ -52,7 +52,7 @@ jobs:
       - name: Get Code
         uses: actions/checkout@v3
         with:
-          ref: stage
+          ref: schema-test
       
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
