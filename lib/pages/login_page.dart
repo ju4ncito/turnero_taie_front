@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'tutor_page.dart';
 
 class LoginPage extends StatefulWidget {
   final String userName, userEmail;
@@ -7,10 +9,13 @@ class LoginPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageState createState() =>
+      _LoginPageState(userName: userName, userEmail: userEmail);
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final String userName, userEmail;
+  _LoginPageState({Key? key, required this.userName, required this.userEmail});
   bool _showAdditionalDropdown = false;
   String _selectedAdditionalOption = '';
 
@@ -174,6 +179,36 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
+          final api_model =
+              ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
+
+          final postresult = await api_model.apiUsersNewUserPost(
+              body: NewUserRequest(
+                  careers: [1],
+                  roles: ['STD'],
+                  name: userName,
+                  lastName: userName,
+                  uccKey:
+                      int.parse(userEmail.substring(0, userEmail.length - 11)),
+                  email: userEmail,
+                  academicYear: 1));
+
+          print(postresult.statusCode);
+
+          if (postresult.statusCode == 201) {
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return TutorPage(
+                      userName: postresult.body?.name ?? '',
+                      tutorId: postresult.body!.id,
+                    );
+                  },
+                ),
+              );
+            }
+          }
           // Add your onPressed code here!
         },
         label: Text(
@@ -195,3 +230,53 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+
+
+// ElevatedButton(
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: Theme.of(context).primaryColor,
+//             ),
+//             onPressed: () async {
+//               final api_model =
+//                   ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
+
+//               final postresult = await api_model.apiUsersNewUserPost(
+//                   body: NewUserRequest(
+//                       careers: [1],
+//                       roles: ['STD'],
+//                       name: userName,
+//                       lastName: userName,
+//                       uccKey: int.parse(
+//                           userEmail.substring(0, userEmail.length - 11)),
+//                       email: userEmail,
+//                       academicYear: 1));
+
+//               print(postresult.statusCode);
+
+//               if (postresult.statusCode == 201) {
+//                 if (context.mounted) {
+//                   Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                       builder: (BuildContext context) {
+//                         return TutorPage(
+//                           userName: postresult.body?.name ?? '',
+//                           tutorId: postresult.body!.id,
+//                         );
+//                       },
+//                     ),
+//                   );
+//                 }
+//               }
+//             },
+//             child: Text(
+//               'Continuar',
+//               style: GoogleFonts.lato(
+//                 textStyle: const TextStyle(
+//                   color: Colors.white,
+//                   fontSize: 18,
+//                   fontWeight: FontWeight.w500,
+//                 ),
+//               ),
+//             ),
+//           ),
