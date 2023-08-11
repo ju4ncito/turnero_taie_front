@@ -132,22 +132,6 @@ class HomePage extends StatelessWidget {
                     text: '   Sign in with Google',
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage(
-                                  userEmail: '',
-                                  userName: '',
-                                )),
-                      );
-                    },
-                    child: const Text('Api Test'),
-                  )
                 ],
               ),
             ),
