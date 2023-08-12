@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'tutor_page.dart';
 
@@ -15,7 +16,49 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final String userName, userEmail;
   _LoginPageState({Key? key, required this.userName, required this.userEmail});
-  bool _showAdditionalDropdown = false;
+  String? selectedFacultad;
+  Career? selectedCareer;
+  List<AcademicUnit> academicUnits = [];
+  List<Career> careers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAcademicUnits();
+    fetchCareers();
+  }
+
+  final apiManager = ApiManager();
+
+  Future<void> fetchAcademicUnits() async {
+    try {
+      final response = await apiManager.apiModel.apiAcademicUnitsGet();
+      if (response.statusCode == 200) {
+        setState(() {
+          academicUnits = response.body ?? [];
+        });
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  Future<void> fetchCareers() async {
+    try {
+      final response = await apiManager.apiModel.apiCareersGet();
+      if (response.statusCode == 200) {
+        setState(() {
+          careers = response.body ?? [];
+        });
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Text(
-                      '${widget.userName}, parece que es tu primera vez utilizando la app de Tutorias',
+                      '$userName, parece que es tu primera vez utilizando la app de Tutorias',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.grey[900],
@@ -59,84 +102,39 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (!_showAdditionalDropdown)
-                      DropdownButtonFormField<String>(
-                        items: [
-                          "Ingenieria",
-                          "Medicina",
-                          'Ciencias Quimicas',
-                          'a',
-                          'b'
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          // Handle dropdown value change
-                        },
-                        decoration: const InputDecoration(
-                          labelText: "Selecciona tu facultad",
-                          hintText: "Facultad",
-                        ),
+                    DropdownButtonFormField<AcademicUnit>(
+                      items: academicUnits.map((AcademicUnit unit) {
+                        return DropdownMenuItem<AcademicUnit>(
+                          value: unit,
+                          child: Text(unit.name),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedFacultad = newValue?.name;
+                        });
+                      },
+                      value:
+                          academicUnits.isNotEmpty ? academicUnits.first : null,
+                      decoration: const InputDecoration(
+                        labelText: "Selecciona tu facultad",
+                        hintText: "Facultad",
                       ),
-                    if (_showAdditionalDropdown)
-                      DropdownButtonFormField<String>(
-                        items: [
-                          "Inge",
-                          "Med",
-                          'Cie',
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
+                    ),
+                    if (selectedFacultad != null)
+                      DropdownButtonFormField<Career>(
+                        items: careers.map((Career career) {
+                          return DropdownMenuItem<Career>(
+                            value: career,
+                            child: Text(career.name),
                           );
                         }).toList(),
                         onChanged: (newValue) {
-                          // Handle dropdown value change
+                          setState(() {
+                            selectedCareer = newValue;
+                          });
                         },
-                        decoration: const InputDecoration(
-                          labelText: "Selecciona tu facultad",
-                          hintText: "Facultad",
-                        ),
-                      ),
-                    if (_showAdditionalDropdown)
-                      DropdownButtonFormField<String>(
-                        items: [
-                          "Sistemas",
-                          "Computacion",
-                          'Electronica',
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          // Handle dropdown value change
-                        },
-                        decoration: const InputDecoration(
-                          labelText: "Selecciona tu carrera",
-                          hintText: "Carrera",
-                        ),
-                      ),
-                    const SizedBox(height: 10),
-                    if (!_showAdditionalDropdown)
-                      DropdownButtonFormField<String>(
-                        items: [
-                          "Sistemas",
-                          "Computacion",
-                          'Electronica',
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          // Handle dropdown value change
-                        },
+                        value: selectedCareer,
                         decoration: const InputDecoration(
                           labelText: "Selecciona tu carrera",
                           hintText: "Carrera",
@@ -149,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          _showAdditionalDropdown = true;
+                          // _showAdditionalDropdown = true;
                         });
                       },
                       child: const Text(
@@ -171,12 +169,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final api_model =
-              ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
-
-          final postresult = await api_model.apiUsersNewUserPost(
+          final postresult = await apiManager.apiModel.apiUsersNewUserPost(
               body: NewUserRequest(
-                  careers: [1],
+                  careers: [selectedCareer?.id ?? 1],
                   roles: ['STD'],
                   name: userName,
                   lastName: userName,

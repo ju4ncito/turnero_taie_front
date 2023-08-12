@@ -3,21 +3,11 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import '../components/home_tutor.dart';
 import '../components/calendar_tutor.dart';
 
-void main() => runApp(MaterialApp(
-    builder: (context, child) {
-      return Directionality(textDirection: TextDirection.ltr, child: child!);
-    },
-    title: 'GNav',
-    theme: ThemeData(
-      primaryColor: Colors.grey[800],
-    ),
-    home: TutorPage(userName: 'John Doe', tutorId: 123)));
-
 class TutorPage extends StatefulWidget {
   final String? userName;
-  final tutorId;
+  final int? tutorId;
 
-  TutorPage({Key? key, required this.userName, required this.tutorId})
+  const TutorPage({Key? key, required this.userName, required this.tutorId})
       : super(key: key);
 
   @override
@@ -29,11 +19,11 @@ class _TutorPageState extends State<TutorPage> {
   static final List<Widget> _widgetOptions = <Widget>[
     TutoriasListWidget(),
     CalendarWidget(),
-    Text(
+    const Text(
       'Busqueda',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
     ),
-    Text(
+    const Text(
       'Perfil',
       style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
     ),
