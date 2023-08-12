@@ -111,7 +111,10 @@ class _TutorPageState extends State<TutorPage> {
                 ),
                 Text(
                   '${widget.userName}',
-                  style: TextStyle(color: Colors.grey[900], fontSize: 22),
+                  style: TextStyle(
+                      color: Colors.grey[900],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
