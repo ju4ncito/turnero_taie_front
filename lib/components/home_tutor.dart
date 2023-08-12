@@ -24,7 +24,7 @@ class TutoriasListWidget extends StatelessWidget {
           final tutoria = tutorias[index];
           return Card(
             elevation: 2,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: ListTile(
               title: Text(tutoria.name),
               subtitle: Text(tutoria.description),

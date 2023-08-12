@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:turnero_taie_front/pages/homepage.dart';
 import '../components/home_tutor.dart';
 import '../components/calendar_tutor.dart';
 
@@ -32,15 +33,7 @@ class _TutorPageState extends State<TutorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.grey[900]),
-        title: Text(
-          'Bienvenido, ${widget.userName}',
-          style: TextStyle(color: Colors.grey[900]),
-        ),
-      ),
+      appBar: _selectedIndex == 0 ? buildAppBar() : null,
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -95,6 +88,57 @@ class _TutorPageState extends State<TutorPage> {
           ),
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.grey[50],
+      elevation: 0,
+      toolbarHeight: 90,
+      iconTheme: IconThemeData(color: Colors.grey[900]),
+      title: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Bienvenido, ',
+                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                ),
+                Text(
+                  '${widget.userName}',
+                  style: TextStyle(color: Colors.grey[900], fontSize: 22),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+              icon: Image.asset(
+                'assets/images/pfp_image.png',
+              ),
+              iconSize: 60,
+              onPressed: () {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const HomePage();
+                      },
+                    ),
+                  );
+                }
+              }),
+        ),
+      ],
     );
   }
 }
