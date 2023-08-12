@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'tutor_page.dart';
 
@@ -17,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final String userName, userEmail;
   _LoginPageState({Key? key, required this.userName, required this.userEmail});
   bool _showAdditionalDropdown = false;
-  String _selectedAdditionalOption = '';
 
   @override
   Widget build(BuildContext context) {
@@ -44,24 +42,20 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       '${widget.userName}, parece que es tu primera vez utilizando la app de Tutorias',
                       textAlign: TextAlign.left,
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          color: Colors.grey[900],
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      style: TextStyle(
+                        color: Colors.grey[900],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 50),
                     Text(
                       'Por favor, rellena los siguientes datos:',
                       textAlign: TextAlign.left,
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          color: Colors.grey[900],
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      style: TextStyle(
+                        color: Colors.grey[900],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -158,14 +152,12 @@ class _LoginPageState extends State<LoginPage> {
                           _showAdditionalDropdown = true;
                         });
                       },
-                      child: Text(
+                      child: const Text(
                         'Agregar otra carrera',
-                        style: GoogleFonts.lato(
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -209,16 +201,13 @@ class _LoginPageState extends State<LoginPage> {
               );
             }
           }
-          // Add your onPressed code here!
         },
-        label: Text(
+        label: const Text(
           'Continuar con el registro',
-          style: GoogleFonts.lato(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
           ),
         ),
         icon: const Icon(

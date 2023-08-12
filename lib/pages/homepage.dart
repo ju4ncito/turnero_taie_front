@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/pages/login_page.dart';
 import 'tutor_page.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -23,17 +23,11 @@ class HomePage extends StatelessWidget {
                 'ucc.edu.ar')) {
           print(account);
 
-          final api_model =
-              ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
-          // hacer singleton de la api
-          final postresult = await api_model.apiUsersIsUserPost(
+          final apiManager = ApiManager();
+          final postresult = await apiManager.apiModel.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));
 
           print(postresult.statusCode);
-
-          // mandar el mail del account por el body
-          // si devuelve 200 en el body esta toda la info, 404 se tiene q registrar y 400 no valido
-          // agregar push a pagina de error de mail que permita volver atras
 
           if (postresult.statusCode == 200) {
             if (context.mounted) {
@@ -55,7 +49,6 @@ class HomePage extends StatelessWidget {
                   builder: (BuildContext context) {
                     return LoginPage(
                       userName: account.displayName ?? '',
-                      //   userName: firstName ?? '',
                       userEmail: account.email,
                     );
                   },
