@@ -25,11 +25,10 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     fetchAcademicUnits();
-    fetchCareers();
+    fetchCareers(1);
   }
 
   final apiManager = ApiManager();
-
   Future<void> fetchAcademicUnits() async {
     try {
       final response = await apiManager.apiModel.apiAcademicUnitsGet();
@@ -37,27 +36,22 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           academicUnits = response.body ?? [];
         });
-      } else {
-        // Handle error
-      }
-    } catch (error) {
-      // Handle error
-    }
+      } else {}
+    } catch (error) {}
   }
 
-  Future<void> fetchCareers() async {
+  Future<void> fetchCareers(int academicUnitId) async {
     try {
       final response = await apiManager.apiModel.apiCareersGet();
       if (response.statusCode == 200) {
         setState(() {
           careers = response.body ?? [];
+          careers = careers
+              .where((career) => career.academicUnit == academicUnitId)
+              .toList();
         });
-      } else {
-        // Handle error
-      }
-    } catch (error) {
-      // Handle error
-    }
+      } else {}
+    } catch (error) {}
   }
 
   @override
@@ -112,10 +106,13 @@ class _LoginPageState extends State<LoginPage> {
                       onChanged: (newValue) {
                         setState(() {
                           selectedFacultad = newValue?.name;
+                          selectedCareer = null;
+                          if (newValue != null) {
+                            fetchCareers(newValue.id);
+                          }
                         });
                       },
-                      value:
-                          academicUnits.isNotEmpty ? academicUnits.first : null,
+                      value: null,
                       decoration: const InputDecoration(
                         labelText: "Selecciona tu facultad",
                         hintText: "Facultad",
