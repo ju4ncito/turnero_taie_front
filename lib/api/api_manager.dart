@@ -9,7 +9,8 @@ class ApiManager {
   }
 
   ApiManager._internal() {
-    _apiModel = ApiModel.create(baseUrl: Uri.parse('http://127.0.0.1:8000'));
+    _apiModel = ApiModel.create(
+        baseUrl: Uri.parse('https://backend-taie.onrender.com'));
   }
 
   ApiModel get apiModel => _apiModel;

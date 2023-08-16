@@ -72,8 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           Column(
             children: [
               Container(
-                margin: const EdgeInsets.all(35.0),
-                width: 500,
+                margin: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
                     Text(
