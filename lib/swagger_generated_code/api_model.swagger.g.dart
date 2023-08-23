@@ -64,6 +64,7 @@ Map<String, dynamic> _$AcademicUnitRequestToJson(
 
 AcademicYear _$AcademicYearFromJson(Map<String, dynamic> json) => AcademicYear(
       id: json['id'] as int,
+      year: json['year'] as int,
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
     );
@@ -71,12 +72,14 @@ AcademicYear _$AcademicYearFromJson(Map<String, dynamic> json) => AcademicYear(
 Map<String, dynamic> _$AcademicYearToJson(AcademicYear instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'year': instance.year,
       'start': _dateToJson(instance.start),
       'end': _dateToJson(instance.end),
     };
 
 AcademicYearRequest _$AcademicYearRequestFromJson(Map<String, dynamic> json) =>
     AcademicYearRequest(
+      year: json['year'] as int,
       start: DateTime.parse(json['start'] as String),
       end: DateTime.parse(json['end'] as String),
     );
@@ -84,6 +87,7 @@ AcademicYearRequest _$AcademicYearRequestFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AcademicYearRequestToJson(
         AcademicYearRequest instance) =>
     <String, dynamic>{
+      'year': instance.year,
       'start': _dateToJson(instance.start),
       'end': _dateToJson(instance.end),
     };
@@ -91,7 +95,6 @@ Map<String, dynamic> _$AcademicYearRequestToJson(
 Area _$AreaFromJson(Map<String, dynamic> json) => Area(
       id: json['id'] as int,
       name: json['name'] as String,
-      academicYear: json['academic_year'] as int,
       postulations: (json['postulations'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toList() ??
@@ -103,20 +106,17 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'academic_year': instance.academicYear,
       'postulations': instance.postulations,
       'users': instance.users,
     };
 
 AreaRequest _$AreaRequestFromJson(Map<String, dynamic> json) => AreaRequest(
       name: json['name'] as String,
-      academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$AreaRequestToJson(AreaRequest instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'academic_year': instance.academicYear,
     };
 
 Career _$CareerFromJson(Map<String, dynamic> json) => Career(
@@ -278,6 +278,7 @@ Map<String, dynamic> _$PatchedAcademicUnitRequestToJson(
 PatchedAcademicYearRequest _$PatchedAcademicYearRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedAcademicYearRequest(
+      year: json['year'] as int?,
       start: json['start'] == null
           ? null
           : DateTime.parse(json['start'] as String),
@@ -287,6 +288,7 @@ PatchedAcademicYearRequest _$PatchedAcademicYearRequestFromJson(
 Map<String, dynamic> _$PatchedAcademicYearRequestToJson(
         PatchedAcademicYearRequest instance) =>
     <String, dynamic>{
+      'year': instance.year,
       'start': _dateToJson(instance.start),
       'end': _dateToJson(instance.end),
     };
@@ -294,13 +296,11 @@ Map<String, dynamic> _$PatchedAcademicYearRequestToJson(
 PatchedAreaRequest _$PatchedAreaRequestFromJson(Map<String, dynamic> json) =>
     PatchedAreaRequest(
       name: json['name'] as String?,
-      academicYear: json['academic_year'] as int?,
     );
 
 Map<String, dynamic> _$PatchedAreaRequestToJson(PatchedAreaRequest instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'academic_year': instance.academicYear,
     };
 
 PatchedCareerRequest _$PatchedCareerRequestFromJson(
@@ -441,20 +441,21 @@ Map<String, dynamic> _$PatchedTutorUserScheduleRequestToJson(
 PatchedTutorshipInstanceRequest _$PatchedTutorshipInstanceRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedTutorshipInstanceRequest(
+      schedule: json['schedule'] == null
+          ? null
+          : TutorUserScheduleRequest.fromJson(
+              json['schedule'] as Map<String, dynamic>),
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       status: json['status'] as String?,
-      schedule: json['schedule'] as int?,
-      area: json['area'] as int?,
     );
 
 Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
         PatchedTutorshipInstanceRequest instance) =>
     <String, dynamic>{
-      'date': instance.date?.toIso8601String(),
+      'schedule': instance.schedule?.toJson(),
+      'date': _dateToJson(instance.date),
       'status': instance.status,
-      'schedule': instance.schedule,
-      'area': instance.area,
     };
 
 PatchedTutorshipReportRequest _$PatchedTutorshipReportRequestFromJson(
@@ -724,10 +725,11 @@ Map<String, dynamic> _$TutorUserScheduleRequestToJson(
 TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
     TutorshipInstance(
       id: json['id'] as int,
+      area: json['area'] as String,
+      schedule:
+          TutorUserSchedule.fromJson(json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
-      schedule: json['schedule'] as int,
-      area: json['area'] as int,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
     );
@@ -735,29 +737,28 @@ TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TutorshipInstanceToJson(TutorshipInstance instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'date': instance.date.toIso8601String(),
-      'status': instance.status,
-      'schedule': instance.schedule,
       'area': instance.area,
+      'schedule': instance.schedule.toJson(),
+      'date': _dateToJson(instance.date),
+      'status': instance.status,
       'users': instance.users,
     };
 
 TutorshipInstanceRequest _$TutorshipInstanceRequestFromJson(
         Map<String, dynamic> json) =>
     TutorshipInstanceRequest(
+      schedule: TutorUserScheduleRequest.fromJson(
+          json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
-      schedule: json['schedule'] as int,
-      area: json['area'] as int,
     );
 
 Map<String, dynamic> _$TutorshipInstanceRequestToJson(
         TutorshipInstanceRequest instance) =>
     <String, dynamic>{
-      'date': instance.date.toIso8601String(),
+      'schedule': instance.schedule.toJson(),
+      'date': _dateToJson(instance.date),
       'status': instance.status,
-      'schedule': instance.schedule,
-      'area': instance.area,
     };
 
 TutorshipReport _$TutorshipReportFromJson(Map<String, dynamic> json) =>

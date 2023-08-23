@@ -121,8 +121,9 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<AcademicYear>> _apiAcademicYearsIdGet({required int? id}) {
-    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+  Future<Response<AcademicYear>> _apiAcademicYearsYearGet(
+      {required int? year}) {
+    final Uri $url = Uri.parse('/api/academic-years/${year}/');
     final Request $request = Request(
       'GET',
       $url,
@@ -132,11 +133,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<AcademicYear>> _apiAcademicYearsIdPut({
-    required int? id,
+  Future<Response<AcademicYear>> _apiAcademicYearsYearPut({
+    required int? year,
     required AcademicYearRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final Uri $url = Uri.parse('/api/academic-years/${year}/');
     final $body = body;
     final Request $request = Request(
       'PUT',
@@ -148,11 +149,11 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<AcademicYear>> _apiAcademicYearsIdPatch({
-    required int? id,
+  Future<Response<AcademicYear>> _apiAcademicYearsYearPatch({
+    required int? year,
     required PatchedAcademicYearRequest? body,
   }) {
-    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+    final Uri $url = Uri.parse('/api/academic-years/${year}/');
     final $body = body;
     final Request $request = Request(
       'PATCH',
@@ -164,8 +165,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<dynamic>> _apiAcademicYearsIdDelete({required int? id}) {
-    final Uri $url = Uri.parse('/api/academic-years/${id}/');
+  Future<Response<dynamic>> _apiAcademicYearsYearDelete({required int? year}) {
+    final Uri $url = Uri.parse('/api/academic-years/${year}/');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -989,6 +990,25 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesByUserGet({
+    required int? roleId,
+    required int? userId,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/by-user/');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'role_id': roleId,
+      'user_id': userId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
   }
 
   @override

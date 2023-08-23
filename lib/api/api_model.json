@@ -350,17 +350,16 @@
                 }
             }
         },
-        "/api/academic-years/{id}/": {
+        "/api/academic-years/{year}/": {
             "get": {
                 "operationId": "academic_years_retrieve",
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "year",
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "A unique integer value identifying this academic year.",
                         "required": true
                     }
                 ],
@@ -394,11 +393,10 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "year",
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "A unique integer value identifying this academic year.",
                         "required": true
                     }
                 ],
@@ -452,11 +450,10 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "year",
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "A unique integer value identifying this academic year.",
                         "required": true
                     }
                 ],
@@ -509,11 +506,10 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "year",
                         "schema": {
                             "type": "integer"
                         },
-                        "description": "A unique integer value identifying this academic year.",
                         "required": true
                     }
                 ],
@@ -3474,6 +3470,55 @@
                 }
             }
         },
+        "/api/tutorship-instances/by-user/": {
+            "get": {
+                "operationId": "tutorship_instances_by_user_retrieve",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "role_id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The Role ID to filter the TutorshipInstance",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "user_id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The User ID to filter the TutorshipInstance",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TutorshipInstance"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/tutorship-reports/": {
             "get": {
                 "operationId": "tutorship_reports_list",
@@ -5014,6 +5059,9 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "year": {
+                        "type": "integer"
+                    },
                     "start": {
                         "type": "string",
                         "format": "date"
@@ -5026,12 +5074,16 @@
                 "required": [
                     "end",
                     "id",
-                    "start"
+                    "start",
+                    "year"
                 ]
             },
             "AcademicYearRequest": {
                 "type": "object",
                 "properties": {
+                    "year": {
+                        "type": "integer"
+                    },
                     "start": {
                         "type": "string",
                         "format": "date"
@@ -5043,7 +5095,8 @@
                 },
                 "required": [
                     "end",
-                    "start"
+                    "start",
+                    "year"
                 ]
             },
             "Area": {
@@ -5056,9 +5109,6 @@
                     "name": {
                         "type": "string",
                         "maxLength": 50
-                    },
-                    "academic_year": {
-                        "type": "integer"
                     },
                     "postulations": {
                         "type": "array",
@@ -5076,7 +5126,6 @@
                     }
                 },
                 "required": [
-                    "academic_year",
                     "id",
                     "name",
                     "postulations",
@@ -5090,13 +5139,9 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 50
-                    },
-                    "academic_year": {
-                        "type": "integer"
                     }
                 },
                 "required": [
-                    "academic_year",
                     "name"
                 ]
             },
@@ -5356,6 +5401,9 @@
             "PatchedAcademicYearRequest": {
                 "type": "object",
                 "properties": {
+                    "year": {
+                        "type": "integer"
+                    },
                     "start": {
                         "type": "string",
                         "format": "date"
@@ -5373,9 +5421,6 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 50
-                    },
-                    "academic_year": {
-                        "type": "integer"
                     }
                 }
             },
@@ -5525,20 +5570,17 @@
             "PatchedTutorshipInstanceRequest": {
                 "type": "object",
                 "properties": {
+                    "schedule": {
+                        "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                    },
                     "date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     },
                     "status": {
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
-                    },
-                    "schedule": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "integer"
                     }
                 }
             },
@@ -5940,19 +5982,20 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "area": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "schedule": {
+                        "$ref": "#/components/schemas/TutorUserSchedule"
+                    },
                     "date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     },
                     "status": {
                         "type": "string",
                         "maxLength": 25
-                    },
-                    "schedule": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "integer"
                     },
                     "users": {
                         "type": "array",
@@ -5974,24 +6017,20 @@
             "TutorshipInstanceRequest": {
                 "type": "object",
                 "properties": {
+                    "schedule": {
+                        "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                    },
                     "date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     },
                     "status": {
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
-                    },
-                    "schedule": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "integer"
                     }
                 },
                 "required": [
-                    "area",
                     "date",
                     "schedule",
                     "status"

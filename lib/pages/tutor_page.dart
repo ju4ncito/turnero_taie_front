@@ -22,7 +22,7 @@ class _TutorPageState extends State<TutorPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       TutoriasListWidget(),
-      CalendarWidget(),
+      TableEventsExample(),
       const Text(
         'Busqueda',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
