@@ -15,14 +15,11 @@ class HomePage extends StatelessWidget {
       try {
         final googleSignIn = GoogleSignIn();
         final account = await googleSignIn.signIn();
-        print(account?.email.length);
-        print(account?.email.substring(account.email.length - 10));
+
         if (account != null &&
             context.mounted &&
             (account.email.substring(account.email.length - 10) ==
                 'ucc.edu.ar')) {
-          print(account);
-
           final apiManager = ApiManager();
           final postresult = await apiManager.apiModel.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));

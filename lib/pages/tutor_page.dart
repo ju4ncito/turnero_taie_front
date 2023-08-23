@@ -17,25 +17,26 @@ class TutorPage extends StatefulWidget {
 
 class _TutorPageState extends State<TutorPage> {
   int _selectedIndex = 0;
-  static final List<Widget> _widgetOptions = <Widget>[
-    TutoriasListWidget(),
-    CalendarWidget(),
-    const Text(
-      'Busqueda',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-    ),
-    const Text(
-      'Perfil',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> widgetOptions = <Widget>[
+      TutoriasListWidget(),
+      CalendarWidget(),
+      const Text(
+        'Busqueda',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      ),
+      const Text(
+        'Perfil',
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      ),
+    ];
+
     return Scaffold(
       appBar: _selectedIndex == 0 ? buildAppBar() : null,
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
