@@ -9,7 +9,6 @@ class Tutoria {
 
 class TutoriaCard extends StatelessWidget {
   final Tutoria tutoria;
-
   const TutoriaCard({super.key, required this.tutoria});
 
   @override
