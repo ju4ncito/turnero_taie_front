@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import 'tutor_page.dart';
+import 'tutor_main.dart';
 
 class LoginPage extends StatefulWidget {
   final String userName, userEmail;
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final String userName, userEmail;
-  _LoginPageState({Key? key, required this.userName, required this.userEmail});
+  _LoginPageState({required this.userName, required this.userEmail});
   String? selectedFacultad;
   Career? selectedCareer;
   List<AcademicUnit> academicUnits = [];

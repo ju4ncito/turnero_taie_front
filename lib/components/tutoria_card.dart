@@ -10,7 +10,7 @@ class Tutoria {
 class TutoriaCard extends StatelessWidget {
   final Tutoria tutoria;
 
-  TutoriaCard({required this.tutoria});
+  const TutoriaCard({super.key, required this.tutoria});
 
   @override
   Widget build(BuildContext context) {

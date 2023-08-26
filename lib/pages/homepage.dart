@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
-import 'package:turnero_taie_front/pages/login_page.dart';
-import 'tutor_page.dart';
+import 'package:turnero_taie_front/pages/login.dart';
+import 'package:turnero_taie_front/pages/student_main.dart';
+import 'tutor_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,17 +28,33 @@ class HomePage extends StatelessWidget {
           print(postresult.statusCode);
 
           if (postresult.statusCode == 200) {
-            if (context.mounted) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return TutorPage(
-                      userName: postresult.body?.name ?? '',
-                      tutorId: postresult.body!.id,
-                    );
-                  },
-                ),
-              );
+            if (postresult.body?.roles != null &&
+                postresult.body!.roles.contains("TUTOR")) {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return TutorPage(
+                        userName: postresult.body?.name ?? '',
+                        tutorId: postresult.body!.id,
+                      );
+                    },
+                  ),
+                );
+              }
+            } else {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return StudentPage(
+                        userName: postresult.body?.name ?? '',
+                        tutorId: postresult.body!.id,
+                      );
+                    },
+                  ),
+                );
+              }
             }
           } else if (postresult.statusCode == 404) {
             if (context.mounted) {

@@ -4,6 +4,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../utils.dart';
 
 class TableEventsExample extends StatefulWidget {
+  const TableEventsExample({super.key});
+
   @override
   _TableEventsExampleState createState() => _TableEventsExampleState();
 }
@@ -67,7 +69,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             },
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarStyle: CalendarStyle(
+            calendarStyle: const CalendarStyle(
               outsideDaysVisible: true,
             ),
             onDaySelected: _onDaySelected,

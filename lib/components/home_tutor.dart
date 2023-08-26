@@ -19,6 +19,8 @@ class TutoriasListWidget extends StatelessWidget {
     Tutoria('name', 'description')
   ];
 
+  TutoriasListWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
