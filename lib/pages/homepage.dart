@@ -27,6 +27,9 @@ class HomePage extends StatelessWidget {
 
           print(postresult.statusCode);
 
+          final currentUser =
+              await apiManager.apiModel.apiUsersIdGet(id: postresult.body!.id);
+
           if (postresult.statusCode == 200) {
             if (postresult.body?.roles != null &&
                 postresult.body!.roles.contains("TUTOR")) {
@@ -35,8 +38,7 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return TutorPage(
-                        userName: postresult.body?.name ?? '',
-                        tutorId: postresult.body!.id,
+                        currentUser: currentUser.body,
                       );
                     },
                   ),

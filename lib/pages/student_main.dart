@@ -21,8 +21,8 @@ class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      TutoriasListWidget(),
-      const TableEventsExample(),
+      // TutoriasListWidget(),
+      TableEventsExample(),
       const Text(
         'Busqueda',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
@@ -107,7 +107,7 @@ class _StudentPageState extends State<StudentPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bienvenido ALUMON, ',
+                  'Bienvenido ALUMONS, ',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Text(

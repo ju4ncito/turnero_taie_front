@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:turnero_taie_front/pages/homepage.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../components/home_tutor.dart';
 import '../components/calendar_tutor.dart';
 
 class TutorPage extends StatefulWidget {
-  final String? userName;
-  final int? tutorId;
+  final User? currentUser;
 
-  const TutorPage({Key? key, required this.userName, required this.tutorId})
-      : super(key: key);
+  const TutorPage({Key? key, required this.currentUser}) : super(key: key);
 
   @override
   _TutorPageState createState() => _TutorPageState();
@@ -21,7 +20,7 @@ class _TutorPageState extends State<TutorPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      TutoriasListWidget(),
+      TutoriasListWidget(currentUser: widget.currentUser),
       const TableEventsExample(),
       const Text(
         'Busqueda',
@@ -111,7 +110,7 @@ class _TutorPageState extends State<TutorPage> {
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Text(
-                  '${widget.userName}',
+                  widget.currentUser!.name,
                   style: TextStyle(
                       color: Colors.grey[900],
                       fontSize: 22,
