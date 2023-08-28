@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-
-class Tutoria {
-  final String name;
-  final String description;
-
-  Tutoria(this.name, this.description);
-}
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import '../api/api_manager.dart';
 
 class TutoriaCard extends StatelessWidget {
-  final Tutoria tutoria;
+  final TutorUserSchedule tutoria;
 
   const TutoriaCard({super.key, required this.tutoria});
 
@@ -30,7 +25,7 @@ class TutoriaCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tutoria.name,
+                    tutoria.day,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -45,7 +40,7 @@ class TutoriaCard extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                tutoria.description,
+                '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
                 style: const TextStyle(
                   color: Color.fromARGB(255, 203, 225, 255),
                   fontSize: 16,
@@ -54,7 +49,7 @@ class TutoriaCard extends StatelessWidget {
               ),
               onTap: () {
                 // Handle tutoria item tap
-                print('Tutoria selected: ${tutoria.name}');
+                print('Tutoria selected: ${tutoria.day}');
               },
             ),
             const Divider(
@@ -76,7 +71,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    'Martes 16 de Agosto',
+                    tutoria.day,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],
@@ -90,7 +85,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    '16:30 a 17:30',
+                    'de ${tutoria.begin} a ${tutoria.end}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],

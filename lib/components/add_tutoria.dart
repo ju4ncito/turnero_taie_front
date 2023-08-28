@@ -59,10 +59,6 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     }
   }
 
-  TimeOfDay _selectedTime =
-      TimeOfDay.now(); // Add this line at the top of the class
-
-// Update the _selectTime function
   Future<void> _selectTime(
       BuildContext context, TextEditingController controller) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -70,9 +66,11 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
       initialTime: TimeOfDay.now(),
     );
     if (picked != null) {
+      final selectedHour = picked.hour < 12 ? picked.hour : picked.hour - 12;
+      final formattedTime =
+          '$selectedHour:${picked.minute.toString().padLeft(2, '0')}:00';
       setState(() {
-        _selectedTime = picked; // Store the selected TimeOfDay
-        controller.text = picked.format(context); // Display in AM/PM format
+        controller.text = formattedTime;
       });
     }
   }

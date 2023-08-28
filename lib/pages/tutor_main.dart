@@ -20,7 +20,7 @@ class _TutorPageState extends State<TutorPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      TutoriasListWidget(currentUser: widget.currentUser),
+      ScheduleListWidget(currentUser: widget.currentUser),
       const TableEventsExample(),
       const Text(
         'Busqueda',
@@ -98,28 +98,32 @@ class _TutorPageState extends State<TutorPage> {
       elevation: 0,
       toolbarHeight: 90,
       iconTheme: IconThemeData(color: Colors.grey[900]),
-      title: Padding(
-        padding: const EdgeInsets.all(6.0),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      title: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Row(
               children: [
-                Text(
-                  'Bienvenido, ',
-                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
-                ),
-                Text(
-                  widget.currentUser!.name,
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Bienvenido, ',
+                      style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                    ),
+                    Text(
+                      widget.currentUser!.name,
+                      style: TextStyle(
+                          color: Colors.grey[900],
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       actions: [
         Padding(
