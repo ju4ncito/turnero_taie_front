@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:turnero_taie_front/pages/homepage.dart';
+import 'package:turnero_taie_front/pages/landing.dart';
 import '../components/home_tutor.dart';
 import '../components/calendar_tutor.dart';
 

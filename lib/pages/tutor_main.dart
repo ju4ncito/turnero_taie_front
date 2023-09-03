@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:turnero_taie_front/pages/homepage.dart';
+import 'package:turnero_taie_front/pages/landing.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../components/home_tutor.dart';
 import '../components/calendar_tutor.dart';
@@ -22,10 +22,6 @@ class _TutorPageState extends State<TutorPage> {
     final List<Widget> widgetOptions = <Widget>[
       ScheduleListWidget(currentUser: widget.currentUser),
       const TableEventsExample(),
-      const Text(
-        'Busqueda',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-      ),
       const Text(
         'Perfil',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
@@ -56,7 +52,7 @@ class _TutorPageState extends State<TutorPage> {
               gap: 6,
               activeColor: Theme.of(context).primaryColor,
               iconSize: 28,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
               duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
@@ -68,10 +64,6 @@ class _TutorPageState extends State<TutorPage> {
                 GButton(
                   icon: Icons.calendar_month_rounded,
                   text: 'Calendario',
-                ),
-                GButton(
-                  icon: Icons.search_rounded,
-                  text: 'Buscar',
                 ),
                 GButton(
                   icon: Icons.person_rounded,

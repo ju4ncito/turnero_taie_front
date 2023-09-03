@@ -75,7 +75,7 @@ class _ScheduleListWidgetState extends State<ScheduleListWidget> {
                     itemBuilder: (context, index) {
                       final schedule = schedules![index];
                       return TutoriaCard(
-                        tutoria: schedule,
+                        tutorSchedule: schedule,
                       );
                     },
                   ),

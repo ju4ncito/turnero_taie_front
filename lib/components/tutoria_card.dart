@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import '../api/api_manager.dart';
+import 'schedule_detail.dart';
 
 class TutoriaCard extends StatelessWidget {
-  final TutorUserSchedule tutoria;
+  final TutorUserSchedule tutorSchedule;
 
-  const TutoriaCard({super.key, required this.tutoria});
+  const TutoriaCard({super.key, required this.tutorSchedule});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class TutoriaCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tutoria.day,
+                    tutorSchedule.day,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -40,7 +40,7 @@ class TutoriaCard extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
+                '${tutorSchedule.modality} con ${tutorSchedule.capacity.toString()} asistentes',
                 style: const TextStyle(
                   color: Color.fromARGB(255, 203, 225, 255),
                   fontSize: 16,
@@ -48,8 +48,13 @@ class TutoriaCard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle tutoria item tap
-                print('Tutoria selected: ${tutoria.day}');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ScheduleDetail(
+                            tutorSchedule: tutorSchedule,
+                          )),
+                );
               },
             ),
             const Divider(
@@ -71,7 +76,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    tutoria.day,
+                    tutorSchedule.day,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],
@@ -85,7 +90,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    'de ${tutoria.begin} a ${tutoria.end}',
+                    'de ${tutorSchedule.begin} a ${tutorSchedule.end}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],
