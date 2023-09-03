@@ -73,6 +73,61 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     super.dispose();
   }
 
+  void _showDeleteConfirmationDialog() async {
+    final isConfirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text('Confirmar Eliminación'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('¿Estás seguro de que deseas eliminar este horario?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(dialogContext)
+                    .pop(false); // Close the dialog with 'false'
+              },
+            ),
+            TextButton(
+              child: Text('Eliminar'),
+              onPressed: () {
+                Navigator.of(dialogContext)
+                    .pop(true); // Close the dialog with 'true'
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    if (isConfirmed == true) {
+      // User confirmed deletion, proceed with DELETE request
+      final apiManager = ApiManager();
+      final deleteResult =
+          await apiManager.apiModel.apiTutorUserSchedulesIdDelete(
+        id: widget.tutorSchedule.id,
+      );
+
+      if (deleteResult.error == null) {
+        // The DELETE request was successful
+        print("Horario eliminado con éxito");
+
+        // Navigate back to the previous page after deleting
+        Navigator.of(context).pop(); // Close the current screen
+      } else {
+        // Error in the DELETE request
+        print("Error al eliminar el horario: ${deleteResult.error}");
+        // You can show an error message or handle the error situation here
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +165,13 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _showDeleteConfirmationDialog,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                    child: Text('Eliminar Horario'),
+                  ),
                 ],
               ),
             ),
