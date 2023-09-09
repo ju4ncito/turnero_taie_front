@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:turnero_taie_front/components/search.dart';
 import 'package:turnero_taie_front/pages/homepage.dart';
 import '../components/home_student.dart';
 import '../components/calendar_tutor.dart';
@@ -22,10 +23,7 @@ class _StudentPageState extends State<StudentPage> {
     final List<Widget> widgetOptions = <Widget>[
       HorariosAlumnosWidget(currentUser: widget.currentUser),
       TableEventsExample(),
-      const Text(
-        'Busqueda',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-      ),
+      SearchPage(),
       const Text(
         'Perfil',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
