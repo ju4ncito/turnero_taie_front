@@ -20,7 +20,7 @@ class _TutorPageState extends State<TutorPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      ScheduleListWidget(currentUser: widget.currentUser),
+      HorariosTutoresWidget(currentUser: widget.currentUser),
       const TableEventsExample(),
       const Text(
         'Perfil',

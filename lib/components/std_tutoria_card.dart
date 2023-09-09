@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'schedule_detail.dart';
 
-class TutoriaCard extends StatelessWidget {
-  final TutorUserSchedule tutorSchedule;
+class StdCard extends StatelessWidget {
+  final TutorUserSchedule tutoria;
 
-  const TutoriaCard({super.key, required this.tutorSchedule});
+  const StdCard({super.key, required this.tutoria});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class TutoriaCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tutorSchedule.day,
+                    tutoria.day,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -40,7 +40,7 @@ class TutoriaCard extends StatelessWidget {
                 ],
               ),
               subtitle: Text(
-                '${tutorSchedule.modality} con ${tutorSchedule.capacity.toString()} asistentes',
+                '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
                 style: const TextStyle(
                   color: Color.fromARGB(255, 203, 225, 255),
                   fontSize: 16,
@@ -52,7 +52,7 @@ class TutoriaCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ScheduleDetail(
-                            tutorSchedule: tutorSchedule,
+                            tutorSchedule: tutoria,
                           )),
                 );
               },
@@ -76,7 +76,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    tutorSchedule.day,
+                    tutoria.day,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],
@@ -90,7 +90,7 @@ class TutoriaCard extends StatelessWidget {
                     size: 21,
                   ),
                   Text(
-                    'de ${tutorSchedule.begin} a ${tutorSchedule.end}',
+                    'de ${tutoria.begin} a ${tutoria.end}',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.grey[100],

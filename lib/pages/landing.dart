@@ -50,8 +50,7 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return StudentPage(
-                        userName: postresult.body?.name ?? '',
-                        tutorId: postresult.body!.id,
+                        currentUser: currentUser.body,
                       );
                     },
                   ),
