@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 
-class TutoriaCard extends StatelessWidget {
+class StdCard extends StatelessWidget {
   final TutorUserSchedule tutoria;
 
-  const TutoriaCard({super.key, required this.tutoria});
+  const StdCard({super.key, required this.tutoria});
 
   @override
   Widget build(BuildContext context) {

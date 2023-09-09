@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:turnero_taie_front/pages/homepage.dart';
-import '../components/home_tutor.dart';
+import '../components/home_student.dart';
 import '../components/calendar_tutor.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 class StudentPage extends StatefulWidget {
-  final String? userName;
-  final int? tutorId;
+  final User? currentUser;
 
-  const StudentPage({Key? key, required this.userName, required this.tutorId})
-      : super(key: key);
+  const StudentPage({Key? key, required this.currentUser}) : super(key: key);
 
   @override
   _StudentPageState createState() => _StudentPageState();
@@ -21,7 +20,7 @@ class _StudentPageState extends State<StudentPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      // TutoriasListWidget(),
+      HorariosAlumnosWidget(currentUser: widget.currentUser),
       TableEventsExample(),
       const Text(
         'Busqueda',
@@ -107,11 +106,11 @@ class _StudentPageState extends State<StudentPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bienvenido ALUMONS, ',
+                  'Bienvenido, ',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Text(
-                  '${widget.userName}',
+                  widget.currentUser!.name,
                   style: TextStyle(
                       color: Colors.grey[900],
                       fontSize: 22,
@@ -127,7 +126,7 @@ class _StudentPageState extends State<StudentPage> {
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
               icon: Image.asset(
-                'assets/images/pfp_image.png',
+                'assets/images/pfp_image_2.png',
               ),
               iconSize: 60,
               onPressed: () {
