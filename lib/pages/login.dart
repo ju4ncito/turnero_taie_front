@@ -1,43 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
+import 'package:turnero_taie_front/pages/student_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import 'tutor_main.dart';
+import 'dart:async';
 
 class LoginPage extends StatefulWidget {
-  final String userName, userEmail;
-  const LoginPage({Key? key, required this.userName, required this.userEmail})
-      : super(key: key);
+  final User? currentUser;
+
+  LoginPage({Key? key, required this.currentUser}) : super(key: key);
 
   @override
-  _LoginPageState createState() =>
-      _LoginPageState(userName: userName, userEmail: userEmail);
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final String userName, userEmail;
-  _LoginPageState({required this.userName, required this.userEmail});
-  String? selectedFacultad;
-  Career? selectedCareer;
+  String? selectedFaculty;
+  String? selectedCareer;
   List<AcademicUnit> academicUnits = [];
   List<Career> careers = [];
+  bool careerDropdownEnabled = true;
+  final apiManager = ApiManager();
+  late Timer careerDropdownTimer;
+  List<String> selectedFaculties = [];
+  List<String> selectedCareers = [];
+  List<int> selectedCareerIds = []; // List to store selected career IDs
+  TextEditingController facultyController = TextEditingController();
+  TextEditingController careerController = TextEditingController();
+  Map<String, String> facultyIdMap =
+      {}; // Mapa para mapear nombres de facultades a IDs
+  Map<String, String> careerIdMap =
+      {}; // Mapa para mapear nombres de carreras a IDs
 
   @override
   void initState() {
     super.initState();
     fetchAcademicUnits();
-    fetchCareers(1);
   }
 
-  final apiManager = ApiManager();
+  @override
+  void dispose() {
+    careerDropdownTimer.cancel();
+    super.dispose();
+  }
+
   Future<void> fetchAcademicUnits() async {
     try {
       final response = await apiManager.apiModel.apiAcademicUnitsGet();
       if (response.statusCode == 200) {
         setState(() {
           academicUnits = response.body ?? [];
+          // Llenar el mapa de nombres de facultades a IDs
+          facultyIdMap = Map.fromIterable(academicUnits,
+              key: (unit) => unit.name, value: (unit) => unit.id.toString());
         });
-      } else {}
-    } catch (error) {}
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      // Handle error
+    }
   }
 
   Future<void> fetchCareers(int academicUnitId) async {
@@ -49,163 +70,174 @@ class _LoginPageState extends State<LoginPage> {
           careers = careers
               .where((career) => career.academicUnit == academicUnitId)
               .toList();
+          // Llenar el mapa de nombres de carreras a IDs
+          careerIdMap = Map.fromIterable(careers,
+              key: (career) => career.name,
+              value: (career) => career.id.toString());
         });
-      } else {}
-    } catch (error) {}
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  void resetCareerDropdown() {
+    setState(() {
+      selectedCareer = null;
+      careerDropdownEnabled = true;
+    });
+  }
+
+  void addFacultyAndCareer() {
+    final faculty = selectedFaculty;
+    final career = selectedCareer;
+
+    if (faculty != null && career != null) {
+      final careerId =
+          int.parse(careerIdMap[career]!); // Parse career ID as an integer
+      setState(() {
+        selectedFaculties.add(faculty);
+        selectedCareers.add(career);
+        selectedCareerIds
+            .add(careerId); // Add the selected career ID to the list
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.grey[900]),
-        automaticallyImplyLeading: false,
-        title: Text(
-          'A registrarse!',
-          style: TextStyle(color: Colors.grey[900]),
-        ),
+        title: Text('Faculty and Career Selection'),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    Text(
-                      '$userName, parece que es tu primera vez utilizando la app de Tutorias',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.grey[900],
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    Text(
-                      'Por favor, rellena los siguientes datos:',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.grey[900],
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    DropdownButtonFormField<AcademicUnit>(
-                      items: academicUnits.map((AcademicUnit unit) {
-                        return DropdownMenuItem<AcademicUnit>(
-                          value: unit,
-                          child: Text(unit.name),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedFacultad = newValue?.name;
-                          selectedCareer = null;
-                          if (newValue != null) {
-                            fetchCareers(newValue.id);
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  DropdownButtonFormField<String>(
+                    value: selectedFaculty,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedFaculty = newValue;
+                        selectedCareer = null;
+                        careerDropdownEnabled = false;
+                      });
+                      careerDropdownTimer =
+                          Timer(Duration(seconds: 2), resetCareerDropdown);
+                      fetchCareers(int.parse(facultyIdMap[
+                          newValue]!)); // Utilizar el mapa para obtener el ID
+                    },
+                    items: academicUnits.map((unit) {
+                      return DropdownMenuItem<String>(
+                        value: unit.name,
+                        child: Text(unit.name),
+                      );
+                    }).toList(),
+                    decoration:
+                        InputDecoration(labelText: 'Selecciona tu facultad'),
+                  ),
+                  SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    value: selectedCareer,
+                    onChanged: careerDropdownEnabled
+                        ? (newValue) {
+                            setState(() {
+                              selectedCareer = newValue;
+                            });
                           }
-                        });
-                      },
-                      value: null,
-                      decoration: const InputDecoration(
-                        labelText: "Selecciona tu facultad",
-                        hintText: "Facultad",
-                      ),
-                    ),
-                    if (selectedFacultad != null)
-                      DropdownButtonFormField<Career>(
-                        items: careers.map((Career career) {
-                          return DropdownMenuItem<Career>(
-                            value: career,
-                            child: Text(career.name),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedCareer = newValue;
-                          });
-                        },
-                        value: selectedCareer,
-                        decoration: const InputDecoration(
-                          labelText: "Selecciona tu carrera",
-                          hintText: "Carrera",
+                        : null,
+                    items: careers.map((career) {
+                      return DropdownMenuItem<String>(
+                        value: career.name,
+                        child: Text(career.name),
+                      );
+                    }).toList(),
+                    decoration:
+                        InputDecoration(labelText: 'Selecciona tu carrera'),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: addFacultyAndCareer,
+                    child: Text('Agregar'),
+                  ),
+                  SizedBox(height: 16),
+                  if (selectedFaculties.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Facultades y Carreras Seleccionadas:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 91, 66, 118),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          // _showAdditionalDropdown = true;
-                        });
-                      },
-                      child: const Text(
-                        'Agregar otra carrera',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: selectedFaculties.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final faculty = selectedFaculties[index];
+                            final career = selectedCareers[index];
+                            final careerId = selectedCareerIds[index];
+                            return ListTile(
+                              title: Text('Facultad: $faculty'),
+                              subtitle: Text('Carrera: $career'),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // Remove the selected career and its ID from the lists
+                                  setState(() {
+                                    selectedFaculties.removeAt(index);
+                                    selectedCareers.removeAt(index);
+                                    selectedCareerIds.removeAt(index);
+                                  });
+                                },
+                              ),
+                            );
+                          },
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                ],
               ),
-              const SizedBox(height: 200),
-            ],
+            ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final postresult = await apiManager.apiModel.apiUsersNewUserPost(
-              body: NewUserRequest(
-                  careers: [selectedCareer?.id ?? 1],
-                  roles: ['STD'],
-                  name: userName,
-                  lastName: userName,
-                  uccKey:
-                      int.parse(userEmail.substring(0, userEmail.length - 11)),
-                  email: userEmail,
-                  academicYear: 1));
+            body: NewUserRequest(
+              careers: selectedCareerIds, // Pass the selected career IDs
+              roles: ['STD'],
+              name: widget.currentUser!.name,
+              lastName: widget.currentUser!.name,
+              uccKey: int.parse(widget.currentUser!.email
+                  .substring(0, widget.currentUser!.email.length - 11)),
+              email: widget.currentUser!.email,
+              academicYear: 1,
+            ),
+          );
+          print(selectedCareerIds);
 
           print(postresult.statusCode);
 
           if (postresult.statusCode == 201) {
-            // if (context.mounted) {
-            //   Navigator.of(context).push(
-            //     MaterialPageRoute(
-            //       builder: (BuildContext context) {
-            //         return TutorPage(
-            //           userName: postresult.body?.name ?? '',
-            //           tutorId: postresult.body!.id,
-            //         );
-            //       },
-            //     ),
-            //   );
-            // }
+            if (context.mounted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return StudentPage(currentUser: widget.currentUser);
+                  },
+                ),
+              );
+            }
           }
         },
-        label: const Text(
-          'Continuar con el registro',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        icon: const Icon(
-          Icons.arrow_forward_ios,
-          size: 14,
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
+        label: Text('Registrarme'),
+        icon: Icon(Icons.arrow_forward),
       ),
     );
   }

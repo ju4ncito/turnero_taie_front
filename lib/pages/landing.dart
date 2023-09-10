@@ -63,8 +63,7 @@ class HomePage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return LoginPage(
-                      userName: account.displayName ?? '',
-                      userEmail: account.email,
+                      currentUser: currentUser.body,
                     );
                   },
                 ),
