@@ -34,7 +34,8 @@ class HomePage extends StatelessWidget {
             if (postresult.body?.roles != null &&
                 postresult.body!.roles.contains("TUTOR")) {
               if (context.mounted) {
-                Navigator.of(context).push(
+                // push replacement para no poder scrollear para atras
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return TutorPage(
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
               }
             } else {
               if (context.mounted) {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return StudentPage(
@@ -59,7 +60,7 @@ class HomePage extends StatelessWidget {
             }
           } else if (postresult.statusCode == 404) {
             if (context.mounted) {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return LoginPage(

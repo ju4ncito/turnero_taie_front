@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
+import 'schedule_detail.dart';
 
 class TutCard extends StatelessWidget {
   final TutorUserSchedule tutoria;
@@ -48,7 +49,13 @@ class TutCard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle tutoria item tap
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ScheduleDetail(
+                            tutorSchedule: tutoria,
+                          )),
+                );
                 print('Tutoria selected: ${tutoria.day}');
               },
             ),
