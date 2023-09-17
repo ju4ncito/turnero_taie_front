@@ -5,8 +5,12 @@ import 'package:intl/intl.dart'; // Import the intl package
 
 class AddTutoriaPage extends StatefulWidget {
   final User? currentUser; // Accept the User object
+  final Future<void> Function() fetchFn;
 
-  AddTutoriaPage({required this.currentUser}); // Constructor
+  const AddTutoriaPage(
+      {super.key,
+      required this.currentUser,
+      required this.fetchFn}); // Constructor
 
   @override
   _AddTutoriaPageState createState() => _AddTutoriaPageState();
@@ -79,14 +83,14 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Tutoria'),
+        title: const Text('Add Tutoria'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             DropdownButton<String>(
               value: _selectedModality,
               onChanged: (String? newValue) {
@@ -102,18 +106,18 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextButton(
               onPressed: () => _selectDate(context),
               child: Row(
                 // Use a Row widget to display the selected date
                 children: [
-                  Text('Select Date: '),
+                  const Text('Select Date: '),
                   Expanded(
                     child: TextFormField(
                       controller: _dateController,
                       enabled: false, // Disable editing of the date field
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
                     ),
@@ -121,27 +125,27 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                 ],
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _beginController,
               onTap: () => _selectTime(context, _beginController),
               readOnly: true,
-              decoration: InputDecoration(labelText: 'Begin Time'),
+              decoration: const InputDecoration(labelText: 'Begin Time'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _endController,
               onTap: () => _selectTime(context, _endController),
               readOnly: true,
-              decoration: InputDecoration(labelText: 'End Time'),
+              decoration: const InputDecoration(labelText: 'End Time'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextFormField(
               controller: _capacityController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Capacity'),
+              decoration: const InputDecoration(labelText: 'Capacity'),
             ),
-            SizedBox(height: 32.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () async {
                 final tutoriaRequest = TutorUserScheduleRequest(
@@ -155,14 +159,29 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
 
                 print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                final postResult =
-                    await apiManager.apiModel.apiTutorUserSchedulesPost(
-                  body: tutoriaRequest,
+                widget.fetchFn();
+
+                // context in a local variable
+                final localContext = context;
+
+                showDialog(
+                  context: localContext,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      title: Text('Éxito'),
+                      content: Text('Nuevo horario agregado con éxito!'),
+                    );
+                  },
                 );
-                print(postResult.error);
-                print("API Response Status Code: ${postResult.statusCode}");
+
+                await Future.delayed(const Duration(milliseconds: 1300), () {
+                  Navigator.pop(localContext);
+                  Future.delayed(const Duration(milliseconds: 300), () {
+                    Navigator.pop(localContext);
+                  });
+                });
               },
-              child: Text('Add Tutoria'),
+              child: const Text('Add Tutoria'),
             ),
           ],
         ),

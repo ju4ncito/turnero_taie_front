@@ -91,6 +91,7 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
             MaterialPageRoute(
               builder: (context) => AddTutoriaPage(
                 currentUser: widget.currentUser,
+                fetchFn: fetchSchedules,
               ),
             ),
           );
