@@ -97,8 +97,20 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             TextButton(
               child: Text('Eliminar'),
               onPressed: () {
-                Navigator.of(dialogContext)
-                    .pop(true); // Close the dialog with 'true'
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      title: Text('Éxito'),
+                      content: Text('Horario eliminado'),
+                    );
+                  },
+                );
+                Future.delayed(const Duration(milliseconds: 1000), () {
+                  Navigator.of(dialogContext).pop(true);
+                  Navigator.of(dialogContext)
+                      .pop(true); // Close the dialog with 'true'
+                });
               },
             ),
           ],

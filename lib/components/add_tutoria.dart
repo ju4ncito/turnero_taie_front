@@ -159,8 +159,6 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
 
                 print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                widget.fetchFn();
-
                 // context in a local variable
                 final localContext = context;
 
@@ -173,6 +171,15 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                     );
                   },
                 );
+
+                final postResult =
+                    await apiManager.apiModel.apiTutorUserSchedulesPost(
+                  body: tutoriaRequest,
+                );
+                print(postResult.error);
+                print("API Response Status Code: ${postResult.statusCode}");
+
+                widget.fetchFn();
 
                 await Future.delayed(const Duration(milliseconds: 1300), () {
                   Navigator.pop(localContext);
