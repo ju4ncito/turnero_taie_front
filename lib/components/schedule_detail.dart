@@ -213,11 +213,89 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     decoration:
                         InputDecoration(labelText: 'Hora de Finalización'),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () async {
+                  //     final editedTutorSchedule = TutorUserSchedule(
+                  //       id: widget.tutorSchedule
+                  //           .id, // Asegúrate de incluir el ID del horario
+                  //       day: dayController.text,
+                  //       modality: modalityController.text,
+                  //       capacity: int.parse(capacityController.text),
+                  //       begin: beginController.text,
+                  //       end: endController.text,
+                  //       tutorUser: widget.tutorSchedule.tutorUser,
+                  //     );
+
+                  //     // Crear un objeto PatchedTutorUserScheduleRequest utilizando los valores editados
+                  //     final patchedRequest = PatchedTutorUserScheduleRequest(
+                  //       modality: editedTutorSchedule.modality,
+                  //       day: editedTutorSchedule.day,
+                  //       begin: editedTutorSchedule.begin,
+                  //       end: editedTutorSchedule.end,
+                  //       capacity: editedTutorSchedule.capacity,
+                  //       tutorUser: editedTutorSchedule.tutorUser,
+                  //     );
+
+                  //     print("Tutoria Request Body: ${patchedRequest.toJson()}");
+
+                  //     final apiManager = ApiManager();
+                  //     final postResult = await apiManager.apiModel
+                  //         .apiTutorUserSchedulesIdPatch(
+                  //       id: widget.tutorSchedule
+                  //           .id, // Pasar el ID del horario que se está modificando
+                  //       body:
+                  //           patchedRequest, // Usar el objeto PatchedTutorUserScheduleRequest
+                  //     );
+
+                  //     if (postResult.error == null) {
+                  //       saveChanges();
+                  //       // La solicitud PATCH se realizó con éxito
+                  //       print(
+                  //           "API Response Status Code: ${postResult.statusCode}");
+                  //       // Puedes realizar otras acciones o mostrar un mensaje de éxito aquí
+                  //     } else {
+                  //       // Error en la solicitud PATCH
+                  //       print(
+                  //           "Error en la solicitud PATCH: ${postResult.error}");
+                  //       // Puedes mostrar un mensaje de error o manejar la situación de error aquí
+                  //     }
+                  //   },
+                  //   style: ElevatedButton.styleFrom(
+                  //     primary: Colors.green,
+                  //   ),
+                  //   child: Text('Guardar Cambios'),
+                  // ),
+                ],
+              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                if (isEditing)
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isEditing = false;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors
+                          .grey, // Choose a suitable color for the cancel button
+                    ),
+                    child: Text('Cancelar'),
+                  ),
+                if (!isEditing)
+                  ElevatedButton(
+                    onPressed: enableEditing,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                    ),
+                    child: Text('Modificar Horario'),
+                  ),
+                if (isEditing)
                   ElevatedButton(
                     onPressed: () async {
                       final editedTutorSchedule = TutorUserSchedule(
-                        id: widget.tutorSchedule
-                            .id, // Asegúrate de incluir el ID del horario
+                        id: widget.tutorSchedule.id,
                         day: dayController.text,
                         modality: modalityController.text,
                         capacity: int.parse(capacityController.text),
@@ -241,10 +319,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       final apiManager = ApiManager();
                       final postResult = await apiManager.apiModel
                           .apiTutorUserSchedulesIdPatch(
-                        id: widget.tutorSchedule
-                            .id, // Pasar el ID del horario que se está modificando
-                        body:
-                            patchedRequest, // Usar el objeto PatchedTutorUserScheduleRequest
+                        id: widget.tutorSchedule.id,
+                        body: patchedRequest,
                       );
 
                       if (postResult.error == null) {
@@ -264,19 +340,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       primary: Colors.green,
                     ),
                     child: Text('Guardar Cambios'),
-                  ),
-                ],
-              ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                if (!isEditing)
-                  ElevatedButton(
-                    onPressed: enableEditing,
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                    ),
-                    child: Text('Modificar Horario'),
                   ),
               ],
             ),
