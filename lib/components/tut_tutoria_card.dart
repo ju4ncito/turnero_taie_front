@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import '../api/api_manager.dart';
 import 'schedule_detail.dart';
 
 class TutCard extends StatelessWidget {
   final TutorUserSchedule tutoria;
+  final Future<void> Function() fetchFn;
 
-  const TutCard({super.key, required this.tutoria});
+  const TutCard({super.key, required this.tutoria, required this.fetchFn});
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +49,16 @@ class TutCard extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                print('Tutoria selected: ${tutoria.day}');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ScheduleDetail(
                             tutorSchedule: tutoria,
                           )),
-                );
-                print('Tutoria selected: ${tutoria.day}');
+                ).then((value) {
+                  fetchFn();
+                });
               },
             ),
             const Divider(

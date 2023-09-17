@@ -77,6 +77,7 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
                       final schedule = schedules![index];
                       return TutCard(
                         tutoria: schedule,
+                        fetchFn: fetchSchedules,
                       );
                     },
                   ),
