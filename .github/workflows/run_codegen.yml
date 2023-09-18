@@ -26,11 +26,6 @@ jobs:
         run: |
           cd backend
           pip install -r requirements.txt
-          
-      - name: Run migration
-        run: |
-          cd backend
-          python3 manage.py migrate
         
       - name: Create schema.json
         run: |
