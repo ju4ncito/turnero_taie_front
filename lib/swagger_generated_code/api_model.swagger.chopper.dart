@@ -993,6 +993,25 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
+  Future<Response<TutorshipInstance>> _apiTutorshipInstancesByUserGet({
+    required int? roleId,
+    required int? userId,
+  }) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/by-user/');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'role_id': roleId,
+      'user_id': userId,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<TutorshipInstance, TutorshipInstance>($request);
+  }
+
+  @override
   Future<Response<List<TutorshipReport>>> _apiTutorshipReportsGet() {
     final Uri $url = Uri.parse('/api/tutorship-reports/');
     final Request $request = Request(

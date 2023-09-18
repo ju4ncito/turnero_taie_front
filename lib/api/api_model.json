@@ -3470,6 +3470,55 @@
                 }
             }
         },
+        "/api/tutorship-instances/by-user/": {
+            "get": {
+                "operationId": "tutorship_instances_by_user_retrieve",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "role_id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The Role ID to filter the TutorshipInstance",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "user_id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "The User ID to filter the TutorshipInstance",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "cookieAuth": []
+                    },
+                    {
+                        "basicAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TutorshipInstance"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/tutorship-reports/": {
             "get": {
                 "operationId": "tutorship_reports_list",
@@ -5061,9 +5110,6 @@
                         "type": "string",
                         "maxLength": 50
                     },
-                    "academic_year": {
-                        "type": "integer"
-                    },
                     "postulations": {
                         "type": "array",
                         "items": {
@@ -5080,7 +5126,6 @@
                     }
                 },
                 "required": [
-                    "academic_year",
                     "id",
                     "name",
                     "postulations",
@@ -5094,13 +5139,9 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 50
-                    },
-                    "academic_year": {
-                        "type": "integer"
                     }
                 },
                 "required": [
-                    "academic_year",
                     "name"
                 ]
             },
@@ -5260,13 +5301,9 @@
                             "type": "string"
                         }
                     },
-                    "name": {
+                    "full_name": {
                         "type": "string",
-                        "maxLength": 50
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 50
+                        "maxLength": 100
                     },
                     "ucc_key": {
                         "type": "integer"
@@ -5277,6 +5314,10 @@
                         "pattern": "^\\d{7}@ucc.edu.ar$",
                         "maxLength": 254
                     },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "academic_year": {
                         "type": "integer"
                     }
@@ -5285,9 +5326,8 @@
                     "academic_year",
                     "careers",
                     "email",
+                    "full_name",
                     "id",
-                    "last_name",
-                    "name",
                     "roles",
                     "ucc_key"
                 ]
@@ -5308,15 +5348,10 @@
                             "minLength": 1
                         }
                     },
-                    "name": {
+                    "full_name": {
                         "type": "string",
                         "minLength": 1,
-                        "maxLength": 50
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 50
+                        "maxLength": 100
                     },
                     "ucc_key": {
                         "type": "integer"
@@ -5328,6 +5363,10 @@
                         "pattern": "^\\d{7}@ucc.edu.ar$",
                         "maxLength": 254
                     },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "academic_year": {
                         "type": "integer"
                     }
@@ -5336,8 +5375,7 @@
                     "academic_year",
                     "careers",
                     "email",
-                    "last_name",
-                    "name",
+                    "full_name",
                     "roles",
                     "ucc_key"
                 ]
@@ -5380,9 +5418,6 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 50
-                    },
-                    "academic_year": {
-                        "type": "integer"
                     }
                 }
             },
@@ -5532,20 +5567,21 @@
             "PatchedTutorshipInstanceRequest": {
                 "type": "object",
                 "properties": {
+                    "area": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "schedule": {
+                        "type": "integer"
+                    },
                     "date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     },
                     "status": {
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
-                    },
-                    "schedule": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "integer"
                     }
                 }
             },
@@ -5573,15 +5609,10 @@
             "PatchedUserRequest": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "full_name": {
                         "type": "string",
                         "minLength": 1,
-                        "maxLength": 50
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 50
+                        "maxLength": 100
                     },
                     "ucc_key": {
                         "type": "integer"
@@ -5592,6 +5623,10 @@
                         "minLength": 1,
                         "pattern": "^\\d{7}@ucc.edu.ar$",
                         "maxLength": 254
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "academic_year": {
                         "type": "integer"
@@ -5947,19 +5982,19 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "status": {
-                        "type": "string",
-                        "maxLength": 25
+                    "area": {
+                        "type": "string"
                     },
                     "schedule": {
                         "type": "integer"
                     },
-                    "area": {
-                        "type": "integer"
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "status": {
+                        "type": "string",
+                        "maxLength": 25
                     },
                     "users": {
                         "type": "array",
@@ -5981,20 +6016,21 @@
             "TutorshipInstanceRequest": {
                 "type": "object",
                 "properties": {
+                    "area": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "schedule": {
+                        "type": "integer"
+                    },
                     "date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date"
                     },
                     "status": {
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
-                    },
-                    "schedule": {
-                        "type": "integer"
-                    },
-                    "area": {
-                        "type": "integer"
                     }
                 },
                 "required": [
@@ -6082,13 +6118,9 @@
                         },
                         "readOnly": true
                     },
-                    "name": {
+                    "full_name": {
                         "type": "string",
-                        "maxLength": 50
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "maxLength": 50
+                        "maxLength": 100
                     },
                     "ucc_key": {
                         "type": "integer"
@@ -6098,6 +6130,10 @@
                         "format": "email",
                         "pattern": "^\\d{7}@ucc.edu.ar$",
                         "maxLength": 254
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
                     },
                     "academic_year": {
                         "type": "integer"
@@ -6107,9 +6143,8 @@
                     "academic_year",
                     "careers",
                     "email",
+                    "full_name",
                     "id",
-                    "last_name",
-                    "name",
                     "roles",
                     "ucc_key"
                 ]
@@ -6117,15 +6152,10 @@
             "UserRequest": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "full_name": {
                         "type": "string",
                         "minLength": 1,
-                        "maxLength": 50
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 50
+                        "maxLength": 100
                     },
                     "ucc_key": {
                         "type": "integer"
@@ -6137,6 +6167,10 @@
                         "pattern": "^\\d{7}@ucc.edu.ar$",
                         "maxLength": 254
                     },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "academic_year": {
                         "type": "integer"
                     }
@@ -6144,8 +6178,7 @@
                 "required": [
                     "academic_year",
                     "email",
-                    "last_name",
-                    "name",
+                    "full_name",
                     "ucc_key"
                 ]
             },

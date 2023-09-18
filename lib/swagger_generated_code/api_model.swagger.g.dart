@@ -95,7 +95,6 @@ Map<String, dynamic> _$AcademicYearRequestToJson(
 Area _$AreaFromJson(Map<String, dynamic> json) => Area(
       id: json['id'] as int,
       name: json['name'] as String,
-      academicYear: json['academic_year'] as int,
       postulations: (json['postulations'] as List<dynamic>?)
               ?.map((e) => e as int)
               .toList() ??
@@ -107,20 +106,17 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'academic_year': instance.academicYear,
       'postulations': instance.postulations,
       'users': instance.users,
     };
 
 AreaRequest _$AreaRequestFromJson(Map<String, dynamic> json) => AreaRequest(
       name: json['name'] as String,
-      academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$AreaRequestToJson(AreaRequest instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'academic_year': instance.academicYear,
     };
 
 Career _$CareerFromJson(Map<String, dynamic> json) => Career(
@@ -221,10 +217,10 @@ NewUser _$NewUserFromJson(Map<String, dynamic> json) => NewUser(
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
-      name: json['name'] as String,
-      lastName: json['last_name'] as String,
+      fullName: json['full_name'] as String,
       uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
@@ -232,10 +228,10 @@ Map<String, dynamic> _$NewUserToJson(NewUser instance) => <String, dynamic>{
       'id': instance.id,
       'careers': instance.careers,
       'roles': instance.roles,
-      'name': instance.name,
-      'last_name': instance.lastName,
+      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
 
@@ -247,10 +243,10 @@ NewUserRequest _$NewUserRequestFromJson(Map<String, dynamic> json) =>
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
-      name: json['name'] as String,
-      lastName: json['last_name'] as String,
+      fullName: json['full_name'] as String,
       uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
@@ -258,10 +254,10 @@ Map<String, dynamic> _$NewUserRequestToJson(NewUserRequest instance) =>
     <String, dynamic>{
       'careers': instance.careers,
       'roles': instance.roles,
-      'name': instance.name,
-      'last_name': instance.lastName,
+      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
 
@@ -300,13 +296,11 @@ Map<String, dynamic> _$PatchedAcademicYearRequestToJson(
 PatchedAreaRequest _$PatchedAreaRequestFromJson(Map<String, dynamic> json) =>
     PatchedAreaRequest(
       name: json['name'] as String?,
-      academicYear: json['academic_year'] as int?,
     );
 
 Map<String, dynamic> _$PatchedAreaRequestToJson(PatchedAreaRequest instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'academic_year': instance.academicYear,
     };
 
 PatchedCareerRequest _$PatchedCareerRequestFromJson(
@@ -447,20 +441,20 @@ Map<String, dynamic> _$PatchedTutorUserScheduleRequestToJson(
 PatchedTutorshipInstanceRequest _$PatchedTutorshipInstanceRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedTutorshipInstanceRequest(
+      area: json['area'] as String?,
+      schedule: json['schedule'] as int?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       status: json['status'] as String?,
-      schedule: json['schedule'] as int?,
-      area: json['area'] as int?,
     );
 
 Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
         PatchedTutorshipInstanceRequest instance) =>
     <String, dynamic>{
-      'date': instance.date?.toIso8601String(),
-      'status': instance.status,
-      'schedule': instance.schedule,
       'area': instance.area,
+      'schedule': instance.schedule,
+      'date': _dateToJson(instance.date),
+      'status': instance.status,
     };
 
 PatchedTutorshipReportRequest _$PatchedTutorshipReportRequestFromJson(
@@ -483,19 +477,19 @@ Map<String, dynamic> _$PatchedTutorshipReportRequestToJson(
 
 PatchedUserRequest _$PatchedUserRequestFromJson(Map<String, dynamic> json) =>
     PatchedUserRequest(
-      name: json['name'] as String?,
-      lastName: json['last_name'] as String?,
+      fullName: json['full_name'] as String?,
       uccKey: json['ucc_key'] as int?,
       email: json['email'] as String?,
+      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int?,
     );
 
 Map<String, dynamic> _$PatchedUserRequestToJson(PatchedUserRequest instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'last_name': instance.lastName,
+      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
 
@@ -730,10 +724,10 @@ Map<String, dynamic> _$TutorUserScheduleRequestToJson(
 TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
     TutorshipInstance(
       id: json['id'] as int,
+      area: json['area'] as String,
+      schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
-      schedule: json['schedule'] as int,
-      area: json['area'] as int,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
     );
@@ -741,29 +735,29 @@ TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TutorshipInstanceToJson(TutorshipInstance instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'date': instance.date.toIso8601String(),
-      'status': instance.status,
-      'schedule': instance.schedule,
       'area': instance.area,
+      'schedule': instance.schedule,
+      'date': _dateToJson(instance.date),
+      'status': instance.status,
       'users': instance.users,
     };
 
 TutorshipInstanceRequest _$TutorshipInstanceRequestFromJson(
         Map<String, dynamic> json) =>
     TutorshipInstanceRequest(
+      area: json['area'] as String,
+      schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
-      schedule: json['schedule'] as int,
-      area: json['area'] as int,
     );
 
 Map<String, dynamic> _$TutorshipInstanceRequestToJson(
         TutorshipInstanceRequest instance) =>
     <String, dynamic>{
-      'date': instance.date.toIso8601String(),
-      'status': instance.status,
-      'schedule': instance.schedule,
       'area': instance.area,
+      'schedule': instance.schedule,
+      'date': _dateToJson(instance.date),
+      'status': instance.status,
     };
 
 TutorshipReport _$TutorshipReportFromJson(Map<String, dynamic> json) =>
@@ -811,10 +805,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               [],
-      name: json['name'] as String,
-      lastName: json['last_name'] as String,
+      fullName: json['full_name'] as String,
       uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
@@ -822,27 +816,27 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'careers': instance.careers,
       'roles': instance.roles,
-      'name': instance.name,
-      'last_name': instance.lastName,
+      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
 
 UserRequest _$UserRequestFromJson(Map<String, dynamic> json) => UserRequest(
-      name: json['name'] as String,
-      lastName: json['last_name'] as String,
+      fullName: json['full_name'] as String,
       uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$UserRequestToJson(UserRequest instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'last_name': instance.lastName,
+      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
 
