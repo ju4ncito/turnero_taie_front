@@ -6,8 +6,10 @@ import 'dart:async';
 
 class LoginPage extends StatefulWidget {
   final User? currentUser;
+  final String? photoUrl;
 
-  LoginPage({Key? key, required this.currentUser}) : super(key: key);
+  LoginPage({Key? key, required this.currentUser, required this.photoUrl})
+      : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -229,7 +231,9 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return StudentPage(currentUser: widget.currentUser);
+                    return StudentPage(
+                        currentUser: widget.currentUser,
+                        photoUrl: widget.photoUrl);
                   },
                 ),
               );

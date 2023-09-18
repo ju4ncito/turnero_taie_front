@@ -7,8 +7,10 @@ import '../components/calendar_tutor.dart';
 
 class TutorPage extends StatefulWidget {
   final User? currentUser;
+  final String? photoUrl;
 
-  const TutorPage({Key? key, required this.currentUser}) : super(key: key);
+  const TutorPage({Key? key, required this.currentUser, required this.photoUrl})
+      : super(key: key);
 
   @override
   _TutorPageState createState() => _TutorPageState();
@@ -121,21 +123,34 @@ class _TutorPageState extends State<TutorPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-              icon: Image.asset(
-                'assets/images/pfp_image.png',
-              ),
-              iconSize: 60,
-              onPressed: () {
-                if (context.mounted) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const HomePage();
-                      },
+            icon: widget.photoUrl != null
+                ? ClipOval(
+                    child: Image.network(
+                      widget.photoUrl!,
+                      width: 50,
+                      height: 50,
                     ),
-                  );
-                }
-              }),
+                  )
+                : ClipOval(
+                    child: Image.asset(
+                      'assets/images/pfp_image.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+            iconSize: 60,
+            onPressed: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const LandingPage();
+                    },
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ],
     );

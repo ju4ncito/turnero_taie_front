@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         primaryColor: const Color(0xFF243a6e),
       ),
-      home: const HomePage(),
+      home: const LandingPage(),
     );
   }
 }
