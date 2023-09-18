@@ -1281,28 +1281,6 @@ abstract class ApiModel extends ChopperService {
       {@Path('id') required int? id});
 
   ///
-  ///@param role_id The Role ID to filter the TutorshipInstance
-  ///@param user_id The User ID to filter the TutorshipInstance
-  Future<chopper.Response<TutorshipInstance>> apiTutorshipInstancesByUserGet({
-    required int? roleId,
-    required int? userId,
-  }) {
-    generatedMapping.putIfAbsent(
-        TutorshipInstance, () => TutorshipInstance.fromJsonFactory);
-
-    return _apiTutorshipInstancesByUserGet(roleId: roleId, userId: userId);
-  }
-
-  ///
-  ///@param role_id The Role ID to filter the TutorshipInstance
-  ///@param user_id The User ID to filter the TutorshipInstance
-  @Get(path: '/api/tutorship-instances/by-user/')
-  Future<chopper.Response<TutorshipInstance>> _apiTutorshipInstancesByUserGet({
-    @Query('role_id') required int? roleId,
-    @Query('user_id') required int? userId,
-  });
-
-  ///
   Future<chopper.Response<List<TutorshipReport>>> apiTutorshipReportsGet() {
     generatedMapping.putIfAbsent(
         TutorshipReport, () => TutorshipReport.fromJsonFactory);
@@ -2220,6 +2198,7 @@ class Area {
   Area({
     required this.id,
     required this.name,
+    required this.academicYear,
     required this.postulations,
     required this.users,
   });
@@ -2233,6 +2212,8 @@ class Area {
   final int id;
   @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'academic_year')
+  final int academicYear;
   @JsonKey(name: 'postulations', defaultValue: <int>[])
   final List<int> postulations;
   @JsonKey(name: 'users', defaultValue: <int>[])
@@ -2247,6 +2228,9 @@ class Area {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.academicYear, academicYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.academicYear, academicYear)) &&
             (identical(other.postulations, postulations) ||
                 const DeepCollectionEquality()
                     .equals(other.postulations, postulations)) &&
@@ -2261,6 +2245,7 @@ class Area {
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(academicYear) ^
       const DeepCollectionEquality().hash(postulations) ^
       const DeepCollectionEquality().hash(users) ^
       runtimeType.hashCode;
@@ -2268,10 +2253,15 @@ class Area {
 
 extension $AreaExtension on Area {
   Area copyWith(
-      {int? id, String? name, List<int>? postulations, List<int>? users}) {
+      {int? id,
+      String? name,
+      int? academicYear,
+      List<int>? postulations,
+      List<int>? users}) {
     return Area(
         id: id ?? this.id,
         name: name ?? this.name,
+        academicYear: academicYear ?? this.academicYear,
         postulations: postulations ?? this.postulations,
         users: users ?? this.users);
   }
@@ -2279,11 +2269,14 @@ extension $AreaExtension on Area {
   Area copyWithWrapped(
       {Wrapped<int>? id,
       Wrapped<String>? name,
+      Wrapped<int>? academicYear,
       Wrapped<List<int>>? postulations,
       Wrapped<List<int>>? users}) {
     return Area(
         id: (id != null ? id.value : this.id),
         name: (name != null ? name.value : this.name),
+        academicYear:
+            (academicYear != null ? academicYear.value : this.academicYear),
         postulations:
             (postulations != null ? postulations.value : this.postulations),
         users: (users != null ? users.value : this.users));
@@ -2294,6 +2287,7 @@ extension $AreaExtension on Area {
 class AreaRequest {
   AreaRequest({
     required this.name,
+    required this.academicYear,
   });
 
   factory AreaRequest.fromJson(Map<String, dynamic> json) =>
@@ -2304,6 +2298,8 @@ class AreaRequest {
 
   @JsonKey(name: 'name')
   final String name;
+  @JsonKey(name: 'academic_year')
+  final int academicYear;
   static const fromJsonFactory = _$AreaRequestFromJson;
 
   @override
@@ -2311,7 +2307,10 @@ class AreaRequest {
     return identical(this, other) ||
         (other is AreaRequest &&
             (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.academicYear, academicYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.academicYear, academicYear)));
   }
 
   @override
@@ -2319,16 +2318,24 @@ class AreaRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(academicYear) ^
+      runtimeType.hashCode;
 }
 
 extension $AreaRequestExtension on AreaRequest {
-  AreaRequest copyWith({String? name}) {
-    return AreaRequest(name: name ?? this.name);
+  AreaRequest copyWith({String? name, int? academicYear}) {
+    return AreaRequest(
+        name: name ?? this.name,
+        academicYear: academicYear ?? this.academicYear);
   }
 
-  AreaRequest copyWithWrapped({Wrapped<String>? name}) {
-    return AreaRequest(name: (name != null ? name.value : this.name));
+  AreaRequest copyWithWrapped(
+      {Wrapped<String>? name, Wrapped<int>? academicYear}) {
+    return AreaRequest(
+        name: (name != null ? name.value : this.name),
+        academicYear:
+            (academicYear != null ? academicYear.value : this.academicYear));
   }
 }
 
@@ -3103,6 +3110,7 @@ extension $PatchedAcademicYearRequestExtension on PatchedAcademicYearRequest {
 class PatchedAreaRequest {
   PatchedAreaRequest({
     this.name,
+    this.academicYear,
   });
 
   factory PatchedAreaRequest.fromJson(Map<String, dynamic> json) =>
@@ -3113,6 +3121,8 @@ class PatchedAreaRequest {
 
   @JsonKey(name: 'name')
   final String? name;
+  @JsonKey(name: 'academic_year')
+  final int? academicYear;
   static const fromJsonFactory = _$PatchedAreaRequestFromJson;
 
   @override
@@ -3120,7 +3130,10 @@ class PatchedAreaRequest {
     return identical(this, other) ||
         (other is PatchedAreaRequest &&
             (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.academicYear, academicYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.academicYear, academicYear)));
   }
 
   @override
@@ -3128,16 +3141,24 @@ class PatchedAreaRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(academicYear) ^
+      runtimeType.hashCode;
 }
 
 extension $PatchedAreaRequestExtension on PatchedAreaRequest {
-  PatchedAreaRequest copyWith({String? name}) {
-    return PatchedAreaRequest(name: name ?? this.name);
+  PatchedAreaRequest copyWith({String? name, int? academicYear}) {
+    return PatchedAreaRequest(
+        name: name ?? this.name,
+        academicYear: academicYear ?? this.academicYear);
   }
 
-  PatchedAreaRequest copyWithWrapped({Wrapped<String?>? name}) {
-    return PatchedAreaRequest(name: (name != null ? name.value : this.name));
+  PatchedAreaRequest copyWithWrapped(
+      {Wrapped<String?>? name, Wrapped<int?>? academicYear}) {
+    return PatchedAreaRequest(
+        name: (name != null ? name.value : this.name),
+        academicYear:
+            (academicYear != null ? academicYear.value : this.academicYear));
   }
 }
 
@@ -3730,9 +3751,10 @@ extension $PatchedTutorUserScheduleRequestExtension
 @JsonSerializable(explicitToJson: true)
 class PatchedTutorshipInstanceRequest {
   PatchedTutorshipInstanceRequest({
-    this.schedule,
     this.date,
     this.status,
+    this.schedule,
+    this.area,
   });
 
   factory PatchedTutorshipInstanceRequest.fromJson(Map<String, dynamic> json) =>
@@ -3742,25 +3764,29 @@ class PatchedTutorshipInstanceRequest {
   Map<String, dynamic> toJson() =>
       _$PatchedTutorshipInstanceRequestToJson(this);
 
-  @JsonKey(name: 'schedule')
-  final TutorUserScheduleRequest? schedule;
-  @JsonKey(name: 'date', toJson: _dateToJson)
+  @JsonKey(name: 'date')
   final DateTime? date;
   @JsonKey(name: 'status')
   final String? status;
+  @JsonKey(name: 'schedule')
+  final int? schedule;
+  @JsonKey(name: 'area')
+  final int? area;
   static const fromJsonFactory = _$PatchedTutorshipInstanceRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedTutorshipInstanceRequest &&
-            (identical(other.schedule, schedule) ||
-                const DeepCollectionEquality()
-                    .equals(other.schedule, schedule)) &&
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.schedule, schedule) ||
+                const DeepCollectionEquality()
+                    .equals(other.schedule, schedule)) &&
+            (identical(other.area, area) ||
+                const DeepCollectionEquality().equals(other.area, area)));
   }
 
   @override
@@ -3768,30 +3794,34 @@ class PatchedTutorshipInstanceRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(schedule) ^
+      const DeepCollectionEquality().hash(area) ^
       runtimeType.hashCode;
 }
 
 extension $PatchedTutorshipInstanceRequestExtension
     on PatchedTutorshipInstanceRequest {
   PatchedTutorshipInstanceRequest copyWith(
-      {TutorUserScheduleRequest? schedule, DateTime? date, String? status}) {
+      {DateTime? date, String? status, int? schedule, int? area}) {
     return PatchedTutorshipInstanceRequest(
-        schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        status: status ?? this.status);
+        status: status ?? this.status,
+        schedule: schedule ?? this.schedule,
+        area: area ?? this.area);
   }
 
   PatchedTutorshipInstanceRequest copyWithWrapped(
-      {Wrapped<TutorUserScheduleRequest?>? schedule,
-      Wrapped<DateTime?>? date,
-      Wrapped<String?>? status}) {
+      {Wrapped<DateTime?>? date,
+      Wrapped<String?>? status,
+      Wrapped<int?>? schedule,
+      Wrapped<int?>? area}) {
     return PatchedTutorshipInstanceRequest(
-        schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status));
+        status: (status != null ? status.value : this.status),
+        schedule: (schedule != null ? schedule.value : this.schedule),
+        area: (area != null ? area.value : this.area));
   }
 }
 
@@ -5051,10 +5081,10 @@ extension $TutorUserScheduleRequestExtension on TutorUserScheduleRequest {
 class TutorshipInstance {
   TutorshipInstance({
     required this.id,
-    required this.area,
-    required this.schedule,
     required this.date,
     required this.status,
+    required this.schedule,
+    required this.area,
     required this.users,
   });
 
@@ -5066,14 +5096,14 @@ class TutorshipInstance {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'area')
-  final String area;
-  @JsonKey(name: 'schedule')
-  final TutorUserSchedule schedule;
-  @JsonKey(name: 'date', toJson: _dateToJson)
+  @JsonKey(name: 'date')
   final DateTime date;
   @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'schedule')
+  final int schedule;
+  @JsonKey(name: 'area')
+  final int area;
   @JsonKey(name: 'users', defaultValue: <int>[])
   final List<int> users;
   static const fromJsonFactory = _$TutorshipInstanceFromJson;
@@ -5084,15 +5114,15 @@ class TutorshipInstance {
         (other is TutorshipInstance &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.area, area) ||
-                const DeepCollectionEquality().equals(other.area, area)) &&
-            (identical(other.schedule, schedule) ||
-                const DeepCollectionEquality()
-                    .equals(other.schedule, schedule)) &&
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.schedule, schedule) ||
+                const DeepCollectionEquality()
+                    .equals(other.schedule, schedule)) &&
+            (identical(other.area, area) ||
+                const DeepCollectionEquality().equals(other.area, area)) &&
             (identical(other.users, users) ||
                 const DeepCollectionEquality().equals(other.users, users)));
   }
@@ -5103,10 +5133,10 @@ class TutorshipInstance {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(area) ^
-      const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(schedule) ^
+      const DeepCollectionEquality().hash(area) ^
       const DeepCollectionEquality().hash(users) ^
       runtimeType.hashCode;
 }
@@ -5114,33 +5144,33 @@ class TutorshipInstance {
 extension $TutorshipInstanceExtension on TutorshipInstance {
   TutorshipInstance copyWith(
       {int? id,
-      String? area,
-      TutorUserSchedule? schedule,
       DateTime? date,
       String? status,
+      int? schedule,
+      int? area,
       List<int>? users}) {
     return TutorshipInstance(
         id: id ?? this.id,
-        area: area ?? this.area,
-        schedule: schedule ?? this.schedule,
         date: date ?? this.date,
         status: status ?? this.status,
+        schedule: schedule ?? this.schedule,
+        area: area ?? this.area,
         users: users ?? this.users);
   }
 
   TutorshipInstance copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<String>? area,
-      Wrapped<TutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<String>? status,
+      Wrapped<int>? schedule,
+      Wrapped<int>? area,
       Wrapped<List<int>>? users}) {
     return TutorshipInstance(
         id: (id != null ? id.value : this.id),
-        area: (area != null ? area.value : this.area),
-        schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
         status: (status != null ? status.value : this.status),
+        schedule: (schedule != null ? schedule.value : this.schedule),
+        area: (area != null ? area.value : this.area),
         users: (users != null ? users.value : this.users));
   }
 }
@@ -5148,9 +5178,10 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
 @JsonSerializable(explicitToJson: true)
 class TutorshipInstanceRequest {
   TutorshipInstanceRequest({
-    required this.schedule,
     required this.date,
     required this.status,
+    required this.schedule,
+    required this.area,
   });
 
   factory TutorshipInstanceRequest.fromJson(Map<String, dynamic> json) =>
@@ -5159,25 +5190,29 @@ class TutorshipInstanceRequest {
   static const toJsonFactory = _$TutorshipInstanceRequestToJson;
   Map<String, dynamic> toJson() => _$TutorshipInstanceRequestToJson(this);
 
-  @JsonKey(name: 'schedule')
-  final TutorUserScheduleRequest schedule;
-  @JsonKey(name: 'date', toJson: _dateToJson)
+  @JsonKey(name: 'date')
   final DateTime date;
   @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'schedule')
+  final int schedule;
+  @JsonKey(name: 'area')
+  final int area;
   static const fromJsonFactory = _$TutorshipInstanceRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TutorshipInstanceRequest &&
-            (identical(other.schedule, schedule) ||
-                const DeepCollectionEquality()
-                    .equals(other.schedule, schedule)) &&
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.schedule, schedule) ||
+                const DeepCollectionEquality()
+                    .equals(other.schedule, schedule)) &&
+            (identical(other.area, area) ||
+                const DeepCollectionEquality().equals(other.area, area)));
   }
 
   @override
@@ -5185,29 +5220,33 @@ class TutorshipInstanceRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(schedule) ^
+      const DeepCollectionEquality().hash(area) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
   TutorshipInstanceRequest copyWith(
-      {TutorUserScheduleRequest? schedule, DateTime? date, String? status}) {
+      {DateTime? date, String? status, int? schedule, int? area}) {
     return TutorshipInstanceRequest(
-        schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        status: status ?? this.status);
+        status: status ?? this.status,
+        schedule: schedule ?? this.schedule,
+        area: area ?? this.area);
   }
 
   TutorshipInstanceRequest copyWithWrapped(
-      {Wrapped<TutorUserScheduleRequest>? schedule,
-      Wrapped<DateTime>? date,
-      Wrapped<String>? status}) {
+      {Wrapped<DateTime>? date,
+      Wrapped<String>? status,
+      Wrapped<int>? schedule,
+      Wrapped<int>? area}) {
     return TutorshipInstanceRequest(
-        schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status));
+        status: (status != null ? status.value : this.status),
+        schedule: (schedule != null ? schedule.value : this.schedule),
+        area: (area != null ? area.value : this.area));
   }
 }
 
