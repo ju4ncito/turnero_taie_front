@@ -8,8 +8,11 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 
 class StudentPage extends StatefulWidget {
   final User? currentUser;
+  final String? photoUrl;
 
-  const StudentPage({Key? key, required this.currentUser}) : super(key: key);
+  const StudentPage(
+      {Key? key, required this.currentUser, required this.photoUrl})
+      : super(key: key);
 
   @override
   _StudentPageState createState() => _StudentPageState();
@@ -123,21 +126,34 @@ class _StudentPageState extends State<StudentPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-              icon: Image.asset(
-                'assets/images/pfp_image_2.png',
-              ),
-              iconSize: 60,
-              onPressed: () {
-                if (context.mounted) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return const HomePage();
-                      },
+            icon: widget.photoUrl != null
+                ? ClipOval(
+                    child: Image.network(
+                      widget.photoUrl!,
+                      width: 50,
+                      height: 50,
                     ),
-                  );
-                }
-              }),
+                  )
+                : ClipOval(
+                    child: Image.asset(
+                      'assets/images/pfp_image.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+            iconSize: 60,
+            onPressed: () {
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const LandingPage();
+                    },
+                  ),
+                );
+              }
+            },
+          ),
         ),
       ],
     );

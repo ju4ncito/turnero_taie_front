@@ -7,8 +7,8 @@ import 'package:turnero_taie_front/pages/student_main.dart';
 import 'tutor_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class LandingPage extends StatelessWidget {
+  const LandingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,15 @@ class HomePage extends StatelessWidget {
             context.mounted &&
             (account.email.substring(account.email.length - 10) ==
                 'ucc.edu.ar')) {
+          final googleSignInAuthentication = await account.authentication;
+          final googleAccessToken = googleSignInAuthentication.accessToken;
+
           final apiManager = ApiManager();
           final postresult = await apiManager.apiModel.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));
 
-          print(postresult.statusCode);
-
+          print('apiUsersIsUserPost = ${postresult.statusCode}');
+          final photoUrl = account.photoUrl;
           final currentUser =
               await apiManager.apiModel.apiUsersIdGet(id: postresult.body!.id);
 
@@ -39,8 +42,7 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return TutorPage(
-                        currentUser: currentUser.body,
-                      );
+                          currentUser: currentUser.body, photoUrl: photoUrl);
                     },
                   ),
                 );
@@ -52,6 +54,7 @@ class HomePage extends StatelessWidget {
                     builder: (BuildContext context) {
                       return StudentPage(
                         currentUser: currentUser.body,
+                        photoUrl: photoUrl,
                       );
                     },
                   ),
@@ -65,6 +68,7 @@ class HomePage extends StatelessWidget {
                   builder: (BuildContext context) {
                     return LoginPage(
                       currentUser: currentUser.body,
+                      photoUrl: photoUrl,
                     );
                   },
                 ),
