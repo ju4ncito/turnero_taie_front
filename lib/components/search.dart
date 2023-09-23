@@ -9,7 +9,7 @@ class SearchPage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Search Page'),
+          title: const Text('Search Page'),
         ),
         body: SearchScreen(),
       ),
@@ -72,22 +72,22 @@ class _SearchScreenState extends State<SearchScreen> {
             onChanged: (query) {
               performSearch(query);
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter your search query',
               suffixIcon: Icon(Icons.search),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: isLoading // Check the loading state
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(), // Show loader
                   )
                 : ListView.builder(
                     itemCount: searchResults.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(searchResults[index].name.toString()),
+                        title: Text(searchResults[index].fullName.toString()),
                         subtitle: Text(searchResults[index].email),
                         onTap: () {
                           // Navigate to the "tutor_detail" page when tapped
