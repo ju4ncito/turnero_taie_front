@@ -212,15 +212,14 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () async {
           final postresult = await apiManager.apiModel.apiUsersNewUserPost(
             body: NewUserRequest(
-              careers: selectedCareerIds, // Pass the selected career IDs
-              roles: ['STD'],
-              name: widget.currentUser!.name,
-              lastName: widget.currentUser!.name,
-              uccKey: int.parse(widget.currentUser!.email
-                  .substring(0, widget.currentUser!.email.length - 11)),
-              email: widget.currentUser!.email,
-              academicYear: 1,
-            ),
+                careers: selectedCareerIds, // Pass the selected career IDs
+                roles: ['STD'],
+                fullName: widget.currentUser!.fullName,
+                uccKey: int.parse(widget.currentUser!.email
+                    .substring(0, widget.currentUser!.email.length - 11)),
+                email: widget.currentUser!.email,
+                academicYear: 1,
+                profilePicture: widget.photoUrl),
           );
           print(selectedCareerIds);
 
