@@ -21,9 +21,6 @@ class LandingPage extends StatelessWidget {
             context.mounted &&
             (account.email.substring(account.email.length - 10) ==
                 'ucc.edu.ar')) {
-          final googleSignInAuthentication = await account.authentication;
-          final googleAccessToken = googleSignInAuthentication.accessToken;
-
           final apiManager = ApiManager();
           final postresult = await apiManager.apiModel.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));
@@ -31,7 +28,7 @@ class LandingPage extends StatelessWidget {
           print('apiUsersIsUserPost = ${postresult.statusCode}');
           final photoUrl = account.photoUrl;
           final currentUser =
-              await apiManager.apiModel.apiUsersIdGet(id: postresult.body!.id);
+              await apiManager.apiModel.apiUsersIdGet(id: postresult.body?.id);
 
           if (postresult.statusCode == 200) {
             if (postresult.body?.roles != null &&
@@ -67,7 +64,7 @@ class LandingPage extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return LoginPage(
-                      currentUser: currentUser.body,
+                      account: account,
                       photoUrl: photoUrl,
                     );
                   },

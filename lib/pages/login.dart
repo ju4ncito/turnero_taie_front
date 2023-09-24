@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/pages/student_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'dart:async';
 
 class LoginPage extends StatefulWidget {
-  final User? currentUser;
+  final GoogleSignInAccount? account;
   final String? photoUrl;
 
-  LoginPage({Key? key, required this.currentUser, required this.photoUrl})
+  LoginPage({Key? key, required this.account, required this.photoUrl})
       : super(key: key);
 
   @override
@@ -112,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Faculty and Career Selection'),
+        title: const Text('Faculty and Career Selection'),
       ),
       body: Column(
         children: [
@@ -129,8 +130,8 @@ class _LoginPageState extends State<LoginPage> {
                         selectedCareer = null;
                         careerDropdownEnabled = false;
                       });
-                      careerDropdownTimer =
-                          Timer(Duration(seconds: 2), resetCareerDropdown);
+                      careerDropdownTimer = Timer(
+                          const Duration(seconds: 2), resetCareerDropdown);
                       fetchCareers(int.parse(facultyIdMap[
                           newValue]!)); // Utilizar el mapa para obtener el ID
                     },
@@ -140,10 +141,10 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(unit.name),
                       );
                     }).toList(),
-                    decoration:
-                        InputDecoration(labelText: 'Selecciona tu facultad'),
+                    decoration: const InputDecoration(
+                        labelText: 'Selecciona tu facultad'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: selectedCareer,
                     onChanged: careerDropdownEnabled
@@ -159,20 +160,20 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(career.name),
                       );
                     }).toList(),
-                    decoration:
-                        InputDecoration(labelText: 'Selecciona tu carrera'),
+                    decoration: const InputDecoration(
+                        labelText: 'Selecciona tu carrera'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: addFacultyAndCareer,
-                    child: Text('Agregar'),
+                    child: const Text('Agregar'),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   if (selectedFaculties.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Facultades y Carreras Seleccionadas:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -187,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                               title: Text('Facultad: $faculty'),
                               subtitle: Text('Carrera: $career'),
                               trailing: IconButton(
-                                icon: Icon(Icons.delete),
+                                icon: const Icon(Icons.delete),
                                 onPressed: () {
                                   // Remove the selected career and its ID from the lists
                                   setState(() {
@@ -214,10 +215,10 @@ class _LoginPageState extends State<LoginPage> {
             body: NewUserRequest(
                 careers: selectedCareerIds, // Pass the selected career IDs
                 roles: ['STD'],
-                fullName: widget.currentUser!.fullName,
-                uccKey: int.parse(widget.currentUser!.email
-                    .substring(0, widget.currentUser!.email.length - 11)),
-                email: widget.currentUser!.email,
+                fullName: widget.account!.displayName ?? 'alumn@',
+                uccKey: int.parse(widget.account!.email
+                    .substring(0, widget.account!.email.length - 11)),
+                email: widget.account!.email,
                 academicYear: 1,
                 profilePicture: widget.photoUrl),
           );
@@ -226,21 +227,23 @@ class _LoginPageState extends State<LoginPage> {
           print(postresult.statusCode);
 
           if (postresult.statusCode == 201) {
+            final currentUser = await apiManager.apiModel
+                .apiUsersIdGet(id: postresult.body?.id);
             if (context.mounted) {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return StudentPage(
-                        currentUser: widget.currentUser,
-                        photoUrl: widget.photoUrl);
+                        currentUser: currentUser.body,
+                        photoUrl: currentUser.body!.profilePicture);
                   },
                 ),
               );
             }
           }
         },
-        label: Text('Registrarme'),
-        icon: Icon(Icons.arrow_forward),
+        label: const Text('Registrarme'),
+        icon: const Icon(Icons.arrow_forward),
       ),
     );
   }
