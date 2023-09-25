@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'schedule_detail.dart';
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
 
 class TutCard extends StatelessWidget {
   final TutorUserSchedule tutoria;
@@ -10,6 +17,12 @@ class TutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Parse the date string to a DateTime object
+    final DateTime date = DateTime.parse(tutoria.day);
+
+    // Format the date as a day of the week
+    final String dayOfWeek = DateFormat('EEEE', 'es').format(date).capitalize();
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -26,7 +39,7 @@ class TutCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tutoria.day,
+                    dayOfWeek, // Display the day of the week
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -49,13 +62,14 @@ class TutCard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                print('Tutoria selected: ${tutoria.day}');
+                print('Tutoria selected: $dayOfWeek');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ScheduleDetail(
-                            tutorSchedule: tutoria,
-                          )),
+                    builder: (context) => ScheduleDetail(
+                      tutorSchedule: tutoria,
+                    ),
+                  ),
                 ).then((value) {
                   fetchFn();
                 });
