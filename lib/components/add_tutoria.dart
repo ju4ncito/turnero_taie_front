@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
-import 'package:intl/intl.dart'; // Import the intl package
+import 'package:intl/intl.dart';
 
 class AddTutoriaPage extends StatefulWidget {
-  final User? currentUser; // Accept the User object
+  final User? currentUser;
   final Future<void> Function() fetchFn;
 
   const AddTutoriaPage(
-      {super.key,
-      required this.currentUser,
-      required this.fetchFn}); // Constructor
+      {super.key, required this.currentUser, required this.fetchFn});
 
   @override
   _AddTutoriaPageState createState() => _AddTutoriaPageState();
@@ -22,7 +20,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
   late TextEditingController _beginController;
   late TextEditingController _endController;
   late TextEditingController _capacityController;
-  late TextEditingController _dateController; // Add this line
+  late TextEditingController _dateController;
 
   String _selectedModality = 'Virtual';
   late DateTime _selectedDate = DateTime.now();
@@ -34,8 +32,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     _endController = TextEditingController();
     _capacityController = TextEditingController();
     _dateController = TextEditingController(
-        text: DateFormat('yyyy-MM-dd')
-            .format(_selectedDate)); // Initialize the date controller
+        text: DateFormat('yyyy-MM-dd').format(_selectedDate));
   }
 
   @override
@@ -43,7 +40,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     _beginController.dispose();
     _endController.dispose();
     _capacityController.dispose();
-    _dateController.dispose(); // Dispose the date controller
+    _dateController.dispose();
     super.dispose();
   }
 
@@ -57,8 +54,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _dateController.text = DateFormat('yyyy-MM-dd').format(
-            _selectedDate); // Update the selected date in the controller
+        _dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
       });
     }
   }
@@ -110,13 +106,12 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
             TextButton(
               onPressed: () => _selectDate(context),
               child: Row(
-                // Use a Row widget to display the selected date
                 children: [
                   const Text('Select Date: '),
                   Expanded(
                     child: TextFormField(
                       controller: _dateController,
-                      enabled: false, // Disable editing of the date field
+                      enabled: false,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
@@ -159,19 +154,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
 
                 print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                // context in a local variable
                 final localContext = context;
-
-                showDialog(
-                  context: localContext,
-                  builder: (BuildContext context) {
-                    return const AlertDialog(
-                      title: Text('Éxito'),
-                      content: Text('Nuevo horario agregado con éxito!'),
-                    );
-                  },
-                );
-
                 final postResult =
                     await apiManager.apiModel.apiTutorUserSchedulesPost(
                   body: tutoriaRequest,
@@ -180,13 +163,9 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                 print("API Response Status Code: ${postResult.statusCode}");
 
                 widget.fetchFn();
-
-                await Future.delayed(const Duration(milliseconds: 1300), () {
+                if (context.mounted) {
                   Navigator.pop(localContext);
-                  Future.delayed(const Duration(milliseconds: 300), () {
-                    Navigator.pop(localContext);
-                  });
-                });
+                }
               },
               child: const Text('Add Tutoria'),
             ),
