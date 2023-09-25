@@ -71,16 +71,30 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
                 ? const Center(
                     child: CircularProgressIndicator(), // Loader
                   )
-                : ListView.builder(
-                    itemCount: schedules?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final schedule = schedules![index];
-                      return TutCard(
-                        tutoria: schedule,
-                        fetchFn: fetchSchedules,
-                      );
-                    },
-                  ),
+                : schedules!.isEmpty
+                    ? const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(28.0),
+                          child: Text(
+                            'Parece que no agregaste ningún horario. Agrega un horario con el botón inferior!',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 20,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: schedules?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          final schedule = schedules![index];
+                          return TutCard(
+                            tutoria: schedule,
+                            fetchFn: fetchSchedules,
+                          );
+                        },
+                      ),
           ),
         ],
       ),
