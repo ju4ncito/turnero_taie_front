@@ -28,10 +28,10 @@ class TutCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       color: const Color.fromARGB(255, 63, 92, 143),
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 8,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(6.0),
         child: Column(
           children: [
             ListTile(

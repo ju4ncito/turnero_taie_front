@@ -16,11 +16,18 @@ class LandingPage extends StatelessWidget {
       try {
         final googleSignIn = GoogleSignIn();
         final account = await googleSignIn.signIn();
+        print(account);
 
         if (account != null &&
             context.mounted &&
             (account.email.substring(account.email.length - 10) ==
                 'ucc.edu.ar')) {
+          final googleSignInAuthentication = await account.authentication;
+          final googleAccessToken = googleSignInAuthentication.accessToken;
+
+          print(googleAccessToken);
+
+          print(googleSignInAuthentication);
           final apiManager = ApiManager();
           final postresult = await apiManager.apiModel.apiUsersIsUserPost(
               body: EmailLookUpRequest(email: account.email));

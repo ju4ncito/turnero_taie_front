@@ -55,6 +55,51 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            color: const Color.fromARGB(255, 30, 56, 102),
+            elevation: 8,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddTutoriaPage(
+                        currentUser: widget.currentUser,
+                        fetchFn: fetchSchedules,
+                      ),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
+                  elevation: 4,
+                ),
+                child: Row(
+                  children: const [
+                    Text(
+                      'Agregar un nuevo horario',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Icon(
+                      Icons.add,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           const Padding(
             padding: EdgeInsets.fromLTRB(18, 8, 0, 8),
             child: Text(
@@ -97,32 +142,6 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
                       ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddTutoriaPage(
-                currentUser: widget.currentUser,
-                fetchFn: fetchSchedules,
-              ),
-            ),
-          );
-        },
-        label: const Text(
-          'Agregar un nuevo horario',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-        icon: const Icon(
-          Icons.arrow_forward_ios,
-          size: 14,
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

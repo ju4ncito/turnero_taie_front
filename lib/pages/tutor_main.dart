@@ -90,6 +90,7 @@ class _TutorPageState extends State<TutorPage> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.grey[50],
       elevation: 0,
+      shadowColor: const Color.fromARGB(60, 158, 158, 158),
       toolbarHeight: 90,
       iconTheme: IconThemeData(color: Colors.grey[900]),
       title: Column(
