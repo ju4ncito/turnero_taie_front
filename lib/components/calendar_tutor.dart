@@ -58,6 +58,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             if (!kEvents.containsKey(eventDate)) {
               kEvents[eventDate] = [];
             }
+            print("kEvents: $kEvents");
 
             kEvents[eventDate]!.add(
               Event(
@@ -81,6 +82,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
     // Set _selectedEvents.value after populating kEvents
     _selectedEvents.value = kEvents[_selectedDay] ?? [];
+    print("Selected Events in futurtre function: ${_selectedEvents.value}");
   }
 
   @override
@@ -116,13 +118,16 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     } else {
       _selectedEvents.value = [];
     }
+
+    print("Selected Events ondayselected: ${_selectedEvents.value}");
   }
 
   @override
   Widget build(BuildContext context) {
-    final kEvents = LinkedHashMap<DateTime, List<Event>>(
-      equals: isSameDay,
-    );
+    // final kEvents = LinkedHashMap<DateTime, List<Event>>(
+    //   equals: isSameDay,
+    //   hashCode: getHashCode,
+    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -219,10 +224,15 @@ class Event {
   String toString() => title;
 }
 
+int getHashCode(DateTime key) {
+  return key.day * 1000000 + key.month * 10000 + key.year;
+}
+
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
+  hashCode: getHashCode,
 );
