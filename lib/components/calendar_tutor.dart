@@ -25,7 +25,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     fetchSchedules();
 
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier([]);
+    _selectedEvents = ValueNotifier([]); // Initialize as an empty list
   }
 
   bool isLoading = true;
@@ -40,6 +40,33 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       if (response.statusCode == 200) {
         setState(() {
           schedules = List<TutorUserSchedule>.from(response.body ?? []);
+
+          // Populate kEvents here
+          kEvents.clear(); // Clear existing data
+          for (final TutorUserSchedule schedule in schedules!) {
+            final String startTimeStr = "${schedule.day}T${schedule.begin}";
+            final String endTimeStr = "${schedule.day}T${schedule.end}";
+            final DateTime startDateTime = DateTime.parse(startTimeStr);
+            final DateTime endDateTime = DateTime.parse(endTimeStr);
+
+            // Add events to kEvents
+            final eventDate = DateTime(
+              startDateTime.year,
+              startDateTime.month,
+              startDateTime.day,
+            );
+            if (!kEvents.containsKey(eventDate)) {
+              kEvents[eventDate] = [];
+            }
+
+            kEvents[eventDate]!.add(
+              Event(
+                schedule.modality,
+                schedule.tutorUser.toString(),
+                DateTimeRange(start: startDateTime, end: endDateTime),
+              ),
+            );
+          }
         });
       } else {
         // Handle error
@@ -51,6 +78,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     setState(() {
       isLoading = false;
     });
+
+    // Set _selectedEvents.value after populating kEvents
+    _selectedEvents.value = kEvents[_selectedDay] ?? [];
   }
 
   @override
@@ -60,79 +90,43 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   }
 
   List<Event> _getEventsForDay(DateTime day) {
-    final List<Event> events = [];
-
-    // Verifica que schedules no sea nulo y que haya horarios para la fecha seleccionada
-    if (schedules != null) {
-      for (final TutorUserSchedule schedule in schedules!) {
-        // Combina la fecha de 'schedule.day' con las cadenas de tiempo 'schedule.begin' y 'schedule.end'
-        final String startTimeStr = "${schedule.day}T${schedule.begin}";
-        final String endTimeStr = "${schedule.day}T${schedule.end}";
-
-        // Convierte las cadenas de tiempo en objetos DateTime
-        final DateTime startDateTime = DateTime.parse(startTimeStr);
-        final DateTime endDateTime = DateTime.parse(endTimeStr);
-
-        // Compara las fechas y horas
-        if (startDateTime.isBefore(day) && endDateTime.isAfter(day)) {
-          final event = Event(
-            schedule.modality,
-            schedule.tutorUser.toString(),
-            DateTimeRange(start: startDateTime, end: endDateTime),
-          );
-          events.add(event);
-        }
-      }
-    }
-
-    return events;
+    // Implementation example
+    return kEvents[day] ?? [];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    // Set _selectedDay to match the format used in kEvents
+    _selectedDay = DateTime(
+      selectedDay.year,
+      selectedDay.month,
+      selectedDay.day,
+      focusedDay.hour,
+      focusedDay.minute,
+      focusedDay.second,
+    );
+
+    print('Selected Day: $_selectedDay');
+
     setState(() {
-      _selectedDay = selectedDay;
-      _focusedDay = selectedDay; // Ajusta _focusedDay al día seleccionado
+      _focusedDay = focusedDay;
     });
 
-    _selectedEvents.value = _getEventsForDay(selectedDay);
+    if (kEvents.containsKey(_selectedDay)) {
+      _selectedEvents.value = List.from(kEvents[_selectedDay]!);
+    } else {
+      _selectedEvents.value = [];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final kEvents = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
-      hashCode: getHashCode,
     );
-
-    // Agrega los eventos de la lista de schedules a kEvents
-    if (schedules != null) {
-      for (final TutorUserSchedule schedule in schedules!) {
-        final String startTimeStr = "${schedule.day}T${schedule.begin}";
-        final String endTimeStr = "${schedule.day}T${schedule.end}";
-        final DateTime startDateTime = DateTime.parse(startTimeStr);
-        final DateTime endDateTime = DateTime.parse(endTimeStr);
-
-        // Agrega el evento a la fecha correspondiente en kEvents
-        final eventDate = DateTime(
-            startDateTime.year, startDateTime.month, startDateTime.day);
-        if (!kEvents.containsKey(eventDate)) {
-          kEvents[eventDate] = [];
-        }
-
-        kEvents[eventDate]!.add(
-          Event(
-            schedule.modality,
-            schedule.tutorUser.toString(),
-            DateTimeRange(start: startDateTime, end: endDateTime),
-          ),
-        );
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            Colors.transparent, // Make AppBar background transparent
+        backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 5,
         automaticallyImplyLeading: false,
@@ -146,7 +140,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             calendarFormat: _calendarFormat,
             availableCalendarFormats: const {
-              CalendarFormat.month: 'Month', // Only show the month option
+              CalendarFormat.month: 'Month',
             },
             eventLoader: (day) {
               final selectedDateEvents = kEvents[day];
@@ -180,6 +174,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
+                print("ValueListenableBuilder called");
+                print("Selected Events Length: ${value.length}");
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (context, index) {
@@ -223,10 +219,10 @@ class Event {
   String toString() => title;
 }
 
-int getHashCode(DateTime key) {
-  return key.day * 1000000 + key.month * 10000 + key.year;
-}
-
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
+
+final kEvents = LinkedHashMap<DateTime, List<Event>>(
+  equals: isSameDay,
+);
