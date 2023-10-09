@@ -87,7 +87,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     itemCount: searchResults.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(searchResults[index].fullName.toString()),
+                        title: Text(
+                            "${searchResults[index].firstName} ${searchResults[index].lastName}"),
                         subtitle: Text(searchResults[index].email),
                         onTap: () {
                           // Navigate to the "tutor_detail" page when tapped

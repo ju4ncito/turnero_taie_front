@@ -119,6 +119,31 @@ Map<String, dynamic> _$AreaRequestToJson(AreaRequest instance) =>
       'name': instance.name,
     };
 
+BadRefreshToken _$BadRefreshTokenFromJson(Map<String, dynamic> json) =>
+    BadRefreshToken(
+      detail: json['detail'] as String,
+      code: json['code'] as String,
+    );
+
+Map<String, dynamic> _$BadRefreshTokenToJson(BadRefreshToken instance) =>
+    <String, dynamic>{
+      'detail': instance.detail,
+      'code': instance.code,
+    };
+
+BadRequest _$BadRequestFromJson(Map<String, dynamic> json) => BadRequest();
+
+Map<String, dynamic> _$BadRequestToJson(BadRequest instance) =>
+    <String, dynamic>{};
+
+BadToken _$BadTokenFromJson(Map<String, dynamic> json) => BadToken(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$BadTokenToJson(BadToken instance) => <String, dynamic>{
+      'message': instance.message,
+    };
+
 Career _$CareerFromJson(Map<String, dynamic> json) => Career(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -209,56 +234,69 @@ Map<String, dynamic> _$EmailLookUpRequestToJson(EmailLookUpRequest instance) =>
       'email': instance.email,
     };
 
+EmailNotValid _$EmailNotValidFromJson(Map<String, dynamic> json) =>
+    EmailNotValid(
+      email:
+          (json['email'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
+    );
+
+Map<String, dynamic> _$EmailNotValidToJson(EmailNotValid instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+    };
+
+GoogleAccessTokenRequest _$GoogleAccessTokenRequestFromJson(
+        Map<String, dynamic> json) =>
+    GoogleAccessTokenRequest(
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$GoogleAccessTokenRequestToJson(
+        GoogleAccessTokenRequest instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+    };
+
+InternalServerError _$InternalServerErrorFromJson(Map<String, dynamic> json) =>
+    InternalServerError(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$InternalServerErrorToJson(
+        InternalServerError instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
 NewUser _$NewUserFromJson(Map<String, dynamic> json) => NewUser(
-      id: json['id'] as int,
-      careers:
-          (json['careers'] as List<dynamic>?)?.map((e) => e as int).toList() ??
-              [],
-      roles:
-          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
-      fullName: json['full_name'] as String,
-      uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
-      academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$NewUserToJson(NewUser instance) => <String, dynamic>{
-      'id': instance.id,
-      'careers': instance.careers,
-      'roles': instance.roles,
-      'full_name': instance.fullName,
-      'ucc_key': instance.uccKey,
       'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
-      'academic_year': instance.academicYear,
     };
 
 NewUserRequest _$NewUserRequestFromJson(Map<String, dynamic> json) =>
     NewUserRequest(
-      careers:
-          (json['careers'] as List<dynamic>?)?.map((e) => e as int).toList() ??
-              [],
-      roles:
-          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
-      fullName: json['full_name'] as String,
-      uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
-      academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$NewUserRequestToJson(NewUserRequest instance) =>
     <String, dynamic>{
-      'careers': instance.careers,
-      'roles': instance.roles,
-      'full_name': instance.fullName,
-      'ucc_key': instance.uccKey,
       'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
-      'academic_year': instance.academicYear,
     };
 
 PatchedAcademicUnitRequest _$PatchedAcademicUnitRequestFromJson(
@@ -477,18 +515,20 @@ Map<String, dynamic> _$PatchedTutorshipReportRequestToJson(
 
 PatchedUserRequest _$PatchedUserRequestFromJson(Map<String, dynamic> json) =>
     PatchedUserRequest(
-      fullName: json['full_name'] as String?,
       uccKey: json['ucc_key'] as int?,
       email: json['email'] as String?,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int?,
     );
 
 Map<String, dynamic> _$PatchedUserRequestToJson(PatchedUserRequest instance) =>
     <String, dynamic>{
-      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
@@ -597,6 +637,43 @@ Map<String, dynamic> _$PostulationXAreaRequestToJson(
     <String, dynamic>{
       'postulation': instance.postulation,
       'area': instance.area,
+    };
+
+RefreshTokenRequest _$RefreshTokenRequestFromJson(Map<String, dynamic> json) =>
+    RefreshTokenRequest(
+      refresh: json['refresh'] as String,
+    );
+
+Map<String, dynamic> _$RefreshTokenRequestToJson(
+        RefreshTokenRequest instance) =>
+    <String, dynamic>{
+      'refresh': instance.refresh,
+    };
+
+ReturnAuthUser _$ReturnAuthUserFromJson(Map<String, dynamic> json) =>
+    ReturnAuthUser(
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      accessToken: json['access_token'] as String,
+      refreshToken: json['refresh_token'] as String,
+    );
+
+Map<String, dynamic> _$ReturnAuthUserToJson(ReturnAuthUser instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+      'access_token': instance.accessToken,
+      'refresh_token': instance.refreshToken,
+    };
+
+ReturnRefreshToken _$ReturnRefreshTokenFromJson(Map<String, dynamic> json) =>
+    ReturnRefreshToken(
+      access: json['access'] as String,
+      refresh: json['refresh'] as String,
+    );
+
+Map<String, dynamic> _$ReturnRefreshTokenToJson(ReturnRefreshToken instance) =>
+    <String, dynamic>{
+      'access': instance.access,
+      'refresh': instance.refresh,
     };
 
 Role _$RoleFromJson(Map<String, dynamic> json) => Role(
@@ -798,44 +875,48 @@ Map<String, dynamic> _$TutorshipReportRequestToJson(
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
+      uccKey: json['ucc_key'] as int,
+      email: json['email'] as String,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      profilePicture: json['profile_picture'] as String?,
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       careers: (json['careers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [],
-      roles:
-          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
-      fullName: json['full_name'] as String,
-      uccKey: json['ucc_key'] as int,
-      email: json['email'] as String,
-      profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
-      'careers': instance.careers,
-      'roles': instance.roles,
-      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
+      'roles': instance.roles,
+      'careers': instance.careers,
       'academic_year': instance.academicYear,
     };
 
 UserRequest _$UserRequestFromJson(Map<String, dynamic> json) => UserRequest(
-      fullName: json['full_name'] as String,
       uccKey: json['ucc_key'] as int,
       email: json['email'] as String,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
       academicYear: json['academic_year'] as int,
     );
 
 Map<String, dynamic> _$UserRequestToJson(UserRequest instance) =>
     <String, dynamic>{
-      'full_name': instance.fullName,
       'ucc_key': instance.uccKey,
       'email': instance.email,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
       'academic_year': instance.academicYear,
     };
