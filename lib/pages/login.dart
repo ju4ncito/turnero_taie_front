@@ -6,10 +6,10 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import 'dart:async';
 
 class LoginPage extends StatefulWidget {
-  final GoogleSignInAccount? account;
+  final User? currentUser;
   final String? photoUrl;
 
-  LoginPage({Key? key, required this.account, required this.photoUrl})
+  LoginPage({Key? key, required this.currentUser, required this.photoUrl})
       : super(key: key);
 
   @override
@@ -211,16 +211,18 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final postresult = await apiManager.apiModel.apiUsersNewUserPost(
-            body: NewUserRequest(
-                careers: selectedCareerIds, // Pass the selected career IDs
-                roles: ['STD'],
-                fullName: widget.account!.displayName ?? 'alumn@',
-                uccKey: int.parse(widget.account!.email
-                    .substring(0, widget.account!.email.length - 11)),
-                email: widget.account!.email,
-                academicYear: 1,
-                profilePicture: widget.photoUrl),
+          final postresult = await apiManager.apiModel.apiUsersIdPatch(
+            id: widget.currentUser!.id,
+            body: PatchedUserRequest(academicYear: 1),
+            // body: NewUserRequest(
+            //     careers: selectedCareerIds, // Pass the selected career IDs
+            //     roles: ['STD'],
+            //     fullName: widget.account!.displayName ?? 'alumn@',
+            //     uccKey: int.parse(widget.account!.email
+            //         .substring(0, widget.account!.email.length - 11)),
+            //     email: widget.account!.email,
+            //     academicYear: 1,
+            //     profilePicture: widget.photoUrl),
           );
           print(selectedCareerIds);
 

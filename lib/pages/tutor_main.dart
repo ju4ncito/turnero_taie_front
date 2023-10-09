@@ -107,7 +107,7 @@ class _TutorPageState extends State<TutorPage> {
                       style: TextStyle(color: Colors.grey[700], fontSize: 16),
                     ),
                     Text(
-                      widget.currentUser!.fullName,
+                      widget.currentUser?.firstName ?? '',
                       style: TextStyle(
                           color: Colors.grey[900],
                           fontSize: 22,

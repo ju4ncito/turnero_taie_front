@@ -18,35 +18,30 @@ class LandingPage extends StatelessWidget {
         final account = await googleSignIn.signIn();
         print(account);
 
-        if (account != null &&
-            context.mounted &&
-            (account.email.substring(account.email.length - 10) ==
-                'ucc.edu.ar')) {
-          final googleSignInAuthentication = await account.authentication;
-          final googleAccessToken = googleSignInAuthentication.accessToken;
+        final googleSignInAuthentication = await account?.authentication;
+        final googleAccessToken = googleSignInAuthentication?.accessToken;
 
-          print(googleAccessToken);
+        print('Google access token: $googleAccessToken');
 
-          print(googleSignInAuthentication);
-          final apiManager = ApiManager();
-          final postresult = await apiManager.apiModel.apiUsersIsUserPost(
-              body: EmailLookUpRequest(email: account.email));
+        print('Google Sign in authentication $googleSignInAuthentication');
+        final apiManager = ApiManager();
 
-          print('apiUsersIsUserPost = ${postresult.statusCode}');
-          final photoUrl = account.photoUrl;
-          final currentUser =
-              await apiManager.apiModel.apiUsersIdGet(id: postresult.body?.id);
+        if (googleAccessToken != null) {
+          final apiAuth = await apiManager.apiModel.apiTokenAuthPost(
+              body: GoogleAccessTokenRequest(token: googleAccessToken));
+          print('apiAuth = ${apiAuth.statusCode}');
 
-          if (postresult.statusCode == 200) {
-            if (postresult.body?.roles != null &&
-                postresult.body!.roles.contains("TUTOR")) {
+          if (apiAuth.statusCode == 200) {
+            if (apiAuth.body?.user.roles != null &&
+                apiAuth.body!.user.roles.contains("TUTOR")) {
               if (context.mounted) {
                 // push replacement para no poder scrollear para atras
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return TutorPage(
-                          currentUser: currentUser.body, photoUrl: photoUrl);
+                          currentUser: apiAuth.body!.user,
+                          photoUrl: apiAuth.body!.user.profilePicture);
                     },
                   ),
                 );
@@ -57,37 +52,36 @@ class LandingPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       return StudentPage(
-                        currentUser: currentUser.body,
-                        photoUrl: photoUrl,
-                      );
+                          currentUser: apiAuth.body!.user,
+                          photoUrl: apiAuth.body!.user.profilePicture);
                     },
                   ),
                 );
               }
             }
-          } else if (postresult.statusCode == 404) {
+          } else if (apiAuth.statusCode == 201) {
             if (context.mounted) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
                     return LoginPage(
-                      account: account,
-                      photoUrl: photoUrl,
+                      currentUser: apiAuth.body!.user,
+                      photoUrl: apiAuth.body!.user.profilePicture,
                     );
                   },
                 ),
               );
             }
-          }
-        } else {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(
-                    'Debe utilizar una cuenta institucional para utilizar la aplicacion.'),
-                duration: Duration(seconds: 5),
-              ),
-            );
+          } else if (apiAuth.statusCode == 400) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                      'Debe utilizar una cuenta institucional para utilizar la aplicacion.'),
+                  duration: Duration(seconds: 5),
+                ),
+              );
+            }
           }
         }
       } catch (e) {
