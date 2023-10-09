@@ -644,6 +644,15 @@ abstract class ApiModel extends ChopperService {
   Future<chopper.Response> _apiCareersIdDelete({@Path('id') required int? id});
 
   ///
+  Future<chopper.Response> apiHelloGet() {
+    return _apiHelloGet();
+  }
+
+  ///
+  @Get(path: '/api/hello/')
+  Future<chopper.Response> _apiHelloGet();
+
+  ///
   Future<chopper.Response<List<PostulationXArea>>> apiPostulationXAreaGet() {
     generatedMapping.putIfAbsent(
         PostulationXArea, () => PostulationXArea.fromJsonFactory);
@@ -970,6 +979,40 @@ abstract class ApiModel extends ChopperService {
   @Get(path: '/api/schema/yaml')
   Future<chopper.Response<Object>> _apiSchemaYamlGet(
       {@Query('lang') String? lang});
+
+  ///Authentication Endpoint
+  Future<chopper.Response<ReturnAuthUser>> apiTokenAuthPost(
+      {required GoogleAccessTokenRequest? body}) {
+    generatedMapping.putIfAbsent(
+        ReturnAuthUser, () => ReturnAuthUser.fromJsonFactory);
+
+    return _apiTokenAuthPost(body: body);
+  }
+
+  ///Authentication Endpoint
+  @Post(
+    path: '/api/token/auth/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<ReturnAuthUser>> _apiTokenAuthPost(
+      {@Body() required GoogleAccessTokenRequest? body});
+
+  ///Refresh JWT Endpoint
+  Future<chopper.Response<ReturnRefreshToken>> apiTokenRefreshPost(
+      {required RefreshTokenRequest? body}) {
+    generatedMapping.putIfAbsent(
+        ReturnRefreshToken, () => ReturnRefreshToken.fromJsonFactory);
+
+    return _apiTokenRefreshPost(body: body);
+  }
+
+  ///Refresh JWT Endpoint
+  @Post(
+    path: '/api/token/refresh/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<ReturnRefreshToken>> _apiTokenRefreshPost(
+      {@Body() required RefreshTokenRequest? body});
 
   ///
   Future<chopper.Response<List<TutorUserReview>>> apiTutorUserReviewGet() {
@@ -2333,6 +2376,120 @@ extension $AreaRequestExtension on AreaRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BadRefreshToken {
+  BadRefreshToken({
+    required this.detail,
+    required this.code,
+  });
+
+  factory BadRefreshToken.fromJson(Map<String, dynamic> json) =>
+      _$BadRefreshTokenFromJson(json);
+
+  static const toJsonFactory = _$BadRefreshTokenToJson;
+  Map<String, dynamic> toJson() => _$BadRefreshTokenToJson(this);
+
+  @JsonKey(name: 'detail')
+  final String detail;
+  @JsonKey(name: 'code')
+  final String code;
+  static const fromJsonFactory = _$BadRefreshTokenFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is BadRefreshToken &&
+            (identical(other.detail, detail) ||
+                const DeepCollectionEquality().equals(other.detail, detail)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(detail) ^
+      const DeepCollectionEquality().hash(code) ^
+      runtimeType.hashCode;
+}
+
+extension $BadRefreshTokenExtension on BadRefreshToken {
+  BadRefreshToken copyWith({String? detail, String? code}) {
+    return BadRefreshToken(
+        detail: detail ?? this.detail, code: code ?? this.code);
+  }
+
+  BadRefreshToken copyWithWrapped(
+      {Wrapped<String>? detail, Wrapped<String>? code}) {
+    return BadRefreshToken(
+        detail: (detail != null ? detail.value : this.detail),
+        code: (code != null ? code.value : this.code));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class BadRequest {
+  BadRequest();
+
+  factory BadRequest.fromJson(Map<String, dynamic> json) =>
+      _$BadRequestFromJson(json);
+
+  static const toJsonFactory = _$BadRequestToJson;
+  Map<String, dynamic> toJson() => _$BadRequestToJson(this);
+
+  static const fromJsonFactory = _$BadRequestFromJson;
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+@JsonSerializable(explicitToJson: true)
+class BadToken {
+  BadToken({
+    required this.message,
+  });
+
+  factory BadToken.fromJson(Map<String, dynamic> json) =>
+      _$BadTokenFromJson(json);
+
+  static const toJsonFactory = _$BadTokenToJson;
+  Map<String, dynamic> toJson() => _$BadTokenToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$BadTokenFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is BadToken &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $BadTokenExtension on BadToken {
+  BadToken copyWith({String? message}) {
+    return BadToken(message: message ?? this.message);
+  }
+
+  BadToken copyWithWrapped({Wrapped<String>? message}) {
+    return BadToken(message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class Career {
   Career({
     required this.id,
@@ -2750,16 +2907,140 @@ extension $EmailLookUpRequestExtension on EmailLookUpRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class EmailNotValid {
+  EmailNotValid({
+    required this.email,
+  });
+
+  factory EmailNotValid.fromJson(Map<String, dynamic> json) =>
+      _$EmailNotValidFromJson(json);
+
+  static const toJsonFactory = _$EmailNotValidToJson;
+  Map<String, dynamic> toJson() => _$EmailNotValidToJson(this);
+
+  @JsonKey(name: 'email', defaultValue: <String>[])
+  final List<String> email;
+  static const fromJsonFactory = _$EmailNotValidFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is EmailNotValid &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(email) ^ runtimeType.hashCode;
+}
+
+extension $EmailNotValidExtension on EmailNotValid {
+  EmailNotValid copyWith({List<String>? email}) {
+    return EmailNotValid(email: email ?? this.email);
+  }
+
+  EmailNotValid copyWithWrapped({Wrapped<List<String>>? email}) {
+    return EmailNotValid(email: (email != null ? email.value : this.email));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class GoogleAccessTokenRequest {
+  GoogleAccessTokenRequest({
+    required this.token,
+  });
+
+  factory GoogleAccessTokenRequest.fromJson(Map<String, dynamic> json) =>
+      _$GoogleAccessTokenRequestFromJson(json);
+
+  static const toJsonFactory = _$GoogleAccessTokenRequestToJson;
+  Map<String, dynamic> toJson() => _$GoogleAccessTokenRequestToJson(this);
+
+  @JsonKey(name: 'token')
+  final String token;
+  static const fromJsonFactory = _$GoogleAccessTokenRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GoogleAccessTokenRequest &&
+            (identical(other.token, token) ||
+                const DeepCollectionEquality().equals(other.token, token)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(token) ^ runtimeType.hashCode;
+}
+
+extension $GoogleAccessTokenRequestExtension on GoogleAccessTokenRequest {
+  GoogleAccessTokenRequest copyWith({String? token}) {
+    return GoogleAccessTokenRequest(token: token ?? this.token);
+  }
+
+  GoogleAccessTokenRequest copyWithWrapped({Wrapped<String>? token}) {
+    return GoogleAccessTokenRequest(
+        token: (token != null ? token.value : this.token));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class InternalServerError {
+  InternalServerError({
+    required this.message,
+  });
+
+  factory InternalServerError.fromJson(Map<String, dynamic> json) =>
+      _$InternalServerErrorFromJson(json);
+
+  static const toJsonFactory = _$InternalServerErrorToJson;
+  Map<String, dynamic> toJson() => _$InternalServerErrorToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$InternalServerErrorFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InternalServerError &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $InternalServerErrorExtension on InternalServerError {
+  InternalServerError copyWith({String? message}) {
+    return InternalServerError(message: message ?? this.message);
+  }
+
+  InternalServerError copyWithWrapped({Wrapped<String>? message}) {
+    return InternalServerError(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class NewUser {
   NewUser({
-    required this.id,
-    required this.careers,
-    required this.roles,
-    required this.fullName,
-    required this.uccKey,
     required this.email,
+    this.firstName,
+    this.lastName,
     this.profilePicture,
-    required this.academicYear,
   });
 
   factory NewUser.fromJson(Map<String, dynamic> json) =>
@@ -2768,48 +3049,31 @@ class NewUser {
   static const toJsonFactory = _$NewUserToJson;
   Map<String, dynamic> toJson() => _$NewUserToJson(this);
 
-  @JsonKey(name: 'id')
-  final int id;
-  @JsonKey(name: 'careers', defaultValue: <int>[])
-  final List<int> careers;
-  @JsonKey(name: 'roles', defaultValue: <String>[])
-  final List<String> roles;
-  @JsonKey(name: 'full_name')
-  final String fullName;
-  @JsonKey(name: 'ucc_key')
-  final int uccKey;
   @JsonKey(name: 'email')
   final String email;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
-  @JsonKey(name: 'academic_year')
-  final int academicYear;
   static const fromJsonFactory = _$NewUserFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is NewUser &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.careers, careers) ||
-                const DeepCollectionEquality()
-                    .equals(other.careers, careers)) &&
-            (identical(other.roles, roles) ||
-                const DeepCollectionEquality().equals(other.roles, roles)) &&
-            (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
-            (identical(other.uccKey, uccKey) ||
-                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)) &&
-            (identical(other.academicYear, academicYear) ||
-                const DeepCollectionEquality()
-                    .equals(other.academicYear, academicYear)));
+                    .equals(other.profilePicture, profilePicture)));
   }
 
   @override
@@ -2817,72 +3081,48 @@ class NewUser {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(careers) ^
-      const DeepCollectionEquality().hash(roles) ^
-      const DeepCollectionEquality().hash(fullName) ^
-      const DeepCollectionEquality().hash(uccKey) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
-      const DeepCollectionEquality().hash(academicYear) ^
       runtimeType.hashCode;
 }
 
 extension $NewUserExtension on NewUser {
   NewUser copyWith(
-      {int? id,
-      List<int>? careers,
-      List<String>? roles,
-      String? fullName,
-      int? uccKey,
-      String? email,
-      String? profilePicture,
-      int? academicYear}) {
+      {String? email,
+      String? firstName,
+      String? lastName,
+      String? profilePicture}) {
     return NewUser(
-        id: id ?? this.id,
-        careers: careers ?? this.careers,
-        roles: roles ?? this.roles,
-        fullName: fullName ?? this.fullName,
-        uccKey: uccKey ?? this.uccKey,
         email: email ?? this.email,
-        profilePicture: profilePicture ?? this.profilePicture,
-        academicYear: academicYear ?? this.academicYear);
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        profilePicture: profilePicture ?? this.profilePicture);
   }
 
   NewUser copyWithWrapped(
-      {Wrapped<int>? id,
-      Wrapped<List<int>>? careers,
-      Wrapped<List<String>>? roles,
-      Wrapped<String>? fullName,
-      Wrapped<int>? uccKey,
-      Wrapped<String>? email,
-      Wrapped<String?>? profilePicture,
-      Wrapped<int>? academicYear}) {
+      {Wrapped<String>? email,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
+      Wrapped<String?>? profilePicture}) {
     return NewUser(
-        id: (id != null ? id.value : this.id),
-        careers: (careers != null ? careers.value : this.careers),
-        roles: (roles != null ? roles.value : this.roles),
-        fullName: (fullName != null ? fullName.value : this.fullName),
-        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
         email: (email != null ? email.value : this.email),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
-            : this.profilePicture),
-        academicYear:
-            (academicYear != null ? academicYear.value : this.academicYear));
+            : this.profilePicture));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class NewUserRequest {
   NewUserRequest({
-    required this.careers,
-    required this.roles,
-    required this.fullName,
-    required this.uccKey,
     required this.email,
+    this.firstName,
+    this.lastName,
     this.profilePicture,
-    required this.academicYear,
   });
 
   factory NewUserRequest.fromJson(Map<String, dynamic> json) =>
@@ -2891,44 +3131,31 @@ class NewUserRequest {
   static const toJsonFactory = _$NewUserRequestToJson;
   Map<String, dynamic> toJson() => _$NewUserRequestToJson(this);
 
-  @JsonKey(name: 'careers', defaultValue: <int>[])
-  final List<int> careers;
-  @JsonKey(name: 'roles', defaultValue: <String>[])
-  final List<String> roles;
-  @JsonKey(name: 'full_name')
-  final String fullName;
-  @JsonKey(name: 'ucc_key')
-  final int uccKey;
   @JsonKey(name: 'email')
   final String email;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
-  @JsonKey(name: 'academic_year')
-  final int academicYear;
   static const fromJsonFactory = _$NewUserRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is NewUserRequest &&
-            (identical(other.careers, careers) ||
-                const DeepCollectionEquality()
-                    .equals(other.careers, careers)) &&
-            (identical(other.roles, roles) ||
-                const DeepCollectionEquality().equals(other.roles, roles)) &&
-            (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
-            (identical(other.uccKey, uccKey) ||
-                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)) &&
-            (identical(other.academicYear, academicYear) ||
-                const DeepCollectionEquality()
-                    .equals(other.academicYear, academicYear)));
+                    .equals(other.profilePicture, profilePicture)));
   }
 
   @override
@@ -2936,54 +3163,38 @@ class NewUserRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(careers) ^
-      const DeepCollectionEquality().hash(roles) ^
-      const DeepCollectionEquality().hash(fullName) ^
-      const DeepCollectionEquality().hash(uccKey) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
-      const DeepCollectionEquality().hash(academicYear) ^
       runtimeType.hashCode;
 }
 
 extension $NewUserRequestExtension on NewUserRequest {
   NewUserRequest copyWith(
-      {List<int>? careers,
-      List<String>? roles,
-      String? fullName,
-      int? uccKey,
-      String? email,
-      String? profilePicture,
-      int? academicYear}) {
+      {String? email,
+      String? firstName,
+      String? lastName,
+      String? profilePicture}) {
     return NewUserRequest(
-        careers: careers ?? this.careers,
-        roles: roles ?? this.roles,
-        fullName: fullName ?? this.fullName,
-        uccKey: uccKey ?? this.uccKey,
         email: email ?? this.email,
-        profilePicture: profilePicture ?? this.profilePicture,
-        academicYear: academicYear ?? this.academicYear);
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        profilePicture: profilePicture ?? this.profilePicture);
   }
 
   NewUserRequest copyWithWrapped(
-      {Wrapped<List<int>>? careers,
-      Wrapped<List<String>>? roles,
-      Wrapped<String>? fullName,
-      Wrapped<int>? uccKey,
-      Wrapped<String>? email,
-      Wrapped<String?>? profilePicture,
-      Wrapped<int>? academicYear}) {
+      {Wrapped<String>? email,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
+      Wrapped<String?>? profilePicture}) {
     return NewUserRequest(
-        careers: (careers != null ? careers.value : this.careers),
-        roles: (roles != null ? roles.value : this.roles),
-        fullName: (fullName != null ? fullName.value : this.fullName),
-        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
         email: (email != null ? email.value : this.email),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
-            : this.profilePicture),
-        academicYear:
-            (academicYear != null ? academicYear.value : this.academicYear));
+            : this.profilePicture));
   }
 }
 
@@ -3897,9 +4108,10 @@ extension $PatchedTutorshipReportRequestExtension
 @JsonSerializable(explicitToJson: true)
 class PatchedUserRequest {
   PatchedUserRequest({
-    this.fullName,
     this.uccKey,
     this.email,
+    this.firstName,
+    this.lastName,
     this.profilePicture,
     this.academicYear,
   });
@@ -3910,12 +4122,14 @@ class PatchedUserRequest {
   static const toJsonFactory = _$PatchedUserRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedUserRequestToJson(this);
 
-  @JsonKey(name: 'full_name')
-  final String? fullName;
   @JsonKey(name: 'ucc_key')
   final int? uccKey;
   @JsonKey(name: 'email')
   final String? email;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
   @JsonKey(name: 'academic_year')
@@ -3926,13 +4140,16 @@ class PatchedUserRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedUserRequest &&
-            (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
             (identical(other.uccKey, uccKey) ||
                 const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
                     .equals(other.profilePicture, profilePicture)) &&
@@ -3946,9 +4163,10 @@ class PatchedUserRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(uccKey) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
       const DeepCollectionEquality().hash(academicYear) ^
       runtimeType.hashCode;
@@ -3956,29 +4174,33 @@ class PatchedUserRequest {
 
 extension $PatchedUserRequestExtension on PatchedUserRequest {
   PatchedUserRequest copyWith(
-      {String? fullName,
-      int? uccKey,
+      {int? uccKey,
       String? email,
+      String? firstName,
+      String? lastName,
       String? profilePicture,
       int? academicYear}) {
     return PatchedUserRequest(
-        fullName: fullName ?? this.fullName,
         uccKey: uccKey ?? this.uccKey,
         email: email ?? this.email,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
         profilePicture: profilePicture ?? this.profilePicture,
         academicYear: academicYear ?? this.academicYear);
   }
 
   PatchedUserRequest copyWithWrapped(
-      {Wrapped<String?>? fullName,
-      Wrapped<int?>? uccKey,
+      {Wrapped<int?>? uccKey,
       Wrapped<String?>? email,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture,
       Wrapped<int?>? academicYear}) {
     return PatchedUserRequest(
-        fullName: (fullName != null ? fullName.value : this.fullName),
         uccKey: (uccKey != null ? uccKey.value : this.uccKey),
         email: (email != null ? email.value : this.email),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
             : this.profilePicture),
@@ -4456,6 +4678,171 @@ extension $PostulationXAreaRequestExtension on PostulationXAreaRequest {
         postulation:
             (postulation != null ? postulation.value : this.postulation),
         area: (area != null ? area.value : this.area));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class RefreshTokenRequest {
+  RefreshTokenRequest({
+    required this.refresh,
+  });
+
+  factory RefreshTokenRequest.fromJson(Map<String, dynamic> json) =>
+      _$RefreshTokenRequestFromJson(json);
+
+  static const toJsonFactory = _$RefreshTokenRequestToJson;
+  Map<String, dynamic> toJson() => _$RefreshTokenRequestToJson(this);
+
+  @JsonKey(name: 'refresh')
+  final String refresh;
+  static const fromJsonFactory = _$RefreshTokenRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is RefreshTokenRequest &&
+            (identical(other.refresh, refresh) ||
+                const DeepCollectionEquality().equals(other.refresh, refresh)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(refresh) ^ runtimeType.hashCode;
+}
+
+extension $RefreshTokenRequestExtension on RefreshTokenRequest {
+  RefreshTokenRequest copyWith({String? refresh}) {
+    return RefreshTokenRequest(refresh: refresh ?? this.refresh);
+  }
+
+  RefreshTokenRequest copyWithWrapped({Wrapped<String>? refresh}) {
+    return RefreshTokenRequest(
+        refresh: (refresh != null ? refresh.value : this.refresh));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReturnAuthUser {
+  ReturnAuthUser({
+    required this.user,
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
+  factory ReturnAuthUser.fromJson(Map<String, dynamic> json) =>
+      _$ReturnAuthUserFromJson(json);
+
+  static const toJsonFactory = _$ReturnAuthUserToJson;
+  Map<String, dynamic> toJson() => _$ReturnAuthUserToJson(this);
+
+  @JsonKey(name: 'user')
+  final User user;
+  @JsonKey(name: 'access_token')
+  final String accessToken;
+  @JsonKey(name: 'refresh_token')
+  final String refreshToken;
+  static const fromJsonFactory = _$ReturnAuthUserFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ReturnAuthUser &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)) &&
+            (identical(other.accessToken, accessToken) ||
+                const DeepCollectionEquality()
+                    .equals(other.accessToken, accessToken)) &&
+            (identical(other.refreshToken, refreshToken) ||
+                const DeepCollectionEquality()
+                    .equals(other.refreshToken, refreshToken)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(user) ^
+      const DeepCollectionEquality().hash(accessToken) ^
+      const DeepCollectionEquality().hash(refreshToken) ^
+      runtimeType.hashCode;
+}
+
+extension $ReturnAuthUserExtension on ReturnAuthUser {
+  ReturnAuthUser copyWith(
+      {User? user, String? accessToken, String? refreshToken}) {
+    return ReturnAuthUser(
+        user: user ?? this.user,
+        accessToken: accessToken ?? this.accessToken,
+        refreshToken: refreshToken ?? this.refreshToken);
+  }
+
+  ReturnAuthUser copyWithWrapped(
+      {Wrapped<User>? user,
+      Wrapped<String>? accessToken,
+      Wrapped<String>? refreshToken}) {
+    return ReturnAuthUser(
+        user: (user != null ? user.value : this.user),
+        accessToken:
+            (accessToken != null ? accessToken.value : this.accessToken),
+        refreshToken:
+            (refreshToken != null ? refreshToken.value : this.refreshToken));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReturnRefreshToken {
+  ReturnRefreshToken({
+    required this.access,
+    required this.refresh,
+  });
+
+  factory ReturnRefreshToken.fromJson(Map<String, dynamic> json) =>
+      _$ReturnRefreshTokenFromJson(json);
+
+  static const toJsonFactory = _$ReturnRefreshTokenToJson;
+  Map<String, dynamic> toJson() => _$ReturnRefreshTokenToJson(this);
+
+  @JsonKey(name: 'access')
+  final String access;
+  @JsonKey(name: 'refresh')
+  final String refresh;
+  static const fromJsonFactory = _$ReturnRefreshTokenFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ReturnRefreshToken &&
+            (identical(other.access, access) ||
+                const DeepCollectionEquality().equals(other.access, access)) &&
+            (identical(other.refresh, refresh) ||
+                const DeepCollectionEquality().equals(other.refresh, refresh)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(access) ^
+      const DeepCollectionEquality().hash(refresh) ^
+      runtimeType.hashCode;
+}
+
+extension $ReturnRefreshTokenExtension on ReturnRefreshToken {
+  ReturnRefreshToken copyWith({String? access, String? refresh}) {
+    return ReturnRefreshToken(
+        access: access ?? this.access, refresh: refresh ?? this.refresh);
+  }
+
+  ReturnRefreshToken copyWithWrapped(
+      {Wrapped<String>? access, Wrapped<String>? refresh}) {
+    return ReturnRefreshToken(
+        access: (access != null ? access.value : this.access),
+        refresh: (refresh != null ? refresh.value : this.refresh));
   }
 }
 
@@ -5418,12 +5805,13 @@ extension $TutorshipReportRequestExtension on TutorshipReportRequest {
 class User {
   User({
     required this.id,
-    required this.careers,
-    required this.roles,
-    required this.fullName,
     required this.uccKey,
     required this.email,
+    this.firstName,
+    this.lastName,
     this.profilePicture,
+    required this.roles,
+    required this.careers,
     required this.academicYear,
   });
 
@@ -5434,18 +5822,20 @@ class User {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'careers', defaultValue: <String>[])
-  final List<String> careers;
-  @JsonKey(name: 'roles', defaultValue: <String>[])
-  final List<String> roles;
-  @JsonKey(name: 'full_name')
-  final String fullName;
   @JsonKey(name: 'ucc_key')
   final int uccKey;
   @JsonKey(name: 'email')
   final String email;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
+  @JsonKey(name: 'roles', defaultValue: <String>[])
+  final List<String> roles;
+  @JsonKey(name: 'careers', defaultValue: <String>[])
+  final List<String> careers;
   @JsonKey(name: 'academic_year')
   final int academicYear;
   static const fromJsonFactory = _$UserFromJson;
@@ -5456,21 +5846,24 @@ class User {
         (other is User &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.careers, careers) ||
-                const DeepCollectionEquality()
-                    .equals(other.careers, careers)) &&
-            (identical(other.roles, roles) ||
-                const DeepCollectionEquality().equals(other.roles, roles)) &&
-            (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
             (identical(other.uccKey, uccKey) ||
                 const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
                     .equals(other.profilePicture, profilePicture)) &&
+            (identical(other.roles, roles) ||
+                const DeepCollectionEquality().equals(other.roles, roles)) &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality()
+                    .equals(other.careers, careers)) &&
             (identical(other.academicYear, academicYear) ||
                 const DeepCollectionEquality()
                     .equals(other.academicYear, academicYear)));
@@ -5482,12 +5875,13 @@ class User {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(careers) ^
-      const DeepCollectionEquality().hash(roles) ^
-      const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(uccKey) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
+      const DeepCollectionEquality().hash(roles) ^
+      const DeepCollectionEquality().hash(careers) ^
       const DeepCollectionEquality().hash(academicYear) ^
       runtimeType.hashCode;
 }
@@ -5495,43 +5889,47 @@ class User {
 extension $UserExtension on User {
   User copyWith(
       {int? id,
-      List<String>? careers,
-      List<String>? roles,
-      String? fullName,
       int? uccKey,
       String? email,
+      String? firstName,
+      String? lastName,
       String? profilePicture,
+      List<String>? roles,
+      List<String>? careers,
       int? academicYear}) {
     return User(
         id: id ?? this.id,
-        careers: careers ?? this.careers,
-        roles: roles ?? this.roles,
-        fullName: fullName ?? this.fullName,
         uccKey: uccKey ?? this.uccKey,
         email: email ?? this.email,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
         profilePicture: profilePicture ?? this.profilePicture,
+        roles: roles ?? this.roles,
+        careers: careers ?? this.careers,
         academicYear: academicYear ?? this.academicYear);
   }
 
   User copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<List<String>>? careers,
-      Wrapped<List<String>>? roles,
-      Wrapped<String>? fullName,
       Wrapped<int>? uccKey,
       Wrapped<String>? email,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture,
+      Wrapped<List<String>>? roles,
+      Wrapped<List<String>>? careers,
       Wrapped<int>? academicYear}) {
     return User(
         id: (id != null ? id.value : this.id),
-        careers: (careers != null ? careers.value : this.careers),
-        roles: (roles != null ? roles.value : this.roles),
-        fullName: (fullName != null ? fullName.value : this.fullName),
         uccKey: (uccKey != null ? uccKey.value : this.uccKey),
         email: (email != null ? email.value : this.email),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
             : this.profilePicture),
+        roles: (roles != null ? roles.value : this.roles),
+        careers: (careers != null ? careers.value : this.careers),
         academicYear:
             (academicYear != null ? academicYear.value : this.academicYear));
   }
@@ -5540,9 +5938,10 @@ extension $UserExtension on User {
 @JsonSerializable(explicitToJson: true)
 class UserRequest {
   UserRequest({
-    required this.fullName,
     required this.uccKey,
     required this.email,
+    this.firstName,
+    this.lastName,
     this.profilePicture,
     required this.academicYear,
   });
@@ -5553,12 +5952,14 @@ class UserRequest {
   static const toJsonFactory = _$UserRequestToJson;
   Map<String, dynamic> toJson() => _$UserRequestToJson(this);
 
-  @JsonKey(name: 'full_name')
-  final String fullName;
   @JsonKey(name: 'ucc_key')
   final int uccKey;
   @JsonKey(name: 'email')
   final String email;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
   @JsonKey(name: 'academic_year')
@@ -5569,13 +5970,16 @@ class UserRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is UserRequest &&
-            (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
             (identical(other.uccKey, uccKey) ||
                 const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
                     .equals(other.profilePicture, profilePicture)) &&
@@ -5589,9 +5993,10 @@ class UserRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(uccKey) ^
       const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
       const DeepCollectionEquality().hash(academicYear) ^
       runtimeType.hashCode;
@@ -5599,29 +6004,33 @@ class UserRequest {
 
 extension $UserRequestExtension on UserRequest {
   UserRequest copyWith(
-      {String? fullName,
-      int? uccKey,
+      {int? uccKey,
       String? email,
+      String? firstName,
+      String? lastName,
       String? profilePicture,
       int? academicYear}) {
     return UserRequest(
-        fullName: fullName ?? this.fullName,
         uccKey: uccKey ?? this.uccKey,
         email: email ?? this.email,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
         profilePicture: profilePicture ?? this.profilePicture,
         academicYear: academicYear ?? this.academicYear);
   }
 
   UserRequest copyWithWrapped(
-      {Wrapped<String>? fullName,
-      Wrapped<int>? uccKey,
+      {Wrapped<int>? uccKey,
       Wrapped<String>? email,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture,
       Wrapped<int>? academicYear}) {
     return UserRequest(
-        fullName: (fullName != null ? fullName.value : this.fullName),
         uccKey: (uccKey != null ? uccKey.value : this.uccKey),
         email: (email != null ? email.value : this.email),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
             : this.profilePicture),

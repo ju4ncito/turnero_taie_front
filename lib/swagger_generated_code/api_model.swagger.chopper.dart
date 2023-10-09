@@ -490,6 +490,17 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
+  Future<Response<dynamic>> _apiHelloGet() {
+    final Uri $url = Uri.parse('/api/hello/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<List<PostulationXArea>>> _apiPostulationXAreaGet() {
     final Uri $url = Uri.parse('/api/postulation-x-area/');
     final Request $request = Request(
@@ -750,6 +761,34 @@ class _$ApiModel extends ApiModel {
       parameters: $params,
     );
     return client.send<Object, Object>($request);
+  }
+
+  @override
+  Future<Response<ReturnAuthUser>> _apiTokenAuthPost(
+      {required GoogleAccessTokenRequest? body}) {
+    final Uri $url = Uri.parse('/api/token/auth/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<ReturnAuthUser, ReturnAuthUser>($request);
+  }
+
+  @override
+  Future<Response<ReturnRefreshToken>> _apiTokenRefreshPost(
+      {required RefreshTokenRequest? body}) {
+    final Uri $url = Uri.parse('/api/token/refresh/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<ReturnRefreshToken, ReturnRefreshToken>($request);
   }
 
   @override
