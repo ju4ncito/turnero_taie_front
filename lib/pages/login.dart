@@ -211,36 +211,33 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final postresult = await apiManager.apiModel.apiUsersIdPatch(
-            id: widget.currentUser!.id,
-            body: PatchedUserRequest(academicYear: 1),
-            // body: NewUserRequest(
-            //     careers: selectedCareerIds, // Pass the selected career IDs
-            //     roles: ['STD'],
-            //     fullName: widget.account!.displayName ?? 'alumn@',
-            //     uccKey: int.parse(widget.account!.email
-            //         .substring(0, widget.account!.email.length - 11)),
-            //     email: widget.account!.email,
-            //     academicYear: 1,
-            //     profilePicture: widget.photoUrl),
-          );
-          print(selectedCareerIds);
+          // Iterate through selectedCareerIds and make a POST request for each career
+          for (int careerId in selectedCareerIds) {
+            final postresult = await apiManager.apiModel.apiCareerXUserPost(
+              body: CareerXUserRequest(
+                career: careerId, // Use the current careerId
+                user:
+                    widget.currentUser!.id, // Convert the user ID to an integer
+              ),
+            );
 
-          print(postresult.statusCode);
+            print(postresult.statusCode);
 
-          if (postresult.statusCode == 201) {
-            final currentUser = await apiManager.apiModel
-                .apiUsersIdGet(id: postresult.body?.id);
-            if (context.mounted) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return StudentPage(
+            if (postresult.statusCode == 201) {
+              final currentUser = await apiManager.apiModel
+                  .apiUsersIdGet(id: postresult.body?.id);
+              if (context.mounted) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return StudentPage(
                         currentUser: currentUser.body,
-                        photoUrl: currentUser.body!.profilePicture);
-                  },
-                ),
-              );
+                        photoUrl: currentUser.body!.profilePicture,
+                      );
+                    },
+                  ),
+                );
+              }
             }
           }
         },
