@@ -30,6 +30,7 @@ class LandingPage extends StatelessWidget {
           final apiAuth = await apiManager.apiModel.apiTokenAuthPost(
               body: GoogleAccessTokenRequest(token: googleAccessToken));
           print('apiAuth = ${apiAuth.statusCode}');
+          print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
 
           if (apiAuth.statusCode == 200) {
             if (apiAuth.body?.user.roles != null &&
@@ -47,7 +48,10 @@ class LandingPage extends StatelessWidget {
                 );
               }
             } else {
-              if (context.mounted) {
+              if ((apiAuth.body?.user.roles != null &&
+                      apiAuth.body!.user.roles.contains("STD") &&
+                      apiAuth.body!.user.careers.isNotEmpty) &&
+                  context.mounted) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
@@ -57,6 +61,19 @@ class LandingPage extends StatelessWidget {
                     },
                   ),
                 );
+              } else if (apiAuth.body!.user.careers.isEmpty) {
+                if (context.mounted) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return LoginPage(
+                          currentUser: apiAuth.body!.user,
+                          photoUrl: apiAuth.body!.user.profilePicture,
+                        );
+                      },
+                    ),
+                  );
+                }
               }
             }
           } else if (apiAuth.statusCode == 201) {
