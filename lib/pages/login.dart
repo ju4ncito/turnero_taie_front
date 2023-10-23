@@ -211,32 +211,32 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          // Iterate through selectedCareerIds and make a POST request for each career
-          for (int careerId in selectedCareerIds) {
-            final postresult = await apiManager.apiModel.apiCareerXUserPost(
-              body: CareerXUserRequest(
-                career: careerId, // Use the current careerId
-                user:
-                    widget.currentUser!.id, // Convert the user ID to an integer
-              ),
-            );
+          print(widget.currentUser);
+          if (widget.currentUser != null && widget.currentUser?.id != null) {
+            for (int careerId in selectedCareerIds) {
+              final postresult = await apiManager.apiModel.apiCareerXUserPost(
+                body: CareerXUserRequest(
+                  career: careerId,
+                  user: widget.currentUser!.id,
+                ),
+              );
 
-            print(postresult.statusCode);
+              print(postresult.statusCode);
+              print(widget.currentUser);
 
-            if (postresult.statusCode == 201) {
-              final currentUser = await apiManager.apiModel
-                  .apiUsersIdGet(id: postresult.body?.id);
-              if (context.mounted) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return StudentPage(
-                        currentUser: currentUser.body,
-                        photoUrl: currentUser.body!.profilePicture,
-                      );
-                    },
-                  ),
-                );
+              if (postresult.statusCode == 201) {
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return StudentPage(
+                          currentUser: widget.currentUser,
+                          photoUrl: widget.photoUrl,
+                        );
+                      },
+                    ),
+                  );
+                }
               }
             }
           }
