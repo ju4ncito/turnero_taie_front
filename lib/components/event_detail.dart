@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../utils.dart';
+
+import 'calendar_tutor.dart';
 
 class EventDetail extends StatelessWidget {
   final Event event;
@@ -18,15 +19,15 @@ class EventDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Title: ${event.title}',
+              'Title: ${event.area}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Main Tutor: ${event.mainTutor}',
+              'Asistentes: ${event.asistentes}',
               style: TextStyle(fontSize: 16),
             ),
             Text(
-              'Date Range: ${event.rangoT.start} - ${event.rangoT.end}',
+              'Status: ${event.status}',
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),

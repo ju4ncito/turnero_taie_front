@@ -20,7 +20,7 @@ class TutCard extends StatelessWidget {
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.fromLTRB(4, 10, 4, 6),
         child: Column(
           children: [
             ListTile(
