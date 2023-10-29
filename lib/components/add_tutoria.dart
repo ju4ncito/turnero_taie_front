@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
-import 'package:intl/intl.dart';
 
 class AddTutoriaPage extends StatefulWidget {
   final User? currentUser;
@@ -20,10 +19,9 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
   late TextEditingController _beginController;
   late TextEditingController _endController;
   late TextEditingController _capacityController;
-  late TextEditingController _dateController;
 
   String _selectedModality = 'Virtual';
-  late DateTime _selectedDate = DateTime.now();
+  String _selectedDay = 'Lunes'; // Default to 'Lunes'
 
   @override
   void initState() {
@@ -31,8 +29,6 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     _beginController = TextEditingController();
     _endController = TextEditingController();
     _capacityController = TextEditingController();
-    _dateController = TextEditingController(
-        text: DateFormat('yyyy-MM-dd').format(_selectedDate));
   }
 
   @override
@@ -40,23 +36,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
     _beginController.dispose();
     _endController.dispose();
     _capacityController.dispose();
-    _dateController.dispose();
     super.dispose();
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-        _dateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate);
-      });
-    }
   }
 
   Future<void> _selectTime(
@@ -65,6 +45,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
+
     if (picked != null) {
       final selectedHour = picked.hour < 12 ? picked.hour : picked.hour - 12;
       final formattedTime =
@@ -103,22 +84,27 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
               }).toList(),
             ),
             const SizedBox(height: 16.0),
-            TextButton(
-              onPressed: () => _selectDate(context),
-              child: Row(
-                children: [
-                  const Text('Select Date: '),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _dateController,
-                      enabled: false,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            DropdownButton<String>(
+              value: _selectedDay,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedDay = newValue!;
+                });
+              },
+              items: <String>[
+                'Lunes',
+                'Martes',
+                'Miercoles',
+                'Jueves',
+                'Viernes',
+                'Sabado',
+                'Domingo'
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
             const SizedBox(height: 16.0),
             TextFormField(
@@ -146,7 +132,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                 final tutoriaRequest = TutorUserScheduleRequest(
                   begin: _beginController.text,
                   capacity: int.parse(_capacityController.text),
-                  day: _dateController.text,
+                  day: _selectedDay,
                   end: _endController.text,
                   modality: _selectedModality,
                   tutorUser: widget.currentUser!.id,

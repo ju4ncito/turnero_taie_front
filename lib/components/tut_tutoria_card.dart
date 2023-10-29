@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'schedule_detail.dart';
-
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
-  }
-}
 
 class TutCard extends StatelessWidget {
   final TutorUserSchedule tutoria;
@@ -17,11 +10,7 @@ class TutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Parse the date string to a DateTime object
-    final DateTime date = DateTime.parse(tutoria.day);
-
-    // Format the date as a day of the week
-    final String dayOfWeek = DateFormat('EEEE', 'es').format(date).capitalize();
+    final String dayOfWeek = tutoria.day;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -31,7 +20,7 @@ class TutCard extends StatelessWidget {
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
             ListTile(
@@ -39,7 +28,7 @@ class TutCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    dayOfWeek, // Display the day of the week
+                    dayOfWeek,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -49,17 +38,53 @@ class TutCard extends StatelessWidget {
                   const Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.white,
-                    size: 18,
+                    size: 20,
                   )
                 ],
               ),
-              subtitle: Text(
-                '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 203, 225, 255),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                ),
+              subtitle: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      child: Text(
+                        '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 203, 225, 255),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.01,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.schedule,
+                          color: Colors.white,
+                          size: 21,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'de ${tutoria.begin.substring(0, tutoria.begin.length - 3)} a ${tutoria.end.substring(0, tutoria.end.length - 3)}',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.grey[100],
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
               onTap: () {
                 print('Tutoria selected: $dayOfWeek');
@@ -75,49 +100,6 @@ class TutCard extends StatelessWidget {
                 });
               },
             ),
-            const Divider(
-              height: 10,
-              thickness: 0.5,
-              indent: 35,
-              endIndent: 35,
-              color: Color.fromARGB(80, 255, 255, 255),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 8, right: 8, bottom: 12, top: 6),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Icon(
-                    Icons.calendar_month_rounded,
-                    color: Colors.white,
-                    size: 21,
-                  ),
-                  Text(
-                    tutoria.day,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.grey[100],
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  const Icon(
-                    Icons.schedule,
-                    color: Colors.white,
-                    size: 21,
-                  ),
-                  Text(
-                    'de ${tutoria.begin} a ${tutoria.end}',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.grey[100],
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),
