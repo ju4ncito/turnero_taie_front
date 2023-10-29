@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 import 'dart:collection';
+import 'event_detail.dart';
 
 class TableEventsExample extends StatefulWidget {
   const TableEventsExample({Key? key});
@@ -15,41 +16,37 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   final ApiManager apiManager = ApiManager();
-  List<TutorUserSchedule>? schedules = []; // Store the fetched schedules
+  List<TutorshipInstance> instances = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
   @override
   void initState() {
     super.initState();
-    fetchSchedules();
+    fetchInstances();
 
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier([]); // Initialize as an empty list
+    _selectedEvents = ValueNotifier([]);
   }
 
   bool isLoading = true;
 
-  Future<void> fetchSchedules() async {
+  Future<void> fetchInstances() async {
     setState(() {
       isLoading = true;
     });
 
     try {
-      final response = await apiManager.apiModel.apiTutorUserSchedulesGet();
+      final response = await apiManager.apiModel.apiTutorshipInstancesGet();
       if (response.statusCode == 200) {
         setState(() {
-          schedules = List<TutorUserSchedule>.from(response.body ?? []);
+          kEvents.clear();
 
-          // Populate kEvents here
-          kEvents.clear(); // Clear existing data
-          for (final TutorUserSchedule schedule in schedules!) {
-            final String startTimeStr = "${schedule.day}T${schedule.begin}";
-            final String endTimeStr = "${schedule.day}T${schedule.end}";
-            final DateTime startDateTime = DateTime.parse(startTimeStr);
-            final DateTime endDateTime = DateTime.parse(endTimeStr);
+          instances = List<TutorshipInstance>.from(response.body ?? []);
+          for (final TutorshipInstance instance in instances) {
+            print('Area: ${instance.area}');
 
-            // Add events to kEvents
+            final DateTime startDateTime = instance.date;
             final eventDate = DateTime(
               startDateTime.year,
               startDateTime.month,
@@ -62,16 +59,14 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
             kEvents[eventDate]!.add(
               Event(
-                schedule.modality,
-                schedule.tutorUser.toString(),
-                DateTimeRange(start: startDateTime, end: endDateTime),
+                instance.area,
+                instance.users.length - 1,
+                instance.status,
               ),
             );
           }
         });
-      } else {
-        // Handle error
-      }
+      } else {}
     } catch (error) {
       // Handle error
     }
@@ -80,9 +75,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       isLoading = false;
     });
 
-    // Set _selectedEvents.value after populating kEvents
     _selectedEvents.value = kEvents[_selectedDay] ?? [];
-    print("Selected Events in futurtre function: ${_selectedEvents.value}");
+    print("Selected Events in future function: ${_selectedEvents.value}");
   }
 
   @override
@@ -91,13 +85,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
-  }
-
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    // Set _selectedDay to match the format used in kEvents
     _selectedDay = DateTime(
       selectedDay.year,
       selectedDay.month,
@@ -119,16 +107,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       _selectedEvents.value = [];
     }
 
-    print("Selected Events ondayselected: ${_selectedEvents.value}");
+    print("Selected Events on day selected: ${_selectedEvents.value}");
   }
 
   @override
   Widget build(BuildContext context) {
-    // final kEvents = LinkedHashMap<DateTime, List<Event>>(
-    //   equals: isSameDay,
-    //   hashCode: getHashCode,
-    // );
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -194,12 +177,20 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
-                        onTap: () => print('${value[index]}'),
-                        title: Text('${value[index].title}'),
-                        subtitle: Text('${value[index].mainTutor}'),
-                        trailing: Text(
-                          '${value[index].rangoT.start.hour}:${value[index].rangoT.start.minute}-${value[index].rangoT.end.hour}:${value[index].rangoT.end.minute}',
-                        ),
+                        onTap: () => {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => EventDetail(
+                          //             event: '',
+                          //           )),
+                          // ),
+                          print(value[index].area)
+                        },
+                        title:
+                            Text(value[index].area ?? "No se encontro el area"),
+                        subtitle: Text(value[index].asistentes.toString()),
+                        trailing: Text(value[index].status ?? "Sin estado"),
                       ),
                     );
                   },
@@ -214,14 +205,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 }
 
 class Event {
-  final String title;
-  final String mainTutor;
-  final DateTimeRange rangoT;
+  final String? area;
+  final int? asistentes;
+  final String? status;
 
-  const Event(this.title, this.mainTutor, this.rangoT);
-
-  @override
-  String toString() => title;
+  const Event(this.area, this.asistentes, this.status);
 }
 
 int getHashCode(DateTime key) {
