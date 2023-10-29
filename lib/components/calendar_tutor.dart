@@ -4,6 +4,7 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import '../api/api_manager.dart';
 import 'dart:collection';
 import 'event_detail.dart';
+import '../components/tut_event_card.dart';
 
 class TableEventsExample extends StatefulWidget {
   const TableEventsExample({Key? key});
@@ -62,6 +63,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 instance.area,
                 instance.users.length - 1,
                 instance.status,
+                instance.id,
               ),
             );
           }
@@ -122,6 +124,31 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       body: Column(
         children: [
           TableCalendar<Event>(
+            calendarBuilders:
+                CalendarBuilders(singleMarkerBuilder: (context, date, events) {
+              final status = events.status;
+              Color color;
+              switch (status) {
+                case 'Scheduled':
+                  color = const Color.fromARGB(255, 29, 69, 140);
+                  break;
+                case 'In Progress':
+                  color = const Color.fromARGB(255, 64, 106, 36);
+                  break;
+                case 'Done':
+                  color = Colors.grey;
+                  break;
+                default:
+                  color = Colors.black;
+              }
+
+              return Container(
+                decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+                width: 11.0,
+                height: 11.0,
+                margin: const EdgeInsets.symmetric(horizontal: 1.5),
+              );
+            }),
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
@@ -167,31 +194,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 5.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        onTap: () => {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => EventDetail(
-                          //             event: '',
-                          //           )),
-                          // ),
-                          print(value[index].area)
-                        },
-                        title:
-                            Text(value[index].area ?? "No se encontro el area"),
-                        subtitle: Text(value[index].asistentes.toString()),
-                        trailing: Text(value[index].status ?? "Sin estado"),
-                      ),
+                    return EventCard(
+                      event: value[index],
+                      fetchFn: fetchInstances,
                     );
                   },
                 );
@@ -208,8 +213,9 @@ class Event {
   final String? area;
   final int? asistentes;
   final String? status;
+  final int? id;
 
-  const Event(this.area, this.asistentes, this.status);
+  const Event(this.area, this.asistentes, this.status, this.id);
 }
 
 int getHashCode(DateTime key) {
