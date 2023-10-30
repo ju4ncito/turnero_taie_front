@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:turnero_taie_front/components/calendar_student.dart';
 import 'package:turnero_taie_front/components/search.dart';
 import 'package:turnero_taie_front/pages/landing.dart';
 import '../components/home_student.dart';
-import '../components/calendar_tutor.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 class StudentPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _StudentPageState extends State<StudentPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       HorariosAlumnosWidget(currentUser: widget.currentUser),
-      TableEventsExample(),
+      CalendarAlumno(),
       SearchPage(),
       const Text(
         'Perfil',
