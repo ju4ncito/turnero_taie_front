@@ -30,7 +30,7 @@ class LandingPage extends StatelessWidget {
           final apiAuth = await apiManager.apiModel.apiTokenAuthPost(
               body: GoogleAccessTokenRequest(token: googleAccessToken));
           print('apiAuth = ${apiAuth.statusCode}');
-          print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
+          // print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
 
           if (apiAuth.statusCode == 200) {
             if (apiAuth.body?.user.roles != null &&
@@ -89,7 +89,7 @@ class LandingPage extends StatelessWidget {
                 ),
               );
             }
-          } else if (apiAuth.statusCode == 400) {
+          } else if (apiAuth.statusCode == 500) {
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
