@@ -31,6 +31,11 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
 
   bool isLoading = true;
 
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   Future<void> fetchInstances() async {
     setState(() {
       isLoading = true;

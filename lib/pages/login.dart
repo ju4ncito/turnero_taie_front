@@ -235,14 +235,14 @@ class _LoginPageState extends State<LoginPage> {
                                     padding: const EdgeInsets.all(2.0),
                                     child: ListTile(
                                       title: Text(
-                                        '$faculty',
+                                        '$career',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       subtitle: Text(
-                                        '$career',
-                                        style: TextStyle(color: Colors.white),
+                                        '$faculty',
+                                        style: TextStyle(color: Colors.white70),
                                       ),
                                       trailing: IconButton(
                                         icon: IconTheme(
