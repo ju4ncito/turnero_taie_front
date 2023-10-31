@@ -29,6 +29,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     _selectedEvents = ValueNotifier([]);
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   bool isLoading = true;
 
   Future<void> fetchInstances() async {
