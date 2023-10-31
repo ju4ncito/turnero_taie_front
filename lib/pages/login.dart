@@ -100,12 +100,20 @@ class _LoginPageState extends State<LoginPage> {
     if (faculty != null && career != null) {
       final careerId =
           int.parse(careerIdMap[career]!); // Parse career ID as an integer
-      setState(() {
-        selectedFaculties.add(faculty);
-        selectedCareers.add(career);
-        selectedCareerIds
-            .add(careerId); // Add the selected career ID to the list
-      });
+      if (selectedCareers.contains(career)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No se puede agregar la misma carrera dos veces.'),
+          ),
+        );
+      } else {
+        setState(() {
+          selectedFaculties.add(faculty);
+          selectedCareers.add(career);
+          selectedCareerIds
+              .add(careerId); // Add the selected career ID to the list
+        });
+      }
     }
   }
 
@@ -113,15 +121,33 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Faculty and Career Selection'),
+        title: const Text('Te damos la bienvenida a Turnero TAIE!'),
+        backgroundColor: const Color.fromARGB(255, 29, 69, 140),
       ),
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(children: [
+                  const Text(
+                    'Vamos a crear tu cuenta.',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Selecciona debajo las carreras que estás cursando en la UCC. Una vez que hayas terminado, presiona el botón "Registrarme".',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: selectedFaculty,
                     onChanged: (newValue) {
@@ -166,7 +192,18 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: addFacultyAndCareer,
-                    child: const Text('Agregar'),
+                    child: const Text(
+                      'Agregar',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 21, 44, 83),
+                      minimumSize: const Size(0, 45),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   if (selectedFaculties.isNotEmpty)
@@ -174,36 +211,66 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Facultades y Carreras Seleccionadas:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          'Tus carreras son:',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: selectedFaculties.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final faculty = selectedFaculties[index];
-                            final career = selectedCareers[index];
-                            final careerId = selectedCareerIds[index];
-                            return ListTile(
-                              title: Text('Facultad: $faculty'),
-                              subtitle: Text('Carrera: $career'),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () {
-                                  // Remove the selected career and its ID from the lists
-                                  setState(() {
-                                    selectedFaculties.removeAt(index);
-                                    selectedCareers.removeAt(index);
-                                    selectedCareerIds.removeAt(index);
-                                  });
-                                },
-                              ),
-                            );
-                          },
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: selectedFaculties.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final faculty = selectedFaculties[index];
+                              final career = selectedCareers[index];
+                              final careerId = selectedCareerIds[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  color: const Color.fromARGB(255, 29, 69, 140),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: ListTile(
+                                      title: Text(
+                                        '$faculty',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      subtitle: Text(
+                                        '$career',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      trailing: IconButton(
+                                        icon: IconTheme(
+                                          data: IconThemeData(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                          ),
+                                          child: const Icon(Icons.delete),
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedFaculties.removeAt(index);
+                                            selectedCareers.removeAt(index);
+                                            selectedCareerIds.removeAt(index);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
-                ],
+                ]),
               ),
             ),
           ),
@@ -242,7 +309,7 @@ class _LoginPageState extends State<LoginPage> {
           }
         },
         label: const Text('Registrarme'),
-        icon: const Icon(Icons.arrow_forward),
+        icon: const Icon(Icons.arrow_forward, size: 18),
       ),
     );
   }
