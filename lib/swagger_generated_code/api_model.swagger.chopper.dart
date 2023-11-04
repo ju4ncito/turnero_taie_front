@@ -490,17 +490,6 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<dynamic>> _apiHelloGet() {
-    final Uri $url = Uri.parse('/api/hello/');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
   Future<Response<List<PostulationXArea>>> _apiPostulationXAreaGet() {
     final Uri $url = Uri.parse('/api/postulation-x-area/');
     final Request $request = Request(
@@ -764,6 +753,101 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
+  Future<Response<BusquedaTutoriaHorarios>> _apiSearchsTutorshipSchedulesGet(
+      {required String? searchString}) {
+    final Uri $url = Uri.parse('/api/searchs/tutorship_schedules');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'search_string': searchString
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client
+        .send<BusquedaTutoriaHorarios, BusquedaTutoriaHorarios>($request);
+  }
+
+  @override
+  Future<Response<List<Tag>>> _apiTagsGet() {
+    final Uri $url = Uri.parse('/api/tags/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<Tag>, Tag>($request);
+  }
+
+  @override
+  Future<Response<Tag>> _apiTagsPost({required TagRequest? body}) {
+    final Uri $url = Uri.parse('/api/tags/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Tag, Tag>($request);
+  }
+
+  @override
+  Future<Response<Tag>> _apiTagsNameGet({required String? name}) {
+    final Uri $url = Uri.parse('/api/tags/${name}/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<Tag, Tag>($request);
+  }
+
+  @override
+  Future<Response<Tag>> _apiTagsNamePut({
+    required String? name,
+    required TagRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tags/${name}/');
+    final $body = body;
+    final Request $request = Request(
+      'PUT',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Tag, Tag>($request);
+  }
+
+  @override
+  Future<Response<Tag>> _apiTagsNamePatch({
+    required String? name,
+    required PatchedTagRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/tags/${name}/');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<Tag, Tag>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _apiTagsNameDelete({required String? name}) {
+    final Uri $url = Uri.parse('/api/tags/${name}/');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<ReturnAuthUser>> _apiTokenAuthPost(
       {required GoogleAccessTokenRequest? body}) {
     final Uri $url = Uri.parse('/api/token/auth/');
@@ -872,19 +956,20 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<TutorUserSchedule>>> _apiTutorUserSchedulesGet() {
+  Future<Response<List<ReadTutorUserSchedule>>> _apiTutorUserSchedulesGet() {
     final Uri $url = Uri.parse('/api/tutor-user-schedules/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<TutorUserSchedule>, TutorUserSchedule>($request);
+    return client
+        .send<List<ReadTutorUserSchedule>, ReadTutorUserSchedule>($request);
   }
 
   @override
-  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesPost(
-      {required TutorUserScheduleRequest? body}) {
+  Future<Response<CreateDeleteTutorUserSchedule>> _apiTutorUserSchedulesPost(
+      {required CreateDeleteTutorUserScheduleRequest? body}) {
     final Uri $url = Uri.parse('/api/tutor-user-schedules/');
     final $body = body;
     final Request $request = Request(
@@ -893,11 +978,12 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+    return client.send<CreateDeleteTutorUserSchedule,
+        CreateDeleteTutorUserSchedule>($request);
   }
 
   @override
-  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdGet(
+  Future<Response<ReadTutorUserSchedule>> _apiTutorUserSchedulesIdGet(
       {required int? id}) {
     final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
     final Request $request = Request(
@@ -905,13 +991,13 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+    return client.send<ReadTutorUserSchedule, ReadTutorUserSchedule>($request);
   }
 
   @override
-  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdPut({
+  Future<Response<CreateDeleteTutorUserSchedule>> _apiTutorUserSchedulesIdPut({
     required int? id,
-    required TutorUserScheduleRequest? body,
+    required CreateDeleteTutorUserScheduleRequest? body,
   }) {
     final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
     final $body = body;
@@ -921,13 +1007,15 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+    return client.send<CreateDeleteTutorUserSchedule,
+        CreateDeleteTutorUserSchedule>($request);
   }
 
   @override
-  Future<Response<TutorUserSchedule>> _apiTutorUserSchedulesIdPatch({
+  Future<Response<CreateDeleteTutorUserSchedule>>
+      _apiTutorUserSchedulesIdPatch({
     required int? id,
-    required PatchedTutorUserScheduleRequest? body,
+    required PatchedCreateDeleteTutorUserScheduleRequest? body,
   }) {
     final Uri $url = Uri.parse('/api/tutor-user-schedules/${id}/');
     final $body = body;
@@ -937,7 +1025,8 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<TutorUserSchedule, TutorUserSchedule>($request);
+    return client.send<CreateDeleteTutorUserSchedule,
+        CreateDeleteTutorUserSchedule>($request);
   }
 
   @override
@@ -952,14 +1041,17 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<TutorshipInstance>>> _apiTutorshipInstancesGet() {
+  Future<Response<List<SearchTutorship>>> _apiTutorshipInstancesGet(
+      {required String? role}) {
     final Uri $url = Uri.parse('/api/tutorship-instances/');
+    final Map<String, dynamic> $params = <String, dynamic>{'role': role};
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
+      parameters: $params,
     );
-    return client.send<List<TutorshipInstance>, TutorshipInstance>($request);
+    return client.send<List<SearchTutorship>, SearchTutorship>($request);
   }
 
   @override
@@ -977,7 +1069,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorshipInstance>> _apiTutorshipInstancesIdGet(
+  Future<Response<SearchTutorship>> _apiTutorshipInstancesIdGet(
       {required int? id}) {
     final Uri $url = Uri.parse('/api/tutorship-instances/${id}/');
     final Request $request = Request(
@@ -985,7 +1077,7 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<TutorshipInstance, TutorshipInstance>($request);
+    return client.send<SearchTutorship, SearchTutorship>($request);
   }
 
   @override
@@ -1032,22 +1124,17 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorshipInstance>> _apiTutorshipInstancesByUserGet({
-    required int? roleId,
-    required int? userId,
-  }) {
-    final Uri $url = Uri.parse('/api/tutorship-instances/by-user/');
-    final Map<String, dynamic> $params = <String, dynamic>{
-      'role_id': roleId,
-      'user_id': userId,
-    };
+  Future<Response<SearchTutorship>> _apiTutorshipInstancesEnrollTutorshipPost(
+      {required SearchTutorshipRequest? body}) {
+    final Uri $url = Uri.parse('/api/tutorship-instances/enroll-tutorship/');
+    final $body = body;
     final Request $request = Request(
-      'GET',
+      'POST',
       $url,
       client.baseUrl,
-      parameters: $params,
+      body: $body,
     );
-    return client.send<TutorshipInstance, TutorshipInstance>($request);
+    return client.send<SearchTutorship, SearchTutorship>($request);
   }
 
   @override
@@ -1454,33 +1541,5 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<User>> _apiUsersIsUserPost(
-      {required EmailLookUpRequest? body}) {
-    final Uri $url = Uri.parse('/api/users/is-user/');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<User, User>($request);
-  }
-
-  @override
-  Future<Response<NewUser>> _apiUsersNewUserPost(
-      {required NewUserRequest? body}) {
-    final Uri $url = Uri.parse('/api/users/new-user/');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<NewUser, NewUser>($request);
   }
 }
