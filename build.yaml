@@ -10,4 +10,4 @@ targets:
         options:
           input_folder: "lib/api/"
           output_folder: "lib/swagger_generated_code/"
-          ignore_headers: true
+          ignore_headers: false
