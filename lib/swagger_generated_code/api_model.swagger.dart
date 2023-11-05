@@ -5368,6 +5368,7 @@ class SearchTutorship {
     required this.schedule,
     required this.date,
     required this.area,
+    required this.status,
   });
 
   factory SearchTutorship.fromJson(Map<String, dynamic> json) =>
@@ -5381,7 +5382,9 @@ class SearchTutorship {
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
   @JsonKey(name: 'area')
-  final int area;
+  final String area;
+  @JsonKey(name: 'status')
+  final String status;
   static const fromJsonFactory = _$SearchTutorshipFromJson;
 
   @override
@@ -5394,7 +5397,9 @@ class SearchTutorship {
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.area, area) ||
-                const DeepCollectionEquality().equals(other.area, area)));
+                const DeepCollectionEquality().equals(other.area, area)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)));
   }
 
   @override
@@ -5405,26 +5410,33 @@ class SearchTutorship {
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(area) ^
+      const DeepCollectionEquality().hash(status) ^
       runtimeType.hashCode;
 }
 
 extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWith(
-      {ReadTutorUserSchedule? schedule, DateTime? date, int? area}) {
+      {ReadTutorUserSchedule? schedule,
+      DateTime? date,
+      String? area,
+      String? status}) {
     return SearchTutorship(
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        area: area ?? this.area);
+        area: area ?? this.area,
+        status: status ?? this.status);
   }
 
   SearchTutorship copyWithWrapped(
       {Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<int>? area}) {
+      Wrapped<String>? area,
+      Wrapped<String>? status}) {
     return SearchTutorship(
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        area: (area != null ? area.value : this.area));
+        area: (area != null ? area.value : this.area),
+        status: (status != null ? status.value : this.status));
   }
 }
 
@@ -5434,6 +5446,7 @@ class SearchTutorshipRequest {
     required this.schedule,
     required this.date,
     required this.area,
+    required this.status,
   });
 
   factory SearchTutorshipRequest.fromJson(Map<String, dynamic> json) =>
@@ -5447,7 +5460,9 @@ class SearchTutorshipRequest {
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
   @JsonKey(name: 'area')
-  final int area;
+  final String area;
+  @JsonKey(name: 'status')
+  final String status;
   static const fromJsonFactory = _$SearchTutorshipRequestFromJson;
 
   @override
@@ -5460,7 +5475,9 @@ class SearchTutorshipRequest {
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.area, area) ||
-                const DeepCollectionEquality().equals(other.area, area)));
+                const DeepCollectionEquality().equals(other.area, area)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)));
   }
 
   @override
@@ -5471,26 +5488,33 @@ class SearchTutorshipRequest {
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(area) ^
+      const DeepCollectionEquality().hash(status) ^
       runtimeType.hashCode;
 }
 
 extension $SearchTutorshipRequestExtension on SearchTutorshipRequest {
   SearchTutorshipRequest copyWith(
-      {ReadTutorUserScheduleRequest? schedule, DateTime? date, int? area}) {
+      {ReadTutorUserScheduleRequest? schedule,
+      DateTime? date,
+      String? area,
+      String? status}) {
     return SearchTutorshipRequest(
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        area: area ?? this.area);
+        area: area ?? this.area,
+        status: status ?? this.status);
   }
 
   SearchTutorshipRequest copyWithWrapped(
       {Wrapped<ReadTutorUserScheduleRequest>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<int>? area}) {
+      Wrapped<String>? area,
+      Wrapped<String>? status}) {
     return SearchTutorshipRequest(
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        area: (area != null ? area.value : this.area));
+        area: (area != null ? area.value : this.area),
+        status: (status != null ? status.value : this.status));
   }
 }
 

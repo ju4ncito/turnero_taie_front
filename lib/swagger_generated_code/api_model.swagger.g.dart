@@ -792,7 +792,8 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
       schedule: ReadTutorUserSchedule.fromJson(
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
-      area: json['area'] as int,
+      area: json['area'] as String,
+      status: json['status'] as String,
     );
 
 Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
@@ -800,6 +801,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
       'area': instance.area,
+      'status': instance.status,
     };
 
 SearchTutorshipRequest _$SearchTutorshipRequestFromJson(
@@ -808,7 +810,8 @@ SearchTutorshipRequest _$SearchTutorshipRequestFromJson(
       schedule: ReadTutorUserScheduleRequest.fromJson(
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
-      area: json['area'] as int,
+      area: json['area'] as String,
+      status: json['status'] as String,
     );
 
 Map<String, dynamic> _$SearchTutorshipRequestToJson(
@@ -817,6 +820,7 @@ Map<String, dynamic> _$SearchTutorshipRequestToJson(
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
       'area': instance.area,
+      'status': instance.status,
     };
 
 Tag _$TagFromJson(Map<String, dynamic> json) => Tag(

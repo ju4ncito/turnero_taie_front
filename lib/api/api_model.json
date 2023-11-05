@@ -2527,8 +2527,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3441,8 +3440,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3488,8 +3486,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -3525,8 +3522,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3580,8 +3576,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3634,8 +3629,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3669,8 +3663,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "204": {
@@ -3708,8 +3701,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -6018,13 +6010,18 @@
                         "format": "date"
                     },
                     "area": {
-                        "type": "integer"
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "maxLength": 25
                     }
                 },
                 "required": [
                     "area",
                     "date",
-                    "schedule"
+                    "schedule",
+                    "status"
                 ]
             },
             "SearchTutorshipRequest": {
@@ -6038,13 +6035,20 @@
                         "format": "date"
                     },
                     "area": {
-                        "type": "integer"
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "status": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 25
                     }
                 },
                 "required": [
                     "area",
                     "date",
-                    "schedule"
+                    "schedule",
+                    "status"
                 ]
             },
             "Tag": {
