@@ -129,7 +129,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
             const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () async {
-                final tutoriaRequest = TutorUserScheduleRequest(
+                final tutoriaRequest = CreateDeleteTutorUserScheduleRequest(
                   begin: _beginController.text,
                   capacity: int.parse(_capacityController.text),
                   day: _selectedDay,

@@ -42,7 +42,8 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
     });
 
     try {
-      final response = await apiManager.apiModel.apiTutorshipInstancesGet();
+      final response =
+          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'STD');
       if (response.statusCode == 200) {
         setState(() {
           kEvents.clear();

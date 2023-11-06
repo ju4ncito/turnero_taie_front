@@ -3,7 +3,7 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import '../api/api_manager.dart';
 
 class ScheduleDetail extends StatefulWidget {
-  final TutorUserSchedule tutorSchedule;
+  final CreateDeleteTutorUserSchedule tutorSchedule;
 
   ScheduleDetail({required this.tutorSchedule});
 
@@ -18,7 +18,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   late TextEditingController beginController;
   late TextEditingController endController;
 
-  late TutorUserSchedule editedTutorSchedule;
+  late CreateDeleteTutorUserSchedule editedTutorSchedule;
   bool isEditing = false;
 
   @override
@@ -44,7 +44,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   void saveChanges() {
     // Update the editedTutorSchedule with new values from controllers
-    editedTutorSchedule = TutorUserSchedule(
+    editedTutorSchedule = CreateDeleteTutorUserSchedule(
       id: editedTutorSchedule.id,
       day: dayController.text,
       modality: modalityController.text,
@@ -228,7 +228,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 if (isEditing)
                   ElevatedButton(
                     onPressed: () async {
-                      final editedTutorSchedule = TutorUserSchedule(
+                      final editedTutorSchedule = CreateDeleteTutorUserSchedule(
                         id: widget.tutorSchedule.id,
                         day: dayController.text,
                         modality: modalityController.text,
@@ -238,7 +238,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         tutorUser: widget.tutorSchedule.tutorUser,
                       );
 
-                      final patchedRequest = PatchedTutorUserScheduleRequest(
+                      final patchedRequest =
+                          PatchedCreateDeleteTutorUserScheduleRequest(
                         modality: editedTutorSchedule.modality,
                         day: editedTutorSchedule.day,
                         begin: editedTutorSchedule.begin,

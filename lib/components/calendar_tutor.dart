@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:turnero_taie_front/storage/cambios/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 import 'dart:collection';
@@ -15,7 +16,7 @@ class TableEventsExample extends StatefulWidget {
 class _TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  final ApiManager apiManager = ApiManager();
+  final AuthenticatedApiManager apiManager = AuthenticatedApiManager();
   List<TutorshipInstance> instances = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -42,7 +43,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     });
 
     try {
-      final response = await apiManager.apiModel.apiTutorshipInstancesGet();
+      final response =
+          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
       if (response.statusCode == 200) {
         setState(() {
           kEvents.clear();

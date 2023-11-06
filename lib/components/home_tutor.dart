@@ -16,7 +16,8 @@ class HorariosTutoresWidget extends StatefulWidget {
 
 class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
   final ApiManager apiManager = ApiManager();
-  List<TutorUserSchedule>? schedules = []; // Store the fetched schedules
+  List<CreateDeleteTutorUserSchedule>? schedules =
+      []; // Store the fetched schedules
 
   @override
   void initState() {
@@ -35,7 +36,8 @@ class _HorariosTutoresWidgetState extends State<HorariosTutoresWidget> {
       final response = await apiManager.apiModel.apiTutorUserSchedulesGet();
       if (response.statusCode == 200) {
         setState(() {
-          schedules = List<TutorUserSchedule>.from(response.body ?? []);
+          schedules =
+              List<CreateDeleteTutorUserSchedule>.from(response.body ?? []);
         });
       } else {
         // Handle error
