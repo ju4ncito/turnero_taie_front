@@ -1484,24 +1484,6 @@
                 }
             }
         },
-        "/api/hello/": {
-            "get": {
-                "operationId": "hello_retrieve",
-                "tags": [
-                    "hello"
-                ],
-                "security": [
-                    {
-                        "jwtAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "No response body"
-                    }
-                }
-            }
-        },
         "/api/postulation-x-area/": {
             "get": {
                 "operationId": "postulation_x_area_list",
@@ -2525,6 +2507,295 @@
                 }
             }
         },
+        "/api/searchs/tutorship_schedules": {
+            "get": {
+                "operationId": "searchs_tutorship_schedules_retrieve",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "search_string",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The string to match with area name or tags of the area for filtering Schedules or Tutorships Instances",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "searchs"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BusquedaTutoriaHorarios"
+                                }
+                            }
+                        },
+                        "description": "Fetched all schedules and tutorship instances for search string and user.areas"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/No_search_string"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/tags/": {
+            "get": {
+                "operationId": "tags_list",
+                "tags": [
+                    "tags"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tag"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "tags_create",
+                "tags": [
+                    "tags"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tag"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/tags/{name}/": {
+            "get": {
+                "operationId": "tags_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tags"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tag"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "tags_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tags"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tag"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "tags_partial_update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tags"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedTagRequest"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedTagRequest"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchedTagRequest"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tag"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "tags_destroy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tags"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No response body"
+                    }
+                }
+            }
+        },
         "/api/token/auth/": {
             "post": {
                 "operationId": "token_auth_create",
@@ -2921,7 +3192,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorUserSchedule"
+                                        "$ref": "#/components/schemas/ReadTutorUserSchedule"
                                     }
                                 }
                             }
@@ -2939,17 +3210,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         }
                     },
@@ -2966,7 +3237,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserSchedule"
+                                    "$ref": "#/components/schemas/Create_DeleteTutorUserSchedule"
                                 }
                             }
                         },
@@ -3003,7 +3274,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserSchedule"
+                                    "$ref": "#/components/schemas/ReadTutorUserSchedule"
                                 }
                             }
                         },
@@ -3031,17 +3302,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/TutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/Create_DeleteTutorUserScheduleRequest"
                             }
                         }
                     },
@@ -3058,7 +3329,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserSchedule"
+                                    "$ref": "#/components/schemas/Create_DeleteTutorUserSchedule"
                                 }
                             }
                         },
@@ -3086,17 +3357,17 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedTutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/PatchedCreate_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedTutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/PatchedCreate_DeleteTutorUserScheduleRequest"
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/PatchedTutorUserScheduleRequest"
+                                "$ref": "#/components/schemas/PatchedCreate_DeleteTutorUserScheduleRequest"
                             }
                         }
                     }
@@ -3112,7 +3383,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserSchedule"
+                                    "$ref": "#/components/schemas/Create_DeleteTutorUserSchedule"
                                 }
                             }
                         },
@@ -3152,14 +3423,24 @@
         "/api/tutorship-instances/": {
             "get": {
                 "operationId": "tutorship_instances_list",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "role",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The role to filter by, value can be STD or TUTOR ",
+                        "required": true
+                    }
+                ],
                 "tags": [
                     "tutorship-instances"
                 ],
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3168,7 +3449,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorshipInstance"
+                                        "$ref": "#/components/schemas/SearchTutorship"
                                     }
                                 }
                             }
@@ -3205,8 +3486,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "201": {
@@ -3242,15 +3522,14 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorshipInstance"
+                                    "$ref": "#/components/schemas/SearchTutorship"
                                 }
                             }
                         },
@@ -3297,8 +3576,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3351,8 +3629,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3386,8 +3663,7 @@
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "204": {
@@ -3396,44 +3672,43 @@
                 }
             }
         },
-        "/api/tutorship-instances/by-user/": {
-            "get": {
-                "operationId": "tutorship_instances_by_user_retrieve",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "role_id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "description": "The Role ID to filter the TutorshipInstance",
-                        "required": true
-                    },
-                    {
-                        "in": "query",
-                        "name": "user_id",
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "description": "The User ID to filter the TutorshipInstance",
-                        "required": true
-                    }
-                ],
+        "/api/tutorship-instances/enroll-tutorship/": {
+            "post": {
+                "operationId": "tutorship_instances_enroll_tutorship_create",
                 "tags": [
                     "tutorship-instances"
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchTutorshipRequest"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchTutorshipRequest"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchTutorshipRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "security": [
                     {
                         "jwtAuth": []
-                    },
-                    {}
+                    }
                 ],
                 "responses": {
                     "200": {
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorshipInstance"
+                                    "$ref": "#/components/schemas/SearchTutorship"
                                 }
                             }
                         },
@@ -4676,168 +4951,10 @@
                     }
                 }
             }
-        },
-        "/api/users/is-user/": {
-            "post": {
-                "operationId": "users_is_user_create",
-                "description": "This endpoint is a POST method, but it does not create any new user.\n        It only looks up for a user by email. Reason for this decision was to not expose emails in the URL.",
-                "summary": "Look up for a user by email",
-                "tags": [
-                    "users"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EmailLookUpRequest"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EmailLookUpRequest"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EmailLookUpRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "jwtAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        },
-                        "description": ""
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/400-isUser"
-                                }
-                            }
-                        },
-                        "description": ""
-                    },
-                    "404": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/404-isUserserializer"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/users/new-user/": {
-            "post": {
-                "operationId": "users_new_user_create",
-                "summary": "Create a new student user",
-                "tags": [
-                    "users"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/NewUserRequest"
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "$ref": "#/components/schemas/NewUserRequest"
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/NewUserRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "security": [
-                    {
-                        "jwtAuth": []
-                    },
-                    {}
-                ],
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/NewUser"
-                                }
-                            }
-                        },
-                        "description": ""
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/400-newUser"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                }
-            }
         }
     },
     "components": {
         "schemas": {
-            "400-isUser": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "400-newUser": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "404-isUserserializer": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
             "AcademicUnit": {
                 "type": "object",
                 "properties": {
@@ -4933,6 +5050,12 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "name": {
                         "type": "string",
                         "maxLength": 50
@@ -4956,12 +5079,20 @@
                     "id",
                     "name",
                     "postulations",
+                    "tags",
                     "users"
                 ]
             },
             "AreaRequest": {
                 "type": "object",
                 "properties": {
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
                     "name": {
                         "type": "string",
                         "minLength": 1,
@@ -4969,7 +5100,8 @@
                     }
                 },
                 "required": [
-                    "name"
+                    "name",
+                    "tags"
                 ]
             },
             "BadRefreshToken": {
@@ -5006,6 +5138,27 @@
                 },
                 "required": [
                     "message"
+                ]
+            },
+            "BusquedaTutoriaHorarios": {
+                "type": "object",
+                "properties": {
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadTutorUserSchedule"
+                        }
+                    },
+                    "tutorship_instances": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchTutorship"
+                        }
+                    }
+                },
+                "required": [
+                    "schedules",
+                    "tutorship_instances"
                 ]
             },
             "Career": {
@@ -5132,17 +5285,81 @@
                     "user"
                 ]
             },
-            "EmailLookUpRequest": {
+            "Create_DeleteTutorUserSchedule": {
                 "type": "object",
                 "properties": {
-                    "email": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "modality": {
                         "type": "string",
-                        "format": "email",
-                        "minLength": 1
+                        "maxLength": 20
+                    },
+                    "day": {
+                        "type": "string",
+                        "maxLength": 10
+                    },
+                    "begin": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
+                        "type": "integer"
                     }
                 },
                 "required": [
-                    "email"
+                    "begin",
+                    "capacity",
+                    "day",
+                    "end",
+                    "id",
+                    "modality",
+                    "tutor_user"
+                ]
+            },
+            "Create_DeleteTutorUserScheduleRequest": {
+                "type": "object",
+                "properties": {
+                    "modality": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20
+                    },
+                    "day": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 10
+                    },
+                    "begin": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "begin",
+                    "capacity",
+                    "day",
+                    "end",
+                    "modality",
+                    "tutor_user"
                 ]
             },
             "EmailNotValid": {
@@ -5183,59 +5400,15 @@
                     "message"
                 ]
             },
-            "NewUser": {
+            "No_search_string": {
                 "type": "object",
                 "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "pattern": "^\\d+@ucc.edu.ar$"
-                    },
-                    "first_name": {
-                        "type": "string",
-                        "title": "Nombre",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "title": "Apellido",
-                        "maxLength": 150
-                    },
-                    "profile_picture": {
-                        "type": "string",
-                        "nullable": true
+                    "message": {
+                        "type": "string"
                     }
                 },
                 "required": [
-                    "email"
-                ]
-            },
-            "NewUserRequest": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "format": "email",
-                        "minLength": 1,
-                        "pattern": "^\\d+@ucc.edu.ar$"
-                    },
-                    "first_name": {
-                        "type": "string",
-                        "title": "Nombre",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "title": "Apellido",
-                        "maxLength": 150
-                    },
-                    "profile_picture": {
-                        "type": "string",
-                        "nullable": true
-                    }
-                },
-                "required": [
-                    "email"
+                    "message"
                 ]
             },
             "PatchedAcademicUnitRequest": {
@@ -5272,6 +5445,13 @@
             "PatchedAreaRequest": {
                 "type": "object",
                 "properties": {
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
                     "name": {
                         "type": "string",
                         "minLength": 1,
@@ -5310,6 +5490,35 @@
                         "type": "integer"
                     },
                     "user": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "PatchedCreate_DeleteTutorUserScheduleRequest": {
+                "type": "object",
+                "properties": {
+                    "modality": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20
+                    },
+                    "day": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 10
+                    },
+                    "begin": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
                         "type": "integer"
                     }
                 }
@@ -5365,6 +5574,19 @@
                     }
                 }
             },
+            "PatchedTagRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                    },
+                    "area": {
+                        "type": "integer"
+                    }
+                }
+            },
             "PatchedTutorUserReviewRequest": {
                 "type": "object",
                 "properties": {
@@ -5389,35 +5611,6 @@
                         "type": "integer"
                     },
                     "tutorship_instance": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "PatchedTutorUserScheduleRequest": {
-                "type": "object",
-                "properties": {
-                    "modality": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 20
-                    },
-                    "day": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 10
-                    },
-                    "begin": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "end": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "capacity": {
-                        "type": "integer"
-                    },
-                    "tutor_user": {
                         "type": "integer"
                     }
                 }
@@ -5623,6 +5816,83 @@
                     "postulation"
                 ]
             },
+            "ReadTutorUserSchedule": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/TutorAreas"
+                    },
+                    "modality": {
+                        "type": "string",
+                        "maxLength": 20
+                    },
+                    "day": {
+                        "type": "string",
+                        "maxLength": 10
+                    },
+                    "begin": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "begin",
+                    "capacity",
+                    "day",
+                    "end",
+                    "id",
+                    "modality",
+                    "tutor_user"
+                ]
+            },
+            "ReadTutorUserScheduleRequest": {
+                "type": "object",
+                "properties": {
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/TutorAreasRequest"
+                    },
+                    "modality": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20
+                    },
+                    "day": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 10
+                    },
+                    "begin": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "time"
+                    },
+                    "capacity": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "begin",
+                    "capacity",
+                    "day",
+                    "end",
+                    "modality",
+                    "tutor_user"
+                ]
+            },
             "Refresh_tokenRequest": {
                 "type": "object",
                 "properties": {
@@ -5729,6 +5999,157 @@
                     "type"
                 ]
             },
+            "SearchTutorship": {
+                "type": "object",
+                "properties": {
+                    "schedule": {
+                        "$ref": "#/components/schemas/ReadTutorUserSchedule"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "maxLength": 25
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "area",
+                    "date",
+                    "schedule",
+                    "status",
+                    "users"
+                ]
+            },
+            "SearchTutorshipRequest": {
+                "type": "object",
+                "properties": {
+                    "schedule": {
+                        "$ref": "#/components/schemas/ReadTutorUserScheduleRequest"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "area": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "status": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 25
+                    }
+                },
+                "required": [
+                    "area",
+                    "date",
+                    "schedule",
+                    "status"
+                ]
+            },
+            "Tag": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "area": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "area",
+                    "id",
+                    "name"
+                ]
+            },
+            "TagRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100
+                    },
+                    "area": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "area",
+                    "name"
+                ]
+            },
+            "TutorAreas": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "areas",
+                    "id"
+                ]
+            },
+            "TutorAreasRequest": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                }
+            },
             "TutorUserReview": {
                 "type": "object",
                 "properties": {
@@ -5805,83 +6226,6 @@
                     "tutor_user",
                     "tutorship_instance",
                     "utility"
-                ]
-            },
-            "TutorUserSchedule": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
-                    "modality": {
-                        "type": "string",
-                        "maxLength": 20
-                    },
-                    "day": {
-                        "type": "string",
-                        "maxLength": 10
-                    },
-                    "begin": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "end": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "capacity": {
-                        "type": "integer"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "begin",
-                    "capacity",
-                    "day",
-                    "end",
-                    "id",
-                    "modality",
-                    "tutor_user"
-                ]
-            },
-            "TutorUserScheduleRequest": {
-                "type": "object",
-                "properties": {
-                    "modality": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 20
-                    },
-                    "day": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 10
-                    },
-                    "begin": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "end": {
-                        "type": "string",
-                        "format": "time"
-                    },
-                    "capacity": {
-                        "type": "integer"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "begin",
-                    "capacity",
-                    "day",
-                    "end",
-                    "modality",
-                    "tutor_user"
                 ]
             },
             "TutorshipInstance": {
@@ -6052,10 +6396,18 @@
                     },
                     "academic_year": {
                         "type": "integer"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "readOnly": true
                     }
                 },
                 "required": [
                     "academic_year",
+                    "areas",
                     "careers",
                     "email",
                     "id",

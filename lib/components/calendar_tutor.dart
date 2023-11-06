@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:turnero_taie_front/storage/cambios/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 import 'dart:collection';
@@ -45,6 +44,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     try {
       final response =
           await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
+
+      print(response.body);
+      print('body');
       if (response.statusCode == 200) {
         setState(() {
           kEvents.clear();
