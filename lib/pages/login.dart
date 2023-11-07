@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/pages/student_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -22,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   List<AcademicUnit> academicUnits = [];
   List<Career> careers = [];
   bool careerDropdownEnabled = true;
-  final apiManager = ApiManager();
+  final apiManager = AuthenticatedApiManager();
   late Timer careerDropdownTimer;
   List<String> selectedFaculties = [];
   List<String> selectedCareers = [];
@@ -280,6 +279,8 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () async {
           print(widget.currentUser);
           if (widget.currentUser != null && widget.currentUser?.id != null) {
+            bool allPostsSuccessful = true;
+
             for (int careerId in selectedCareerIds) {
               final postresult = await apiManager.apiModel.apiCareerXUserPost(
                 body: CareerXUserRequest(
@@ -291,20 +292,23 @@ class _LoginPageState extends State<LoginPage> {
               print(postresult.statusCode);
               print(widget.currentUser);
 
-              if (postresult.statusCode == 201) {
-                if (context.mounted) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return StudentPage(
-                          currentUser: widget.currentUser,
-                          photoUrl: widget.photoUrl,
-                        );
-                      },
-                    ),
-                  );
-                }
+              if (postresult.statusCode != 201) {
+                allPostsSuccessful = false;
+                break;
               }
+            }
+
+            if (allPostsSuccessful && context.mounted) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return StudentPage(
+                      currentUser: widget.currentUser,
+                      photoUrl: widget.photoUrl,
+                    );
+                  },
+                ),
+              );
             }
           }
         },
