@@ -45,7 +45,7 @@ class MyAuthenticator implements Authenticator {
     Response response, [
     Request? originalRequest,
   ]) async {
-    print('[MyAuthenticator] response.statusCode: ${response.statusCode}');
+    // print('[MyAuthenticator] response.statusCode: ${response.statusCode}');
     // print(
     //   '[MyAuthenticator] request Retry-Count: ${request.headers['Retry-Count'] ?? 0}',
     // );

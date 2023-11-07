@@ -14,7 +14,7 @@ class HorariosAlumnosWidget extends StatefulWidget {
 }
 
 class _HorariosAlumnosWidgetState extends State<HorariosAlumnosWidget> {
-  final ApiManager apiManager = ApiManager();
+  final AuthenticatedApiManager apiManager = AuthenticatedApiManager();
   List<ReadTutorUserSchedule>? schedules = []; // Store the fetched schedules
 
   @override

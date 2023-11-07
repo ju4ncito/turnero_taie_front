@@ -3,7 +3,7 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import 'schedule_detail.dart';
 
 class TutCard extends StatelessWidget {
-  final CreateDeleteTutorUserSchedule tutoria;
+  final ReadTutorUserSchedule tutoria;
   final Future<void> Function() fetchFn;
 
   const TutCard({super.key, required this.tutoria, required this.fetchFn});

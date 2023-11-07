@@ -3,7 +3,7 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import '../api/api_manager.dart';
 
 class ScheduleDetail extends StatefulWidget {
-  final CreateDeleteTutorUserSchedule tutorSchedule;
+  final ReadTutorUserSchedule tutorSchedule;
 
   ScheduleDetail({required this.tutorSchedule});
 
@@ -24,7 +24,14 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   @override
   void initState() {
     super.initState();
-    editedTutorSchedule = widget.tutorSchedule;
+    editedTutorSchedule = CreateDeleteTutorUserSchedule(
+        id: widget.tutorSchedule.id,
+        modality: widget.tutorSchedule.modality,
+        day: widget.tutorSchedule.day,
+        begin: widget.tutorSchedule.begin,
+        end: widget.tutorSchedule.end,
+        capacity: widget.tutorSchedule.capacity,
+        tutorUser: widget.tutorSchedule.tutorUser.id);
 
     // Initialize controllers with the current values
     dayController = TextEditingController(text: editedTutorSchedule.day);
@@ -235,7 +242,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         capacity: int.parse(capacityController.text),
                         begin: beginController.text,
                         end: endController.text,
-                        tutorUser: widget.tutorSchedule.tutorUser,
+                        tutorUser: widget.tutorSchedule.tutorUser.id,
                       );
 
                       final patchedRequest =

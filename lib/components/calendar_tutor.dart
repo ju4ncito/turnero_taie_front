@@ -15,8 +15,8 @@ class TableEventsExample extends StatefulWidget {
 class _TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  final AuthenticatedApiManager apiManager = AuthenticatedApiManager();
-  List<TutorshipInstance> instances = [];
+  final apiManager = AuthenticatedApiManager();
+  List<SearchTutorship> instances = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -45,14 +45,15 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       final response =
           await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
 
-      print(response.body);
-      print('body');
       if (response.statusCode == 200) {
+        // print('response de fetchinstance ${response.body}');
+
         setState(() {
           kEvents.clear();
 
-          instances = List<TutorshipInstance>.from(response.body ?? []);
-          for (final TutorshipInstance instance in instances) {
+          instances = List<SearchTutorship>.from(response.body ?? []);
+          print(instances);
+          for (final SearchTutorship instance in instances) {
             print('Area: ${instance.area}');
 
             final DateTime startDateTime = instance.date;
@@ -69,9 +70,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             kEvents[eventDate]!.add(
               Event(
                 instance.area,
-                instance.users.length - 1,
+                instance.schedule.capacity - 1,
                 instance.status,
-                instance.id,
+                instance.schedule.id,
               ),
             );
           }

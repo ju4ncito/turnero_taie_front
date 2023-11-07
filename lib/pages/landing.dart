@@ -41,6 +41,8 @@ class LandingPage extends StatelessWidget {
               UserSecureStorage.setField('accessToken', accessToken);
 
               UserSecureStorage.setField('refreshToken', refreshToken);
+
+              print('saved access tokens ${accessToken} ${refreshToken}');
             }
             if (apiAuth.body?.user.roles != null &&
                 apiAuth.body!.user.roles.contains("TUTOR")) {

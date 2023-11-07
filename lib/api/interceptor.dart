@@ -14,13 +14,16 @@ class AuthInterceptor implements RequestInterceptor {
   FutureOr<Request> onRequest(Request request) async {
     final accessToken = await _repo.accessToken;
 
+    // print('accessToken: $accessToken');
+
     final updatedRequest = applyHeader(
       request,
       HttpHeaders.authorizationHeader,
-      accessToken!,
+      'Bearer ${accessToken!}',
       override: false,
     );
 
+    // print('updatedRequest: $updatedRequest');
     // print(
     //   '[AuthInterceptor] accessToken: ${updatedRequest.headers[HttpHeaders.authorizationHeader]}',
     // );
