@@ -115,7 +115,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     );
 
     if (isConfirmed == true) {
-      final apiManager = ApiManager();
+      final apiManager = AuthenticatedApiManager();
       final deleteResult =
           await apiManager.apiModel.apiTutorUserSchedulesIdDelete(
         id: widget.tutorSchedule.id,
@@ -257,7 +257,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
                       print("Tutoria Request Body: ${patchedRequest.toJson()}");
 
-                      final apiManager = ApiManager();
+                      final apiManager = AuthenticatedApiManager();
                       final postResult = await apiManager.apiModel
                           .apiTutorUserSchedulesIdPatch(
                         id: widget.tutorSchedule.id,

@@ -14,7 +14,7 @@ class AddTutoriaPage extends StatefulWidget {
 }
 
 class _AddTutoriaPageState extends State<AddTutoriaPage> {
-  final apiManager = ApiManager();
+  final apiManager = AuthenticatedApiManager();
 
   late TextEditingController _beginController;
   late TextEditingController _endController;

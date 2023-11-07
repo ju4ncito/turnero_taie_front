@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
-import 'package:turnero_taie_front/components/tutor_detail.dart';
+import 'package:turnero_taie_front/components/search_schedule_page.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+
+import 'search_instance_detail.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -95,8 +97,9 @@ class _SearchPageState extends State<SearchPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => TutorDetailPage(
-                                            id: schedule.tutorUser.id),
+                                        builder: (context) =>
+                                            SearchSchedulePage(
+                                                tutorUserSchedule: schedule),
                                       ),
                                     );
                                   },
@@ -126,9 +129,10 @@ class _SearchPageState extends State<SearchPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => TutorDetailPage(
-                                              id: tutorshipInstance
-                                                  .schedule.tutorUser.id),
+                                          builder: (context) =>
+                                              SearchInstancePage(
+                                                  tutorInstance:
+                                                      tutorshipInstance),
                                         ),
                                       );
                                     },
