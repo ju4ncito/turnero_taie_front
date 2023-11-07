@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
-import '../components/calendar_tutor.dart';
 import '../components/tut_event_card.dart';
+import 'event.dart';
 
 class CalendarAlumno extends StatefulWidget {
   const CalendarAlumno({super.key});
@@ -15,8 +15,8 @@ class CalendarAlumno extends StatefulWidget {
 class CalendarAlumnoState extends State<CalendarAlumno> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  final ApiManager apiManager = ApiManager();
-  List<TutorshipInstance> instances = [];
+  final AuthenticatedApiManager apiManager = AuthenticatedApiManager();
+  List<SearchTutorship> instances = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -48,8 +48,8 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
         setState(() {
           kEvents.clear();
 
-          instances = List<TutorshipInstance>.from(response.body ?? []);
-          for (final TutorshipInstance instance in instances) {
+          instances = List<SearchTutorship>.from(response.body ?? []);
+          for (final SearchTutorship instance in instances) {
             print('Area: ${instance.area}');
 
             final DateTime startDateTime = instance.date;
@@ -68,7 +68,7 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
                 instance.area,
                 instance.users.length - 1,
                 instance.status,
-                instance.id,
+                instance.schedule.id,
               ),
             );
           }
