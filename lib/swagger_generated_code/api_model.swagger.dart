@@ -1439,24 +1439,23 @@ abstract class ApiModel extends ChopperService {
   Future<chopper.Response> _apiTutorshipInstancesIdDelete(
       {@Path('id') required int? id});
 
-  ///
-  Future<chopper.Response<SearchTutorship>>
-      apiTutorshipInstancesEnrollTutorshipPost(
-          {required SearchTutorshipRequest? body}) {
+  ///Authentication Endpoint
+  Future<chopper.Response<OkSerializer>>
+      apiTutorshipInstancesEnrollTutorshipPost({required EnrollRequest? body}) {
     generatedMapping.putIfAbsent(
-        SearchTutorship, () => SearchTutorship.fromJsonFactory);
+        OkSerializer, () => OkSerializer.fromJsonFactory);
 
     return _apiTutorshipInstancesEnrollTutorshipPost(body: body);
   }
 
-  ///
+  ///Authentication Endpoint
   @Post(
     path: '/api/tutorship-instances/enroll-tutorship/',
     optionalBody: true,
   )
-  Future<chopper.Response<SearchTutorship>>
+  Future<chopper.Response<OkSerializer>>
       _apiTutorshipInstancesEnrollTutorshipPost(
-          {@Body() required SearchTutorshipRequest? body});
+          {@Body() required EnrollRequest? body});
 
   ///
   Future<chopper.Response<List<TutorshipReport>>> apiTutorshipReportsGet() {
@@ -2900,6 +2899,49 @@ extension $CareerXUserRequestExtension on CareerXUserRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ConflictSerializer {
+  ConflictSerializer({
+    required this.message,
+  });
+
+  factory ConflictSerializer.fromJson(Map<String, dynamic> json) =>
+      _$ConflictSerializerFromJson(json);
+
+  static const toJsonFactory = _$ConflictSerializerToJson;
+  Map<String, dynamic> toJson() => _$ConflictSerializerToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$ConflictSerializerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ConflictSerializer &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $ConflictSerializerExtension on ConflictSerializer {
+  ConflictSerializer copyWith({String? message}) {
+    return ConflictSerializer(message: message ?? this.message);
+  }
+
+  ConflictSerializer copyWithWrapped({Wrapped<String>? message}) {
+    return ConflictSerializer(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateDeleteTutorUserSchedule {
   CreateDeleteTutorUserSchedule({
     required this.id,
@@ -3114,6 +3156,49 @@ extension $CreateDeleteTutorUserScheduleRequestExtension
 }
 
 @JsonSerializable(explicitToJson: true)
+class CreatedSerializer {
+  CreatedSerializer({
+    required this.message,
+  });
+
+  factory CreatedSerializer.fromJson(Map<String, dynamic> json) =>
+      _$CreatedSerializerFromJson(json);
+
+  static const toJsonFactory = _$CreatedSerializerToJson;
+  Map<String, dynamic> toJson() => _$CreatedSerializerToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$CreatedSerializerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is CreatedSerializer &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $CreatedSerializerExtension on CreatedSerializer {
+  CreatedSerializer copyWith({String? message}) {
+    return CreatedSerializer(message: message ?? this.message);
+  }
+
+  CreatedSerializer copyWithWrapped({Wrapped<String>? message}) {
+    return CreatedSerializer(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class EmailNotValid {
   EmailNotValid({
     required this.email,
@@ -3152,6 +3237,71 @@ extension $EmailNotValidExtension on EmailNotValid {
 
   EmailNotValid copyWithWrapped({Wrapped<List<String>>? email}) {
     return EmailNotValid(email: (email != null ? email.value : this.email));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class EnrollRequest {
+  EnrollRequest({
+    required this.scheduleId,
+    required this.date,
+    required this.areaId,
+  });
+
+  factory EnrollRequest.fromJson(Map<String, dynamic> json) =>
+      _$EnrollRequestFromJson(json);
+
+  static const toJsonFactory = _$EnrollRequestToJson;
+  Map<String, dynamic> toJson() => _$EnrollRequestToJson(this);
+
+  @JsonKey(name: 'schedule_id')
+  final int scheduleId;
+  @JsonKey(name: 'date', toJson: _dateToJson)
+  final DateTime date;
+  @JsonKey(name: 'area_id')
+  final int areaId;
+  static const fromJsonFactory = _$EnrollRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is EnrollRequest &&
+            (identical(other.scheduleId, scheduleId) ||
+                const DeepCollectionEquality()
+                    .equals(other.scheduleId, scheduleId)) &&
+            (identical(other.date, date) ||
+                const DeepCollectionEquality().equals(other.date, date)) &&
+            (identical(other.areaId, areaId) ||
+                const DeepCollectionEquality().equals(other.areaId, areaId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(scheduleId) ^
+      const DeepCollectionEquality().hash(date) ^
+      const DeepCollectionEquality().hash(areaId) ^
+      runtimeType.hashCode;
+}
+
+extension $EnrollRequestExtension on EnrollRequest {
+  EnrollRequest copyWith({int? scheduleId, DateTime? date, int? areaId}) {
+    return EnrollRequest(
+        scheduleId: scheduleId ?? this.scheduleId,
+        date: date ?? this.date,
+        areaId: areaId ?? this.areaId);
+  }
+
+  EnrollRequest copyWithWrapped(
+      {Wrapped<int>? scheduleId,
+      Wrapped<DateTime>? date,
+      Wrapped<int>? areaId}) {
+    return EnrollRequest(
+        scheduleId: (scheduleId != null ? scheduleId.value : this.scheduleId),
+        date: (date != null ? date.value : this.date),
+        areaId: (areaId != null ? areaId.value : this.areaId));
   }
 }
 
@@ -3280,6 +3430,49 @@ extension $NoSearchStringExtension on NoSearchString {
 
   NoSearchString copyWithWrapped({Wrapped<String>? message}) {
     return NoSearchString(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class OkSerializer {
+  OkSerializer({
+    required this.message,
+  });
+
+  factory OkSerializer.fromJson(Map<String, dynamic> json) =>
+      _$OkSerializerFromJson(json);
+
+  static const toJsonFactory = _$OkSerializerToJson;
+  Map<String, dynamic> toJson() => _$OkSerializerToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$OkSerializerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is OkSerializer &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $OkSerializerExtension on OkSerializer {
+  OkSerializer copyWith({String? message}) {
+    return OkSerializer(message: message ?? this.message);
+  }
+
+  OkSerializer copyWithWrapped({Wrapped<String>? message}) {
+    return OkSerializer(
         message: (message != null ? message.value : this.message));
   }
 }
@@ -4943,107 +5136,6 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ReadTutorUserScheduleRequest {
-  ReadTutorUserScheduleRequest({
-    required this.tutorUser,
-    required this.modality,
-    required this.day,
-    required this.begin,
-    required this.end,
-    required this.capacity,
-  });
-
-  factory ReadTutorUserScheduleRequest.fromJson(Map<String, dynamic> json) =>
-      _$ReadTutorUserScheduleRequestFromJson(json);
-
-  static const toJsonFactory = _$ReadTutorUserScheduleRequestToJson;
-  Map<String, dynamic> toJson() => _$ReadTutorUserScheduleRequestToJson(this);
-
-  @JsonKey(name: 'tutor_user')
-  final TutorAreasRequest tutorUser;
-  @JsonKey(name: 'modality')
-  final String modality;
-  @JsonKey(name: 'day')
-  final String day;
-  @JsonKey(name: 'begin')
-  final String begin;
-  @JsonKey(name: 'end')
-  final String end;
-  @JsonKey(name: 'capacity')
-  final int capacity;
-  static const fromJsonFactory = _$ReadTutorUserScheduleRequestFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is ReadTutorUserScheduleRequest &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.modality, modality) ||
-                const DeepCollectionEquality()
-                    .equals(other.modality, modality)) &&
-            (identical(other.day, day) ||
-                const DeepCollectionEquality().equals(other.day, day)) &&
-            (identical(other.begin, begin) ||
-                const DeepCollectionEquality().equals(other.begin, begin)) &&
-            (identical(other.end, end) ||
-                const DeepCollectionEquality().equals(other.end, end)) &&
-            (identical(other.capacity, capacity) ||
-                const DeepCollectionEquality()
-                    .equals(other.capacity, capacity)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(modality) ^
-      const DeepCollectionEquality().hash(day) ^
-      const DeepCollectionEquality().hash(begin) ^
-      const DeepCollectionEquality().hash(end) ^
-      const DeepCollectionEquality().hash(capacity) ^
-      runtimeType.hashCode;
-}
-
-extension $ReadTutorUserScheduleRequestExtension
-    on ReadTutorUserScheduleRequest {
-  ReadTutorUserScheduleRequest copyWith(
-      {TutorAreasRequest? tutorUser,
-      String? modality,
-      String? day,
-      String? begin,
-      String? end,
-      int? capacity}) {
-    return ReadTutorUserScheduleRequest(
-        tutorUser: tutorUser ?? this.tutorUser,
-        modality: modality ?? this.modality,
-        day: day ?? this.day,
-        begin: begin ?? this.begin,
-        end: end ?? this.end,
-        capacity: capacity ?? this.capacity);
-  }
-
-  ReadTutorUserScheduleRequest copyWithWrapped(
-      {Wrapped<TutorAreasRequest>? tutorUser,
-      Wrapped<String>? modality,
-      Wrapped<String>? day,
-      Wrapped<String>? begin,
-      Wrapped<String>? end,
-      Wrapped<int>? capacity}) {
-    return ReadTutorUserScheduleRequest(
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        modality: (modality != null ? modality.value : this.modality),
-        day: (day != null ? day.value : this.day),
-        begin: (begin != null ? begin.value : this.begin),
-        end: (end != null ? end.value : this.end),
-        capacity: (capacity != null ? capacity.value : this.capacity));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class RefreshTokenRequest {
   RefreshTokenRequest({
     required this.refresh,
@@ -5451,84 +5543,6 @@ extension $SearchTutorshipExtension on SearchTutorship {
 }
 
 @JsonSerializable(explicitToJson: true)
-class SearchTutorshipRequest {
-  SearchTutorshipRequest({
-    required this.schedule,
-    required this.date,
-    required this.area,
-    required this.status,
-  });
-
-  factory SearchTutorshipRequest.fromJson(Map<String, dynamic> json) =>
-      _$SearchTutorshipRequestFromJson(json);
-
-  static const toJsonFactory = _$SearchTutorshipRequestToJson;
-  Map<String, dynamic> toJson() => _$SearchTutorshipRequestToJson(this);
-
-  @JsonKey(name: 'schedule')
-  final ReadTutorUserScheduleRequest schedule;
-  @JsonKey(name: 'date', toJson: _dateToJson)
-  final DateTime date;
-  @JsonKey(name: 'area')
-  final String area;
-  @JsonKey(name: 'status')
-  final String status;
-  static const fromJsonFactory = _$SearchTutorshipRequestFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is SearchTutorshipRequest &&
-            (identical(other.schedule, schedule) ||
-                const DeepCollectionEquality()
-                    .equals(other.schedule, schedule)) &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)) &&
-            (identical(other.area, area) ||
-                const DeepCollectionEquality().equals(other.area, area)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(schedule) ^
-      const DeepCollectionEquality().hash(date) ^
-      const DeepCollectionEquality().hash(area) ^
-      const DeepCollectionEquality().hash(status) ^
-      runtimeType.hashCode;
-}
-
-extension $SearchTutorshipRequestExtension on SearchTutorshipRequest {
-  SearchTutorshipRequest copyWith(
-      {ReadTutorUserScheduleRequest? schedule,
-      DateTime? date,
-      String? area,
-      String? status}) {
-    return SearchTutorshipRequest(
-        schedule: schedule ?? this.schedule,
-        date: date ?? this.date,
-        area: area ?? this.area,
-        status: status ?? this.status);
-  }
-
-  SearchTutorshipRequest copyWithWrapped(
-      {Wrapped<ReadTutorUserScheduleRequest>? schedule,
-      Wrapped<DateTime>? date,
-      Wrapped<String>? area,
-      Wrapped<String>? status}) {
-    return SearchTutorshipRequest(
-        schedule: (schedule != null ? schedule.value : this.schedule),
-        date: (date != null ? date.value : this.date),
-        area: (area != null ? area.value : this.area),
-        status: (status != null ? status.value : this.status));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class Tag {
   Tag({
     required this.id,
@@ -5722,76 +5736,6 @@ extension $TutorAreasExtension on TutorAreas {
     return TutorAreas(
         id: (id != null ? id.value : this.id),
         areas: (areas != null ? areas.value : this.areas),
-        firstName: (firstName != null ? firstName.value : this.firstName),
-        lastName: (lastName != null ? lastName.value : this.lastName),
-        profilePicture: (profilePicture != null
-            ? profilePicture.value
-            : this.profilePicture));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TutorAreasRequest {
-  TutorAreasRequest({
-    this.firstName,
-    this.lastName,
-    this.profilePicture,
-  });
-
-  factory TutorAreasRequest.fromJson(Map<String, dynamic> json) =>
-      _$TutorAreasRequestFromJson(json);
-
-  static const toJsonFactory = _$TutorAreasRequestToJson;
-  Map<String, dynamic> toJson() => _$TutorAreasRequestToJson(this);
-
-  @JsonKey(name: 'first_name')
-  final String? firstName;
-  @JsonKey(name: 'last_name')
-  final String? lastName;
-  @JsonKey(name: 'profile_picture')
-  final String? profilePicture;
-  static const fromJsonFactory = _$TutorAreasRequestFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is TutorAreasRequest &&
-            (identical(other.firstName, firstName) ||
-                const DeepCollectionEquality()
-                    .equals(other.firstName, firstName)) &&
-            (identical(other.lastName, lastName) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastName, lastName)) &&
-            (identical(other.profilePicture, profilePicture) ||
-                const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(firstName) ^
-      const DeepCollectionEquality().hash(lastName) ^
-      const DeepCollectionEquality().hash(profilePicture) ^
-      runtimeType.hashCode;
-}
-
-extension $TutorAreasRequestExtension on TutorAreasRequest {
-  TutorAreasRequest copyWith(
-      {String? firstName, String? lastName, String? profilePicture}) {
-    return TutorAreasRequest(
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        profilePicture: profilePicture ?? this.profilePicture);
-  }
-
-  TutorAreasRequest copyWithWrapped(
-      {Wrapped<String?>? firstName,
-      Wrapped<String?>? lastName,
-      Wrapped<String?>? profilePicture}) {
-    return TutorAreasRequest(
         firstName: (firstName != null ? firstName.value : this.firstName),
         lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null

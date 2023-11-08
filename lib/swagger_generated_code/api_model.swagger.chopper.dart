@@ -1124,8 +1124,8 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<SearchTutorship>> _apiTutorshipInstancesEnrollTutorshipPost(
-      {required SearchTutorshipRequest? body}) {
+  Future<Response<OkSerializer>> _apiTutorshipInstancesEnrollTutorshipPost(
+      {required EnrollRequest? body}) {
     final Uri $url = Uri.parse('/api/tutorship-instances/enroll-tutorship/');
     final $body = body;
     final Request $request = Request(
@@ -1134,7 +1134,7 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<SearchTutorship, SearchTutorship>($request);
+    return client.send<OkSerializer, OkSerializer>($request);
   }
 
   @override

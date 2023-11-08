@@ -224,6 +224,16 @@ Map<String, dynamic> _$CareerXUserRequestToJson(CareerXUserRequest instance) =>
       'user': instance.user,
     };
 
+ConflictSerializer _$ConflictSerializerFromJson(Map<String, dynamic> json) =>
+    ConflictSerializer(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$ConflictSerializerToJson(ConflictSerializer instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
 CreateDeleteTutorUserSchedule _$CreateDeleteTutorUserScheduleFromJson(
         Map<String, dynamic> json) =>
     CreateDeleteTutorUserSchedule(
@@ -270,6 +280,16 @@ Map<String, dynamic> _$CreateDeleteTutorUserScheduleRequestToJson(
       'tutor_user': instance.tutorUser,
     };
 
+CreatedSerializer _$CreatedSerializerFromJson(Map<String, dynamic> json) =>
+    CreatedSerializer(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$CreatedSerializerToJson(CreatedSerializer instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
 EmailNotValid _$EmailNotValidFromJson(Map<String, dynamic> json) =>
     EmailNotValid(
       email:
@@ -280,6 +300,20 @@ EmailNotValid _$EmailNotValidFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$EmailNotValidToJson(EmailNotValid instance) =>
     <String, dynamic>{
       'email': instance.email,
+    };
+
+EnrollRequest _$EnrollRequestFromJson(Map<String, dynamic> json) =>
+    EnrollRequest(
+      scheduleId: json['schedule_id'] as int,
+      date: DateTime.parse(json['date'] as String),
+      areaId: json['area_id'] as int,
+    );
+
+Map<String, dynamic> _$EnrollRequestToJson(EnrollRequest instance) =>
+    <String, dynamic>{
+      'schedule_id': instance.scheduleId,
+      'date': _dateToJson(instance.date),
+      'area_id': instance.areaId,
     };
 
 GoogleAccessTokenRequest _$GoogleAccessTokenRequestFromJson(
@@ -311,6 +345,15 @@ NoSearchString _$NoSearchStringFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$NoSearchStringToJson(NoSearchString instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
+OkSerializer _$OkSerializerFromJson(Map<String, dynamic> json) => OkSerializer(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$OkSerializerToJson(OkSerializer instance) =>
     <String, dynamic>{
       'message': instance.message,
     };
@@ -697,29 +740,6 @@ Map<String, dynamic> _$ReadTutorUserScheduleToJson(
       'capacity': instance.capacity,
     };
 
-ReadTutorUserScheduleRequest _$ReadTutorUserScheduleRequestFromJson(
-        Map<String, dynamic> json) =>
-    ReadTutorUserScheduleRequest(
-      tutorUser: TutorAreasRequest.fromJson(
-          json['tutor_user'] as Map<String, dynamic>),
-      modality: json['modality'] as String,
-      day: json['day'] as String,
-      begin: json['begin'] as String,
-      end: json['end'] as String,
-      capacity: json['capacity'] as int,
-    );
-
-Map<String, dynamic> _$ReadTutorUserScheduleRequestToJson(
-        ReadTutorUserScheduleRequest instance) =>
-    <String, dynamic>{
-      'tutor_user': instance.tutorUser.toJson(),
-      'modality': instance.modality,
-      'day': instance.day,
-      'begin': instance.begin,
-      'end': instance.end,
-      'capacity': instance.capacity,
-    };
-
 RefreshTokenRequest _$RefreshTokenRequestFromJson(Map<String, dynamic> json) =>
     RefreshTokenRequest(
       refresh: json['refresh'] as String,
@@ -807,25 +827,6 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'users': instance.users,
     };
 
-SearchTutorshipRequest _$SearchTutorshipRequestFromJson(
-        Map<String, dynamic> json) =>
-    SearchTutorshipRequest(
-      schedule: ReadTutorUserScheduleRequest.fromJson(
-          json['schedule'] as Map<String, dynamic>),
-      date: DateTime.parse(json['date'] as String),
-      area: json['area'] as String,
-      status: json['status'] as String,
-    );
-
-Map<String, dynamic> _$SearchTutorshipRequestToJson(
-        SearchTutorshipRequest instance) =>
-    <String, dynamic>{
-      'schedule': instance.schedule.toJson(),
-      'date': _dateToJson(instance.date),
-      'area': instance.area,
-      'status': instance.status,
-    };
-
 Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -863,20 +864,6 @@ Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
     <String, dynamic>{
       'id': instance.id,
       'areas': instance.areas,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'profile_picture': instance.profilePicture,
-    };
-
-TutorAreasRequest _$TutorAreasRequestFromJson(Map<String, dynamic> json) =>
-    TutorAreasRequest(
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
-      profilePicture: json['profile_picture'] as String?,
-    );
-
-Map<String, dynamic> _$TutorAreasRequestToJson(TutorAreasRequest instance) =>
-    <String, dynamic>{
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
