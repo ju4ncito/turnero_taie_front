@@ -5369,6 +5369,7 @@ class SearchTutorship {
     required this.date,
     required this.area,
     required this.status,
+    required this.users,
   });
 
   factory SearchTutorship.fromJson(Map<String, dynamic> json) =>
@@ -5385,6 +5386,8 @@ class SearchTutorship {
   final String area;
   @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'users', defaultValue: <int>[])
+  final List<int> users;
   static const fromJsonFactory = _$SearchTutorshipFromJson;
 
   @override
@@ -5399,7 +5402,9 @@ class SearchTutorship {
             (identical(other.area, area) ||
                 const DeepCollectionEquality().equals(other.area, area)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.users, users) ||
+                const DeepCollectionEquality().equals(other.users, users)));
   }
 
   @override
@@ -5411,6 +5416,7 @@ class SearchTutorship {
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(area) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(users) ^
       runtimeType.hashCode;
 }
 
@@ -5419,24 +5425,28 @@ extension $SearchTutorshipExtension on SearchTutorship {
       {ReadTutorUserSchedule? schedule,
       DateTime? date,
       String? area,
-      String? status}) {
+      String? status,
+      List<int>? users}) {
     return SearchTutorship(
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
         area: area ?? this.area,
-        status: status ?? this.status);
+        status: status ?? this.status,
+        users: users ?? this.users);
   }
 
   SearchTutorship copyWithWrapped(
       {Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<String>? area,
-      Wrapped<String>? status}) {
+      Wrapped<String>? status,
+      Wrapped<List<int>>? users}) {
     return SearchTutorship(
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
         area: (area != null ? area.value : this.area),
-        status: (status != null ? status.value : this.status));
+        status: (status != null ? status.value : this.status),
+        users: (users != null ? users.value : this.users));
   }
 }
 

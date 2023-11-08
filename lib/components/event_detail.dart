@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'calendar_tutor.dart';
+import 'event.dart';
 
 class EventDetail extends StatelessWidget {
   final Event event;

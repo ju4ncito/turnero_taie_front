@@ -3,7 +3,7 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import '../api/api_manager.dart';
 
 class ScheduleDetail extends StatefulWidget {
-  final TutorUserSchedule tutorSchedule;
+  final ReadTutorUserSchedule tutorSchedule;
 
   ScheduleDetail({required this.tutorSchedule});
 
@@ -18,13 +18,20 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   late TextEditingController beginController;
   late TextEditingController endController;
 
-  late TutorUserSchedule editedTutorSchedule;
+  late CreateDeleteTutorUserSchedule editedTutorSchedule;
   bool isEditing = false;
 
   @override
   void initState() {
     super.initState();
-    editedTutorSchedule = widget.tutorSchedule;
+    editedTutorSchedule = CreateDeleteTutorUserSchedule(
+        id: widget.tutorSchedule.id,
+        modality: widget.tutorSchedule.modality,
+        day: widget.tutorSchedule.day,
+        begin: widget.tutorSchedule.begin,
+        end: widget.tutorSchedule.end,
+        capacity: widget.tutorSchedule.capacity,
+        tutorUser: widget.tutorSchedule.tutorUser.id);
 
     // Initialize controllers with the current values
     dayController = TextEditingController(text: editedTutorSchedule.day);
@@ -44,7 +51,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   void saveChanges() {
     // Update the editedTutorSchedule with new values from controllers
-    editedTutorSchedule = TutorUserSchedule(
+    editedTutorSchedule = CreateDeleteTutorUserSchedule(
       id: editedTutorSchedule.id,
       day: dayController.text,
       modality: modalityController.text,
@@ -108,7 +115,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     );
 
     if (isConfirmed == true) {
-      final apiManager = ApiManager();
+      final apiManager = AuthenticatedApiManager();
       final deleteResult =
           await apiManager.apiModel.apiTutorUserSchedulesIdDelete(
         id: widget.tutorSchedule.id,
@@ -228,17 +235,18 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 if (isEditing)
                   ElevatedButton(
                     onPressed: () async {
-                      final editedTutorSchedule = TutorUserSchedule(
+                      final editedTutorSchedule = CreateDeleteTutorUserSchedule(
                         id: widget.tutorSchedule.id,
                         day: dayController.text,
                         modality: modalityController.text,
                         capacity: int.parse(capacityController.text),
                         begin: beginController.text,
                         end: endController.text,
-                        tutorUser: widget.tutorSchedule.tutorUser,
+                        tutorUser: widget.tutorSchedule.tutorUser.id,
                       );
 
-                      final patchedRequest = PatchedTutorUserScheduleRequest(
+                      final patchedRequest =
+                          PatchedCreateDeleteTutorUserScheduleRequest(
                         modality: editedTutorSchedule.modality,
                         day: editedTutorSchedule.day,
                         begin: editedTutorSchedule.begin,
@@ -249,7 +257,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
                       print("Tutoria Request Body: ${patchedRequest.toJson()}");
 
-                      final apiManager = ApiManager();
+                      final apiManager = AuthenticatedApiManager();
                       final postResult = await apiManager.apiModel
                           .apiTutorUserSchedulesIdPatch(
                         id: widget.tutorSchedule.id,

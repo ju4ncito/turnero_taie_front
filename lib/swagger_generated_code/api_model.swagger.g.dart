@@ -794,6 +794,8 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
       date: DateTime.parse(json['date'] as String),
       area: json['area'] as String,
       status: json['status'] as String,
+      users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
+          [],
     );
 
 Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
@@ -802,6 +804,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'date': _dateToJson(instance.date),
       'area': instance.area,
       'status': instance.status,
+      'users': instance.users,
     };
 
 SearchTutorshipRequest _$SearchTutorshipRequestFromJson(

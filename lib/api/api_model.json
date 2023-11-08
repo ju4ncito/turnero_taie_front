@@ -6015,13 +6015,21 @@
                     "status": {
                         "type": "string",
                         "maxLength": 25
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "readOnly": true
                     }
                 },
                 "required": [
                     "area",
                     "date",
                     "schedule",
-                    "status"
+                    "status",
+                    "users"
                 ]
             },
             "SearchTutorshipRequest": {

@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/pages/login.dart';
 import 'package:turnero_taie_front/pages/student_main.dart';
+import '../storage/secure_storage.dart';
 import 'tutor_main.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
@@ -33,6 +34,16 @@ class LandingPage extends StatelessWidget {
           // print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
 
           if (apiAuth.statusCode == 200) {
+            final user = apiAuth.body?.user;
+            final accessToken = apiAuth.body?.accessToken;
+            final refreshToken = apiAuth.body?.refreshToken;
+            if (user != null) {
+              UserSecureStorage.setField('accessToken', accessToken);
+
+              UserSecureStorage.setField('refreshToken', refreshToken);
+
+              print('saved access tokens ${accessToken} ${refreshToken}');
+            }
             if (apiAuth.body?.user.roles != null &&
                 apiAuth.body!.user.roles.contains("TUTOR")) {
               if (context.mounted) {

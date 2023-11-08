@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
-import 'dart:collection';
 import '../components/tut_event_card.dart';
+import 'event.dart';
 
 class TableEventsExample extends StatefulWidget {
   const TableEventsExample({super.key});
@@ -15,8 +15,8 @@ class TableEventsExample extends StatefulWidget {
 class _TableEventsExampleState extends State<TableEventsExample> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  final ApiManager apiManager = ApiManager();
-  List<TutorshipInstance> instances = [];
+  final apiManager = AuthenticatedApiManager();
+  List<SearchTutorship> instances = [];
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -42,13 +42,18 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     });
 
     try {
-      final response = await apiManager.apiModel.apiTutorshipInstancesGet();
+      final response =
+          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
+
       if (response.statusCode == 200) {
+        // print('response de fetchinstance ${response.body}');
+
         setState(() {
           kEvents.clear();
 
-          instances = List<TutorshipInstance>.from(response.body ?? []);
-          for (final TutorshipInstance instance in instances) {
+          instances = List<SearchTutorship>.from(response.body ?? []);
+          print(instances);
+          for (final SearchTutorship instance in instances) {
             print('Area: ${instance.area}');
 
             final DateTime startDateTime = instance.date;
@@ -65,9 +70,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             kEvents[eventDate]!.add(
               Event(
                 instance.area,
-                instance.users.length - 1,
+                instance.schedule.capacity - 1,
                 instance.status,
-                instance.id,
+                instance.schedule.id,
               ),
             );
           }
@@ -223,25 +228,3 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     );
   }
 }
-
-class Event {
-  final String? area;
-  final int? asistentes;
-  final String? status;
-  final int? id;
-
-  const Event(this.area, this.asistentes, this.status, this.id);
-}
-
-int getHashCode(DateTime key) {
-  return key.day * 1000000 + key.month * 10000 + key.year;
-}
-
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
-
-final kEvents = LinkedHashMap<DateTime, List<Event>>(
-  equals: isSameDay,
-  hashCode: getHashCode,
-);

@@ -3,13 +3,13 @@ import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart
 import 'schedule_info.dart';
 
 class StdCard extends StatelessWidget {
-  final TutorUserSchedule tutoria;
+  final SearchTutorship tutoria;
 
   const StdCard({super.key, required this.tutoria});
 
   @override
   Widget build(BuildContext context) {
-    final String dayOfWeek = tutoria.day;
+    final String dayOfWeek = tutoria.schedule.day;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -50,7 +50,7 @@ class StdCard extends StatelessWidget {
                         vertical: MediaQuery.of(context).size.height * 0.01,
                       ),
                       child: Text(
-                        '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
+                        '${tutoria.schedule.modality} con ${tutoria.schedule.capacity.toString()} asistentes',
                         style: const TextStyle(
                           color: Color.fromARGB(255, 203, 225, 255),
                           fontSize: 16,
@@ -73,7 +73,7 @@ class StdCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'de ${tutoria.begin.substring(0, tutoria.begin.length - 3)} a ${tutoria.end.substring(0, tutoria.end.length - 3)}',
+                          'de ${tutoria.schedule.begin.substring(0, tutoria.schedule.begin.length - 3)} a ${tutoria.schedule.end.substring(0, tutoria.schedule.end.length - 3)}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.grey[100],
@@ -87,14 +87,14 @@ class StdCard extends StatelessWidget {
               ),
               onTap: () {
                 print('Tutoria selected: $dayOfWeek');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScheduleInfo(
-                      tutorSchedule: tutoria,
-                    ),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   // MaterialPageRoute(
+                //   //   // builder: (context) => ScheduleInfo(
+                //   //   //   tutorSchedule: tutoria,
+                //   //   // ),
+                //   // ),
+                // );
               },
             ),
           ],
