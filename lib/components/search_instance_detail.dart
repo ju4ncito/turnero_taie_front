@@ -25,7 +25,6 @@ class SearchInstancePage extends StatelessWidget {
               'Area: ${tutorInstance.area}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 10),
             Text('Date: ${tutorInstance.date}'),
             const SizedBox(height: 10),
@@ -33,40 +32,44 @@ class SearchInstancePage extends StatelessWidget {
             const SizedBox(height: 10),
             Text('Cantidad de asistentes: ${tutorInstance.users.length - 1}'),
             const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () async {
+                final tutoriaRequest = SearchTutorshipRequest(
+                    area: tutorInstance.area,
+                    date: tutorInstance.date,
+                    schedule: ReadTutorUserScheduleRequest(
+                        tutorUser: TutorAreasRequest(
+                            firstName:
+                                tutorInstance.schedule.tutorUser.firstName,
+                            lastName: tutorInstance.schedule.tutorUser.lastName,
+                            profilePicture: tutorInstance
+                                .schedule.tutorUser.profilePicture),
+                        modality: tutorInstance.schedule.modality,
+                        day: tutorInstance.schedule.day,
+                        begin: tutorInstance.schedule.begin,
+                        end: tutorInstance.schedule.end,
+                        capacity: tutorInstance.schedule.capacity),
+                    status: tutorInstance.status);
 
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     final tutoriaRequest = CreateDeleteTutorUserScheduleRequest(
-            //       begin: _beginController.text,
-            //       capacity: int.parse(_capacityController.text),
-            //       day: _selectedDay,
-            //       end: _endController.text,
-            //       modality: _selectedModality,
-            //       tutorUser: widget.currentUser!.id,
-            //     );
+                print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-            //     print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
+                final localContext = context;
+                final apiManager = AuthenticatedApiManager();
+                final postResult = await apiManager.apiModel
+                    .apiTutorshipInstancesEnrollTutorshipPost(
+                  body: tutoriaRequest,
+                );
 
-            //     final localContext = context;
-            //     final postResult = await AuthenticatedApiManager.apiModel
-            //         .apiTutorUserSchedulesPost(
-            //       body: tutoriaRequest,
-            //     );
-            //     print(postResult.error);
-            //     print("API Response Status Code: ${postResult.statusCode}");
+                print(postResult.error);
+                print(
+                    "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
 
-            //     widget.fetchFn();
-            //     if (context.mounted) {
-            //       Navigator.pop(localContext);
-            //     }
-            //   },
-            //   child: const Text('Add Tutoria'),
-            // ),
-            // Text('End: ${tutorUserSchedule.end}'),
-            // const SizedBox(height: 10),
-            // Text('Capacity: ${tutorUserSchedule.capacity}'),
-            // const SizedBox(height: 10),
-            // Add more details as needed
+                if (context.mounted) {
+                  Navigator.pop(localContext);
+                }
+              },
+              child: const Text('Add Tutoria'),
+            ),
           ],
         ),
       ),

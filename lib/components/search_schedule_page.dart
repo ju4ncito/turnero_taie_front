@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
+import '../api/api_manager.dart';
+
 class SearchSchedulePage extends StatelessWidget {
   final ReadTutorUserSchedule tutorUserSchedule;
 
@@ -22,7 +24,6 @@ class SearchSchedulePage extends StatelessWidget {
               'Name: ${tutorUserSchedule.tutorUser.firstName} ${tutorUserSchedule.tutorUser.lastName}',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 10),
             Text('Modality: ${tutorUserSchedule.modality}'),
             const SizedBox(height: 10),
@@ -34,7 +35,33 @@ class SearchSchedulePage extends StatelessWidget {
             const SizedBox(height: 10),
             Text('Capacity: ${tutorUserSchedule.capacity}'),
             const SizedBox(height: 10),
-            // Add more details as needed
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final tutoriaRequest = SearchTutorshipRequest(
+            //         area: tutorUserSchedule.tutorUser.areas[],
+            //         date: tutorUserSchedule.day,
+            //         schedule: ReadTutorUserScheduleRequest(tutorUser: TutorAreasRequest(
+
+            //         ) , modality: modality, day: day, begin: begin, end: end, capacity: capacity),
+            //         status: 'Pendiente');
+
+            //     print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
+
+            //     final localContext = context;
+            //     final apiManager = AuthenticatedApiManager();
+            //     final postResult = await apiManager.apiModel
+            //         .apiTutorshipInstancesEnrollTutorshipPost(
+            //       body: tutoriaRequest,
+            //     );
+            //     print(postResult.error);
+            //     print("API Response Status Code: ${postResult.statusCode}");
+
+            //     if (context.mounted) {
+            //       Navigator.pop(localContext);
+            //     }
+            //   },
+            //   child: const Text('Add Tutoria'),
+            // ),
           ],
         ),
       ),
