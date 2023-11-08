@@ -5077,10 +5077,7 @@
                         "readOnly": true
                     },
                     "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                        "$ref": "#/components/schemas/Tag"
                     },
                     "name": {
                         "type": "string",
@@ -5113,11 +5110,7 @@
                 "type": "object",
                 "properties": {
                     "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "minLength": 1
-                        }
+                        "$ref": "#/components/schemas/TagRequest"
                     },
                     "name": {
                         "type": "string",
@@ -5540,11 +5533,7 @@
                 "type": "object",
                 "properties": {
                     "tags": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "minLength": 1
-                        }
+                        "$ref": "#/components/schemas/TagRequest"
                     },
                     "name": {
                         "type": "string",
@@ -6067,7 +6056,7 @@
                         "format": "date"
                     },
                     "area": {
-                        "type": "string"
+                        "$ref": "#/components/schemas/TutorshipArea"
                     },
                     "status": {
                         "type": "string",
@@ -6237,6 +6226,23 @@
                     "tutor_user",
                     "tutorship_instance",
                     "utility"
+                ]
+            },
+            "TutorshipArea": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 50
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
                 ]
             },
             "TutorshipInstance": {

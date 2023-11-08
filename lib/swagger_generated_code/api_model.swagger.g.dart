@@ -64,9 +64,7 @@ Map<String, dynamic> _$AcademicYearRequestToJson(
 
 Area _$AreaFromJson(Map<String, dynamic> json) => Area(
       id: json['id'] as int,
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
+      tags: Tag.fromJson(json['tags'] as Map<String, dynamic>),
       name: json['name'] as String,
       postulations: (json['postulations'] as List<dynamic>?)
               ?.map((e) => e as int)
@@ -78,22 +76,20 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
 
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
       'id': instance.id,
-      'tags': instance.tags,
+      'tags': instance.tags.toJson(),
       'name': instance.name,
       'postulations': instance.postulations,
       'users': instance.users,
     };
 
 AreaRequest _$AreaRequestFromJson(Map<String, dynamic> json) => AreaRequest(
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
+      tags: TagRequest.fromJson(json['tags'] as Map<String, dynamic>),
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$AreaRequestToJson(AreaRequest instance) =>
     <String, dynamic>{
-      'tags': instance.tags,
+      'tags': instance.tags.toJson(),
       'name': instance.name,
     };
 
@@ -392,15 +388,15 @@ Map<String, dynamic> _$PatchedAcademicYearRequestToJson(
 
 PatchedAreaRequest _$PatchedAreaRequestFromJson(Map<String, dynamic> json) =>
     PatchedAreaRequest(
-      tags:
-          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
+      tags: json['tags'] == null
+          ? null
+          : TagRequest.fromJson(json['tags'] as Map<String, dynamic>),
       name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$PatchedAreaRequestToJson(PatchedAreaRequest instance) =>
     <String, dynamic>{
-      'tags': instance.tags,
+      'tags': instance.tags?.toJson(),
       'name': instance.name,
     };
 
@@ -812,7 +808,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
       schedule: ReadTutorUserSchedule.fromJson(
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
-      area: json['area'] as String,
+      area: TutorshipArea.fromJson(json['area'] as Map<String, dynamic>),
       status: json['status'] as String,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
@@ -822,7 +818,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
     <String, dynamic>{
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
-      'area': instance.area,
+      'area': instance.area.toJson(),
       'status': instance.status,
       'users': instance.users,
     };
@@ -915,6 +911,18 @@ Map<String, dynamic> _$TutorUserReviewRequestToJson(
       'tutor_user': instance.tutorUser,
       'student_user': instance.studentUser,
       'tutorship_instance': instance.tutorshipInstance,
+    };
+
+TutorshipArea _$TutorshipAreaFromJson(Map<String, dynamic> json) =>
+    TutorshipArea(
+      id: json['id'] as int,
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$TutorshipAreaToJson(TutorshipArea instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
     };
 
 TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>

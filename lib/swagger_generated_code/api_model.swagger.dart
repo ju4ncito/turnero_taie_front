@@ -2226,8 +2226,8 @@ class Area {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'tags', defaultValue: <String>[])
-  final List<String> tags;
+  @JsonKey(name: 'tags')
+  final Tag tags;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'postulations', defaultValue: <int>[])
@@ -2269,7 +2269,7 @@ class Area {
 extension $AreaExtension on Area {
   Area copyWith(
       {int? id,
-      List<String>? tags,
+      Tag? tags,
       String? name,
       List<int>? postulations,
       List<int>? users}) {
@@ -2283,7 +2283,7 @@ extension $AreaExtension on Area {
 
   Area copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<List<String>>? tags,
+      Wrapped<Tag>? tags,
       Wrapped<String>? name,
       Wrapped<List<int>>? postulations,
       Wrapped<List<int>>? users}) {
@@ -2310,8 +2310,8 @@ class AreaRequest {
   static const toJsonFactory = _$AreaRequestToJson;
   Map<String, dynamic> toJson() => _$AreaRequestToJson(this);
 
-  @JsonKey(name: 'tags', defaultValue: <String>[])
-  final List<String> tags;
+  @JsonKey(name: 'tags')
+  final TagRequest tags;
   @JsonKey(name: 'name')
   final String name;
   static const fromJsonFactory = _$AreaRequestFromJson;
@@ -2337,12 +2337,12 @@ class AreaRequest {
 }
 
 extension $AreaRequestExtension on AreaRequest {
-  AreaRequest copyWith({List<String>? tags, String? name}) {
+  AreaRequest copyWith({TagRequest? tags, String? name}) {
     return AreaRequest(tags: tags ?? this.tags, name: name ?? this.name);
   }
 
   AreaRequest copyWithWrapped(
-      {Wrapped<List<String>>? tags, Wrapped<String>? name}) {
+      {Wrapped<TagRequest>? tags, Wrapped<String>? name}) {
     return AreaRequest(
         tags: (tags != null ? tags.value : this.tags),
         name: (name != null ? name.value : this.name));
@@ -3608,8 +3608,8 @@ class PatchedAreaRequest {
   static const toJsonFactory = _$PatchedAreaRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedAreaRequestToJson(this);
 
-  @JsonKey(name: 'tags', defaultValue: <String>[])
-  final List<String>? tags;
+  @JsonKey(name: 'tags')
+  final TagRequest? tags;
   @JsonKey(name: 'name')
   final String? name;
   static const fromJsonFactory = _$PatchedAreaRequestFromJson;
@@ -3635,12 +3635,12 @@ class PatchedAreaRequest {
 }
 
 extension $PatchedAreaRequestExtension on PatchedAreaRequest {
-  PatchedAreaRequest copyWith({List<String>? tags, String? name}) {
+  PatchedAreaRequest copyWith({TagRequest? tags, String? name}) {
     return PatchedAreaRequest(tags: tags ?? this.tags, name: name ?? this.name);
   }
 
   PatchedAreaRequest copyWithWrapped(
-      {Wrapped<List<String>?>? tags, Wrapped<String?>? name}) {
+      {Wrapped<TagRequest?>? tags, Wrapped<String?>? name}) {
     return PatchedAreaRequest(
         tags: (tags != null ? tags.value : this.tags),
         name: (name != null ? name.value : this.name));
@@ -5475,7 +5475,7 @@ class SearchTutorship {
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
   @JsonKey(name: 'area')
-  final String area;
+  final TutorshipArea area;
   @JsonKey(name: 'status')
   final String status;
   @JsonKey(name: 'users', defaultValue: <int>[])
@@ -5516,7 +5516,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWith(
       {ReadTutorUserSchedule? schedule,
       DateTime? date,
-      String? area,
+      TutorshipArea? area,
       String? status,
       List<int>? users}) {
     return SearchTutorship(
@@ -5530,7 +5530,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWithWrapped(
       {Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<String>? area,
+      Wrapped<TutorshipArea>? area,
       Wrapped<String>? status,
       Wrapped<List<int>>? users}) {
     return SearchTutorship(
@@ -5983,6 +5983,57 @@ extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class TutorshipArea {
+  TutorshipArea({
+    required this.id,
+    required this.name,
+  });
+
+  factory TutorshipArea.fromJson(Map<String, dynamic> json) =>
+      _$TutorshipAreaFromJson(json);
+
+  static const toJsonFactory = _$TutorshipAreaToJson;
+  Map<String, dynamic> toJson() => _$TutorshipAreaToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'name')
+  final String name;
+  static const fromJsonFactory = _$TutorshipAreaFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is TutorshipArea &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
+      runtimeType.hashCode;
+}
+
+extension $TutorshipAreaExtension on TutorshipArea {
+  TutorshipArea copyWith({int? id, String? name}) {
+    return TutorshipArea(id: id ?? this.id, name: name ?? this.name);
+  }
+
+  TutorshipArea copyWithWrapped({Wrapped<int>? id, Wrapped<String>? name}) {
+    return TutorshipArea(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name));
   }
 }
 
