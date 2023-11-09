@@ -69,7 +69,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
             kEvents[eventDate]!.add(
               Event(
-                instance.area,
+                instance.area.name,
                 instance.schedule.capacity - 1,
                 instance.status,
                 instance.schedule.id,

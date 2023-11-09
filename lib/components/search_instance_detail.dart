@@ -34,22 +34,10 @@ class SearchInstancePage extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () async {
-                final tutoriaRequest = SearchTutorshipRequest(
-                    area: tutorInstance.area,
+                final tutoriaRequest = EnrollRequest(
+                    scheduleId: tutorInstance.schedule.id,
                     date: tutorInstance.date,
-                    schedule: ReadTutorUserScheduleRequest(
-                        tutorUser: TutorAreasRequest(
-                            firstName:
-                                tutorInstance.schedule.tutorUser.firstName,
-                            lastName: tutorInstance.schedule.tutorUser.lastName,
-                            profilePicture: tutorInstance
-                                .schedule.tutorUser.profilePicture),
-                        modality: tutorInstance.schedule.modality,
-                        day: tutorInstance.schedule.day,
-                        begin: tutorInstance.schedule.begin,
-                        end: tutorInstance.schedule.end,
-                        capacity: tutorInstance.schedule.capacity),
-                    status: tutorInstance.status);
+                    areaId: tutorInstance.area.id);
 
                 print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 

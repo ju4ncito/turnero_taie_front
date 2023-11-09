@@ -107,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
                                   (index) {
                                     final tutorshipInstance = searchResults[0]!
                                         .tutorshipInstances[index];
-                                    final title = tutorshipInstance.area;
+                                    final title = tutorshipInstance.area.name;
                                     final formattedDate = capitalize(
                                         DateFormat('EEEEE dd-MM', 'es_AR')
                                             .format(tutorshipInstance.date));

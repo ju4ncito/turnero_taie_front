@@ -65,7 +65,7 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
 
             kEvents[eventDate]!.add(
               Event(
-                instance.area,
+                instance.area.name,
                 instance.users.length - 1,
                 instance.status,
                 instance.schedule.id,
