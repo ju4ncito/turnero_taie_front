@@ -4,6 +4,7 @@ import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/components/search_schedule_page.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'search_instance_detail.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -67,8 +68,14 @@ class _SearchPageState extends State<SearchPage> {
                   setState(() {
                     searchResults.clear();
                   });
+                  EasyDebounce.cancel(
+                      'search-debouncer'); // Cancel any ongoing debounce operations
                 } else {
-                  performSearch(query);
+                  EasyDebounce.debounce(
+                    'search-debouncer',
+                    const Duration(milliseconds: 200),
+                    () => performSearch(query),
+                  );
                 }
               },
               decoration: const InputDecoration(
@@ -86,87 +93,96 @@ class _SearchPageState extends State<SearchPage> {
                         ? ListView(
                             children: [
                               // Tutorship instances list
-                              const Text(
-                                'Tutorias programadas',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Text(
-                                  'Tutorias a las que puedes sumarte',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.grey),
-                                ),
-                              ),
-                              const SizedBox(height: 6),
+
                               if (searchResults[0]!
                                   .tutorshipInstances
                                   .isNotEmpty)
-                                ...List.generate(
-                                  searchResults[0]!.tutorshipInstances.length,
-                                  (index) {
-                                    final tutorshipInstance = searchResults[0]!
-                                        .tutorshipInstances[index];
-                                    final title = tutorshipInstance.area.name;
-                                    final formattedDate = capitalize(
-                                        DateFormat('EEEEE dd-MM', 'es_AR')
-                                            .format(tutorshipInstance.date));
-
-                                    final subtitle = Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            "$formattedDate de ${tutorshipInstance.schedule.begin.substring(0, tutorshipInstance.schedule.begin.length - 3)} a ${tutorshipInstance.schedule.end.substring(0, tutorshipInstance.schedule.begin.length - 3)} con"),
-                                        Text(
-                                          ' ${tutorshipInstance.schedule.tutorUser.firstName}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(title),
-                                        subtitle: subtitle,
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SearchInstancePage(
-                                                      tutorInstance:
-                                                          tutorshipInstance),
-                                            ),
-                                          );
-                                        },
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      'Tutorias programadas',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(3.0),
+                                      child: Text(
+                                        'Tutorias a las que puedes sumarte',
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.grey),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    SizedBox(height: 6),
+                                  ],
                                 ),
-                              if (searchResults[0]!.tutorshipInstances.isEmpty)
-                                const Text(
-                                  'No hay tutorias a las cuales puedes sumarte',
-                                ),
+                              ...List.generate(
+                                searchResults[0]!.tutorshipInstances.length,
+                                (index) {
+                                  final tutorshipInstance = searchResults[0]!
+                                      .tutorshipInstances[index];
+                                  final title = tutorshipInstance.area.name;
+                                  final formattedDate = capitalize(
+                                      DateFormat('EEEEE dd-MM', 'es_AR')
+                                          .format(tutorshipInstance.date));
 
-                              const SizedBox(height: 20),
-                              // Schedules list
-                              if (searchResults[0]!.schedules.isNotEmpty)
-                                const Text(
-                                  'Horarios disponibles',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              const Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: Text(
-                                  'Reserva una tutoria con un tutor',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.grey),
-                                ),
+                                  final subtitle = Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "$formattedDate de ${tutorshipInstance.schedule.begin.substring(0, tutorshipInstance.schedule.begin.length - 3)} a ${tutorshipInstance.schedule.end.substring(0, tutorshipInstance.schedule.begin.length - 3)} con"),
+                                      Text(
+                                        ' ${tutorshipInstance.schedule.tutorUser.firstName}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+
+                                  return Card(
+                                    child: ListTile(
+                                      title: Text(title),
+                                      subtitle: subtitle,
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchInstancePage(
+                                                    tutorInstance:
+                                                        tutorshipInstance),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
-                              const SizedBox(height: 6),
+                              // if (searchResults[0]!.tutorshipInstances.isEmpty)
+
+                              if (searchResults[0]!.schedules.isNotEmpty)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    SizedBox(height: 20),
+                                    Text(
+                                      'Horarios disponibles',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(3.0),
+                                      child: Text(
+                                        'Selecciona un horario y reserva una tutoría',
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.grey),
+                                      ),
+                                    ),
+                                    SizedBox(height: 6),
+                                  ],
+                                ),
+                              // Schedules list
+
                               ...List.generate(
                                 searchResults[0]!.schedules.length,
                                 (index) {
@@ -196,16 +212,33 @@ class _SearchPageState extends State<SearchPage> {
                                   );
                                 },
                               ),
-                              if (searchResults[0]!.schedules.isEmpty)
-                                const Text('No se encontraron horarios'),
+                              if (searchResults[0]!.schedules.isEmpty &&
+                                  searchResults[0]!.tutorshipInstances.isEmpty)
+                                const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'En caso de no encontrar lo que buscabas, prueba con otros términos o contacta a secretaría',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
                             ],
                           )
                         : const Center(
-                            child: Text(
-                              'En caso de no encontrar lo que buscabas, prueba con otra materia',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'En caso de no encontrar lo que buscabas, prueba con otros términos o contacta a secretaría',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           )),
