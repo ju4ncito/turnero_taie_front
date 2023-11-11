@@ -286,6 +286,17 @@ Map<String, dynamic> _$CreatedSerializerToJson(CreatedSerializer instance) =>
       'message': instance.message,
     };
 
+CustomArea _$CustomAreaFromJson(Map<String, dynamic> json) => CustomArea(
+      id: json['id'] as int,
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$CustomAreaToJson(CustomArea instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
 EmailNotValid _$EmailNotValidFromJson(Map<String, dynamic> json) =>
     EmailNotValid(
       email:
@@ -808,7 +819,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
       schedule: ReadTutorUserSchedule.fromJson(
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
-      area: TutorshipArea.fromJson(json['area'] as Map<String, dynamic>),
+      area: CustomArea.fromJson(json['area'] as Map<String, dynamic>),
       status: json['status'] as String,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
@@ -848,9 +859,7 @@ Map<String, dynamic> _$TagRequestToJson(TagRequest instance) =>
 
 TutorAreas _$TutorAreasFromJson(Map<String, dynamic> json) => TutorAreas(
       id: json['id'] as int,
-      areas:
-          (json['areas'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              [],
+      areas: CustomArea.fromJson(json['areas'] as Map<String, dynamic>),
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
@@ -859,7 +868,7 @@ TutorAreas _$TutorAreasFromJson(Map<String, dynamic> json) => TutorAreas(
 Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'areas': instance.areas,
+      'areas': instance.areas.toJson(),
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
@@ -911,18 +920,6 @@ Map<String, dynamic> _$TutorUserReviewRequestToJson(
       'tutor_user': instance.tutorUser,
       'student_user': instance.studentUser,
       'tutorship_instance': instance.tutorshipInstance,
-    };
-
-TutorshipArea _$TutorshipAreaFromJson(Map<String, dynamic> json) =>
-    TutorshipArea(
-      id: json['id'] as int,
-      name: json['name'] as String,
-    );
-
-Map<String, dynamic> _$TutorshipAreaToJson(TutorshipArea instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
     };
 
 TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>

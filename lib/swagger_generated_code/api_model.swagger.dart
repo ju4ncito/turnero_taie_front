@@ -1439,7 +1439,7 @@ abstract class ApiModel extends ChopperService {
   Future<chopper.Response> _apiTutorshipInstancesIdDelete(
       {@Path('id') required int? id});
 
-  ///Authentication Endpoint
+  ///Enroll a student to an existing o new tutorship
   Future<chopper.Response<OkSerializer>>
       apiTutorshipInstancesEnrollTutorshipPost({required EnrollRequest? body}) {
     generatedMapping.putIfAbsent(
@@ -1448,7 +1448,7 @@ abstract class ApiModel extends ChopperService {
     return _apiTutorshipInstancesEnrollTutorshipPost(body: body);
   }
 
-  ///Authentication Endpoint
+  ///Enroll a student to an existing o new tutorship
   @Post(
     path: '/api/tutorship-instances/enroll-tutorship/',
     optionalBody: true,
@@ -3195,6 +3195,57 @@ extension $CreatedSerializerExtension on CreatedSerializer {
   CreatedSerializer copyWithWrapped({Wrapped<String>? message}) {
     return CreatedSerializer(
         message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CustomArea {
+  CustomArea({
+    required this.id,
+    required this.name,
+  });
+
+  factory CustomArea.fromJson(Map<String, dynamic> json) =>
+      _$CustomAreaFromJson(json);
+
+  static const toJsonFactory = _$CustomAreaToJson;
+  Map<String, dynamic> toJson() => _$CustomAreaToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'name')
+  final String name;
+  static const fromJsonFactory = _$CustomAreaFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is CustomArea &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
+      runtimeType.hashCode;
+}
+
+extension $CustomAreaExtension on CustomArea {
+  CustomArea copyWith({int? id, String? name}) {
+    return CustomArea(id: id ?? this.id, name: name ?? this.name);
+  }
+
+  CustomArea copyWithWrapped({Wrapped<int>? id, Wrapped<String>? name}) {
+    return CustomArea(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name));
   }
 }
 
@@ -5475,7 +5526,7 @@ class SearchTutorship {
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
   @JsonKey(name: 'area')
-  final TutorshipArea area;
+  final CustomArea area;
   @JsonKey(name: 'status')
   final String status;
   @JsonKey(name: 'users', defaultValue: <int>[])
@@ -5516,7 +5567,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWith(
       {ReadTutorUserSchedule? schedule,
       DateTime? date,
-      TutorshipArea? area,
+      CustomArea? area,
       String? status,
       List<int>? users}) {
     return SearchTutorship(
@@ -5530,7 +5581,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWithWrapped(
       {Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<TutorshipArea>? area,
+      Wrapped<CustomArea>? area,
       Wrapped<String>? status,
       Wrapped<List<int>>? users}) {
     return SearchTutorship(
@@ -5670,8 +5721,8 @@ class TutorAreas {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'areas', defaultValue: <String>[])
-  final List<String> areas;
+  @JsonKey(name: 'areas')
+  final CustomArea areas;
   @JsonKey(name: 'first_name')
   final String? firstName;
   @JsonKey(name: 'last_name')
@@ -5715,7 +5766,7 @@ class TutorAreas {
 extension $TutorAreasExtension on TutorAreas {
   TutorAreas copyWith(
       {int? id,
-      List<String>? areas,
+      CustomArea? areas,
       String? firstName,
       String? lastName,
       String? profilePicture}) {
@@ -5729,7 +5780,7 @@ extension $TutorAreasExtension on TutorAreas {
 
   TutorAreas copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<List<String>>? areas,
+      Wrapped<CustomArea>? areas,
       Wrapped<String?>? firstName,
       Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture}) {
@@ -5983,57 +6034,6 @@ extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class TutorshipArea {
-  TutorshipArea({
-    required this.id,
-    required this.name,
-  });
-
-  factory TutorshipArea.fromJson(Map<String, dynamic> json) =>
-      _$TutorshipAreaFromJson(json);
-
-  static const toJsonFactory = _$TutorshipAreaToJson;
-  Map<String, dynamic> toJson() => _$TutorshipAreaToJson(this);
-
-  @JsonKey(name: 'id')
-  final int id;
-  @JsonKey(name: 'name')
-  final String name;
-  static const fromJsonFactory = _$TutorshipAreaFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is TutorshipArea &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(name) ^
-      runtimeType.hashCode;
-}
-
-extension $TutorshipAreaExtension on TutorshipArea {
-  TutorshipArea copyWith({int? id, String? name}) {
-    return TutorshipArea(id: id ?? this.id, name: name ?? this.name);
-  }
-
-  TutorshipArea copyWithWrapped({Wrapped<int>? id, Wrapped<String>? name}) {
-    return TutorshipArea(
-        id: (id != null ? id.value : this.id),
-        name: (name != null ? name.value : this.name));
   }
 }
 
