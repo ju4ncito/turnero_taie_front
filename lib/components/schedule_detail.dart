@@ -137,7 +137,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Schedule Detail'),
+        title: const Text('Detalle del horario'),
+        backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -16,7 +16,7 @@ class TutCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      color: const Color.fromARGB(255, 63, 92, 143),
+      color: const Color.fromARGB(255, 50, 75, 118),
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(

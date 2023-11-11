@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Te damos la bienvenida a Turnero TAIE!'),
-        backgroundColor: const Color.fromARGB(255, 29, 69, 140),
+        backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Column(
         children: [

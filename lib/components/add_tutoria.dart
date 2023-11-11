@@ -60,7 +60,8 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Tutoria'),
+        title: const Text('Agregar un horario'),
+        backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

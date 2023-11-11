@@ -55,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Búsqueda'),
-        backgroundColor: const Color.fromARGB(255, 29, 69, 140),
+        backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -10,7 +10,8 @@ class EventDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Detail'),
+        title: Text('Detalle del evento'),
+        backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

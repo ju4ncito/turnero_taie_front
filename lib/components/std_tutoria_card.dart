@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:turnero_taie_front/components/std_schedule_info.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import 'schedule_info.dart';
 
 class StdCard extends StatelessWidget {
   final SearchTutorship tutoria;
@@ -15,7 +15,7 @@ class StdCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      color: const Color.fromARGB(255, 63, 92, 143),
+      color: const Color.fromARGB(255, 50, 75, 118),
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(
@@ -50,7 +50,7 @@ class StdCard extends StatelessWidget {
                         vertical: MediaQuery.of(context).size.height * 0.01,
                       ),
                       child: Text(
-                        '${tutoria.schedule.modality} con ${tutoria.schedule.capacity.toString()} asistentes',
+                        '${tutoria.schedule.modality} con ${tutoria.schedule.tutorUser.firstName} ',
                         style: const TextStyle(
                           color: Color.fromARGB(255, 203, 225, 255),
                           fontSize: 16,
@@ -87,14 +87,14 @@ class StdCard extends StatelessWidget {
               ),
               onTap: () {
                 print('Tutoria selected: $dayOfWeek');
-                // Navigator.push(
-                //   context,
-                //   // MaterialPageRoute(
-                //   //   // builder: (context) => ScheduleInfo(
-                //   //   //   tutorSchedule: tutoria,
-                //   //   // ),
-                //   // ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduleInfo(
+                      tutorInstance: tutoria,
+                    ),
+                  ),
+                );
               },
             ),
           ],
