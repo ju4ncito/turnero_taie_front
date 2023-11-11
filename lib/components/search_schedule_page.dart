@@ -23,12 +23,18 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
   _SearchSchedulePageState({required this.tutorUserSchedule});
 
   String _selectedArea = '';
+  DateTime _selectedDate = DateTime.now();
+  String _selectedDateString = ''; //
 
   @override
   void initState() {
     super.initState();
     if (widget.tutorUserSchedule.tutorUser.areas.isNotEmpty) {
       _selectedArea = widget.tutorUserSchedule.tutorUser.areas[0];
+    }
+    List<String> dates = generateDates();
+    if (dates.isNotEmpty) {
+      _selectedDateString = dates[0];
     }
   }
 
@@ -41,7 +47,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
   }
 
 // Funcion de dias de semana
-  List<DateTime> generateDates() {
+  List<String> generateDates() {
     int scheduleDayOfWeek;
     switch (tutorUserSchedule.day.toLowerCase()) {
       case 'lunes':
@@ -76,13 +82,19 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
     List<DateTime> dates =
         List.generate(5, (index) => nextDate.add(Duration(days: index * 7)));
 
-    return dates;
+    // Use DateFormat to convert DateTime to formatted string
+    List<String> formattedDates =
+        dates.map((date) => DateFormat('yyyy-MM-dd').format(date)).toList();
+
+    print('DATRES: $formattedDates');
+
+    return formattedDates;
   }
 
   Widget build(BuildContext context) {
-    List<DateTime> _dates = generateDates();
-    String _selectedDate = DateFormat('yyyy-MM-dd').format(_dates[0]);
-    String _selectedDateString = DateFormat('yyyy-MM-dd').format(_dates[0]);
+    print('pre Date String: $_selectedDateString');
+    print('pre Area: $_selectedArea');
+    print('pre Dates: ${generateDates()}');
 
     return Scaffold(
       appBar: AppBar(
@@ -234,16 +246,20 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                         color: Colors.blueGrey, fontWeight: FontWeight.bold),
                   ),
                   DropdownButton<String>(
-                    value: _selectedDate,
-                    items: _dates.map((DateTime date) {
+                    // Use String type for DropdownButton
+                    value: _selectedDateString,
+                    items: generateDates().map((String formattedDate) {
+                      print('DropdownMenuItem value: $formattedDate');
+
                       return DropdownMenuItem<String>(
-                        value: DateFormat('yyyy-MM-dd').format(date),
-                        child: Text(capitalize(
-                            DateFormat('EEEE dd-MM', 'es_AR').format(date))),
+                        value: formattedDate,
+                        child: Text(formattedDate),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
-                      _selectedDate = newValue!;
+                      setState(() {
+                        _selectedDateString = newValue!;
+                      });
                     },
                   ),
                 ],
@@ -281,32 +297,32 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () async {
-                      DateTime selectedDate =
-                          DateFormat('yyyy-MM-dd').parse(_selectedDateString);
+                      // DateTime selectedDate =
+                      //     DateFormat('yyyy-MM-dd').parse(_selectedDateString);
 
-                      final tutoriaRequest = EnrollRequest(
-                          scheduleId: tutorUserSchedule.id,
-                          date: selectedDate,
-                          areaId: tutorUserSchedule.tutorUser.areas
-                              .indexOf(_selectedArea));
+                      // final tutoriaRequest = EnrollRequest(
+                      //     scheduleId: tutorUserSchedule.id,
+                      //     date: selectedDate,
+                      //     areaId: tutorUserSchedule.tutorUser.areas
+                      //         .indexOf(_selectedArea));
 
-                      print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
+                      // print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                      final localContext = context;
-                      final apiManager = AuthenticatedApiManager();
-                      final postResult = await apiManager.apiModel
-                          .apiTutorshipInstancesEnrollTutorshipPost(
-                        body: tutoriaRequest,
-                      );
+                      // final localContext = context;
+                      // final apiManager = AuthenticatedApiManager();
+                      // final postResult = await apiManager.apiModel
+                      //     .apiTutorshipInstancesEnrollTutorshipPost(
+                      //   body: tutoriaRequest,
+                      // );
 
-                      print(postResult.error);
-                      print(postResult);
-                      print(
-                          "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
+                      // print(postResult.error);
+                      // print(postResult);
+                      // print(
+                      //     "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
 
-                      if (context.mounted) {
-                        Navigator.pop(localContext);
-                      }
+                      // if (context.mounted) {
+                      //   Navigator.pop(localContext);
+                      // }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
