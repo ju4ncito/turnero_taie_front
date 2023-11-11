@@ -141,6 +141,7 @@ class _SearchPageState extends State<SearchPage> {
                                   );
 
                                   return Card(
+                                    elevation: 6,
                                     child: ListTile(
                                       title: Text(title),
                                       subtitle: subtitle,
@@ -188,14 +189,31 @@ class _SearchPageState extends State<SearchPage> {
                                 (index) {
                                   final schedule =
                                       searchResults[0]!.schedules[index];
-                                  final title =
-                                      "${schedule.tutorUser.firstName} ${schedule.tutorUser.lastName}";
-                                  final subtitle = schedule.modality;
-
+                                  final title = Row(
+                                    children: [
+                                      Text(
+                                          "${schedule.begin.substring(0, schedule.begin.length - 3)} a ${schedule.end.substring(0, schedule.end.length - 3)}")
+                                    ],
+                                  );
+                                  final subtitle = Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${schedule.modality} con"),
+                                      Text(
+                                        ' ${schedule.tutorUser.firstName}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  );
                                   return Card(
+                                    // color: Color.fromARGB(255, 220, 233, 255),
+                                    elevation: 6,
                                     child: ListTile(
-                                      title: Text(title),
-                                      subtitle: Text(subtitle),
+                                      title: title,
+                                      subtitle: subtitle,
                                       onTap: () {
                                         // Navigate to the "tutor_detail" page when tapped
                                         Navigator.push(

@@ -34,6 +34,19 @@ class SearchInstancePage extends StatelessWidget {
     }
   }
 
+  String translateStatusToSpanish(String status) {
+    Map<String, String> statusTranslations = {
+      'Scheduled': 'Programada',
+      'In progress': 'En curso',
+      'Done': 'Finalizada',
+    };
+
+    // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
+    return statusTranslations.containsKey(status)
+        ? statusTranslations[status]!
+        : status;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -168,6 +181,28 @@ class SearchInstancePage extends StatelessWidget {
                         child: Text(
                           tutorInstance.schedule.end.substring(
                               0, tutorInstance.schedule.begin.length - 3),
+                          style: const TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 30),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Fecha',
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      ElevatedButton(
+                        onPressed: null,
+                        child: Text(
+                          '${tutorInstance.date.day}/'
+                          '${tutorInstance.date.month}/'
+                          '${tutorInstance.date.year}',
                           style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
