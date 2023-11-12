@@ -42,17 +42,19 @@ jobs:
         run: |
           cd backend
           python3 manage.py spectacular --format openapi-json --file api_model.json
-          
+
+      - name: Deploy API doc on Bump.sh
+        uses: bump-sh/github-action@v1
+        with:
+          doc: turnerotaie
+          token: ${{secrets.BUMP_TOKEN}}
+          file: ./backend/api_model.json
+              
       - name: Save schema file for next jobs
         uses: actions/upload-artifact@v3
         with:
           name: api_model
           path: ./backend/api_model.json
-      
-      - name: Check json file path
-        run: |
-          cd backend
-          ls -a
           
   update-api-with-codegen:
     runs-on: ubuntu-latest
