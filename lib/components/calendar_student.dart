@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:turnero_taie_front/components/std_event_card.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 import '../components/tut_event_card.dart';
@@ -64,8 +65,13 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
             print("kEvents: $kEvents");
 
             kEvents[eventDate]!.add(
-              Event(instance.area.name, instance.users.length - 1,
-                  instance.status, instance.schedule.id, instance.schedule),
+              Event(
+                  instance.area.name,
+                  instance.users.length - 1,
+                  instance.status,
+                  instance.schedule.id,
+                  instance.schedule,
+                  instance.users),
             );
           }
         });
@@ -206,7 +212,7 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
                 return ListView.builder(
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    return EventCard(
+                    return StdEventCard(
                       event: value[index],
                       fetchFn: fetchInstances,
                     );

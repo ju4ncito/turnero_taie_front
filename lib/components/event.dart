@@ -8,8 +8,10 @@ class Event {
   final String? status;
   final int? id;
   final ReadTutorUserSchedule? schedule;
+  final List<int>? users;
 
-  const Event(this.area, this.asistentes, this.status, this.id, this.schedule);
+  const Event(this.area, this.asistentes, this.status, this.id, this.schedule,
+      this.users);
 }
 
 int getHashCode(DateTime key) {

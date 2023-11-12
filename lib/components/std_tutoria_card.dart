@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/components/std_schedule_info.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
@@ -27,7 +28,7 @@ class StdCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    dayOfWeek,
+                    '${dayOfWeek} ${DateFormat(' dd-MM', 'es_AR').format(tutoria.date)}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,

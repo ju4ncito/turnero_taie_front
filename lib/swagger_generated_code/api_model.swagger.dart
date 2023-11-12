@@ -1439,6 +1439,26 @@ abstract class ApiModel extends ChopperService {
   Future<chopper.Response> _apiTutorshipInstancesIdDelete(
       {@Path('id') required int? id});
 
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  Future<chopper.Response<OkSerializer>>
+      apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
+    generatedMapping.putIfAbsent(
+        OkSerializer, () => OkSerializer.fromJsonFactory);
+
+    return _apiTutorshipInstancesIdDisenrollTutorshipPost(id: id);
+  }
+
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  @Post(
+    path: '/api/tutorship-instances/{id}/disenroll-tutorship/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<OkSerializer>>
+      _apiTutorshipInstancesIdDisenrollTutorshipPost(
+          {@Path('id') required int? id});
+
   ///Enroll a student to an existing o new tutorship
   Future<chopper.Response<OkSerializer>>
       apiTutorshipInstancesEnrollTutorshipPost({required EnrollRequest? body}) {
@@ -5508,6 +5528,7 @@ extension $RoleRequestExtension on RoleRequest {
 @JsonSerializable(explicitToJson: true)
 class SearchTutorship {
   SearchTutorship({
+    required this.id,
     required this.schedule,
     required this.date,
     required this.area,
@@ -5521,6 +5542,8 @@ class SearchTutorship {
   static const toJsonFactory = _$SearchTutorshipToJson;
   Map<String, dynamic> toJson() => _$SearchTutorshipToJson(this);
 
+  @JsonKey(name: 'id')
+  final int id;
   @JsonKey(name: 'schedule')
   final ReadTutorUserSchedule schedule;
   @JsonKey(name: 'date', toJson: _dateToJson)
@@ -5537,6 +5560,8 @@ class SearchTutorship {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is SearchTutorship &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.schedule, schedule) ||
                 const DeepCollectionEquality()
                     .equals(other.schedule, schedule)) &&
@@ -5555,6 +5580,7 @@ class SearchTutorship {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(area) ^
@@ -5565,12 +5591,14 @@ class SearchTutorship {
 
 extension $SearchTutorshipExtension on SearchTutorship {
   SearchTutorship copyWith(
-      {ReadTutorUserSchedule? schedule,
+      {int? id,
+      ReadTutorUserSchedule? schedule,
       DateTime? date,
       CustomArea? area,
       String? status,
       List<int>? users}) {
     return SearchTutorship(
+        id: id ?? this.id,
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
         area: area ?? this.area,
@@ -5579,12 +5607,14 @@ extension $SearchTutorshipExtension on SearchTutorship {
   }
 
   SearchTutorship copyWithWrapped(
-      {Wrapped<ReadTutorUserSchedule>? schedule,
+      {Wrapped<int>? id,
+      Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<CustomArea>? area,
       Wrapped<String>? status,
       Wrapped<List<int>>? users}) {
     return SearchTutorship(
+        id: (id != null ? id.value : this.id),
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
         area: (area != null ? area.value : this.area),
