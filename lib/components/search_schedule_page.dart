@@ -22,7 +22,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
 
   _SearchSchedulePageState({required this.tutorUserSchedule});
 
-  String _selectedArea = '';
+  CustomArea _selectedArea = CustomArea(name: '', id: 0);
   DateTime _selectedDate = DateTime.now();
   String _selectedDateString = ''; //
 
@@ -30,7 +30,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
   void initState() {
     super.initState();
     if (widget.tutorUserSchedule.tutorUser.areas.isNotEmpty) {
-      _selectedArea = widget.tutorUserSchedule.tutorUser.areas[0].name;
+      _selectedArea = widget.tutorUserSchedule.tutorUser.areas[0];
     }
     List<String> dates = generateDates();
     if (dates.isNotEmpty) {
@@ -148,11 +148,11 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const SizedBox(height: 5),
-                        Text(
-                          tutorUserSchedule.tutorUser.areas[0].name,
-                          style:
-                              const TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
+                        // Text(
+                        //   ,
+                        //   style:
+                        //       const TextStyle(fontSize: 16, color: Colors.grey),
+                        // ),
                       ],
                     ),
                   ],
@@ -274,15 +274,16 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                     style: TextStyle(
                         color: Colors.blueGrey, fontWeight: FontWeight.bold),
                   ),
-                  DropdownButton<String>(
+                  DropdownButton<CustomArea>(
                     value: _selectedArea,
-                    items: tutorUserSchedule.tutorUser.areas.map((area) {
-                      return DropdownMenuItem<String>(
-                        value: area.name,
+                    items: tutorUserSchedule.tutorUser.areas
+                        .map((CustomArea area) {
+                      return DropdownMenuItem<CustomArea>(
+                        value: area,
                         child: Text(area.name),
                       );
                     }).toList(),
-                    onChanged: (String? newValue) {
+                    onChanged: (CustomArea? newValue) {
                       setState(() {
                         _selectedArea = newValue!;
                       });
@@ -297,32 +298,31 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () async {
-                      // DateTime selectedDate =
-                      //     DateFormat('yyyy-MM-dd').parse(_selectedDateString);
+                      DateTime selectedDate =
+                          DateFormat('yyyy-MM-dd').parse(_selectedDateString);
 
-                      // final tutoriaRequest = EnrollRequest(
-                      //     scheduleId: tutorUserSchedule.id,
-                      //     date: selectedDate,
-                      //     areaId: tutorUserSchedule.tutorUser.areas
-                      //         .indexOf(_selectedArea));
+                      final tutoriaRequest = EnrollRequest(
+                          scheduleId: tutorUserSchedule.id,
+                          date: selectedDate,
+                          areaId: _selectedArea.id);
 
-                      // print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
+                      print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                      // final localContext = context;
-                      // final apiManager = AuthenticatedApiManager();
-                      // final postResult = await apiManager.apiModel
-                      //     .apiTutorshipInstancesEnrollTutorshipPost(
-                      //   body: tutoriaRequest,
-                      // );
+                      final localContext = context;
+                      final apiManager = AuthenticatedApiManager();
+                      final postResult = await apiManager.apiModel
+                          .apiTutorshipInstancesEnrollTutorshipPost(
+                        body: tutoriaRequest,
+                      );
 
-                      // print(postResult.error);
-                      // print(postResult);
-                      // print(
-                      //     "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
+                      print(postResult.error);
+                      print(postResult);
+                      print(
+                          "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
 
-                      // if (context.mounted) {
-                      //   Navigator.pop(localContext);
-                      // }
+                      if (context.mounted) {
+                        Navigator.pop(localContext);
+                      }
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

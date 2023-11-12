@@ -64,12 +64,8 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
             print("kEvents: $kEvents");
 
             kEvents[eventDate]!.add(
-              Event(
-                instance.area.name,
-                instance.users.length - 1,
-                instance.status,
-                instance.schedule.id,
-              ),
+              Event(instance.area.name, instance.users.length - 1,
+                  instance.status, instance.schedule.id, instance.schedule),
             );
           }
         });

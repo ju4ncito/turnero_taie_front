@@ -73,6 +73,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 instance.schedule.capacity - 1,
                 instance.status,
                 instance.schedule.id,
+                instance.schedule,
               ),
             );
           }

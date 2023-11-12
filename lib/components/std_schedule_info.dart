@@ -130,7 +130,7 @@ class ScheduleInfo extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.schedule.tutorUser.areas[0]}',
+                          '${tutorInstance.area.name}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
