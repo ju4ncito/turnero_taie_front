@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -19,6 +20,9 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   late TextEditingController beginController;
   late TextEditingController endController;
   late CreateDeleteTutorUserSchedule editedTutorSchedule;
+
+  String _selectedDay = ''; // Default to 'Lunes'
+
   bool isEditing = false;
 
   String getDayAbbreviation(DateTime date) {
@@ -64,12 +68,62 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         TextEditingController(text: editedTutorSchedule.capacity.toString());
     beginController = TextEditingController(text: editedTutorSchedule.begin);
     endController = TextEditingController(text: editedTutorSchedule.end);
+    _selectedDay = editedTutorSchedule.day; // Default to 'Lunes'
   }
 
   void enableEditing() {
     setState(() {
       isEditing = true;
     });
+  }
+
+  Future<void> _selectTime(
+      BuildContext context, TextEditingController controller) async {
+    final Duration? picked = await showCupertinoModalPopup<Duration>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 300,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: const Text('Done'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoTimerPicker(
+                  mode: CupertinoTimerPickerMode.hm,
+                  initialTimerDuration: Duration(hours: 12, minutes: 0),
+                  onTimerDurationChanged: (Duration newDuration) {
+                    final formattedTime =
+                        '${newDuration.inHours}:${newDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}';
+                    controller.text = formattedTime;
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void saveChanges() {
@@ -316,33 +370,67 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               ),
             ),
             if (isEditing)
-              Column(
-                children: [
-                  TextFormField(
-                    controller: dayController,
-                    decoration: const InputDecoration(labelText: 'Día'),
-                  ),
-                  TextFormField(
-                    controller: modalityController,
-                    decoration: const InputDecoration(labelText: 'Modalidad'),
-                  ),
-                  TextFormField(
-                    controller: capacityController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        labelText: 'Capacidad (asistentes)'),
-                  ),
-                  TextFormField(
-                    controller: beginController,
-                    decoration:
-                        const InputDecoration(labelText: 'Hora de Inicio'),
-                  ),
-                  TextFormField(
-                    controller: endController,
-                    decoration: const InputDecoration(
-                        labelText: 'Hora de Finalización'),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Completa los siguientes datos',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16.0),
+                    const Text(
+                      'Día de la semana',
+                      style: TextStyle(
+                          color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    ),
+                    DropdownButton<String>(
+                      value: _selectedDay,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedDay = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        'Lunes',
+                        'Martes',
+                        'Miercoles',
+                        'Jueves',
+                        'Viernes',
+                        'Sabado',
+                        'Domingo'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    TextFormField(
+                      controller: modalityController,
+                      decoration: const InputDecoration(labelText: 'Modalidad'),
+                    ),
+                    TextFormField(
+                      controller: capacityController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                          labelText: 'Capacidad (asistentes)'),
+                    ),
+                    TextFormField(
+                      controller: beginController,
+                      decoration:
+                          const InputDecoration(labelText: 'Hora de Inicio'),
+                    ),
+                    TextFormField(
+                      controller: endController,
+                      decoration: const InputDecoration(
+                          labelText: 'Hora de Finalización'),
+                    ),
+                  ],
+                ),
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -386,7 +474,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     onPressed: () async {
                       final editedTutorSchedule = CreateDeleteTutorUserSchedule(
                         id: widget.tutorSchedule.id,
-                        day: dayController.text,
+                        day: _selectedDay,
                         modality: modalityController.text,
                         capacity: int.parse(capacityController.text),
                         begin: beginController.text,

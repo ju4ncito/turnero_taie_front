@@ -13,7 +13,7 @@ class EventCard extends StatelessWidget {
     switch (status) {
       case 'Scheduled':
         return const Color.fromARGB(255, 63, 92, 143);
-      case 'In Progress':
+      case 'In progress':
         return const Color.fromARGB(255, 69, 92, 54);
       case 'Done':
         return Colors.grey;
