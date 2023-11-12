@@ -147,6 +147,9 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
                 case 'Done':
                   color = Colors.grey;
                   break;
+                case 'Cancelled':
+                  color = const Color.fromARGB(255, 102, 30, 30);
+                  break;
                 default:
                   color = Colors.black;
               }

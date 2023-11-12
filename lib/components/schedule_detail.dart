@@ -14,14 +14,18 @@ class ScheduleDetail extends StatefulWidget {
 }
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
-  late TextEditingController dayController;
-  late TextEditingController modalityController;
   late TextEditingController capacityController;
   late TextEditingController beginController;
   late TextEditingController endController;
   late CreateDeleteTutorUserSchedule editedTutorSchedule;
 
-  String _selectedDay = ''; // Default to 'Lunes'
+  List<Widget> numbers = List<Widget>.generate(
+    50,
+    (index) => Text('${index + 1}'),
+  );
+
+  String _selectedDay = '';
+  String _selectedModality = '';
 
   bool isEditing = false;
 
@@ -61,14 +65,13 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         tutorUser: widget.tutorSchedule.tutorUser.id);
 
     // Initialize controllers with the current values
-    dayController = TextEditingController(text: editedTutorSchedule.day);
-    modalityController =
-        TextEditingController(text: editedTutorSchedule.modality);
+
     capacityController =
         TextEditingController(text: editedTutorSchedule.capacity.toString());
     beginController = TextEditingController(text: editedTutorSchedule.begin);
     endController = TextEditingController(text: editedTutorSchedule.end);
-    _selectedDay = editedTutorSchedule.day; // Default to 'Lunes'
+    _selectedDay = editedTutorSchedule.day;
+    _selectedModality = editedTutorSchedule.modality;
   }
 
   void enableEditing() {
@@ -126,12 +129,59 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     );
   }
 
+  Future<void> _selectNumber(
+      BuildContext context, TextEditingController controller) async {
+    final int? picked = await showCupertinoModalPopup<int>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 300,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: const Text('Done'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoPicker(
+                  itemExtent: 32.0,
+                  onSelectedItemChanged: (int index) {
+                    controller.text = (index + 1).toString();
+                  },
+                  children: numbers,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void saveChanges() {
     // Update the editedTutorSchedule with new values from controllers
     editedTutorSchedule = CreateDeleteTutorUserSchedule(
       id: editedTutorSchedule.id,
-      day: dayController.text,
-      modality: modalityController.text,
+      day: _selectedDay,
+      modality: _selectedModality,
       capacity: int.parse(capacityController.text),
       begin: beginController.text,
       end: endController.text,
@@ -149,8 +199,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   @override
   void dispose() {
     // Dispose of the controllers
-    dayController.dispose();
-    modalityController.dispose();
+
     capacityController.dispose();
     beginController.dispose();
     endController.dispose();
@@ -248,7 +297,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                           children: [
                             Column(
                               children: [
-                                Text(
+                                const Text(
                                   'Modalidad',
                                   style: TextStyle(
                                       color: Colors.blueGrey,
@@ -381,53 +430,249 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+                    const SizedBox(height: 30.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            const Text(
+                              'Día de la semana',
+                              style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            DropdownButton<String>(
+                              value: _selectedDay,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedDay = newValue!;
+                                });
+                              },
+                              items: <String>[
+                                'Lunes',
+                                'Martes',
+                                'Miercoles',
+                                'Jueves',
+                                'Viernes',
+                                'Sabado',
+                                'Domingo'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 60),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Modalidad',
+                              style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            DropdownButton<String>(
+                              value: _selectedModality,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedModality = newValue!;
+                                });
+                              },
+                              items: <String>[
+                                'Virtual',
+                                'Presencial'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 16.0),
-                    const Text(
-                      'Día de la semana',
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              children: [
+                                const SizedBox(height: 16.0),
+                                const Text(
+                                  'Hora de inicio',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  width: 85,
+                                  child: TextFormField(
+                                    textAlign: TextAlign.center,
+                                    controller: beginController,
+                                    onTap: () =>
+                                        _selectTime(context, beginController),
+                                    decoration: const InputDecoration(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 30),
+                            Column(
+                              children: [
+                                const SizedBox(height: 16.0),
+                                const Text(
+                                  'Hora de fin',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  width: 85,
+                                  child: TextFormField(
+                                    textAlign: TextAlign.center,
+                                    controller: endController,
+                                    onTap: () =>
+                                        _selectTime(context, endController),
+                                    decoration: const InputDecoration(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 30),
+                            Column(
+                              children: [
+                                const SizedBox(height: 16.0),
+                                const Text(
+                                  'Capacidad',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  width: 60,
+                                  child: TextFormField(
+                                    textAlign: TextAlign.center,
+                                    controller: capacityController,
+                                    onTap: () => _selectNumber(
+                                        context, capacityController),
+                                    decoration: const InputDecoration(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    DropdownButton<String>(
-                      value: _selectedDay,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedDay = newValue!;
-                        });
-                      },
-                      items: <String>[
-                        'Lunes',
-                        'Martes',
-                        'Miercoles',
-                        'Jueves',
-                        'Viernes',
-                        'Sabado',
-                        'Domingo'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    SizedBox(
+                      height: 40,
                     ),
-                    TextFormField(
-                      controller: modalityController,
-                      decoration: const InputDecoration(labelText: 'Modalidad'),
-                    ),
-                    TextFormField(
-                      controller: capacityController,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                          labelText: 'Capacidad (asistentes)'),
-                    ),
-                    TextFormField(
-                      controller: beginController,
-                      decoration:
-                          const InputDecoration(labelText: 'Hora de Inicio'),
-                    ),
-                    TextFormField(
-                      controller: endController,
-                      decoration: const InputDecoration(
-                          labelText: 'Hora de Finalización'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 2 / 6,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  isEditing = false;
+                                });
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueGrey,
+                              ),
+                              child: const Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 2 / 5,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                final editedTutorSchedule =
+                                    CreateDeleteTutorUserSchedule(
+                                  id: widget.tutorSchedule.id,
+                                  day: _selectedDay,
+                                  modality: _selectedModality,
+                                  capacity: int.parse(capacityController.text),
+                                  begin: beginController.text,
+                                  end: endController.text,
+                                  tutorUser: widget.tutorSchedule.tutorUser.id,
+                                );
+
+                                final patchedRequest =
+                                    PatchedCreateDeleteTutorUserScheduleRequest(
+                                  modality: editedTutorSchedule.modality,
+                                  day: editedTutorSchedule.day,
+                                  begin: editedTutorSchedule.begin,
+                                  end: editedTutorSchedule.end,
+                                  capacity: editedTutorSchedule.capacity,
+                                  tutorUser: editedTutorSchedule.tutorUser,
+                                );
+
+                                print(
+                                    "Tutoria Request Body: ${patchedRequest.toJson()}");
+
+                                final apiManager = AuthenticatedApiManager();
+                                final postResult = await apiManager.apiModel
+                                    .apiTutorUserSchedulesIdPatch(
+                                  id: widget.tutorSchedule.id,
+                                  body: patchedRequest,
+                                );
+
+                                if (postResult.error == null) {
+                                  saveChanges();
+                                  print(
+                                      "API Response Status Code: ${postResult.statusCode}");
+                                } else {
+                                  print(
+                                      "Error en la solicitud PATCH: ${postResult.error}");
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            '${postResult.error}. Por favor, contacte a soporte.'),
+                                        duration: Duration(seconds: 5),
+                                      ),
+                                    );
+                                  }
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              child: const Text(
+                                'Guardar Cambios',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -435,18 +680,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                if (isEditing)
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isEditing = false;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
-                    ),
-                    child: const Text('Cancelar'),
-                  ),
                 if (!isEditing)
                   Center(
                     child: Container(
@@ -468,52 +701,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         ),
                       ),
                     ),
-                  ),
-                if (isEditing)
-                  ElevatedButton(
-                    onPressed: () async {
-                      final editedTutorSchedule = CreateDeleteTutorUserSchedule(
-                        id: widget.tutorSchedule.id,
-                        day: _selectedDay,
-                        modality: modalityController.text,
-                        capacity: int.parse(capacityController.text),
-                        begin: beginController.text,
-                        end: endController.text,
-                        tutorUser: widget.tutorSchedule.tutorUser.id,
-                      );
-
-                      final patchedRequest =
-                          PatchedCreateDeleteTutorUserScheduleRequest(
-                        modality: editedTutorSchedule.modality,
-                        day: editedTutorSchedule.day,
-                        begin: editedTutorSchedule.begin,
-                        end: editedTutorSchedule.end,
-                        capacity: editedTutorSchedule.capacity,
-                        tutorUser: editedTutorSchedule.tutorUser,
-                      );
-
-                      print("Tutoria Request Body: ${patchedRequest.toJson()}");
-
-                      final apiManager = AuthenticatedApiManager();
-                      final postResult = await apiManager.apiModel
-                          .apiTutorUserSchedulesIdPatch(
-                        id: widget.tutorSchedule.id,
-                        body: patchedRequest,
-                      );
-
-                      if (postResult.error == null) {
-                        saveChanges();
-                        print(
-                            "API Response Status Code: ${postResult.statusCode}");
-                      } else {
-                        print(
-                            "Error en la solicitud PATCH: ${postResult.error}");
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: const Text('Guardar Cambios'),
                   ),
               ],
             ),

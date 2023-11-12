@@ -150,6 +150,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 case 'Done':
                   color = Colors.grey;
                   break;
+                case 'Cancelled':
+                  color = const Color.fromARGB(255, 102, 30, 30);
+                  break;
                 default:
                   color = Colors.black;
               }

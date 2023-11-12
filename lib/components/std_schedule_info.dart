@@ -71,7 +71,7 @@ class ScheduleInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
-                      width: 60, // Set your desired width
+                      width: 80, // Set your desired width
                       height: 30, // Set your desired height
                       child: ElevatedButton(
                         onPressed: null,
@@ -284,7 +284,7 @@ class ScheduleInfo extends StatelessWidget {
                           "API disenroll Status Code: ${postResult.statusCode}");
 
                       if (context.mounted) {
-                        Navigator.pop(localContext);
+                        Navigator.pop(localContext, true);
                       }
                     },
                     style: ButtonStyle(

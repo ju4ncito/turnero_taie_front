@@ -17,6 +17,8 @@ class StdEventCard extends StatelessWidget {
         return const Color.fromARGB(255, 69, 92, 54);
       case 'Done':
         return Colors.grey;
+      case 'Cancelled':
+        return Color.fromARGB(255, 102, 30, 30);
       default:
         return Colors.black;
     }
