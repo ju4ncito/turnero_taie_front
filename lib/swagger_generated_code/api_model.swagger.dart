@@ -5721,8 +5721,8 @@ class TutorAreas {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'areas')
-  final CustomArea areas;
+  @JsonKey(name: 'areas', defaultValue: <CustomArea>[])
+  final List<CustomArea> areas;
   @JsonKey(name: 'first_name')
   final String? firstName;
   @JsonKey(name: 'last_name')
@@ -5766,7 +5766,7 @@ class TutorAreas {
 extension $TutorAreasExtension on TutorAreas {
   TutorAreas copyWith(
       {int? id,
-      CustomArea? areas,
+      List<CustomArea>? areas,
       String? firstName,
       String? lastName,
       String? profilePicture}) {
@@ -5780,7 +5780,7 @@ extension $TutorAreasExtension on TutorAreas {
 
   TutorAreas copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<CustomArea>? areas,
+      Wrapped<List<CustomArea>>? areas,
       Wrapped<String?>? firstName,
       Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture}) {

@@ -6140,7 +6140,10 @@
                         "readOnly": true
                     },
                     "areas": {
-                        "$ref": "#/components/schemas/CustomArea"
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomArea"
+                        }
                     },
                     "first_name": {
                         "type": "string",

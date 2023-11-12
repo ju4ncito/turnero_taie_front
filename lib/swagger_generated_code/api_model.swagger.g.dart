@@ -859,7 +859,10 @@ Map<String, dynamic> _$TagRequestToJson(TagRequest instance) =>
 
 TutorAreas _$TutorAreasFromJson(Map<String, dynamic> json) => TutorAreas(
       id: json['id'] as int,
-      areas: CustomArea.fromJson(json['areas'] as Map<String, dynamic>),
+      areas: (json['areas'] as List<dynamic>?)
+              ?.map((e) => CustomArea.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
@@ -868,7 +871,7 @@ TutorAreas _$TutorAreasFromJson(Map<String, dynamic> json) => TutorAreas(
 Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'areas': instance.areas.toJson(),
+      'areas': instance.areas.map((e) => e.toJson()).toList(),
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
