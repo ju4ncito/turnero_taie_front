@@ -30,7 +30,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
   void initState() {
     super.initState();
     if (widget.tutorUserSchedule.tutorUser.areas.isNotEmpty) {
-      _selectedArea = widget.tutorUserSchedule.tutorUser.areas[0];
+      _selectedArea = widget.tutorUserSchedule.tutorUser.areas[0].name;
     }
     List<String> dates = generateDates();
     if (dates.isNotEmpty) {
@@ -149,7 +149,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          tutorUserSchedule.tutorUser.areas[0],
+                          tutorUserSchedule.tutorUser.areas[0].name,
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
@@ -276,10 +276,10 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                   ),
                   DropdownButton<String>(
                     value: _selectedArea,
-                    items: tutorUserSchedule.tutorUser.areas.map((String area) {
+                    items: tutorUserSchedule.tutorUser.areas.map((area) {
                       return DropdownMenuItem<String>(
-                        value: area,
-                        child: Text(area),
+                        value: area.name,
+                        child: Text(area.name),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
