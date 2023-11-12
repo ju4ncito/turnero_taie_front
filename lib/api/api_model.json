@@ -3700,26 +3700,6 @@
                         },
                         "description": ""
                     },
-                    "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Created_serializer"
-                                }
-                            }
-                        },
-                        "description": ""
-                    },
-                    "409": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Conflict_serializer"
-                                }
-                            }
-                        },
-                        "description": ""
-                    },
                     "500": {
                         "content": {
                             "application/json": {
