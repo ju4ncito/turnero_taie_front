@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import '../api/api_manager.dart';
 import 'event.dart';
 
 class EventInfo extends StatelessWidget {
@@ -62,18 +64,133 @@ class EventInfo extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Spacer(),
-              const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(28.0),
-                  child: Text(
-                    'Para consultar tus horarios dirigete a la página principal',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 20,
-                    ),
-                    textAlign: TextAlign.center,
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 1 / 2,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final patchedRequest =
+                                  PatchedTutorshipInstanceRequest(
+                                area: event.area,
+                                schedule: event.schedule!.id,
+                                status: 'In progress',
+                                date: event.date,
+                              );
+
+                              print(
+                                  "Tutoria Request Body: ${patchedRequest.toJson()}");
+
+                              final apiManager = AuthenticatedApiManager();
+                              final postResult = await apiManager.apiModel
+                                  .apiTutorshipInstancesIdPatch(
+                                id: event.tutorshipId,
+                                body: patchedRequest,
+                              );
+
+                              print('id ${event.tutorshipId}');
+                              if (postResult.error == null) {
+                                print(
+                                    "API Response Status Code: ${postResult.statusCode}");
+                              } else {
+                                print(
+                                    "Error en la solicitud PATCH: ${postResult.error}");
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(255, 19, 45, 88),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9),
+                                ),
+                              ),
+                              elevation: MaterialStateProperty.all(4),
+                            ),
+                            child: const Text(
+                              'Comenzar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 1 / 3,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              //
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Color.fromARGB(255, 102, 76, 30),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9),
+                                ),
+                              ),
+                              elevation: MaterialStateProperty.all(4),
+                            ),
+                            child: const Text(
+                              'Demorar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 6 / 7,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          //
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 102, 30, 30),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+                          ),
+                          elevation: MaterialStateProperty.all(4),
+                        ),
+                        child: const Text(
+                          'Cancelar esta clase',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 80),
             ],

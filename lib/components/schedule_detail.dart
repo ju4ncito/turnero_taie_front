@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
 
@@ -17,9 +18,31 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   late TextEditingController capacityController;
   late TextEditingController beginController;
   late TextEditingController endController;
-
   late CreateDeleteTutorUserSchedule editedTutorSchedule;
   bool isEditing = false;
+
+  String getDayAbbreviation(DateTime date) {
+    String weekday = DateFormat('EEEE', 'es_ES').format(date).toUpperCase();
+
+    switch (weekday) {
+      case 'LUNES':
+        return 'LUN';
+      case 'MARTES':
+        return 'MAR';
+      case 'MIÉRCOLES':
+        return 'MIE';
+      case 'JUEVES':
+        return 'JUE';
+      case 'VIERNES':
+        return 'VIE';
+      case 'SÁBADO':
+        return 'SAB';
+      case 'DOMINGO':
+        return 'DOM';
+      default:
+        return '';
+    }
+  }
 
   @override
   void initState() {
@@ -147,38 +170,149 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
           children: [
             Visibility(
               visible: !isEditing,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Día: ${editedTutorSchedule.day}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Modalidad: ${editedTutorSchedule.modality}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Capacidad (asistentes): ${editedTutorSchedule.capacity.toString()}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Hora de Inicio: ${editedTutorSchedule.begin}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Hora de Finalización: ${editedTutorSchedule.end}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _showDeleteConfirmationDialog,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Día: ${editedTutorSchedule.day}',
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(width: 10),
+                      ],
                     ),
-                    child: const Text('Eliminar Horario'),
-                  ),
-                ],
+                    const SizedBox(height: 40),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  'Modalidad',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                ElevatedButton(
+                                  onPressed: null,
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color.fromARGB(
+                                                  255, 30, 56, 102))),
+                                  child: Text(
+                                    editedTutorSchedule.modality,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 20),
+                            Column(
+                              children: [
+                                const Text(
+                                  'Capacidad',
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                ElevatedButton(
+                                  onPressed: null,
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color.fromARGB(
+                                                  255, 30, 56, 102))),
+                                  child: Text(
+                                    ('${editedTutorSchedule.capacity.toString()} alumnos'),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Column(
+                        children: [
+                          const Text(
+                            'Inicio',
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton(
+                            onPressed: null,
+                            child: Text(
+                              editedTutorSchedule.begin.substring(
+                                  0, editedTutorSchedule.begin.length - 3),
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 30),
+                      Column(
+                        children: [
+                          const Text(
+                            'Final',
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton(
+                            onPressed: null,
+                            child: Text(
+                              editedTutorSchedule.end.substring(
+                                  0, editedTutorSchedule.end.length - 3),
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 6 / 7,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: _showDeleteConfirmationDialog,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 102, 30, 30),
+                          ),
+                          child: const Text(
+                            'Eliminar horario',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
             if (isEditing)
@@ -226,12 +360,26 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     child: const Text('Cancelar'),
                   ),
                 if (!isEditing)
-                  ElevatedButton(
-                    onPressed: enableEditing,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 6 / 7,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: enableEditing,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 19, 45, 88),
+                        ),
+                        child: const Text(
+                          'Modificar horario',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                    child: const Text('Modificar Horario'),
                   ),
                 if (isEditing)
                   ElevatedButton(

@@ -74,7 +74,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   instance.status,
                   instance.schedule.id,
                   instance.schedule,
-                  instance.users),
+                  instance.users,
+                  instance.id,
+                  instance.date),
             );
           }
         });
