@@ -346,6 +346,21 @@ Map<String, dynamic> _$InternalServerErrorToJson(
       'message': instance.message,
     };
 
+InternalServerErrorSerializerDisenroll
+    _$InternalServerErrorSerializerDisenrollFromJson(
+            Map<String, dynamic> json) =>
+        InternalServerErrorSerializerDisenroll(
+          message: json['message'] as String,
+          traceback: json['traceback'] as String,
+        );
+
+Map<String, dynamic> _$InternalServerErrorSerializerDisenrollToJson(
+        InternalServerErrorSerializerDisenroll instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'traceback': instance.traceback,
+    };
+
 NoSearchString _$NoSearchStringFromJson(Map<String, dynamic> json) =>
     NoSearchString(
       message: json['message'] as String,
@@ -361,6 +376,18 @@ OkSerializer _$OkSerializerFromJson(Map<String, dynamic> json) => OkSerializer(
     );
 
 Map<String, dynamic> _$OkSerializerToJson(OkSerializer instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+    };
+
+OkSerializerDisenroll _$OkSerializerDisenrollFromJson(
+        Map<String, dynamic> json) =>
+    OkSerializerDisenroll(
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$OkSerializerDisenrollToJson(
+        OkSerializerDisenroll instance) =>
     <String, dynamic>{
       'message': instance.message,
     };

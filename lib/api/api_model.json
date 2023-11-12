@@ -3694,7 +3694,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Ok_serializer"
+                                    "$ref": "#/components/schemas/Ok_serializer_Disenroll"
                                 }
                             }
                         },
@@ -3704,7 +3704,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InternalServerError_"
+                                    "$ref": "#/components/schemas/InternalServerError_Serializer_Disenroll"
                                 }
                             }
                         },
@@ -5528,6 +5528,21 @@
                     "traceback"
                 ]
             },
+            "InternalServerError_Serializer_Disenroll": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "traceback": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message",
+                    "traceback"
+                ]
+            },
             "Internal_Server_Error": {
                 "type": "object",
                 "properties": {
@@ -5551,6 +5566,17 @@
                 ]
             },
             "Ok_serializer": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "Ok_serializer_Disenroll": {
                 "type": "object",
                 "properties": {
                     "message": {
