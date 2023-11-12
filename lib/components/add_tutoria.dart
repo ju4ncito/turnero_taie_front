@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../api/api_manager.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddTutoriaPage extends StatefulWidget {
   final User? currentUser;
@@ -41,19 +42,51 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
 
   Future<void> _selectTime(
       BuildContext context, TextEditingController controller) async {
-    final TimeOfDay? picked = await showTimePicker(
+    final Duration? picked = await showCupertinoModalPopup<Duration>(
       context: context,
-      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context) => Container(
+        height: 300,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: const Text('Done'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: CupertinoTimerPicker(
+                  mode: CupertinoTimerPickerMode.hm,
+                  initialTimerDuration: Duration(hours: 12, minutes: 0),
+                  onTimerDurationChanged: (Duration newDuration) {
+                    final formattedTime =
+                        '${newDuration.inHours}:${newDuration.inMinutes.remainder(60).toString().padLeft(2, '0')}';
+                    controller.text = formattedTime;
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-
-    if (picked != null) {
-      final selectedHour = picked.hour < 12 ? picked.hour : picked.hour - 12;
-      final formattedTime =
-          '$selectedHour:${picked.minute.toString().padLeft(2, '0')}:00';
-      setState(() {
-        controller.text = formattedTime;
-      });
-    }
   }
 
   @override
@@ -65,98 +98,145 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 16.0),
-            DropdownButton<String>(
-              value: _selectedModality,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedModality = newValue!;
-                });
-              },
-              items: <String>['Virtual', 'Presencial']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16.0),
-            DropdownButton<String>(
-              value: _selectedDay,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedDay = newValue!;
-                });
-              },
-              items: <String>[
-                'Lunes',
-                'Martes',
-                'Miercoles',
-                'Jueves',
-                'Viernes',
-                'Sabado',
-                'Domingo'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _beginController,
-              onTap: () => _selectTime(context, _beginController),
-              readOnly: true,
-              decoration: const InputDecoration(labelText: 'Begin Time'),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _endController,
-              onTap: () => _selectTime(context, _endController),
-              readOnly: true,
-              decoration: const InputDecoration(labelText: 'End Time'),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _capacityController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Capacity'),
-            ),
-            const SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () async {
-                final tutoriaRequest = CreateDeleteTutorUserScheduleRequest(
-                  begin: _beginController.text,
-                  capacity: int.parse(_capacityController.text),
-                  day: _selectedDay,
-                  end: _endController.text,
-                  modality: _selectedModality,
-                  tutorUser: widget.currentUser!.id,
-                );
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16.0),
+              const Text(
+                'Completa los siguientes datos',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Modalidad',
+                style: TextStyle(
+                    color: Colors.blueGrey, fontWeight: FontWeight.bold),
+              ),
+              DropdownButton<String>(
+                value: _selectedModality,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedModality = newValue!;
+                  });
+                },
+                items: <String>['Virtual', 'Presencial']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Día de la semana',
+                style: TextStyle(
+                    color: Colors.blueGrey, fontWeight: FontWeight.bold),
+              ),
+              DropdownButton<String>(
+                value: _selectedDay,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedDay = newValue!;
+                  });
+                },
+                items: <String>[
+                  'Lunes',
+                  'Martes',
+                  'Miercoles',
+                  'Jueves',
+                  'Viernes',
+                  'Sabado',
+                  'Domingo'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _beginController,
+                onTap: () => _selectTime(context, _beginController),
+                readOnly: true,
+                decoration: const InputDecoration(labelText: 'Begin Time'),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _endController,
+                onTap: () => _selectTime(context, _endController),
+                readOnly: true,
+                decoration: const InputDecoration(labelText: 'End Time'),
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _capacityController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Capacity'),
+              ),
+              const SizedBox(height: 32.0),
+              Spacer(),
+              Container(
+                width: MediaQuery.of(context).size.width * 6 / 7,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final beginTime = _beginController.text + ':00';
+                    final endTime = _endController.text + ':00';
 
-                print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
+                    final tutoriaRequest = CreateDeleteTutorUserScheduleRequest(
+                      begin: beginTime,
+                      capacity: int.parse(_capacityController.text),
+                      day: _selectedDay,
+                      end: endTime,
+                      modality: _selectedModality,
+                      tutorUser: widget.currentUser!.id,
+                    );
 
-                final localContext = context;
-                final postResult =
-                    await apiManager.apiModel.apiTutorUserSchedulesPost(
-                  body: tutoriaRequest,
-                );
-                print(postResult.error);
-                print("API Response Status Code: ${postResult.statusCode}");
+                    print("Tutoria Request Body: ${tutoriaRequest.toJson()}");
 
-                widget.fetchFn();
-                if (context.mounted) {
-                  Navigator.pop(localContext);
-                }
-              },
-              child: const Text('Add Tutoria'),
-            ),
-          ],
+                    final localContext = context;
+                    final postResult =
+                        await apiManager.apiModel.apiTutorUserSchedulesPost(
+                      body: tutoriaRequest,
+                    );
+                    print(postResult.error);
+                    print("API Response Status Code: ${postResult.statusCode}");
+
+                    widget.fetchFn();
+                    if (context.mounted) {
+                      Navigator.pop(localContext);
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 30, 56, 102),
+                    ),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                    ),
+                    elevation: MaterialStateProperty.all(4),
+                  ),
+                  child: const Text(
+                    'Agregar nuevo horario',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 60,
+              ),
+            ],
+          ),
         ),
       ),
     );
