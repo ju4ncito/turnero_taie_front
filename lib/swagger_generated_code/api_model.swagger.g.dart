@@ -816,6 +816,7 @@ Map<String, dynamic> _$RoleRequestToJson(RoleRequest instance) =>
 
 SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
     SearchTutorship(
+      id: json['id'] as int,
       schedule: ReadTutorUserSchedule.fromJson(
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
@@ -827,6 +828,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
       'area': instance.area.toJson(),
