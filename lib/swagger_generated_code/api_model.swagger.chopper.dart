@@ -1124,19 +1124,6 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<OkSerializer>> _apiTutorshipInstancesIdDisenrollTutorshipPost(
-      {required int? id}) {
-    final Uri $url =
-        Uri.parse('/api/tutorship-instances/${id}/disenroll-tutorship/');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<OkSerializer, OkSerializer>($request);
-  }
-
-  @override
   Future<Response<OkSerializerDisenroll>>
       _apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
     final Uri $url =
