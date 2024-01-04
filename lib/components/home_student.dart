@@ -76,7 +76,7 @@ class _HorariosAlumnosWidgetState extends State<HorariosAlumnosWidget> {
                         child: Padding(
                           padding: EdgeInsets.all(28.0),
                           child: Text(
-                            'Parece que no tienes agendado ningún horario. Dirígete al calendario o busca una tutoría para reservar.',
+                            'Parece que no tienes agendado ningún horario. Dirígete a la lupa y busca una tutoría para reservar.',
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 20,
@@ -91,6 +91,7 @@ class _HorariosAlumnosWidgetState extends State<HorariosAlumnosWidget> {
                           final schedule = schedules![index];
                           return StdCard(
                             tutoria: schedule,
+                            fetchFn: fetchSchedules,
                           );
                         },
                       ),

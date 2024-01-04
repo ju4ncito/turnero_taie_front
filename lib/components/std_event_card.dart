@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:turnero_taie_front/components/tut_event_info.dart';
 import 'event.dart';
+import 'std_event_detail.dart';
 
-class EventCard extends StatelessWidget {
+class StdEventCard extends StatelessWidget {
   final Event event;
   final Future<void> Function() fetchFn;
 
-  const EventCard({Key? key, required this.event, required this.fetchFn})
+  const StdEventCard({Key? key, required this.event, required this.fetchFn})
       : super(key: key);
 
   Color getColorFromStatus(String? status) {
     switch (status) {
       case 'Scheduled':
         return const Color.fromARGB(255, 63, 92, 143);
-      case 'In progress':
+      case 'In Progress':
         return const Color.fromARGB(255, 69, 92, 54);
       case 'Done':
         return Colors.grey;
@@ -91,7 +91,7 @@ class EventCard extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   Text(
-                    "Asistentes: ${event.users!.length - 1}",
+                    "Asistentes: ${event.asistentes.toString()}",
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -100,7 +100,7 @@ class EventCard extends StatelessWidget {
                   ),
                   Text(
                     "Modalidad: ${event.schedule?.modality ?? "Sin estado"}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
                     ),
@@ -112,7 +112,7 @@ class EventCard extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EventInfo(
+                    builder: (context) => EventDetail(
                       event: event,
                     ),
                   ),

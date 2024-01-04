@@ -281,6 +281,15 @@ class _LoginPageState extends State<LoginPage> {
           if (widget.currentUser != null && widget.currentUser?.id != null) {
             bool allPostsSuccessful = true;
 
+            if (selectedCareerIds.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      'No se puede registrar sin seleccionar al menos una carrera.'),
+                ),
+              );
+              return;
+            }
             for (int careerId in selectedCareerIds) {
               final postresult = await apiManager.apiModel.apiCareerXUserPost(
                 body: CareerXUserRequest(

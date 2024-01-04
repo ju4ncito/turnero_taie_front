@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/components/std_schedule_info.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 class StdCard extends StatelessWidget {
   final SearchTutorship tutoria;
+  final Future<void> Function() fetchFn;
 
-  const StdCard({super.key, required this.tutoria});
+  const StdCard({super.key, required this.tutoria, required this.fetchFn});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,29 @@ class StdCard extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    dayOfWeek,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ' ${tutoria.area.name}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        ' ${dayOfWeek} ${DateFormat(' dd-MM', 'es_AR').format(tutoria.date)}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
                   ),
                   const Icon(
                     Icons.arrow_forward_ios,
@@ -94,7 +112,9 @@ class StdCard extends StatelessWidget {
                       tutorInstance: tutoria,
                     ),
                   ),
-                );
+                ).then((value) {
+                  fetchFn();
+                });
               },
             ),
           ],

@@ -69,11 +69,14 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
             kEvents[eventDate]!.add(
               Event(
-                instance.area.name,
-                instance.schedule.capacity - 1,
-                instance.status,
-                instance.schedule.id,
-              ),
+                  instance.area.name,
+                  instance.schedule.capacity - 1,
+                  instance.status,
+                  instance.schedule.id,
+                  instance.schedule,
+                  instance.users,
+                  instance.id,
+                  instance.date),
             );
           }
         });
@@ -146,6 +149,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   break;
                 case 'Done':
                   color = Colors.grey;
+                  break;
+                case 'Cancelled':
+                  color = const Color.fromARGB(255, 102, 30, 30);
                   break;
                 default:
                   color = Colors.black;

@@ -50,13 +50,25 @@ class TutCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      child: Text(
-                        '${tutoria.modality} con ${tutoria.capacity.toString()} asistentes',
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 203, 225, 255),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                        ),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${tutoria.modality} ',
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 203, 225, 255),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'con capacidad de ${tutoria.capacity.toString()} alumnos',
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 203, 225, 255),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

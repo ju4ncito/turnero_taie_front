@@ -1441,6 +1441,26 @@ abstract class ApiModel extends ChopperService {
 
   ///Disenroll a student from an existing Tutorship
   ///@param id A unique integer value identifying this tutorship instance.
+  Future<chopper.Response<OkSerializer>>
+      apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
+    generatedMapping.putIfAbsent(
+        OkSerializer, () => OkSerializer.fromJsonFactory);
+
+    return _apiTutorshipInstancesIdDisenrollTutorshipPost(id: id);
+  }
+
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  @Post(
+    path: '/api/tutorship-instances/{id}/disenroll-tutorship/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<OkSerializer>>
+      _apiTutorshipInstancesIdDisenrollTutorshipPost(
+          {@Path('id') required int? id});
+
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
   Future<chopper.Response<OkSerializerDisenroll>>
       apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
     generatedMapping.putIfAbsent(

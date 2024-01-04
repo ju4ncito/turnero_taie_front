@@ -71,7 +71,7 @@ class ScheduleInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
-                      width: 58, // Set your desired width
+                      width: 80, // Set your desired width
                       height: 30, // Set your desired height
                       child: ElevatedButton(
                         onPressed: null,
@@ -130,7 +130,7 @@ class ScheduleInfo extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.schedule.tutorUser.areas[0]}',
+                          '${tutorInstance.area.name}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
@@ -274,16 +274,17 @@ class ScheduleInfo extends StatelessWidget {
                       final localContext = context;
                       final apiManager = AuthenticatedApiManager();
                       final postResult = await apiManager.apiModel
-                          .apiTutorshipInstancesEnrollTutorshipPost(
-                        body: tutoriaRequest,
+                          .apiTutorshipInstancesIdDisenrollTutorshipPost(
+                        id: tutorInstance.id,
                       );
 
                       print(postResult.error);
+                      print(postResult.body);
                       print(
-                          "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
+                          "API disenroll Status Code: ${postResult.statusCode}");
 
                       if (context.mounted) {
-                        Navigator.pop(localContext);
+                        Navigator.pop(localContext, true);
                       }
                     },
                     style: ButtonStyle(

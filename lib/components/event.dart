@@ -1,13 +1,19 @@
 import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
 class Event {
   final String? area;
   final int? asistentes;
   final String? status;
   final int? id;
+  final ReadTutorUserSchedule? schedule;
+  final List<int>? users;
+  final int? tutorshipId;
+  final DateTime? date;
 
-  const Event(this.area, this.asistentes, this.status, this.id);
+  const Event(this.area, this.asistentes, this.status, this.id, this.schedule,
+      this.users, this.tutorshipId, this.date);
 }
 
 int getHashCode(DateTime key) {

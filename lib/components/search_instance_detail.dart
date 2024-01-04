@@ -71,7 +71,7 @@ class SearchInstancePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
-                      width: 58, // Set your desired width
+                      width: 65, // Set your desired width
                       height: 30, // Set your desired height
                       child: ElevatedButton(
                         onPressed: null,
@@ -130,7 +130,7 @@ class SearchInstancePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.schedule.tutorUser.areas[0]}',
+                          '${tutorInstance.schedule.tutorUser.areas[0].name}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
