@@ -144,7 +144,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 case 'Scheduled':
                   color = const Color.fromARGB(255, 29, 69, 140);
                   break;
-                case 'In Progress':
+                case 'In progress':
                   color = const Color.fromARGB(255, 64, 106, 36);
                   break;
                 case 'Done':
