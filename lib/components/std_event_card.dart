@@ -19,6 +19,8 @@ class StdEventCard extends StatelessWidget {
         return Colors.grey;
       case 'Cancelled':
         return Color.fromARGB(255, 102, 30, 30);
+      case 'Delayed':
+        return const Color.fromARGB(255, 78, 67, 9);
       default:
         return Colors.black;
     }
@@ -29,6 +31,8 @@ class StdEventCard extends StatelessWidget {
       'Scheduled': 'Programada',
       'In progress': 'En curso',
       'Done': 'Finalizada',
+      'Cancelled': 'Cancelada',
+      'Delayed': 'Demorada',
     };
 
     // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible

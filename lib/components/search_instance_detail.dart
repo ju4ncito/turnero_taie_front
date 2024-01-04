@@ -39,6 +39,8 @@ class SearchInstancePage extends StatelessWidget {
       'Scheduled': 'Programada',
       'In progress': 'En curso',
       'Done': 'Finalizada',
+      'Cancelled': 'Cancelada',
+      'Delayed': 'Demorada',
     };
 
     // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
