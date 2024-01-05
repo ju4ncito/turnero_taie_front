@@ -1459,6 +1459,26 @@ abstract class ApiModel extends ChopperService {
       _apiTutorshipInstancesIdDisenrollTutorshipPost(
           {@Path('id') required int? id});
 
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  Future<chopper.Response<OkSerializerDisenroll>>
+      apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
+    generatedMapping.putIfAbsent(
+        OkSerializerDisenroll, () => OkSerializerDisenroll.fromJsonFactory);
+
+    return _apiTutorshipInstancesIdDisenrollTutorshipPost(id: id);
+  }
+
+  ///Disenroll a student from an existing Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  @Post(
+    path: '/api/tutorship-instances/{id}/disenroll-tutorship/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<OkSerializerDisenroll>>
+      _apiTutorshipInstancesIdDisenrollTutorshipPost(
+          {@Path('id') required int? id});
+
   ///Enroll a student to an existing o new tutorship
   Future<chopper.Response<OkSerializer>>
       apiTutorshipInstancesEnrollTutorshipPost({required EnrollRequest? body}) {
@@ -3463,6 +3483,67 @@ extension $InternalServerErrorExtension on InternalServerError {
 }
 
 @JsonSerializable(explicitToJson: true)
+class InternalServerErrorSerializerDisenroll {
+  InternalServerErrorSerializerDisenroll({
+    required this.message,
+    required this.traceback,
+  });
+
+  factory InternalServerErrorSerializerDisenroll.fromJson(
+          Map<String, dynamic> json) =>
+      _$InternalServerErrorSerializerDisenrollFromJson(json);
+
+  static const toJsonFactory = _$InternalServerErrorSerializerDisenrollToJson;
+  Map<String, dynamic> toJson() =>
+      _$InternalServerErrorSerializerDisenrollToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  @JsonKey(name: 'traceback')
+  final String traceback;
+  static const fromJsonFactory =
+      _$InternalServerErrorSerializerDisenrollFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InternalServerErrorSerializerDisenroll &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality()
+                    .equals(other.message, message)) &&
+            (identical(other.traceback, traceback) ||
+                const DeepCollectionEquality()
+                    .equals(other.traceback, traceback)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^
+      const DeepCollectionEquality().hash(traceback) ^
+      runtimeType.hashCode;
+}
+
+extension $InternalServerErrorSerializerDisenrollExtension
+    on InternalServerErrorSerializerDisenroll {
+  InternalServerErrorSerializerDisenroll copyWith(
+      {String? message, String? traceback}) {
+    return InternalServerErrorSerializerDisenroll(
+        message: message ?? this.message,
+        traceback: traceback ?? this.traceback);
+  }
+
+  InternalServerErrorSerializerDisenroll copyWithWrapped(
+      {Wrapped<String>? message, Wrapped<String>? traceback}) {
+    return InternalServerErrorSerializerDisenroll(
+        message: (message != null ? message.value : this.message),
+        traceback: (traceback != null ? traceback.value : this.traceback));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class NoSearchString {
   NoSearchString({
     required this.message,
@@ -3544,6 +3625,49 @@ extension $OkSerializerExtension on OkSerializer {
 
   OkSerializer copyWithWrapped({Wrapped<String>? message}) {
     return OkSerializer(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class OkSerializerDisenroll {
+  OkSerializerDisenroll({
+    required this.message,
+  });
+
+  factory OkSerializerDisenroll.fromJson(Map<String, dynamic> json) =>
+      _$OkSerializerDisenrollFromJson(json);
+
+  static const toJsonFactory = _$OkSerializerDisenrollToJson;
+  Map<String, dynamic> toJson() => _$OkSerializerDisenrollToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$OkSerializerDisenrollFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is OkSerializerDisenroll &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $OkSerializerDisenrollExtension on OkSerializerDisenroll {
+  OkSerializerDisenroll copyWith({String? message}) {
+    return OkSerializerDisenroll(message: message ?? this.message);
+  }
+
+  OkSerializerDisenroll copyWithWrapped({Wrapped<String>? message}) {
+    return OkSerializerDisenroll(
         message: (message != null ? message.value : this.message));
   }
 }

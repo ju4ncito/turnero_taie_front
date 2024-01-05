@@ -3666,6 +3666,53 @@
                 }
             }
         },
+        "/api/tutorship-instances/{id}/disenroll-tutorship/": {
+            "post": {
+                "operationId": "tutorship_instances_disenroll_tutorship_create",
+                "summary": "Disenroll a student from an existing Tutorship",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this tutorship instance.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ok_serializer_Disenroll"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerError_Serializer_Disenroll"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/tutorship-instances/enroll-tutorship/": {
             "post": {
                 "operationId": "tutorship_instances_enroll_tutorship_create",
@@ -5481,6 +5528,21 @@
                     "traceback"
                 ]
             },
+            "InternalServerError_Serializer_Disenroll": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "traceback": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message",
+                    "traceback"
+                ]
+            },
             "Internal_Server_Error": {
                 "type": "object",
                 "properties": {
@@ -5504,6 +5566,17 @@
                 ]
             },
             "Ok_serializer": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "Ok_serializer_Disenroll": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -6064,6 +6137,10 @@
             "SearchTutorship": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "schedule": {
                         "$ref": "#/components/schemas/ReadTutorUserSchedule"
                     },
@@ -6089,6 +6166,7 @@
                 "required": [
                     "area",
                     "date",
+                    "id",
                     "schedule",
                     "status",
                     "users"
