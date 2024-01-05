@@ -191,19 +191,57 @@ class _SearchPageState extends State<SearchPage> {
                                       searchResults[0]!.schedules[index];
                                   final title = Row(
                                     children: [
-                                      Text(
-                                          "${schedule.begin.substring(0, schedule.begin.length - 3)} a ${schedule.end.substring(0, schedule.end.length - 3)}")
+                                      Expanded(
+                                        child: Text(
+                                          "${schedule.begin.substring(0, schedule.begin.length - 3)} a ${schedule.end.substring(0, schedule.end.length - 3)}",
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              spreadRadius: 1,
+                                              blurRadius: 2,
+                                              offset: const Offset(0, 1),
+                                            ),
+                                          ],
+                                          color: const Color.fromARGB(
+                                              255, 19, 45, 88),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Text(
+                                          '${schedule.coincidence!.length <= 25 ? schedule.coincidence : schedule.coincidence!.substring(0, 22) + "..."}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   );
                                   final subtitle = Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text("${schedule.modality} con"),
-                                      Text(
-                                        ' ${schedule.tutorUser.firstName}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Text("${schedule.modality} con"),
+                                            Text(
+                                              ' ${schedule.tutorUser.firstName}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(width: 15),
+                                          ],
                                         ),
                                       ),
                                     ],

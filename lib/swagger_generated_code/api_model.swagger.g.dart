@@ -64,7 +64,9 @@ Map<String, dynamic> _$AcademicYearRequestToJson(
 
 Area _$AreaFromJson(Map<String, dynamic> json) => Area(
       id: json['id'] as int,
-      tags: Tag.fromJson(json['tags'] as Map<String, dynamic>),
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       name: json['name'] as String,
       postulations: (json['postulations'] as List<dynamic>?)
               ?.map((e) => e as int)
@@ -76,20 +78,22 @@ Area _$AreaFromJson(Map<String, dynamic> json) => Area(
 
 Map<String, dynamic> _$AreaToJson(Area instance) => <String, dynamic>{
       'id': instance.id,
-      'tags': instance.tags.toJson(),
+      'tags': instance.tags,
       'name': instance.name,
       'postulations': instance.postulations,
       'users': instance.users,
     };
 
 AreaRequest _$AreaRequestFromJson(Map<String, dynamic> json) => AreaRequest(
-      tags: TagRequest.fromJson(json['tags'] as Map<String, dynamic>),
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       name: json['name'] as String,
     );
 
 Map<String, dynamic> _$AreaRequestToJson(AreaRequest instance) =>
     <String, dynamic>{
-      'tags': instance.tags.toJson(),
+      'tags': instance.tags,
       'name': instance.name,
     };
 
@@ -426,15 +430,15 @@ Map<String, dynamic> _$PatchedAcademicYearRequestToJson(
 
 PatchedAreaRequest _$PatchedAreaRequestFromJson(Map<String, dynamic> json) =>
     PatchedAreaRequest(
-      tags: json['tags'] == null
-          ? null
-          : TagRequest.fromJson(json['tags'] as Map<String, dynamic>),
+      tags:
+          (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              [],
       name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$PatchedAreaRequestToJson(PatchedAreaRequest instance) =>
     <String, dynamic>{
-      'tags': instance.tags?.toJson(),
+      'tags': instance.tags,
       'name': instance.name,
     };
 
@@ -755,6 +759,7 @@ ReadTutorUserSchedule _$ReadTutorUserScheduleFromJson(
       id: json['id'] as int,
       tutorUser:
           TutorAreas.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      coincidence: json['coincidence'] as String?,
       modality: json['modality'] as String,
       day: json['day'] as String,
       begin: json['begin'] as String,
@@ -767,6 +772,7 @@ Map<String, dynamic> _$ReadTutorUserScheduleToJson(
     <String, dynamic>{
       'id': instance.id,
       'tutor_user': instance.tutorUser.toJson(),
+      'coincidence': instance.coincidence,
       'modality': instance.modality,
       'day': instance.day,
       'begin': instance.begin,
