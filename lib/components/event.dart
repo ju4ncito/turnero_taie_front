@@ -10,10 +10,11 @@ class Event {
   final ReadTutorUserSchedule? schedule;
   final List<int>? users;
   final int? tutorshipId;
-  final DateTime? date;
+  final DateTime date;
+  final int areaId;
 
   const Event(this.area, this.asistentes, this.status, this.id, this.schedule,
-      this.users, this.tutorshipId, this.date);
+      this.users, this.tutorshipId, this.date, this.areaId);
 }
 
 int getHashCode(DateTime key) {

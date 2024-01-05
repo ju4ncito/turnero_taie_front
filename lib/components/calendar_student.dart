@@ -73,7 +73,8 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
                   instance.schedule,
                   instance.users,
                   instance.id,
-                  instance.date),
+                  instance.date,
+                  instance.area.id),
             );
           }
         });

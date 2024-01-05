@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/components/tut_event_info.dart';
 import 'event.dart';
+import 'helper_functions.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -8,39 +9,6 @@ class EventCard extends StatelessWidget {
 
   const EventCard({Key? key, required this.event, required this.fetchFn})
       : super(key: key);
-
-  Color getColorFromStatus(String? status) {
-    switch (status) {
-      case 'Scheduled':
-        return const Color.fromARGB(255, 63, 92, 143);
-      case 'In progress':
-        return const Color.fromARGB(255, 69, 92, 54);
-      case 'Done':
-        return Colors.grey;
-      case 'Cancelled':
-        return Color.fromARGB(255, 102, 30, 30);
-      case 'Delayed':
-        return const Color.fromARGB(255, 78, 67, 9);
-
-      default:
-        return Colors.black;
-    }
-  }
-
-  String? translateStatusToSpanish(String? status) {
-    Map<String, String> statusTranslations = {
-      'Scheduled': 'Programada',
-      'In progress': 'En curso',
-      'Done': 'Finalizada',
-      'Cancelled': 'Cancelada',
-      'Delayed': 'Demorada',
-    };
-
-    // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
-    return statusTranslations.containsKey(status)
-        ? statusTranslations[status]!
-        : status;
-  }
 
   @override
   Widget build(BuildContext context) {
