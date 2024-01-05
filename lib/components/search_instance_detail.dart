@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
-import 'package:intl/intl.dart';
+import 'helper_functions.dart';
 
 class SearchInstancePage extends StatelessWidget {
   final apiManager = AuthenticatedApiManager();
@@ -11,42 +11,6 @@ class SearchInstancePage extends StatelessWidget {
   SearchInstancePage({required this.tutorInstance});
 
   @override
-  String getDayAbbreviation(DateTime date) {
-    String weekday = DateFormat('EEEE', 'es_ES').format(date).toUpperCase();
-
-    switch (weekday) {
-      case 'LUNES':
-        return 'LUN';
-      case 'MARTES':
-        return 'MAR';
-      case 'MIÉRCOLES':
-        return 'MIE';
-      case 'JUEVES':
-        return 'JUE';
-      case 'VIERNES':
-        return 'VIE';
-      case 'SÁBADO':
-        return 'SAB';
-      case 'DOMINGO':
-        return 'DOM';
-      default:
-        return '';
-    }
-  }
-
-  String translateStatusToSpanish(String status) {
-    Map<String, String> statusTranslations = {
-      'Scheduled': 'Programada',
-      'In progress': 'En curso',
-      'Done': 'Finalizada',
-    };
-
-    // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
-    return statusTranslations.containsKey(status)
-        ? statusTranslations[status]!
-        : status;
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +35,7 @@ class SearchInstancePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
-                      width: 58, // Set your desired width
+                      width: 65, // Set your desired width
                       height: 30, // Set your desired height
                       child: ElevatedButton(
                         onPressed: null,
@@ -130,7 +94,7 @@ class SearchInstancePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.schedule.tutorUser.areas[0]}',
+                          '${tutorInstance.schedule.tutorUser.areas[0].name}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),

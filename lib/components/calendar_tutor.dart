@@ -76,7 +76,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   instance.schedule,
                   instance.users,
                   instance.id,
-                  instance.date),
+                  instance.date,
+                  instance.area.id),
             );
           }
         });
@@ -144,7 +145,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 case 'Scheduled':
                   color = const Color.fromARGB(255, 29, 69, 140);
                   break;
-                case 'In Progress':
+                case 'In progress':
                   color = const Color.fromARGB(255, 64, 106, 36);
                   break;
                 case 'Done':
@@ -152,6 +153,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   break;
                 case 'Cancelled':
                   color = const Color.fromARGB(255, 102, 30, 30);
+                  break;
+                case 'Delayed':
+                  color = const Color.fromARGB(255, 78, 67, 9);
                   break;
                 default:
                   color = Colors.black;

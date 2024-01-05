@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/components/std_schedule_info.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'helper_functions.dart';
 
 class StdCard extends StatelessWidget {
   final SearchTutorship tutoria;
@@ -17,7 +18,7 @@ class StdCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      color: const Color.fromARGB(255, 50, 75, 118),
+      color: getColorFromStatus(tutoria.status),
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
       child: Padding(
@@ -68,7 +69,7 @@ class StdCard extends StatelessWidget {
                         vertical: MediaQuery.of(context).size.height * 0.01,
                       ),
                       child: Text(
-                        '${tutoria.schedule.modality} con ${tutoria.schedule.tutorUser.firstName} ',
+                        '${tutoria.schedule.modality} con ${tutoria.schedule.tutorUser.firstName}',
                         style: const TextStyle(
                           color: Color.fromARGB(255, 203, 225, 255),
                           fontSize: 16,
@@ -91,7 +92,7 @@ class StdCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'de ${tutoria.schedule.begin.substring(0, tutoria.schedule.begin.length - 3)} a ${tutoria.schedule.end.substring(0, tutoria.schedule.end.length - 3)}',
+                          'de ${tutoria.schedule.begin.substring(0, tutoria.schedule.begin.length - 3)} a ${tutoria.schedule.end.substring(0, tutoria.schedule.end.length - 3)} - ${translateStatusToSpanish(tutoria.status)}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.grey[100],

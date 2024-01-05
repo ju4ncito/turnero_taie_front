@@ -3666,6 +3666,53 @@
                 }
             }
         },
+        "/api/tutorship-instances/{id}/disenroll-tutorship/": {
+            "post": {
+                "operationId": "tutorship_instances_disenroll_tutorship_create",
+                "summary": "Disenroll a student from an existing Tutorship",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this tutorship instance.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Ok_serializer_Disenroll"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerError_Serializer_Disenroll"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/tutorship-instances/enroll-tutorship/": {
             "post": {
                 "operationId": "tutorship_instances_enroll_tutorship_create",
@@ -5076,7 +5123,10 @@
                         "readOnly": true
                     },
                     "tags": {
-                        "$ref": "#/components/schemas/Tag"
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     "name": {
                         "type": "string",
@@ -5109,7 +5159,11 @@
                 "type": "object",
                 "properties": {
                     "tags": {
-                        "$ref": "#/components/schemas/TagRequest"
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
                     },
                     "name": {
                         "type": "string",
@@ -5481,6 +5535,21 @@
                     "traceback"
                 ]
             },
+            "InternalServerError_Serializer_Disenroll": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "traceback": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message",
+                    "traceback"
+                ]
+            },
             "Internal_Server_Error": {
                 "type": "object",
                 "properties": {
@@ -5504,6 +5573,17 @@
                 ]
             },
             "Ok_serializer": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ]
+            },
+            "Ok_serializer_Disenroll": {
                 "type": "object",
                 "properties": {
                     "message": {
@@ -5549,7 +5629,11 @@
                 "type": "object",
                 "properties": {
                     "tags": {
-                        "$ref": "#/components/schemas/TagRequest"
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
                     },
                     "name": {
                         "type": "string",
@@ -5925,6 +6009,11 @@
                     "tutor_user": {
                         "$ref": "#/components/schemas/TutorAreas"
                     },
+                    "coincidence": {
+                        "type": "string",
+                        "readOnly": true,
+                        "nullable": true
+                    },
                     "modality": {
                         "type": "string",
                         "maxLength": 20
@@ -5948,6 +6037,7 @@
                 "required": [
                     "begin",
                     "capacity",
+                    "coincidence",
                     "day",
                     "end",
                     "id",
@@ -6064,6 +6154,10 @@
             "SearchTutorship": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
                     "schedule": {
                         "$ref": "#/components/schemas/ReadTutorUserSchedule"
                     },
@@ -6089,6 +6183,7 @@
                 "required": [
                     "area",
                     "date",
+                    "id",
                     "schedule",
                     "status",
                     "users"

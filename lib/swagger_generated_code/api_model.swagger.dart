@@ -1441,10 +1441,10 @@ abstract class ApiModel extends ChopperService {
 
   ///Disenroll a student from an existing Tutorship
   ///@param id A unique integer value identifying this tutorship instance.
-  Future<chopper.Response<OkSerializer>>
+  Future<chopper.Response<OkSerializerDisenroll>>
       apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
     generatedMapping.putIfAbsent(
-        OkSerializer, () => OkSerializer.fromJsonFactory);
+        OkSerializerDisenroll, () => OkSerializerDisenroll.fromJsonFactory);
 
     return _apiTutorshipInstancesIdDisenrollTutorshipPost(id: id);
   }
@@ -1455,7 +1455,7 @@ abstract class ApiModel extends ChopperService {
     path: '/api/tutorship-instances/{id}/disenroll-tutorship/',
     optionalBody: true,
   )
-  Future<chopper.Response<OkSerializer>>
+  Future<chopper.Response<OkSerializerDisenroll>>
       _apiTutorshipInstancesIdDisenrollTutorshipPost(
           {@Path('id') required int? id});
 
@@ -2246,8 +2246,8 @@ class Area {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'tags')
-  final Tag tags;
+  @JsonKey(name: 'tags', defaultValue: <String>[])
+  final List<String> tags;
   @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'postulations', defaultValue: <int>[])
@@ -2289,7 +2289,7 @@ class Area {
 extension $AreaExtension on Area {
   Area copyWith(
       {int? id,
-      Tag? tags,
+      List<String>? tags,
       String? name,
       List<int>? postulations,
       List<int>? users}) {
@@ -2303,7 +2303,7 @@ extension $AreaExtension on Area {
 
   Area copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<Tag>? tags,
+      Wrapped<List<String>>? tags,
       Wrapped<String>? name,
       Wrapped<List<int>>? postulations,
       Wrapped<List<int>>? users}) {
@@ -2330,8 +2330,8 @@ class AreaRequest {
   static const toJsonFactory = _$AreaRequestToJson;
   Map<String, dynamic> toJson() => _$AreaRequestToJson(this);
 
-  @JsonKey(name: 'tags')
-  final TagRequest tags;
+  @JsonKey(name: 'tags', defaultValue: <String>[])
+  final List<String> tags;
   @JsonKey(name: 'name')
   final String name;
   static const fromJsonFactory = _$AreaRequestFromJson;
@@ -2357,12 +2357,12 @@ class AreaRequest {
 }
 
 extension $AreaRequestExtension on AreaRequest {
-  AreaRequest copyWith({TagRequest? tags, String? name}) {
+  AreaRequest copyWith({List<String>? tags, String? name}) {
     return AreaRequest(tags: tags ?? this.tags, name: name ?? this.name);
   }
 
   AreaRequest copyWithWrapped(
-      {Wrapped<TagRequest>? tags, Wrapped<String>? name}) {
+      {Wrapped<List<String>>? tags, Wrapped<String>? name}) {
     return AreaRequest(
         tags: (tags != null ? tags.value : this.tags),
         name: (name != null ? name.value : this.name));
@@ -3463,6 +3463,67 @@ extension $InternalServerErrorExtension on InternalServerError {
 }
 
 @JsonSerializable(explicitToJson: true)
+class InternalServerErrorSerializerDisenroll {
+  InternalServerErrorSerializerDisenroll({
+    required this.message,
+    required this.traceback,
+  });
+
+  factory InternalServerErrorSerializerDisenroll.fromJson(
+          Map<String, dynamic> json) =>
+      _$InternalServerErrorSerializerDisenrollFromJson(json);
+
+  static const toJsonFactory = _$InternalServerErrorSerializerDisenrollToJson;
+  Map<String, dynamic> toJson() =>
+      _$InternalServerErrorSerializerDisenrollToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  @JsonKey(name: 'traceback')
+  final String traceback;
+  static const fromJsonFactory =
+      _$InternalServerErrorSerializerDisenrollFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InternalServerErrorSerializerDisenroll &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality()
+                    .equals(other.message, message)) &&
+            (identical(other.traceback, traceback) ||
+                const DeepCollectionEquality()
+                    .equals(other.traceback, traceback)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^
+      const DeepCollectionEquality().hash(traceback) ^
+      runtimeType.hashCode;
+}
+
+extension $InternalServerErrorSerializerDisenrollExtension
+    on InternalServerErrorSerializerDisenroll {
+  InternalServerErrorSerializerDisenroll copyWith(
+      {String? message, String? traceback}) {
+    return InternalServerErrorSerializerDisenroll(
+        message: message ?? this.message,
+        traceback: traceback ?? this.traceback);
+  }
+
+  InternalServerErrorSerializerDisenroll copyWithWrapped(
+      {Wrapped<String>? message, Wrapped<String>? traceback}) {
+    return InternalServerErrorSerializerDisenroll(
+        message: (message != null ? message.value : this.message),
+        traceback: (traceback != null ? traceback.value : this.traceback));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class NoSearchString {
   NoSearchString({
     required this.message,
@@ -3544,6 +3605,49 @@ extension $OkSerializerExtension on OkSerializer {
 
   OkSerializer copyWithWrapped({Wrapped<String>? message}) {
     return OkSerializer(
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class OkSerializerDisenroll {
+  OkSerializerDisenroll({
+    required this.message,
+  });
+
+  factory OkSerializerDisenroll.fromJson(Map<String, dynamic> json) =>
+      _$OkSerializerDisenrollFromJson(json);
+
+  static const toJsonFactory = _$OkSerializerDisenrollToJson;
+  Map<String, dynamic> toJson() => _$OkSerializerDisenrollToJson(this);
+
+  @JsonKey(name: 'message')
+  final String message;
+  static const fromJsonFactory = _$OkSerializerDisenrollFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is OkSerializerDisenroll &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+}
+
+extension $OkSerializerDisenrollExtension on OkSerializerDisenroll {
+  OkSerializerDisenroll copyWith({String? message}) {
+    return OkSerializerDisenroll(message: message ?? this.message);
+  }
+
+  OkSerializerDisenroll copyWithWrapped({Wrapped<String>? message}) {
+    return OkSerializerDisenroll(
         message: (message != null ? message.value : this.message));
   }
 }
@@ -3679,8 +3783,8 @@ class PatchedAreaRequest {
   static const toJsonFactory = _$PatchedAreaRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedAreaRequestToJson(this);
 
-  @JsonKey(name: 'tags')
-  final TagRequest? tags;
+  @JsonKey(name: 'tags', defaultValue: <String>[])
+  final List<String>? tags;
   @JsonKey(name: 'name')
   final String? name;
   static const fromJsonFactory = _$PatchedAreaRequestFromJson;
@@ -3706,12 +3810,12 @@ class PatchedAreaRequest {
 }
 
 extension $PatchedAreaRequestExtension on PatchedAreaRequest {
-  PatchedAreaRequest copyWith({TagRequest? tags, String? name}) {
+  PatchedAreaRequest copyWith({List<String>? tags, String? name}) {
     return PatchedAreaRequest(tags: tags ?? this.tags, name: name ?? this.name);
   }
 
   PatchedAreaRequest copyWithWrapped(
-      {Wrapped<TagRequest?>? tags, Wrapped<String?>? name}) {
+      {Wrapped<List<String>?>? tags, Wrapped<String?>? name}) {
     return PatchedAreaRequest(
         tags: (tags != null ? tags.value : this.tags),
         name: (name != null ? name.value : this.name));
@@ -5101,6 +5205,7 @@ class ReadTutorUserSchedule {
   ReadTutorUserSchedule({
     required this.id,
     required this.tutorUser,
+    required this.coincidence,
     required this.modality,
     required this.day,
     required this.begin,
@@ -5118,6 +5223,8 @@ class ReadTutorUserSchedule {
   final int id;
   @JsonKey(name: 'tutor_user')
   final TutorAreas tutorUser;
+  @JsonKey(name: 'coincidence')
+  final String? coincidence;
   @JsonKey(name: 'modality')
   final String modality;
   @JsonKey(name: 'day')
@@ -5139,6 +5246,9 @@ class ReadTutorUserSchedule {
             (identical(other.tutorUser, tutorUser) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.coincidence, coincidence) ||
+                const DeepCollectionEquality()
+                    .equals(other.coincidence, coincidence)) &&
             (identical(other.modality, modality) ||
                 const DeepCollectionEquality()
                     .equals(other.modality, modality)) &&
@@ -5160,6 +5270,7 @@ class ReadTutorUserSchedule {
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(coincidence) ^
       const DeepCollectionEquality().hash(modality) ^
       const DeepCollectionEquality().hash(day) ^
       const DeepCollectionEquality().hash(begin) ^
@@ -5172,6 +5283,7 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
   ReadTutorUserSchedule copyWith(
       {int? id,
       TutorAreas? tutorUser,
+      String? coincidence,
       String? modality,
       String? day,
       String? begin,
@@ -5180,6 +5292,7 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
     return ReadTutorUserSchedule(
         id: id ?? this.id,
         tutorUser: tutorUser ?? this.tutorUser,
+        coincidence: coincidence ?? this.coincidence,
         modality: modality ?? this.modality,
         day: day ?? this.day,
         begin: begin ?? this.begin,
@@ -5190,6 +5303,7 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
   ReadTutorUserSchedule copyWithWrapped(
       {Wrapped<int>? id,
       Wrapped<TutorAreas>? tutorUser,
+      Wrapped<String?>? coincidence,
       Wrapped<String>? modality,
       Wrapped<String>? day,
       Wrapped<String>? begin,
@@ -5198,6 +5312,8 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
     return ReadTutorUserSchedule(
         id: (id != null ? id.value : this.id),
         tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        coincidence:
+            (coincidence != null ? coincidence.value : this.coincidence),
         modality: (modality != null ? modality.value : this.modality),
         day: (day != null ? day.value : this.day),
         begin: (begin != null ? begin.value : this.begin),
