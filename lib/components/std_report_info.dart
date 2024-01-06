@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'helper_functions.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
@@ -42,7 +43,7 @@ class StdReportInfo extends StatelessWidget {
                 children: [
                   Text(
                     'La clase fue dictada por:',
-                    style: const TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
@@ -88,30 +89,53 @@ class StdReportInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Text(
                 'Feedback del tutor',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 17),
               ),
               const SizedBox(height: 10),
               Text(
                 '¿Cómo evaluarías la clase en general?',
                 style: TextStyle(fontSize: 15),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 15),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Sí'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Parcialmente'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('No'),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 0.5,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    unratedColor: Color.fromARGB(82, 91, 94, 97),
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star_rounded,
+                      color: Color.fromARGB(255, 19, 45, 88),
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
                 ],
               ),
-              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Insuficiente',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  SizedBox(width: 45),
+                  Text(
+                    'Excelente',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
               Text(
                 '¿El contenido fue claro y comprensible?',
                 style: TextStyle(fontSize: 15),
@@ -149,7 +173,7 @@ class StdReportInfo extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Utiliza este espacio para agregar comentarios sobre la clase',
+                'Comentarios sobre la clase (opcional)',
                 style: TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 10),
