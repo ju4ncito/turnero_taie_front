@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:turnero_taie_front/components/calendar_student.dart';
+import 'package:turnero_taie_front/components/report_student.dart';
 import 'package:turnero_taie_front/components/search.dart';
 import 'package:turnero_taie_front/pages/landing.dart';
 import '../components/home_student.dart';
@@ -25,11 +26,10 @@ class _StudentPageState extends State<StudentPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       HorariosAlumnosWidget(currentUser: widget.currentUser),
-      CalendarAlumno(),
-      SearchPage(),
-      const Text(
-        'Perfil',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      const CalendarAlumno(),
+      const SearchPage(),
+      StudentReportWidget(
+        currentUser: widget.currentUser,
       ),
     ];
 
@@ -75,8 +75,8 @@ class _StudentPageState extends State<StudentPage> {
                   text: 'Buscar',
                 ),
                 GButton(
-                  icon: Icons.person_rounded,
-                  text: 'Perfil',
+                  icon: Icons.rate_review_rounded,
+                  text: 'Evaluar',
                 ),
               ],
               selectedIndex: _selectedIndex,
