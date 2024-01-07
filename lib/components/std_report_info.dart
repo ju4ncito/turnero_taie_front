@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'helper_functions.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 
-class StdReportInfo extends StatelessWidget {
+class StdReportInfo extends StatefulWidget {
   final apiManager = AuthenticatedApiManager();
   final SearchTutorship report;
   final TextEditingController commentsController = TextEditingController();
 
   StdReportInfo({Key? key, required this.report}) : super(key: key);
 
+  @override
+  _StdReportInfoState createState() => _StdReportInfoState();
+}
+
+class _StdReportInfoState extends State<StdReportInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class StdReportInfo extends StatelessWidget {
             Text('Informe'),
             SizedBox(height: 4),
             Text(
-              '${report.area.name} - ${DateFormat('dd-MM-yyyy').format(report.date)}',
+              '${widget.report.area.name} - ${DateFormat('dd-MM-yyyy').format(widget.report.date)}',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.white54,
@@ -54,9 +58,11 @@ class StdReportInfo extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: Image(
-                        image: report.schedule.tutorUser.profilePicture != null
-                            ? NetworkImage(
-                                report.schedule.tutorUser.profilePicture!)
+                        image: widget
+                                    .report.schedule.tutorUser.profilePicture !=
+                                null
+                            ? NetworkImage(widget
+                                .report.schedule.tutorUser.profilePicture!)
                             : const AssetImage(
                                     'assets/images/default_profile_picture.png')
                                 as ImageProvider,
@@ -70,7 +76,7 @@ class StdReportInfo extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${report.schedule.tutorUser.firstName} ${report.schedule.tutorUser.lastName}',
+                          '${widget.report.schedule.tutorUser.firstName} ${widget.report.schedule.tutorUser.lastName}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -78,7 +84,7 @@ class StdReportInfo extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          report.area.name,
+                          widget.report.area.name,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
@@ -178,7 +184,7 @@ class StdReportInfo extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: commentsController,
+                controller: widget.commentsController,
                 maxLength: 160,
                 maxLines: 3,
                 decoration: InputDecoration(

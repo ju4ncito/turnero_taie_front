@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:turnero_taie_front/components/calendar_student.dart';
 import 'package:turnero_taie_front/components/report_student.dart';
 import 'package:turnero_taie_front/components/search.dart';
+import 'package:turnero_taie_front/components/settings_student.dart';
 import 'package:turnero_taie_front/pages/landing.dart';
 import '../components/home_student.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -107,7 +108,7 @@ class _StudentPageState extends State<StudentPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bienvenido, ',
+                  'Hola, ',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Text(
@@ -147,7 +148,7 @@ class _StudentPageState extends State<StudentPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const LandingPage();
+                      return StudentsSettingsPage();
                     },
                   ),
                 );

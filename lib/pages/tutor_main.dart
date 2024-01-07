@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:turnero_taie_front/components/report_tutor.dart';
+import 'package:turnero_taie_front/components/settings_tutor.dart';
 import 'package:turnero_taie_front/pages/landing.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import '../components/home_tutor.dart';
@@ -24,9 +26,8 @@ class _TutorPageState extends State<TutorPage> {
     final List<Widget> widgetOptions = <Widget>[
       HorariosTutoresWidget(currentUser: widget.currentUser),
       const TableEventsExample(),
-      const Text(
-        'Perfil',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      TutorReportWidget(
+        currentUser: widget.currentUser,
       ),
     ];
 
@@ -68,8 +69,8 @@ class _TutorPageState extends State<TutorPage> {
                   text: 'Calendario',
                 ),
                 GButton(
-                  icon: Icons.person_rounded,
-                  text: 'Perfil',
+                  icon: Icons.rate_review_rounded,
+                  text: 'Evaluar',
                 ),
               ],
               selectedIndex: _selectedIndex,
@@ -103,7 +104,7 @@ class _TutorPageState extends State<TutorPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Bienvenido, ',
+                      'Hola, ',
                       style: TextStyle(color: Colors.grey[700], fontSize: 16),
                     ),
                     Text(
@@ -145,7 +146,7 @@ class _TutorPageState extends State<TutorPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const LandingPage();
+                      return TutorSettingsPage();
                     },
                   ),
                 );
