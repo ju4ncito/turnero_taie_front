@@ -10,4 +10,12 @@ class UserSecureStorage {
   static Future<String?> getField(key) async {
     return await _storage.read(key: key);
   }
+
+  static Future<void> clearAccessToken() async {
+    await _storage.delete(key: 'accessToken');
+  }
+
+  static Future<void> clearRefreshToken() async {
+    await _storage.delete(key: 'refreshToken');
+  }
 }

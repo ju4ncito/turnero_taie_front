@@ -13,7 +13,7 @@ class AuthRepository {
   String? _accessToken;
 
   FutureOr<String?> get accessToken async {
-    _accessToken ??= await UserSecureStorage.getField('accessToken');
+    _accessToken = await UserSecureStorage.getField('accessToken');
     return _accessToken;
   }
 

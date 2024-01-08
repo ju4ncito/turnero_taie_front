@@ -34,9 +34,9 @@ class LandingPage extends StatelessWidget {
           // print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
 
           if (apiAuth.statusCode == 200) {
-            final user = apiAuth.body?.user;
-            final accessToken = apiAuth.body?.accessToken;
-            final refreshToken = apiAuth.body?.refreshToken;
+            final user = apiAuth.body!.user;
+            final accessToken = apiAuth.body!.accessToken;
+            final refreshToken = apiAuth.body!.refreshToken;
             if (user != null) {
               UserSecureStorage.setField('accessToken', accessToken);
 

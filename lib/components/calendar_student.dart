@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:turnero_taie_front/components/std_event_card.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -134,6 +135,18 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
       body: Column(
         children: [
           TableCalendar<Event>(
+            locale: 'es_AR',
+            headerStyle: HeaderStyle(
+              titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale)
+                  .format(date)
+                  .capitalize(), // Capitaliza el primer caracter del nombre del mes
+
+              titleCentered: true,
+              formatButtonVisible: false,
+              titleTextStyle: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
             calendarBuilders:
                 CalendarBuilders(singleMarkerBuilder: (context, date, events) {
               final status = events.status;
@@ -233,5 +246,11 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
         ],
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }

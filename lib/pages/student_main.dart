@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:turnero_taie_front/components/calendar_student.dart';
+import 'package:turnero_taie_front/components/report_student.dart';
 import 'package:turnero_taie_front/components/search.dart';
+import 'package:turnero_taie_front/components/settings_student.dart';
 import 'package:turnero_taie_front/pages/landing.dart';
 import '../components/home_student.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
@@ -11,7 +13,7 @@ class StudentPage extends StatefulWidget {
   final String? photoUrl;
 
   const StudentPage(
-      {Key? key, required this.currentUser, required this.photoUrl})
+      {Key? key, required this.currentUser, required this.photoUrl, User? user})
       : super(key: key);
 
   @override
@@ -25,11 +27,10 @@ class _StudentPageState extends State<StudentPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       HorariosAlumnosWidget(currentUser: widget.currentUser),
-      CalendarAlumno(),
-      SearchPage(),
-      const Text(
-        'Perfil',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+      const CalendarAlumno(),
+      const SearchPage(),
+      StudentReportWidget(
+        currentUser: widget.currentUser,
       ),
     ];
 
@@ -75,8 +76,8 @@ class _StudentPageState extends State<StudentPage> {
                   text: 'Buscar',
                 ),
                 GButton(
-                  icon: Icons.person_rounded,
-                  text: 'Perfil',
+                  icon: Icons.rate_review_rounded,
+                  text: 'Evaluar',
                 ),
               ],
               selectedIndex: _selectedIndex,
@@ -107,7 +108,7 @@ class _StudentPageState extends State<StudentPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Bienvenido, ',
+                  'Hola, ',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 Text(
@@ -147,7 +148,10 @@ class _StudentPageState extends State<StudentPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return const LandingPage();
+                      return StudentsSettingsPage(
+                        currentUser: widget.currentUser,
+                        photoUrl: widget.photoUrl,
+                      );
                     },
                   ),
                 );
