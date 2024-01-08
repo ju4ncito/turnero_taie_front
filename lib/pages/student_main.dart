@@ -13,7 +13,7 @@ class StudentPage extends StatefulWidget {
   final String? photoUrl;
 
   const StudentPage(
-      {Key? key, required this.currentUser, required this.photoUrl})
+      {Key? key, required this.currentUser, required this.photoUrl, User? user})
       : super(key: key);
 
   @override
@@ -148,7 +148,10 @@ class _StudentPageState extends State<StudentPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return StudentsSettingsPage();
+                      return StudentsSettingsPage(
+                        currentUser: widget.currentUser,
+                        photoUrl: widget.photoUrl,
+                      );
                     },
                   ),
                 );

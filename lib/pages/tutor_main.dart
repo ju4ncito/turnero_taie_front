@@ -146,7 +146,10 @@ class _TutorPageState extends State<TutorPage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return TutorSettingsPage();
+                      return TutorSettingsPage(
+                        currentUser: widget.currentUser,
+                        photoUrl: widget.photoUrl,
+                      );
                     },
                   ),
                 );
