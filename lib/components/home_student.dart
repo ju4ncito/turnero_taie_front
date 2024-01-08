@@ -31,8 +31,8 @@ class _HorariosAlumnosWidgetState extends State<HorariosAlumnosWidget> {
     });
 
     try {
-      final response =
-          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'STD');
+      final response = await apiManager.apiModel
+          .apiTutorshipInstancesGet(role: 'STD', page: 'home');
       if (response.statusCode == 200) {
         setState(() {
           schedules = List<SearchTutorship>.from(response.body ?? []);
