@@ -1333,20 +1333,26 @@ abstract class ApiModel extends ChopperService {
       {@Path('id') required int? id});
 
   ///
+  ///@param page The page to filter by, value can be home, report or calendar
   ///@param role The role to filter by, value can be STD or TUTOR
-  Future<chopper.Response<List<SearchTutorship>>> apiTutorshipInstancesGet(
-      {required String? role}) {
+  Future<chopper.Response<List<SearchTutorship>>> apiTutorshipInstancesGet({
+    required String? page,
+    required String? role,
+  }) {
     generatedMapping.putIfAbsent(
         SearchTutorship, () => SearchTutorship.fromJsonFactory);
 
-    return _apiTutorshipInstancesGet(role: role);
+    return _apiTutorshipInstancesGet(page: page, role: role);
   }
 
   ///
+  ///@param page The page to filter by, value can be home, report or calendar
   ///@param role The role to filter by, value can be STD or TUTOR
   @Get(path: '/api/tutorship-instances/')
-  Future<chopper.Response<List<SearchTutorship>>> _apiTutorshipInstancesGet(
-      {@Query('role') required String? role});
+  Future<chopper.Response<List<SearchTutorship>>> _apiTutorshipInstancesGet({
+    @Query('page') required String? page,
+    @Query('role') required String? role,
+  });
 
   ///
   Future<chopper.Response<TutorshipInstance>> apiTutorshipInstancesPost(
