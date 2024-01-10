@@ -43,8 +43,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     });
 
     try {
-      final response =
-          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
+      final response = await apiManager.apiModel
+          .apiTutorshipInstancesGet(role: 'TUTOR', page: 'calendar');
 
       if (response.statusCode == 200) {
         // print('response de fetchinstance ${response.body}');

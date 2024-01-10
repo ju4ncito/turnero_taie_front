@@ -30,8 +30,8 @@ class _TutorReportWidgetState extends State<TutorReportWidget> {
     });
 
     try {
-      final response =
-          await apiManager.apiModel.apiTutorshipInstancesGet(role: 'TUTOR');
+      final response = await apiManager.apiModel
+          .apiTutorshipInstancesGet(role: 'TUTOR', page: 'report');
       if (response.statusCode == 200) {
         setState(() {
           reports = List<SearchTutorship>.from(response.body ?? []);

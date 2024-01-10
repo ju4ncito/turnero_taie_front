@@ -3420,6 +3420,15 @@
                 "parameters": [
                     {
                         "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "The page to filter by, value can be home, report or calendar ",
+                        "required": true
+                    },
+                    {
+                        "in": "query",
                         "name": "role",
                         "schema": {
                             "type": "string"

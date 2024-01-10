@@ -1041,10 +1041,15 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<SearchTutorship>>> _apiTutorshipInstancesGet(
-      {required String? role}) {
+  Future<Response<List<SearchTutorship>>> _apiTutorshipInstancesGet({
+    required String? page,
+    required String? role,
+  }) {
     final Uri $url = Uri.parse('/api/tutorship-instances/');
-    final Map<String, dynamic> $params = <String, dynamic>{'role': role};
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'page': page,
+      'role': role,
+    };
     final Request $request = Request(
       'GET',
       $url,
