@@ -99,6 +99,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -157,6 +162,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -215,6 +225,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -276,6 +291,11 @@ class EventInfo extends StatelessWidget {
 
                             print('id ${event.tutorshipId}');
                             if (postResult.error == null) {
+                              final localContext = context;
+
+                              if (context.mounted) {
+                                Navigator.pop(localContext, true);
+                              }
                               print(
                                   "API Response Status Code: ${postResult.statusCode}");
                             } else {
