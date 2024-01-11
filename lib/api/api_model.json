@@ -5853,13 +5853,14 @@
                 "type": "object",
                 "properties": {
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
                         "minLength": 1,
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -6477,12 +6478,13 @@
                         "readOnly": true
                     },
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -6530,21 +6532,21 @@
                     "careers",
                     "email",
                     "id",
-                    "roles",
-                    "ucc_key"
+                    "roles"
                 ]
             },
             "UserRequest": {
                 "type": "object",
                 "properties": {
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
                         "minLength": 1,
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -6567,8 +6569,7 @@
                 },
                 "required": [
                     "academic_year",
-                    "email",
-                    "ucc_key"
+                    "email"
                 ]
             },
             "User_X_Area_": {

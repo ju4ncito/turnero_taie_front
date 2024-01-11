@@ -1037,7 +1037,7 @@ Map<String, dynamic> _$TutorshipReportRequestToJson(
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
-      uccKey: json['ucc_key'] as int,
+      uccKey: json['ucc_key'] as int?,
       email: json['email'] as String,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
@@ -1068,7 +1068,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
     };
 
 UserRequest _$UserRequestFromJson(Map<String, dynamic> json) => UserRequest(
-      uccKey: json['ucc_key'] as int,
+      uccKey: json['ucc_key'] as int?,
       email: json['email'] as String,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,

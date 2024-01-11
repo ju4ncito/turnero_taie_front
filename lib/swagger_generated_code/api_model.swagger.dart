@@ -6542,7 +6542,7 @@ extension $TutorshipReportRequestExtension on TutorshipReportRequest {
 class User {
   User({
     required this.id,
-    required this.uccKey,
+    this.uccKey,
     required this.email,
     this.firstName,
     this.lastName,
@@ -6561,7 +6561,7 @@ class User {
   @JsonKey(name: 'id')
   final int id;
   @JsonKey(name: 'ucc_key')
-  final int uccKey;
+  final int? uccKey;
   @JsonKey(name: 'email')
   final String email;
   @JsonKey(name: 'first_name')
@@ -6656,7 +6656,7 @@ extension $UserExtension on User {
 
   User copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<int>? uccKey,
+      Wrapped<int?>? uccKey,
       Wrapped<String>? email,
       Wrapped<String?>? firstName,
       Wrapped<String?>? lastName,
@@ -6685,7 +6685,7 @@ extension $UserExtension on User {
 @JsonSerializable(explicitToJson: true)
 class UserRequest {
   UserRequest({
-    required this.uccKey,
+    this.uccKey,
     required this.email,
     this.firstName,
     this.lastName,
@@ -6700,7 +6700,7 @@ class UserRequest {
   Map<String, dynamic> toJson() => _$UserRequestToJson(this);
 
   @JsonKey(name: 'ucc_key')
-  final int uccKey;
+  final int? uccKey;
   @JsonKey(name: 'email')
   final String email;
   @JsonKey(name: 'first_name')
@@ -6767,7 +6767,7 @@ extension $UserRequestExtension on UserRequest {
   }
 
   UserRequest copyWithWrapped(
-      {Wrapped<int>? uccKey,
+      {Wrapped<int?>? uccKey,
       Wrapped<String>? email,
       Wrapped<String?>? firstName,
       Wrapped<String?>? lastName,
