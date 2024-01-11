@@ -30,7 +30,7 @@ class TutorReportCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    ' ${report.id}', // Assuming subject is part of the report
+                    '${report.area.name}', // Assuming subject is part of the report
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -41,7 +41,7 @@ class TutorReportCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    ' ${DateFormat(' dd-MM', 'es_AR').format(report.date)}',
+                    '${DateFormat('dd-MM-yyyy', 'es_AR').format(report.date)}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -66,7 +66,7 @@ class TutorReportCard extends StatelessWidget {
                     vertical: MediaQuery.of(context).size.height * 0.01,
                   ),
                   child: Text(
-                    'Informe por ${report.area}',
+                    '${report.schedule.modality} con ${report.users.length - 1} ${report.users.length - 1 == 1 ? 'asistente' : 'asistentes'}',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 203, 225, 255),
                       fontSize: 16,
@@ -83,13 +83,13 @@ class TutorReportCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Icon(
-                      Icons.calendar_today,
+                      Icons.info_outline_rounded,
                       color: Colors.white,
                       size: 21,
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Fecha de evaluación: ${DateFormat(' dd-MM-yyyy', 'es_AR').format(report.date)} - ${translateStatusToSpanish(report.status)}',
+                      'Reporte pendiente',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Colors.grey[100],
