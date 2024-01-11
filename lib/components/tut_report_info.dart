@@ -91,7 +91,30 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // Your action when the button is pressed
+                    final reportRequest = TutorshipReportRequest(
+                      subject: widget.subjectController.text,
+                      comment: widget.commentsController.text,
+                      tutorUser: widget.report.schedule.tutorUser.id,
+                      tutorshipInstance: widget.report.id,
+                    );
+
+                    print("reportRequest Body: ${reportRequest.toJson()}");
+
+                    final localContext = context;
+                    final apiManager = AuthenticatedApiManager();
+                    final postResult =
+                        await apiManager.apiModel.apiTutorshipReportsPost(
+                      body: reportRequest,
+                    );
+
+                    print(postResult.error);
+                    print(postResult);
+                    print(
+                        "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
+
+                    if (context.mounted) {
+                      Navigator.pop(localContext);
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
