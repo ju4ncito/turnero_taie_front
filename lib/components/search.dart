@@ -274,7 +274,7 @@ class _SearchPageState extends State<SearchPage> {
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(
-                                      'En caso de no encontrar lo que buscabas, prueba con otros términos o contacta a secretaría',
+                                      'En caso de no encontrar lo que buscabas, prueba con otros términos',
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 18,
@@ -289,7 +289,7 @@ class _SearchPageState extends State<SearchPage> {
                             child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text(
-                                'En caso de no encontrar lo que buscabas, prueba con otros términos o contacta a secretaría',
+                                'En caso de no encontrar lo que buscabas, prueba con otros términos',
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 18,
