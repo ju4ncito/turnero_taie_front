@@ -56,7 +56,7 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
       case 'martes':
         scheduleDayOfWeek = 2;
         break;
-      case 'miércoles':
+      case 'miercoles':
         scheduleDayOfWeek = 3;
         break;
       case 'jueves':
