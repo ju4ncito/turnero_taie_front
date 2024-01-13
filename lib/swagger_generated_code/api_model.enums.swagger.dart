@@ -189,6 +189,8 @@ enum ApiSchemaJsonGetLang {
   tt('tt'),
   @JsonValue('udm')
   udm('udm'),
+  @JsonValue('ug')
+  ug('ug'),
   @JsonValue('uk')
   uk('uk'),
   @JsonValue('ur')
@@ -395,6 +397,8 @@ enum ApiSchemaYamlGetLang {
   tt('tt'),
   @JsonValue('udm')
   udm('udm'),
+  @JsonValue('ug')
+  ug('ug'),
   @JsonValue('uk')
   uk('uk'),
   @JsonValue('ur')

@@ -334,7 +334,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -368,7 +371,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -422,7 +428,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -475,7 +484,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -2324,6 +2336,7 @@
                                 "tr",
                                 "tt",
                                 "udm",
+                                "ug",
                                 "uk",
                                 "ur",
                                 "uz",
@@ -2467,6 +2480,7 @@
                                 "tr",
                                 "tt",
                                 "udm",
+                                "ug",
                                 "uk",
                                 "ur",
                                 "uz",
@@ -5085,7 +5099,10 @@
                         "readOnly": true
                     },
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5107,7 +5124,10 @@
                 "type": "object",
                 "properties": {
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5401,7 +5421,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5439,7 +5462,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5622,7 +5648,10 @@
                 "type": "object",
                 "properties": {
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5708,7 +5737,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5794,7 +5826,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5854,6 +5889,9 @@
                 "properties": {
                     "ucc_key": {
                         "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
                         "nullable": true
                     },
                     "email": {
@@ -6041,7 +6079,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     }
                 },
                 "required": [
@@ -6288,7 +6329,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -6326,7 +6370,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -6479,6 +6526,9 @@
                     },
                     "ucc_key": {
                         "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
                         "nullable": true
                     },
                     "email": {
@@ -6540,6 +6590,9 @@
                 "properties": {
                     "ucc_key": {
                         "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
                         "nullable": true
                     },
                     "email": {
