@@ -3386,6 +3386,7 @@ extension $EnrollRequestExtension on EnrollRequest {
 class GoogleAccessTokenRequest {
   GoogleAccessTokenRequest({
     required this.token,
+    required this.origin,
   });
 
   factory GoogleAccessTokenRequest.fromJson(Map<String, dynamic> json) =>
@@ -3396,6 +3397,8 @@ class GoogleAccessTokenRequest {
 
   @JsonKey(name: 'token')
   final String token;
+  @JsonKey(name: 'origin')
+  final String origin;
   static const fromJsonFactory = _$GoogleAccessTokenRequestFromJson;
 
   @override
@@ -3403,7 +3406,9 @@ class GoogleAccessTokenRequest {
     return identical(this, other) ||
         (other is GoogleAccessTokenRequest &&
             (identical(other.token, token) ||
-                const DeepCollectionEquality().equals(other.token, token)));
+                const DeepCollectionEquality().equals(other.token, token)) &&
+            (identical(other.origin, origin) ||
+                const DeepCollectionEquality().equals(other.origin, origin)));
   }
 
   @override
@@ -3411,17 +3416,22 @@ class GoogleAccessTokenRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(token) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(token) ^
+      const DeepCollectionEquality().hash(origin) ^
+      runtimeType.hashCode;
 }
 
 extension $GoogleAccessTokenRequestExtension on GoogleAccessTokenRequest {
-  GoogleAccessTokenRequest copyWith({String? token}) {
-    return GoogleAccessTokenRequest(token: token ?? this.token);
+  GoogleAccessTokenRequest copyWith({String? token, String? origin}) {
+    return GoogleAccessTokenRequest(
+        token: token ?? this.token, origin: origin ?? this.origin);
   }
 
-  GoogleAccessTokenRequest copyWithWrapped({Wrapped<String>? token}) {
+  GoogleAccessTokenRequest copyWithWrapped(
+      {Wrapped<String>? token, Wrapped<String>? origin}) {
     return GoogleAccessTokenRequest(
-        token: (token != null ? token.value : this.token));
+        token: (token != null ? token.value : this.token),
+        origin: (origin != null ? origin.value : this.origin));
   }
 }
 

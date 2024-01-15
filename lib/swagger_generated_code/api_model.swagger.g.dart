@@ -331,12 +331,14 @@ GoogleAccessTokenRequest _$GoogleAccessTokenRequestFromJson(
         Map<String, dynamic> json) =>
     GoogleAccessTokenRequest(
       token: json['token'] as String,
+      origin: json['origin'] as String,
     );
 
 Map<String, dynamic> _$GoogleAccessTokenRequestToJson(
         GoogleAccessTokenRequest instance) =>
     <String, dynamic>{
       'token': instance.token,
+      'origin': instance.origin,
     };
 
 InternalServerError _$InternalServerErrorFromJson(Map<String, dynamic> json) =>
