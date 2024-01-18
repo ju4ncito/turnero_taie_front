@@ -1333,8 +1333,8 @@ abstract class ApiModel extends ChopperService {
       {@Path('id') required int? id});
 
   ///
-  ///@param page The page to filter by, value can be home, report or calendar
-  ///@param role The role to filter by, value can be STD or TUTOR
+  ///@param page The page to filter by, value can be home, report, calendar or tutorship_page
+  ///@param role The role to filter by, value can be STD, TUTOR or COORD
   Future<chopper.Response<List<SearchTutorship>>> apiTutorshipInstancesGet({
     required String? page,
     required String? role,
@@ -1346,8 +1346,8 @@ abstract class ApiModel extends ChopperService {
   }
 
   ///
-  ///@param page The page to filter by, value can be home, report or calendar
-  ///@param role The role to filter by, value can be STD or TUTOR
+  ///@param page The page to filter by, value can be home, report, calendar or tutorship_page
+  ///@param role The role to filter by, value can be STD, TUTOR or COORD
   @Get(path: '/api/tutorship-instances/')
   Future<chopper.Response<List<SearchTutorship>>> _apiTutorshipInstancesGet({
     @Query('page') required String? page,
