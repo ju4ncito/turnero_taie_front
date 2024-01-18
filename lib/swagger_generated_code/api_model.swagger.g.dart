@@ -600,6 +600,7 @@ PatchedTutorshipInstanceRequest _$PatchedTutorshipInstanceRequestFromJson(
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
       status: json['status'] as String?,
+      zoomLink: json['zoom_link'] as String?,
     );
 
 Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
@@ -609,6 +610,7 @@ Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
       'status': instance.status,
+      'zoom_link': instance.zoomLink,
     };
 
 PatchedTutorshipReportRequest _$PatchedTutorshipReportRequestFromJson(
@@ -859,6 +861,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
+      zoomLink: json['zoom_link'] as String?,
     );
 
 Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
@@ -869,6 +872,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'area': instance.area.toJson(),
       'status': instance.status,
       'users': instance.users,
+      'zoom_link': instance.zoomLink,
     };
 
 Tag _$TagFromJson(Map<String, dynamic> json) => Tag(
@@ -969,6 +973,7 @@ TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
+      zoomLink: json['zoom_link'] as String?,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
     );
@@ -980,6 +985,7 @@ Map<String, dynamic> _$TutorshipInstanceToJson(TutorshipInstance instance) =>
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
       'status': instance.status,
+      'zoom_link': instance.zoomLink,
       'users': instance.users,
     };
 
@@ -990,6 +996,7 @@ TutorshipInstanceRequest _$TutorshipInstanceRequestFromJson(
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
       status: json['status'] as String,
+      zoomLink: json['zoom_link'] as String?,
     );
 
 Map<String, dynamic> _$TutorshipInstanceRequestToJson(
@@ -999,6 +1006,7 @@ Map<String, dynamic> _$TutorshipInstanceRequestToJson(
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
       'status': instance.status,
+      'zoom_link': instance.zoomLink,
     };
 
 TutorshipReport _$TutorshipReportFromJson(Map<String, dynamic> json) =>

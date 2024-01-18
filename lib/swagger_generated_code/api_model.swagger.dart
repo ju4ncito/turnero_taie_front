@@ -4486,6 +4486,7 @@ class PatchedTutorshipInstanceRequest {
     this.schedule,
     this.date,
     this.status,
+    this.zoomLink,
   });
 
   factory PatchedTutorshipInstanceRequest.fromJson(Map<String, dynamic> json) =>
@@ -4503,6 +4504,8 @@ class PatchedTutorshipInstanceRequest {
   final DateTime? date;
   @JsonKey(name: 'status')
   final String? status;
+  @JsonKey(name: 'zoom_link')
+  final String? zoomLink;
   static const fromJsonFactory = _$PatchedTutorshipInstanceRequestFromJson;
 
   @override
@@ -4517,7 +4520,10 @@ class PatchedTutorshipInstanceRequest {
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.zoomLink, zoomLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.zoomLink, zoomLink)));
   }
 
   @override
@@ -4529,30 +4535,38 @@ class PatchedTutorshipInstanceRequest {
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(zoomLink) ^
       runtimeType.hashCode;
 }
 
 extension $PatchedTutorshipInstanceRequestExtension
     on PatchedTutorshipInstanceRequest {
   PatchedTutorshipInstanceRequest copyWith(
-      {String? area, int? schedule, DateTime? date, String? status}) {
+      {String? area,
+      int? schedule,
+      DateTime? date,
+      String? status,
+      String? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: area ?? this.area,
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        status: status ?? this.status);
+        status: status ?? this.status,
+        zoomLink: zoomLink ?? this.zoomLink);
   }
 
   PatchedTutorshipInstanceRequest copyWithWrapped(
       {Wrapped<String?>? area,
       Wrapped<int?>? schedule,
       Wrapped<DateTime?>? date,
-      Wrapped<String?>? status}) {
+      Wrapped<String?>? status,
+      Wrapped<String?>? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status));
+        status: (status != null ? status.value : this.status),
+        zoomLink: (zoomLink != null ? zoomLink.value : this.zoomLink));
   }
 }
 
@@ -5666,6 +5680,7 @@ class SearchTutorship {
     required this.area,
     required this.status,
     required this.users,
+    this.zoomLink,
   });
 
   factory SearchTutorship.fromJson(Map<String, dynamic> json) =>
@@ -5686,6 +5701,8 @@ class SearchTutorship {
   final String status;
   @JsonKey(name: 'users', defaultValue: <int>[])
   final List<int> users;
+  @JsonKey(name: 'zoom_link')
+  final String? zoomLink;
   static const fromJsonFactory = _$SearchTutorshipFromJson;
 
   @override
@@ -5704,7 +5721,10 @@ class SearchTutorship {
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.users, users) ||
-                const DeepCollectionEquality().equals(other.users, users)));
+                const DeepCollectionEquality().equals(other.users, users)) &&
+            (identical(other.zoomLink, zoomLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.zoomLink, zoomLink)));
   }
 
   @override
@@ -5718,6 +5738,7 @@ class SearchTutorship {
       const DeepCollectionEquality().hash(area) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(users) ^
+      const DeepCollectionEquality().hash(zoomLink) ^
       runtimeType.hashCode;
 }
 
@@ -5728,14 +5749,16 @@ extension $SearchTutorshipExtension on SearchTutorship {
       DateTime? date,
       CustomArea? area,
       String? status,
-      List<int>? users}) {
+      List<int>? users,
+      String? zoomLink}) {
     return SearchTutorship(
         id: id ?? this.id,
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
         area: area ?? this.area,
         status: status ?? this.status,
-        users: users ?? this.users);
+        users: users ?? this.users,
+        zoomLink: zoomLink ?? this.zoomLink);
   }
 
   SearchTutorship copyWithWrapped(
@@ -5744,14 +5767,16 @@ extension $SearchTutorshipExtension on SearchTutorship {
       Wrapped<DateTime>? date,
       Wrapped<CustomArea>? area,
       Wrapped<String>? status,
-      Wrapped<List<int>>? users}) {
+      Wrapped<List<int>>? users,
+      Wrapped<String?>? zoomLink}) {
     return SearchTutorship(
         id: (id != null ? id.value : this.id),
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
         area: (area != null ? area.value : this.area),
         status: (status != null ? status.value : this.status),
-        users: (users != null ? users.value : this.users));
+        users: (users != null ? users.value : this.users),
+        zoomLink: (zoomLink != null ? zoomLink.value : this.zoomLink));
   }
 }
 
@@ -6207,6 +6232,7 @@ class TutorshipInstance {
     required this.schedule,
     required this.date,
     required this.status,
+    this.zoomLink,
     required this.users,
   });
 
@@ -6226,6 +6252,8 @@ class TutorshipInstance {
   final DateTime date;
   @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'zoom_link')
+  final String? zoomLink;
   @JsonKey(name: 'users', defaultValue: <int>[])
   final List<int> users;
   static const fromJsonFactory = _$TutorshipInstanceFromJson;
@@ -6245,6 +6273,9 @@ class TutorshipInstance {
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.zoomLink, zoomLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.zoomLink, zoomLink)) &&
             (identical(other.users, users) ||
                 const DeepCollectionEquality().equals(other.users, users)));
   }
@@ -6259,6 +6290,7 @@ class TutorshipInstance {
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(zoomLink) ^
       const DeepCollectionEquality().hash(users) ^
       runtimeType.hashCode;
 }
@@ -6270,6 +6302,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       int? schedule,
       DateTime? date,
       String? status,
+      String? zoomLink,
       List<int>? users}) {
     return TutorshipInstance(
         id: id ?? this.id,
@@ -6277,6 +6310,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
         status: status ?? this.status,
+        zoomLink: zoomLink ?? this.zoomLink,
         users: users ?? this.users);
   }
 
@@ -6286,6 +6320,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<String>? status,
+      Wrapped<String?>? zoomLink,
       Wrapped<List<int>>? users}) {
     return TutorshipInstance(
         id: (id != null ? id.value : this.id),
@@ -6293,6 +6328,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
         status: (status != null ? status.value : this.status),
+        zoomLink: (zoomLink != null ? zoomLink.value : this.zoomLink),
         users: (users != null ? users.value : this.users));
   }
 }
@@ -6304,6 +6340,7 @@ class TutorshipInstanceRequest {
     required this.schedule,
     required this.date,
     required this.status,
+    this.zoomLink,
   });
 
   factory TutorshipInstanceRequest.fromJson(Map<String, dynamic> json) =>
@@ -6320,6 +6357,8 @@ class TutorshipInstanceRequest {
   final DateTime date;
   @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'zoom_link')
+  final String? zoomLink;
   static const fromJsonFactory = _$TutorshipInstanceRequestFromJson;
 
   @override
@@ -6334,7 +6373,10 @@ class TutorshipInstanceRequest {
             (identical(other.date, date) ||
                 const DeepCollectionEquality().equals(other.date, date)) &&
             (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)));
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.zoomLink, zoomLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.zoomLink, zoomLink)));
   }
 
   @override
@@ -6346,29 +6388,37 @@ class TutorshipInstanceRequest {
       const DeepCollectionEquality().hash(schedule) ^
       const DeepCollectionEquality().hash(date) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(zoomLink) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
   TutorshipInstanceRequest copyWith(
-      {String? area, int? schedule, DateTime? date, String? status}) {
+      {String? area,
+      int? schedule,
+      DateTime? date,
+      String? status,
+      String? zoomLink}) {
     return TutorshipInstanceRequest(
         area: area ?? this.area,
         schedule: schedule ?? this.schedule,
         date: date ?? this.date,
-        status: status ?? this.status);
+        status: status ?? this.status,
+        zoomLink: zoomLink ?? this.zoomLink);
   }
 
   TutorshipInstanceRequest copyWithWrapped(
       {Wrapped<String>? area,
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<String>? status}) {
+      Wrapped<String>? status,
+      Wrapped<String?>? zoomLink}) {
     return TutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
         schedule: (schedule != null ? schedule.value : this.schedule),
         date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status));
+        status: (status != null ? status.value : this.status),
+        zoomLink: (zoomLink != null ? zoomLink.value : this.zoomLink));
   }
 }
 

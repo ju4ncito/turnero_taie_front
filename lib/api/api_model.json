@@ -5866,6 +5866,13 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
+                    },
+                    "zoom_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "minLength": 1,
+                        "maxLength": 200
                     }
                 }
             },
@@ -6235,6 +6242,12 @@
                             "type": "integer"
                         },
                         "readOnly": true
+                    },
+                    "zoom_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
                     }
                 },
                 "required": [
@@ -6422,6 +6435,12 @@
                         "type": "string",
                         "maxLength": 25
                     },
+                    "zoom_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
+                    },
                     "users": {
                         "type": "array",
                         "items": {
@@ -6457,6 +6476,13 @@
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 25
+                    },
+                    "zoom_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "minLength": 1,
+                        "maxLength": 200
                     }
                 },
                 "required": [
