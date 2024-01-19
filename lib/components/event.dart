@@ -12,9 +12,10 @@ class Event {
   final int? tutorshipId;
   final DateTime date;
   final int areaId;
+  final String? zoomLink;
 
   const Event(this.area, this.asistentes, this.status, this.id, this.schedule,
-      this.users, this.tutorshipId, this.date, this.areaId);
+      this.users, this.tutorshipId, this.date, this.areaId, this.zoomLink);
 }
 
 int getHashCode(DateTime key) {

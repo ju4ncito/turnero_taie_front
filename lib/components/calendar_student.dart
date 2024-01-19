@@ -75,7 +75,8 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
                   instance.users,
                   instance.id,
                   instance.date,
-                  instance.area.id),
+                  instance.area.id,
+                  instance.zoomLink),
             );
           }
         });

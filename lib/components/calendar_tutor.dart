@@ -78,7 +78,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   instance.users,
                   instance.id,
                   instance.date,
-                  instance.area.id),
+                  instance.area.id,
+                  instance.zoomLink),
             );
           }
         });

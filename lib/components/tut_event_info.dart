@@ -277,6 +277,7 @@ class EventInfo extends StatelessWidget {
                               schedule: event.schedule!.id,
                               status: 'Cancelled',
                               date: event.date,
+                              zoomLink: event.zoomLink,
                             );
 
                             print(
