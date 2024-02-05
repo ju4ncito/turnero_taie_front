@@ -644,6 +644,20 @@ abstract class ApiModel extends ChopperService {
   Future<chopper.Response> _apiCareersIdDelete({@Path('id') required int? id});
 
   ///
+  ///@param id A unique integer value identifying this career.
+  Future<chopper.Response<Career>> apiCareersIdGetAreasGet({required int? id}) {
+    generatedMapping.putIfAbsent(Career, () => Career.fromJsonFactory);
+
+    return _apiCareersIdGetAreasGet(id: id);
+  }
+
+  ///
+  ///@param id A unique integer value identifying this career.
+  @Get(path: '/api/careers/{id}/getAreas/')
+  Future<chopper.Response<Career>> _apiCareersIdGetAreasGet(
+      {@Path('id') required int? id});
+
+  ///
   Future<chopper.Response<List<PostulationXArea>>> apiPostulationXAreaGet() {
     generatedMapping.putIfAbsent(
         PostulationXArea, () => PostulationXArea.fromJsonFactory);
@@ -747,16 +761,16 @@ abstract class ApiModel extends ChopperService {
       {@Path('id') required int? id});
 
   ///
-  Future<chopper.Response<List<Postulation>>> apiPostulationsGet() {
+  Future<chopper.Response<List<PostulationList>>> apiPostulationsGet() {
     generatedMapping.putIfAbsent(
-        Postulation, () => Postulation.fromJsonFactory);
+        PostulationList, () => PostulationList.fromJsonFactory);
 
     return _apiPostulationsGet();
   }
 
   ///
   @Get(path: '/api/postulations/')
-  Future<chopper.Response<List<Postulation>>> _apiPostulationsGet();
+  Future<chopper.Response<List<PostulationList>>> _apiPostulationsGet();
 
   ///
   Future<chopper.Response<Postulation>> apiPostulationsPost(
@@ -777,10 +791,10 @@ abstract class ApiModel extends ChopperService {
 
   ///
   ///@param id A unique integer value identifying this postulation.
-  Future<chopper.Response<Postulation>> apiPostulationsIdGet(
+  Future<chopper.Response<PostulationDetail>> apiPostulationsIdGet(
       {required int? id}) {
     generatedMapping.putIfAbsent(
-        Postulation, () => Postulation.fromJsonFactory);
+        PostulationDetail, () => PostulationDetail.fromJsonFactory);
 
     return _apiPostulationsIdGet(id: id);
   }
@@ -788,7 +802,7 @@ abstract class ApiModel extends ChopperService {
   ///
   ///@param id A unique integer value identifying this postulation.
   @Get(path: '/api/postulations/{id}/')
-  Future<chopper.Response<Postulation>> _apiPostulationsIdGet(
+  Future<chopper.Response<PostulationDetail>> _apiPostulationsIdGet(
       {@Path('id') required int? id});
 
   ///
@@ -848,6 +862,31 @@ abstract class ApiModel extends ChopperService {
   @Delete(path: '/api/postulations/{id}/')
   Future<chopper.Response> _apiPostulationsIdDelete(
       {@Path('id') required int? id});
+
+  ///Approve or Deny a postulation
+  ///@param id A unique integer value identifying this postulation.
+  Future<chopper.Response<SuccessResponse>>
+      apiPostulationsIdClosePostulationPost({
+    required int? id,
+    required ClosePostulationRequest? body,
+  }) {
+    generatedMapping.putIfAbsent(
+        SuccessResponse, () => SuccessResponse.fromJsonFactory);
+
+    return _apiPostulationsIdClosePostulationPost(id: id, body: body);
+  }
+
+  ///Approve or Deny a postulation
+  ///@param id A unique integer value identifying this postulation.
+  @Post(
+    path: '/api/postulations/{id}/close-postulation/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<SuccessResponse>>
+      _apiPostulationsIdClosePostulationPost({
+    @Path('id') required int? id,
+    @Body() required ClosePostulationRequest? body,
+  });
 
   ///
   Future<chopper.Response<List<Role>>> apiRolesGet() {
@@ -1085,10 +1124,10 @@ abstract class ApiModel extends ChopperService {
       {@Path('name') required String? name});
 
   ///Authentication Endpoint
-  Future<chopper.Response<ReturnAuthUser>> apiTokenAuthPost(
+  Future<chopper.Response<SuccessResponse>> apiTokenAuthPost(
       {required GoogleAccessTokenRequest? body}) {
     generatedMapping.putIfAbsent(
-        ReturnAuthUser, () => ReturnAuthUser.fromJsonFactory);
+        SuccessResponse, () => SuccessResponse.fromJsonFactory);
 
     return _apiTokenAuthPost(body: body);
   }
@@ -1098,7 +1137,7 @@ abstract class ApiModel extends ChopperService {
     path: '/api/token/auth/',
     optionalBody: true,
   )
-  Future<chopper.Response<ReturnAuthUser>> _apiTokenAuthPost(
+  Future<chopper.Response<SuccessResponse>> _apiTokenAuthPost(
       {@Body() required GoogleAccessTokenRequest? body});
 
   ///Refresh JWT Endpoint
@@ -1447,10 +1486,10 @@ abstract class ApiModel extends ChopperService {
 
   ///Disenroll a student from an existing Tutorship
   ///@param id A unique integer value identifying this tutorship instance.
-  Future<chopper.Response<OkSerializerDisenroll>>
+  Future<chopper.Response<SuccessResponse>>
       apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
     generatedMapping.putIfAbsent(
-        OkSerializerDisenroll, () => OkSerializerDisenroll.fromJsonFactory);
+        SuccessResponse, () => SuccessResponse.fromJsonFactory);
 
     return _apiTutorshipInstancesIdDisenrollTutorshipPost(id: id);
   }
@@ -1461,15 +1500,35 @@ abstract class ApiModel extends ChopperService {
     path: '/api/tutorship-instances/{id}/disenroll-tutorship/',
     optionalBody: true,
   )
-  Future<chopper.Response<OkSerializerDisenroll>>
+  Future<chopper.Response<SuccessResponse>>
       _apiTutorshipInstancesIdDisenrollTutorshipPost(
           {@Path('id') required int? id});
 
+  ///Get Report and Reviews for specific Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  Future<chopper.Response<ReportAndReview>>
+      apiTutorshipInstancesIdReportAndReviewsPost({required int? id}) {
+    generatedMapping.putIfAbsent(
+        ReportAndReview, () => ReportAndReview.fromJsonFactory);
+
+    return _apiTutorshipInstancesIdReportAndReviewsPost(id: id);
+  }
+
+  ///Get Report and Reviews for specific Tutorship
+  ///@param id A unique integer value identifying this tutorship instance.
+  @Post(
+    path: '/api/tutorship-instances/{id}/report-and-reviews/',
+    optionalBody: true,
+  )
+  Future<chopper.Response<ReportAndReview>>
+      _apiTutorshipInstancesIdReportAndReviewsPost(
+          {@Path('id') required int? id});
+
   ///Enroll a student to an existing o new tutorship
-  Future<chopper.Response<OkSerializer>>
+  Future<chopper.Response<SuccessResponse>>
       apiTutorshipInstancesEnrollTutorshipPost({required EnrollRequest? body}) {
     generatedMapping.putIfAbsent(
-        OkSerializer, () => OkSerializer.fromJsonFactory);
+        SuccessResponse, () => SuccessResponse.fromJsonFactory);
 
     return _apiTutorshipInstancesEnrollTutorshipPost(body: body);
   }
@@ -1479,7 +1538,7 @@ abstract class ApiModel extends ChopperService {
     path: '/api/tutorship-instances/enroll-tutorship/',
     optionalBody: true,
   )
-  Future<chopper.Response<OkSerializer>>
+  Future<chopper.Response<SuccessResponse>>
       _apiTutorshipInstancesEnrollTutorshipPost(
           {@Body() required EnrollRequest? body});
 
@@ -2448,6 +2507,61 @@ class BadRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BadRequestResponse {
+  BadRequestResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory BadRequestResponse.fromJson(Map<String, dynamic> json) =>
+      _$BadRequestResponseFromJson(json);
+
+  static const toJsonFactory = _$BadRequestResponseToJson;
+  Map<String, dynamic> toJson() => _$BadRequestResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$BadRequestResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is BadRequestResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
+}
+
+extension $BadRequestResponseExtension on BadRequestResponse {
+  BadRequestResponse copyWith({int? statusCode, String? message}) {
+    return BadRequestResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
+  }
+
+  BadRequestResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return BadRequestResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class BadToken {
   BadToken({
     required this.message,
@@ -2925,25 +3039,98 @@ extension $CareerXUserRequestExtension on CareerXUserRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ConflictSerializer {
-  ConflictSerializer({
-    required this.message,
+class ClosePostulationRequest {
+  ClosePostulationRequest({
+    required this.approve,
+    this.comment,
+    required this.areas,
   });
 
-  factory ConflictSerializer.fromJson(Map<String, dynamic> json) =>
-      _$ConflictSerializerFromJson(json);
+  factory ClosePostulationRequest.fromJson(Map<String, dynamic> json) =>
+      _$ClosePostulationRequestFromJson(json);
 
-  static const toJsonFactory = _$ConflictSerializerToJson;
-  Map<String, dynamic> toJson() => _$ConflictSerializerToJson(this);
+  static const toJsonFactory = _$ClosePostulationRequestToJson;
+  Map<String, dynamic> toJson() => _$ClosePostulationRequestToJson(this);
 
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$ConflictSerializerFromJson;
+  @JsonKey(name: 'approve')
+  final bool approve;
+  @JsonKey(name: 'comment')
+  final String? comment;
+  @JsonKey(name: 'areas', defaultValue: <Object>[])
+  final List<Object> areas;
+  static const fromJsonFactory = _$ClosePostulationRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ConflictSerializer &&
+        (other is ClosePostulationRequest &&
+            (identical(other.approve, approve) ||
+                const DeepCollectionEquality()
+                    .equals(other.approve, approve)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
+            (identical(other.areas, areas) ||
+                const DeepCollectionEquality().equals(other.areas, areas)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(approve) ^
+      const DeepCollectionEquality().hash(comment) ^
+      const DeepCollectionEquality().hash(areas) ^
+      runtimeType.hashCode;
+}
+
+extension $ClosePostulationRequestExtension on ClosePostulationRequest {
+  ClosePostulationRequest copyWith(
+      {bool? approve, String? comment, List<Object>? areas}) {
+    return ClosePostulationRequest(
+        approve: approve ?? this.approve,
+        comment: comment ?? this.comment,
+        areas: areas ?? this.areas);
+  }
+
+  ClosePostulationRequest copyWithWrapped(
+      {Wrapped<bool>? approve,
+      Wrapped<String?>? comment,
+      Wrapped<List<Object>>? areas}) {
+    return ClosePostulationRequest(
+        approve: (approve != null ? approve.value : this.approve),
+        comment: (comment != null ? comment.value : this.comment),
+        areas: (areas != null ? areas.value : this.areas));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ConflictResponse {
+  ConflictResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory ConflictResponse.fromJson(Map<String, dynamic> json) =>
+      _$ConflictResponseFromJson(json);
+
+  static const toJsonFactory = _$ConflictResponseToJson;
+  Map<String, dynamic> toJson() => _$ConflictResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$ConflictResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ConflictResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality().equals(other.message, message)));
   }
@@ -2953,16 +3140,77 @@ class ConflictSerializer {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
 }
 
-extension $ConflictSerializerExtension on ConflictSerializer {
-  ConflictSerializer copyWith({String? message}) {
-    return ConflictSerializer(message: message ?? this.message);
+extension $ConflictResponseExtension on ConflictResponse {
+  ConflictResponse copyWith({int? statusCode, String? message}) {
+    return ConflictResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
   }
 
-  ConflictSerializer copyWithWrapped({Wrapped<String>? message}) {
-    return ConflictSerializer(
+  ConflictResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return ConflictResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateResponse {
+  CreateResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory CreateResponse.fromJson(Map<String, dynamic> json) =>
+      _$CreateResponseFromJson(json);
+
+  static const toJsonFactory = _$CreateResponseToJson;
+  Map<String, dynamic> toJson() => _$CreateResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$CreateResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is CreateResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
+}
+
+extension $CreateResponseExtension on CreateResponse {
+  CreateResponse copyWith({int? statusCode, String? message}) {
+    return CreateResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
+  }
+
+  CreateResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return CreateResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
         message: (message != null ? message.value : this.message));
   }
 }
@@ -3182,49 +3430,6 @@ extension $CreateDeleteTutorUserScheduleRequestExtension
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreatedSerializer {
-  CreatedSerializer({
-    required this.message,
-  });
-
-  factory CreatedSerializer.fromJson(Map<String, dynamic> json) =>
-      _$CreatedSerializerFromJson(json);
-
-  static const toJsonFactory = _$CreatedSerializerToJson;
-  Map<String, dynamic> toJson() => _$CreatedSerializerToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$CreatedSerializerFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is CreatedSerializer &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
-}
-
-extension $CreatedSerializerExtension on CreatedSerializer {
-  CreatedSerializer copyWith({String? message}) {
-    return CreatedSerializer(message: message ?? this.message);
-  }
-
-  CreatedSerializer copyWithWrapped({Wrapped<String>? message}) {
-    return CreatedSerializer(
-        message: (message != null ? message.value : this.message));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class CustomArea {
   CustomArea({
     required this.id,
@@ -3383,6 +3588,61 @@ extension $EnrollRequestExtension on EnrollRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ErrorResponse {
+  ErrorResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory ErrorResponse.fromJson(Map<String, dynamic> json) =>
+      _$ErrorResponseFromJson(json);
+
+  static const toJsonFactory = _$ErrorResponseToJson;
+  Map<String, dynamic> toJson() => _$ErrorResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$ErrorResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ErrorResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
+}
+
+extension $ErrorResponseExtension on ErrorResponse {
+  ErrorResponse copyWith({int? statusCode, String? message}) {
+    return ErrorResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
+  }
+
+  ErrorResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return ErrorResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class GoogleAccessTokenRequest {
   GoogleAccessTokenRequest({
     required this.token,
@@ -3432,239 +3692,6 @@ extension $GoogleAccessTokenRequestExtension on GoogleAccessTokenRequest {
     return GoogleAccessTokenRequest(
         token: (token != null ? token.value : this.token),
         origin: (origin != null ? origin.value : this.origin));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class InternalServerError {
-  InternalServerError({
-    required this.message,
-  });
-
-  factory InternalServerError.fromJson(Map<String, dynamic> json) =>
-      _$InternalServerErrorFromJson(json);
-
-  static const toJsonFactory = _$InternalServerErrorToJson;
-  Map<String, dynamic> toJson() => _$InternalServerErrorToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$InternalServerErrorFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is InternalServerError &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
-}
-
-extension $InternalServerErrorExtension on InternalServerError {
-  InternalServerError copyWith({String? message}) {
-    return InternalServerError(message: message ?? this.message);
-  }
-
-  InternalServerError copyWithWrapped({Wrapped<String>? message}) {
-    return InternalServerError(
-        message: (message != null ? message.value : this.message));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class InternalServerErrorSerializerDisenroll {
-  InternalServerErrorSerializerDisenroll({
-    required this.message,
-    required this.traceback,
-  });
-
-  factory InternalServerErrorSerializerDisenroll.fromJson(
-          Map<String, dynamic> json) =>
-      _$InternalServerErrorSerializerDisenrollFromJson(json);
-
-  static const toJsonFactory = _$InternalServerErrorSerializerDisenrollToJson;
-  Map<String, dynamic> toJson() =>
-      _$InternalServerErrorSerializerDisenrollToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  @JsonKey(name: 'traceback')
-  final String traceback;
-  static const fromJsonFactory =
-      _$InternalServerErrorSerializerDisenrollFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is InternalServerErrorSerializerDisenroll &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality()
-                    .equals(other.message, message)) &&
-            (identical(other.traceback, traceback) ||
-                const DeepCollectionEquality()
-                    .equals(other.traceback, traceback)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^
-      const DeepCollectionEquality().hash(traceback) ^
-      runtimeType.hashCode;
-}
-
-extension $InternalServerErrorSerializerDisenrollExtension
-    on InternalServerErrorSerializerDisenroll {
-  InternalServerErrorSerializerDisenroll copyWith(
-      {String? message, String? traceback}) {
-    return InternalServerErrorSerializerDisenroll(
-        message: message ?? this.message,
-        traceback: traceback ?? this.traceback);
-  }
-
-  InternalServerErrorSerializerDisenroll copyWithWrapped(
-      {Wrapped<String>? message, Wrapped<String>? traceback}) {
-    return InternalServerErrorSerializerDisenroll(
-        message: (message != null ? message.value : this.message),
-        traceback: (traceback != null ? traceback.value : this.traceback));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class NoSearchString {
-  NoSearchString({
-    required this.message,
-  });
-
-  factory NoSearchString.fromJson(Map<String, dynamic> json) =>
-      _$NoSearchStringFromJson(json);
-
-  static const toJsonFactory = _$NoSearchStringToJson;
-  Map<String, dynamic> toJson() => _$NoSearchStringToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$NoSearchStringFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is NoSearchString &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
-}
-
-extension $NoSearchStringExtension on NoSearchString {
-  NoSearchString copyWith({String? message}) {
-    return NoSearchString(message: message ?? this.message);
-  }
-
-  NoSearchString copyWithWrapped({Wrapped<String>? message}) {
-    return NoSearchString(
-        message: (message != null ? message.value : this.message));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class OkSerializer {
-  OkSerializer({
-    required this.message,
-  });
-
-  factory OkSerializer.fromJson(Map<String, dynamic> json) =>
-      _$OkSerializerFromJson(json);
-
-  static const toJsonFactory = _$OkSerializerToJson;
-  Map<String, dynamic> toJson() => _$OkSerializerToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$OkSerializerFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is OkSerializer &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
-}
-
-extension $OkSerializerExtension on OkSerializer {
-  OkSerializer copyWith({String? message}) {
-    return OkSerializer(message: message ?? this.message);
-  }
-
-  OkSerializer copyWithWrapped({Wrapped<String>? message}) {
-    return OkSerializer(
-        message: (message != null ? message.value : this.message));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class OkSerializerDisenroll {
-  OkSerializerDisenroll({
-    required this.message,
-  });
-
-  factory OkSerializerDisenroll.fromJson(Map<String, dynamic> json) =>
-      _$OkSerializerDisenrollFromJson(json);
-
-  static const toJsonFactory = _$OkSerializerDisenrollToJson;
-  Map<String, dynamic> toJson() => _$OkSerializerDisenrollToJson(this);
-
-  @JsonKey(name: 'message')
-  final String message;
-  static const fromJsonFactory = _$OkSerializerDisenrollFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is OkSerializerDisenroll &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(message) ^ runtimeType.hashCode;
-}
-
-extension $OkSerializerDisenrollExtension on OkSerializerDisenroll {
-  OkSerializerDisenroll copyWith({String? message}) {
-    return OkSerializerDisenroll(message: message ?? this.message);
-  }
-
-  OkSerializerDisenroll copyWithWrapped({Wrapped<String>? message}) {
-    return OkSerializerDisenroll(
-        message: (message != null ? message.value : this.message));
   }
 }
 
@@ -4108,9 +4135,12 @@ extension $PatchedCreateDeleteTutorUserScheduleRequestExtension
 @JsonSerializable(explicitToJson: true)
 class PatchedPostulationRequest {
   PatchedPostulationRequest({
-    this.date,
-    this.status,
     this.studentUser,
+    this.areas,
+    this.createdDate,
+    this.status,
+    this.decisionDate,
+    this.comment,
     this.coordinatorUser,
   });
 
@@ -4120,12 +4150,18 @@ class PatchedPostulationRequest {
   static const toJsonFactory = _$PatchedPostulationRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedPostulationRequestToJson(this);
 
-  @JsonKey(name: 'date')
-  final DateTime? date;
-  @JsonKey(name: 'status')
-  final String? status;
   @JsonKey(name: 'student_user')
   final int? studentUser;
+  @JsonKey(name: 'areas', defaultValue: <String>[])
+  final List<String>? areas;
+  @JsonKey(name: 'created_date')
+  final DateTime? createdDate;
+  @JsonKey(name: 'status')
+  final String? status;
+  @JsonKey(name: 'decision_date')
+  final DateTime? decisionDate;
+  @JsonKey(name: 'comment')
+  final String? comment;
   @JsonKey(name: 'coordinator_user')
   final int? coordinatorUser;
   static const fromJsonFactory = _$PatchedPostulationRequestFromJson;
@@ -4134,13 +4170,22 @@ class PatchedPostulationRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedPostulationRequest &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.studentUser, studentUser) ||
                 const DeepCollectionEquality()
                     .equals(other.studentUser, studentUser)) &&
+            (identical(other.areas, areas) ||
+                const DeepCollectionEquality().equals(other.areas, areas)) &&
+            (identical(other.createdDate, createdDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdDate, createdDate)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.decisionDate, decisionDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.decisionDate, decisionDate)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
             (identical(other.coordinatorUser, coordinatorUser) ||
                 const DeepCollectionEquality()
                     .equals(other.coordinatorUser, coordinatorUser)));
@@ -4151,36 +4196,53 @@ class PatchedPostulationRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(date) ^
-      const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(studentUser) ^
+      const DeepCollectionEquality().hash(areas) ^
+      const DeepCollectionEquality().hash(createdDate) ^
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(decisionDate) ^
+      const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(coordinatorUser) ^
       runtimeType.hashCode;
 }
 
 extension $PatchedPostulationRequestExtension on PatchedPostulationRequest {
   PatchedPostulationRequest copyWith(
-      {DateTime? date,
+      {int? studentUser,
+      List<String>? areas,
+      DateTime? createdDate,
       String? status,
-      int? studentUser,
+      DateTime? decisionDate,
+      String? comment,
       int? coordinatorUser}) {
     return PatchedPostulationRequest(
-        date: date ?? this.date,
-        status: status ?? this.status,
         studentUser: studentUser ?? this.studentUser,
+        areas: areas ?? this.areas,
+        createdDate: createdDate ?? this.createdDate,
+        status: status ?? this.status,
+        decisionDate: decisionDate ?? this.decisionDate,
+        comment: comment ?? this.comment,
         coordinatorUser: coordinatorUser ?? this.coordinatorUser);
   }
 
   PatchedPostulationRequest copyWithWrapped(
-      {Wrapped<DateTime?>? date,
+      {Wrapped<int?>? studentUser,
+      Wrapped<List<String>?>? areas,
+      Wrapped<DateTime?>? createdDate,
       Wrapped<String?>? status,
-      Wrapped<int?>? studentUser,
+      Wrapped<DateTime?>? decisionDate,
+      Wrapped<String?>? comment,
       Wrapped<int?>? coordinatorUser}) {
     return PatchedPostulationRequest(
-        date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status),
         studentUser:
             (studentUser != null ? studentUser.value : this.studentUser),
+        areas: (areas != null ? areas.value : this.areas),
+        createdDate:
+            (createdDate != null ? createdDate.value : this.createdDate),
+        status: (status != null ? status.value : this.status),
+        decisionDate:
+            (decisionDate != null ? decisionDate.value : this.decisionDate),
+        comment: (comment != null ? comment.value : this.comment),
         coordinatorUser: (coordinatorUser != null
             ? coordinatorUser.value
             : this.coordinatorUser));
@@ -4365,12 +4427,12 @@ extension $PatchedTagRequestExtension on PatchedTagRequest {
 @JsonSerializable(explicitToJson: true)
 class PatchedTutorUserReviewRequest {
   PatchedTutorUserReviewRequest({
+    this.tutorUser,
+    this.studentUser,
     this.comment,
     this.occurred,
     this.absent,
     this.utility,
-    this.tutorUser,
-    this.studentUser,
     this.tutorshipInstance,
   });
 
@@ -4380,6 +4442,10 @@ class PatchedTutorUserReviewRequest {
   static const toJsonFactory = _$PatchedTutorUserReviewRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedTutorUserReviewRequestToJson(this);
 
+  @JsonKey(name: 'tutor_user')
+  final UserRequest? tutorUser;
+  @JsonKey(name: 'student_user')
+  final UserRequest? studentUser;
   @JsonKey(name: 'comment')
   final String? comment;
   @JsonKey(name: 'occurred')
@@ -4388,10 +4454,6 @@ class PatchedTutorUserReviewRequest {
   final bool? absent;
   @JsonKey(name: 'utility')
   final int? utility;
-  @JsonKey(name: 'tutor_user')
-  final int? tutorUser;
-  @JsonKey(name: 'student_user')
-  final int? studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int? tutorshipInstance;
   static const fromJsonFactory = _$PatchedTutorUserReviewRequestFromJson;
@@ -4400,6 +4462,12 @@ class PatchedTutorUserReviewRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedTutorUserReviewRequest &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -4411,12 +4479,6 @@ class PatchedTutorUserReviewRequest {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -4427,12 +4489,12 @@ class PatchedTutorUserReviewRequest {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
@@ -4440,39 +4502,39 @@ class PatchedTutorUserReviewRequest {
 extension $PatchedTutorUserReviewRequestExtension
     on PatchedTutorUserReviewRequest {
   PatchedTutorUserReviewRequest copyWith(
-      {String? comment,
+      {UserRequest? tutorUser,
+      UserRequest? studentUser,
+      String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
-      int? tutorUser,
-      int? studentUser,
       int? tutorshipInstance}) {
     return PatchedTutorUserReviewRequest(
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   PatchedTutorUserReviewRequest copyWithWrapped(
-      {Wrapped<String?>? comment,
+      {Wrapped<UserRequest?>? tutorUser,
+      Wrapped<UserRequest?>? studentUser,
+      Wrapped<String?>? comment,
       Wrapped<bool?>? occurred,
       Wrapped<bool?>? absent,
       Wrapped<int?>? utility,
-      Wrapped<int?>? tutorUser,
-      Wrapped<int?>? studentUser,
       Wrapped<int?>? tutorshipInstance}) {
     return PatchedTutorUserReviewRequest(
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -4573,10 +4635,10 @@ extension $PatchedTutorshipInstanceRequestExtension
 @JsonSerializable(explicitToJson: true)
 class PatchedTutorshipReportRequest {
   PatchedTutorshipReportRequest({
+    this.tutorUser,
     this.comment,
     this.subject,
     this.tutorshipInstance,
-    this.tutorUser,
   });
 
   factory PatchedTutorshipReportRequest.fromJson(Map<String, dynamic> json) =>
@@ -4585,20 +4647,23 @@ class PatchedTutorshipReportRequest {
   static const toJsonFactory = _$PatchedTutorshipReportRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedTutorshipReportRequestToJson(this);
 
+  @JsonKey(name: 'tutor_user')
+  final UserRequest? tutorUser;
   @JsonKey(name: 'comment')
   final String? comment;
   @JsonKey(name: 'subject')
   final String? subject;
   @JsonKey(name: 'tutorship_instance')
   final int? tutorshipInstance;
-  @JsonKey(name: 'tutor_user')
-  final int? tutorUser;
   static const fromJsonFactory = _$PatchedTutorshipReportRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedTutorshipReportRequest &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -4607,10 +4672,7 @@ class PatchedTutorshipReportRequest {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)));
   }
 
   @override
@@ -4618,39 +4680,39 @@ class PatchedTutorshipReportRequest {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $PatchedTutorshipReportRequestExtension
     on PatchedTutorshipReportRequest {
   PatchedTutorshipReportRequest copyWith(
-      {String? comment,
+      {UserRequest? tutorUser,
+      String? comment,
       String? subject,
-      int? tutorshipInstance,
-      int? tutorUser}) {
+      int? tutorshipInstance}) {
     return PatchedTutorshipReportRequest(
+        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
-        tutorUser: tutorUser ?? this.tutorUser);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   PatchedTutorshipReportRequest copyWithWrapped(
-      {Wrapped<String?>? comment,
+      {Wrapped<UserRequest?>? tutorUser,
+      Wrapped<String?>? comment,
       Wrapped<String?>? subject,
-      Wrapped<int?>? tutorshipInstance,
-      Wrapped<int?>? tutorUser}) {
+      Wrapped<int?>? tutorshipInstance}) {
     return PatchedTutorshipReportRequest(
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
+            : this.tutorshipInstance));
   }
 }
 
@@ -4941,10 +5003,13 @@ extension $PatchedUserXTutorshipInstanceXRoleRequestExtension
 class Postulation {
   Postulation({
     required this.id,
-    required this.date,
-    required this.status,
     required this.studentUser,
-    required this.coordinatorUser,
+    required this.areas,
+    this.createdDate,
+    this.status,
+    this.decisionDate,
+    this.comment,
+    this.coordinatorUser,
   });
 
   factory Postulation.fromJson(Map<String, dynamic> json) =>
@@ -4955,14 +5020,20 @@ class Postulation {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'date')
-  final DateTime date;
-  @JsonKey(name: 'status')
-  final String status;
   @JsonKey(name: 'student_user')
   final int studentUser;
+  @JsonKey(name: 'areas', defaultValue: <String>[])
+  final List<String> areas;
+  @JsonKey(name: 'created_date')
+  final DateTime? createdDate;
+  @JsonKey(name: 'status')
+  final String? status;
+  @JsonKey(name: 'decision_date')
+  final DateTime? decisionDate;
+  @JsonKey(name: 'comment')
+  final String? comment;
   @JsonKey(name: 'coordinator_user')
-  final int coordinatorUser;
+  final int? coordinatorUser;
   static const fromJsonFactory = _$PostulationFromJson;
 
   @override
@@ -4971,13 +5042,22 @@ class Postulation {
         (other is Postulation &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.studentUser, studentUser) ||
                 const DeepCollectionEquality()
                     .equals(other.studentUser, studentUser)) &&
+            (identical(other.areas, areas) ||
+                const DeepCollectionEquality().equals(other.areas, areas)) &&
+            (identical(other.createdDate, createdDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdDate, createdDate)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.decisionDate, decisionDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.decisionDate, decisionDate)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
             (identical(other.coordinatorUser, coordinatorUser) ||
                 const DeepCollectionEquality()
                     .equals(other.coordinatorUser, coordinatorUser)));
@@ -4989,9 +5069,12 @@ class Postulation {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(date) ^
-      const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(studentUser) ^
+      const DeepCollectionEquality().hash(areas) ^
+      const DeepCollectionEquality().hash(createdDate) ^
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(decisionDate) ^
+      const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(coordinatorUser) ^
       runtimeType.hashCode;
 }
@@ -4999,30 +5082,44 @@ class Postulation {
 extension $PostulationExtension on Postulation {
   Postulation copyWith(
       {int? id,
-      DateTime? date,
-      String? status,
       int? studentUser,
+      List<String>? areas,
+      DateTime? createdDate,
+      String? status,
+      DateTime? decisionDate,
+      String? comment,
       int? coordinatorUser}) {
     return Postulation(
         id: id ?? this.id,
-        date: date ?? this.date,
-        status: status ?? this.status,
         studentUser: studentUser ?? this.studentUser,
+        areas: areas ?? this.areas,
+        createdDate: createdDate ?? this.createdDate,
+        status: status ?? this.status,
+        decisionDate: decisionDate ?? this.decisionDate,
+        comment: comment ?? this.comment,
         coordinatorUser: coordinatorUser ?? this.coordinatorUser);
   }
 
   Postulation copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<DateTime>? date,
-      Wrapped<String>? status,
       Wrapped<int>? studentUser,
-      Wrapped<int>? coordinatorUser}) {
+      Wrapped<List<String>>? areas,
+      Wrapped<DateTime?>? createdDate,
+      Wrapped<String?>? status,
+      Wrapped<DateTime?>? decisionDate,
+      Wrapped<String?>? comment,
+      Wrapped<int?>? coordinatorUser}) {
     return Postulation(
         id: (id != null ? id.value : this.id),
-        date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status),
         studentUser:
             (studentUser != null ? studentUser.value : this.studentUser),
+        areas: (areas != null ? areas.value : this.areas),
+        createdDate:
+            (createdDate != null ? createdDate.value : this.createdDate),
+        status: (status != null ? status.value : this.status),
+        decisionDate:
+            (decisionDate != null ? decisionDate.value : this.decisionDate),
+        comment: (comment != null ? comment.value : this.comment),
         coordinatorUser: (coordinatorUser != null
             ? coordinatorUser.value
             : this.coordinatorUser));
@@ -5030,41 +5127,64 @@ extension $PostulationExtension on Postulation {
 }
 
 @JsonSerializable(explicitToJson: true)
-class PostulationRequest {
-  PostulationRequest({
-    required this.date,
-    required this.status,
+class PostulationDetail {
+  PostulationDetail({
+    required this.id,
     required this.studentUser,
-    required this.coordinatorUser,
+    required this.areas,
+    this.createdDate,
+    this.status,
+    this.decisionDate,
+    this.comment,
+    this.coordinatorUser,
   });
 
-  factory PostulationRequest.fromJson(Map<String, dynamic> json) =>
-      _$PostulationRequestFromJson(json);
+  factory PostulationDetail.fromJson(Map<String, dynamic> json) =>
+      _$PostulationDetailFromJson(json);
 
-  static const toJsonFactory = _$PostulationRequestToJson;
-  Map<String, dynamic> toJson() => _$PostulationRequestToJson(this);
+  static const toJsonFactory = _$PostulationDetailToJson;
+  Map<String, dynamic> toJson() => _$PostulationDetailToJson(this);
 
-  @JsonKey(name: 'date')
-  final DateTime date;
-  @JsonKey(name: 'status')
-  final String status;
+  @JsonKey(name: 'id')
+  final int id;
   @JsonKey(name: 'student_user')
-  final int studentUser;
+  final PostulationUser studentUser;
+  @JsonKey(name: 'areas', defaultValue: <CustomArea>[])
+  final List<CustomArea> areas;
+  @JsonKey(name: 'created_date')
+  final DateTime? createdDate;
+  @JsonKey(name: 'status')
+  final String? status;
+  @JsonKey(name: 'decision_date')
+  final DateTime? decisionDate;
+  @JsonKey(name: 'comment')
+  final String? comment;
   @JsonKey(name: 'coordinator_user')
-  final int coordinatorUser;
-  static const fromJsonFactory = _$PostulationRequestFromJson;
+  final int? coordinatorUser;
+  static const fromJsonFactory = _$PostulationDetailFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is PostulationRequest &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
+        (other is PostulationDetail &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.studentUser, studentUser) ||
                 const DeepCollectionEquality()
                     .equals(other.studentUser, studentUser)) &&
+            (identical(other.areas, areas) ||
+                const DeepCollectionEquality().equals(other.areas, areas)) &&
+            (identical(other.createdDate, createdDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdDate, createdDate)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.decisionDate, decisionDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.decisionDate, decisionDate)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
             (identical(other.coordinatorUser, coordinatorUser) ||
                 const DeepCollectionEquality()
                     .equals(other.coordinatorUser, coordinatorUser)));
@@ -5075,39 +5195,361 @@ class PostulationRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(date) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(studentUser) ^
+      const DeepCollectionEquality().hash(areas) ^
+      const DeepCollectionEquality().hash(createdDate) ^
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(decisionDate) ^
+      const DeepCollectionEquality().hash(comment) ^
+      const DeepCollectionEquality().hash(coordinatorUser) ^
+      runtimeType.hashCode;
+}
+
+extension $PostulationDetailExtension on PostulationDetail {
+  PostulationDetail copyWith(
+      {int? id,
+      PostulationUser? studentUser,
+      List<CustomArea>? areas,
+      DateTime? createdDate,
+      String? status,
+      DateTime? decisionDate,
+      String? comment,
+      int? coordinatorUser}) {
+    return PostulationDetail(
+        id: id ?? this.id,
+        studentUser: studentUser ?? this.studentUser,
+        areas: areas ?? this.areas,
+        createdDate: createdDate ?? this.createdDate,
+        status: status ?? this.status,
+        decisionDate: decisionDate ?? this.decisionDate,
+        comment: comment ?? this.comment,
+        coordinatorUser: coordinatorUser ?? this.coordinatorUser);
+  }
+
+  PostulationDetail copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<PostulationUser>? studentUser,
+      Wrapped<List<CustomArea>>? areas,
+      Wrapped<DateTime?>? createdDate,
+      Wrapped<String?>? status,
+      Wrapped<DateTime?>? decisionDate,
+      Wrapped<String?>? comment,
+      Wrapped<int?>? coordinatorUser}) {
+    return PostulationDetail(
+        id: (id != null ? id.value : this.id),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
+        areas: (areas != null ? areas.value : this.areas),
+        createdDate:
+            (createdDate != null ? createdDate.value : this.createdDate),
+        status: (status != null ? status.value : this.status),
+        decisionDate:
+            (decisionDate != null ? decisionDate.value : this.decisionDate),
+        comment: (comment != null ? comment.value : this.comment),
+        coordinatorUser: (coordinatorUser != null
+            ? coordinatorUser.value
+            : this.coordinatorUser));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PostulationList {
+  PostulationList({
+    required this.id,
+    this.createdDate,
+    this.status,
+    required this.studentUser,
+  });
+
+  factory PostulationList.fromJson(Map<String, dynamic> json) =>
+      _$PostulationListFromJson(json);
+
+  static const toJsonFactory = _$PostulationListToJson;
+  Map<String, dynamic> toJson() => _$PostulationListToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'created_date')
+  final DateTime? createdDate;
+  @JsonKey(name: 'status')
+  final String? status;
+  @JsonKey(name: 'student_user')
+  final PostulationUser studentUser;
+  static const fromJsonFactory = _$PostulationListFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PostulationList &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.createdDate, createdDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdDate, createdDate)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(createdDate) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(studentUser) ^
+      runtimeType.hashCode;
+}
+
+extension $PostulationListExtension on PostulationList {
+  PostulationList copyWith(
+      {int? id,
+      DateTime? createdDate,
+      String? status,
+      PostulationUser? studentUser}) {
+    return PostulationList(
+        id: id ?? this.id,
+        createdDate: createdDate ?? this.createdDate,
+        status: status ?? this.status,
+        studentUser: studentUser ?? this.studentUser);
+  }
+
+  PostulationList copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<DateTime?>? createdDate,
+      Wrapped<String?>? status,
+      Wrapped<PostulationUser>? studentUser}) {
+    return PostulationList(
+        id: (id != null ? id.value : this.id),
+        createdDate:
+            (createdDate != null ? createdDate.value : this.createdDate),
+        status: (status != null ? status.value : this.status),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PostulationRequest {
+  PostulationRequest({
+    required this.studentUser,
+    required this.areas,
+    this.createdDate,
+    this.status,
+    this.decisionDate,
+    this.comment,
+    this.coordinatorUser,
+  });
+
+  factory PostulationRequest.fromJson(Map<String, dynamic> json) =>
+      _$PostulationRequestFromJson(json);
+
+  static const toJsonFactory = _$PostulationRequestToJson;
+  Map<String, dynamic> toJson() => _$PostulationRequestToJson(this);
+
+  @JsonKey(name: 'student_user')
+  final int studentUser;
+  @JsonKey(name: 'areas', defaultValue: <String>[])
+  final List<String> areas;
+  @JsonKey(name: 'created_date')
+  final DateTime? createdDate;
+  @JsonKey(name: 'status')
+  final String? status;
+  @JsonKey(name: 'decision_date')
+  final DateTime? decisionDate;
+  @JsonKey(name: 'comment')
+  final String? comment;
+  @JsonKey(name: 'coordinator_user')
+  final int? coordinatorUser;
+  static const fromJsonFactory = _$PostulationRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PostulationRequest &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
+            (identical(other.areas, areas) ||
+                const DeepCollectionEquality().equals(other.areas, areas)) &&
+            (identical(other.createdDate, createdDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.createdDate, createdDate)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.decisionDate, decisionDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.decisionDate, decisionDate)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
+            (identical(other.coordinatorUser, coordinatorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.coordinatorUser, coordinatorUser)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(studentUser) ^
+      const DeepCollectionEquality().hash(areas) ^
+      const DeepCollectionEquality().hash(createdDate) ^
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(decisionDate) ^
+      const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(coordinatorUser) ^
       runtimeType.hashCode;
 }
 
 extension $PostulationRequestExtension on PostulationRequest {
   PostulationRequest copyWith(
-      {DateTime? date,
+      {int? studentUser,
+      List<String>? areas,
+      DateTime? createdDate,
       String? status,
-      int? studentUser,
+      DateTime? decisionDate,
+      String? comment,
       int? coordinatorUser}) {
     return PostulationRequest(
-        date: date ?? this.date,
-        status: status ?? this.status,
         studentUser: studentUser ?? this.studentUser,
+        areas: areas ?? this.areas,
+        createdDate: createdDate ?? this.createdDate,
+        status: status ?? this.status,
+        decisionDate: decisionDate ?? this.decisionDate,
+        comment: comment ?? this.comment,
         coordinatorUser: coordinatorUser ?? this.coordinatorUser);
   }
 
   PostulationRequest copyWithWrapped(
-      {Wrapped<DateTime>? date,
-      Wrapped<String>? status,
-      Wrapped<int>? studentUser,
-      Wrapped<int>? coordinatorUser}) {
+      {Wrapped<int>? studentUser,
+      Wrapped<List<String>>? areas,
+      Wrapped<DateTime?>? createdDate,
+      Wrapped<String?>? status,
+      Wrapped<DateTime?>? decisionDate,
+      Wrapped<String?>? comment,
+      Wrapped<int?>? coordinatorUser}) {
     return PostulationRequest(
-        date: (date != null ? date.value : this.date),
-        status: (status != null ? status.value : this.status),
         studentUser:
             (studentUser != null ? studentUser.value : this.studentUser),
+        areas: (areas != null ? areas.value : this.areas),
+        createdDate:
+            (createdDate != null ? createdDate.value : this.createdDate),
+        status: (status != null ? status.value : this.status),
+        decisionDate:
+            (decisionDate != null ? decisionDate.value : this.decisionDate),
+        comment: (comment != null ? comment.value : this.comment),
         coordinatorUser: (coordinatorUser != null
             ? coordinatorUser.value
             : this.coordinatorUser));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PostulationUser {
+  PostulationUser({
+    required this.id,
+    this.firstName,
+    this.lastName,
+    this.profilePicture,
+    this.uccKey,
+    required this.careers,
+  });
+
+  factory PostulationUser.fromJson(Map<String, dynamic> json) =>
+      _$PostulationUserFromJson(json);
+
+  static const toJsonFactory = _$PostulationUserToJson;
+  Map<String, dynamic> toJson() => _$PostulationUserToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
+  @JsonKey(name: 'profile_picture')
+  final String? profilePicture;
+  @JsonKey(name: 'ucc_key')
+  final int? uccKey;
+  @JsonKey(name: 'careers', defaultValue: <String>[])
+  final List<String> careers;
+  static const fromJsonFactory = _$PostulationUserFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PostulationUser &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.profilePicture, profilePicture) ||
+                const DeepCollectionEquality()
+                    .equals(other.profilePicture, profilePicture)) &&
+            (identical(other.uccKey, uccKey) ||
+                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality().equals(other.careers, careers)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(profilePicture) ^
+      const DeepCollectionEquality().hash(uccKey) ^
+      const DeepCollectionEquality().hash(careers) ^
+      runtimeType.hashCode;
+}
+
+extension $PostulationUserExtension on PostulationUser {
+  PostulationUser copyWith(
+      {int? id,
+      String? firstName,
+      String? lastName,
+      String? profilePicture,
+      int? uccKey,
+      List<String>? careers}) {
+    return PostulationUser(
+        id: id ?? this.id,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        profilePicture: profilePicture ?? this.profilePicture,
+        uccKey: uccKey ?? this.uccKey,
+        careers: careers ?? this.careers);
+  }
+
+  PostulationUser copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
+      Wrapped<String?>? profilePicture,
+      Wrapped<int?>? uccKey,
+      Wrapped<List<String>>? careers}) {
+    return PostulationUser(
+        id: (id != null ? id.value : this.id),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
+        profilePicture: (profilePicture != null
+            ? profilePicture.value
+            : this.profilePicture),
+        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
+        careers: (careers != null ? careers.value : this.careers));
   }
 }
 
@@ -5396,39 +5838,33 @@ extension $RefreshTokenRequestExtension on RefreshTokenRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ReturnAuthUser {
-  ReturnAuthUser({
-    required this.user,
-    required this.accessToken,
-    required this.refreshToken,
+class ReportAndReview {
+  ReportAndReview({
+    required this.reports,
+    required this.reviews,
   });
 
-  factory ReturnAuthUser.fromJson(Map<String, dynamic> json) =>
-      _$ReturnAuthUserFromJson(json);
+  factory ReportAndReview.fromJson(Map<String, dynamic> json) =>
+      _$ReportAndReviewFromJson(json);
 
-  static const toJsonFactory = _$ReturnAuthUserToJson;
-  Map<String, dynamic> toJson() => _$ReturnAuthUserToJson(this);
+  static const toJsonFactory = _$ReportAndReviewToJson;
+  Map<String, dynamic> toJson() => _$ReportAndReviewToJson(this);
 
-  @JsonKey(name: 'user')
-  final User user;
-  @JsonKey(name: 'access_token')
-  final String accessToken;
-  @JsonKey(name: 'refresh_token')
-  final String refreshToken;
-  static const fromJsonFactory = _$ReturnAuthUserFromJson;
+  @JsonKey(name: 'reports', defaultValue: <TutorshipReport>[])
+  final List<TutorshipReport> reports;
+  @JsonKey(name: 'reviews', defaultValue: <TutorUserReview>[])
+  final List<TutorUserReview> reviews;
+  static const fromJsonFactory = _$ReportAndReviewFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is ReturnAuthUser &&
-            (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)) &&
-            (identical(other.accessToken, accessToken) ||
+        (other is ReportAndReview &&
+            (identical(other.reports, reports) ||
                 const DeepCollectionEquality()
-                    .equals(other.accessToken, accessToken)) &&
-            (identical(other.refreshToken, refreshToken) ||
-                const DeepCollectionEquality()
-                    .equals(other.refreshToken, refreshToken)));
+                    .equals(other.reports, reports)) &&
+            (identical(other.reviews, reviews) ||
+                const DeepCollectionEquality().equals(other.reviews, reviews)));
   }
 
   @override
@@ -5436,31 +5872,24 @@ class ReturnAuthUser {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(user) ^
-      const DeepCollectionEquality().hash(accessToken) ^
-      const DeepCollectionEquality().hash(refreshToken) ^
+      const DeepCollectionEquality().hash(reports) ^
+      const DeepCollectionEquality().hash(reviews) ^
       runtimeType.hashCode;
 }
 
-extension $ReturnAuthUserExtension on ReturnAuthUser {
-  ReturnAuthUser copyWith(
-      {User? user, String? accessToken, String? refreshToken}) {
-    return ReturnAuthUser(
-        user: user ?? this.user,
-        accessToken: accessToken ?? this.accessToken,
-        refreshToken: refreshToken ?? this.refreshToken);
+extension $ReportAndReviewExtension on ReportAndReview {
+  ReportAndReview copyWith(
+      {List<TutorshipReport>? reports, List<TutorUserReview>? reviews}) {
+    return ReportAndReview(
+        reports: reports ?? this.reports, reviews: reviews ?? this.reviews);
   }
 
-  ReturnAuthUser copyWithWrapped(
-      {Wrapped<User>? user,
-      Wrapped<String>? accessToken,
-      Wrapped<String>? refreshToken}) {
-    return ReturnAuthUser(
-        user: (user != null ? user.value : this.user),
-        accessToken:
-            (accessToken != null ? accessToken.value : this.accessToken),
-        refreshToken:
-            (refreshToken != null ? refreshToken.value : this.refreshToken));
+  ReportAndReview copyWithWrapped(
+      {Wrapped<List<TutorshipReport>>? reports,
+      Wrapped<List<TutorUserReview>>? reviews}) {
+    return ReportAndReview(
+        reports: (reports != null ? reports.value : this.reports),
+        reviews: (reviews != null ? reviews.value : this.reviews));
   }
 }
 
@@ -5781,6 +6210,61 @@ extension $SearchTutorshipExtension on SearchTutorship {
 }
 
 @JsonSerializable(explicitToJson: true)
+class SuccessResponse {
+  SuccessResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory SuccessResponse.fromJson(Map<String, dynamic> json) =>
+      _$SuccessResponseFromJson(json);
+
+  static const toJsonFactory = _$SuccessResponseToJson;
+  Map<String, dynamic> toJson() => _$SuccessResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$SuccessResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SuccessResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
+}
+
+extension $SuccessResponseExtension on SuccessResponse {
+  SuccessResponse copyWith({int? statusCode, String? message}) {
+    return SuccessResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
+  }
+
+  SuccessResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return SuccessResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+        message: (message != null ? message.value : this.message));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class Tag {
   Tag({
     required this.id,
@@ -5986,12 +6470,12 @@ extension $TutorAreasExtension on TutorAreas {
 class TutorUserReview {
   TutorUserReview({
     required this.id,
+    required this.tutorUser,
+    required this.studentUser,
     required this.comment,
     required this.occurred,
     required this.absent,
     required this.utility,
-    required this.tutorUser,
-    required this.studentUser,
     required this.tutorshipInstance,
   });
 
@@ -6003,6 +6487,10 @@ class TutorUserReview {
 
   @JsonKey(name: 'id')
   final int id;
+  @JsonKey(name: 'tutor_user')
+  final User tutorUser;
+  @JsonKey(name: 'student_user')
+  final User studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6011,10 +6499,6 @@ class TutorUserReview {
   final bool absent;
   @JsonKey(name: 'utility')
   final int utility;
-  @JsonKey(name: 'tutor_user')
-  final int tutorUser;
-  @JsonKey(name: 'student_user')
-  final int studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
   static const fromJsonFactory = _$TutorUserReviewFromJson;
@@ -6025,6 +6509,12 @@ class TutorUserReview {
         (other is TutorUserReview &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6036,12 +6526,6 @@ class TutorUserReview {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -6053,12 +6537,12 @@ class TutorUserReview {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
@@ -6066,42 +6550,42 @@ class TutorUserReview {
 extension $TutorUserReviewExtension on TutorUserReview {
   TutorUserReview copyWith(
       {int? id,
+      User? tutorUser,
+      User? studentUser,
       String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
-      int? tutorUser,
-      int? studentUser,
       int? tutorshipInstance}) {
     return TutorUserReview(
         id: id ?? this.id,
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorUserReview copyWithWrapped(
       {Wrapped<int>? id,
+      Wrapped<User>? tutorUser,
+      Wrapped<User>? studentUser,
       Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,
       Wrapped<int>? utility,
-      Wrapped<int>? tutorUser,
-      Wrapped<int>? studentUser,
       Wrapped<int>? tutorshipInstance}) {
     return TutorUserReview(
         id: (id != null ? id.value : this.id),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -6111,12 +6595,12 @@ extension $TutorUserReviewExtension on TutorUserReview {
 @JsonSerializable(explicitToJson: true)
 class TutorUserReviewRequest {
   TutorUserReviewRequest({
+    required this.tutorUser,
+    required this.studentUser,
     required this.comment,
     required this.occurred,
     required this.absent,
     required this.utility,
-    required this.tutorUser,
-    required this.studentUser,
     required this.tutorshipInstance,
   });
 
@@ -6126,6 +6610,10 @@ class TutorUserReviewRequest {
   static const toJsonFactory = _$TutorUserReviewRequestToJson;
   Map<String, dynamic> toJson() => _$TutorUserReviewRequestToJson(this);
 
+  @JsonKey(name: 'tutor_user')
+  final UserRequest tutorUser;
+  @JsonKey(name: 'student_user')
+  final UserRequest studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6134,10 +6622,6 @@ class TutorUserReviewRequest {
   final bool absent;
   @JsonKey(name: 'utility')
   final int utility;
-  @JsonKey(name: 'tutor_user')
-  final int tutorUser;
-  @JsonKey(name: 'student_user')
-  final int studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
   static const fromJsonFactory = _$TutorUserReviewRequestFromJson;
@@ -6146,6 +6630,12 @@ class TutorUserReviewRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TutorUserReviewRequest &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6157,12 +6647,6 @@ class TutorUserReviewRequest {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -6173,51 +6657,51 @@ class TutorUserReviewRequest {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
 
 extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
   TutorUserReviewRequest copyWith(
-      {String? comment,
+      {UserRequest? tutorUser,
+      UserRequest? studentUser,
+      String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
-      int? tutorUser,
-      int? studentUser,
       int? tutorshipInstance}) {
     return TutorUserReviewRequest(
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorUserReviewRequest copyWithWrapped(
-      {Wrapped<String>? comment,
+      {Wrapped<UserRequest>? tutorUser,
+      Wrapped<UserRequest>? studentUser,
+      Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,
       Wrapped<int>? utility,
-      Wrapped<int>? tutorUser,
-      Wrapped<int>? studentUser,
       Wrapped<int>? tutorshipInstance}) {
     return TutorUserReviewRequest(
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -6426,10 +6910,10 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
 class TutorshipReport {
   TutorshipReport({
     required this.id,
+    required this.tutorUser,
     required this.comment,
     required this.subject,
     required this.tutorshipInstance,
-    required this.tutorUser,
   });
 
   factory TutorshipReport.fromJson(Map<String, dynamic> json) =>
@@ -6440,14 +6924,14 @@ class TutorshipReport {
 
   @JsonKey(name: 'id')
   final int id;
+  @JsonKey(name: 'tutor_user')
+  final User tutorUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'subject')
   final String subject;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
-  @JsonKey(name: 'tutor_user')
-  final int tutorUser;
   static const fromJsonFactory = _$TutorshipReportFromJson;
 
   @override
@@ -6456,6 +6940,9 @@ class TutorshipReport {
         (other is TutorshipReport &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6464,10 +6951,7 @@ class TutorshipReport {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)));
   }
 
   @override
@@ -6476,52 +6960,52 @@ class TutorshipReport {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipReportExtension on TutorshipReport {
   TutorshipReport copyWith(
       {int? id,
+      User? tutorUser,
       String? comment,
       String? subject,
-      int? tutorshipInstance,
-      int? tutorUser}) {
+      int? tutorshipInstance}) {
     return TutorshipReport(
         id: id ?? this.id,
+        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
-        tutorUser: tutorUser ?? this.tutorUser);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorshipReport copyWithWrapped(
       {Wrapped<int>? id,
+      Wrapped<User>? tutorUser,
       Wrapped<String>? comment,
       Wrapped<String>? subject,
-      Wrapped<int>? tutorshipInstance,
-      Wrapped<int>? tutorUser}) {
+      Wrapped<int>? tutorshipInstance}) {
     return TutorshipReport(
         id: (id != null ? id.value : this.id),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
+            : this.tutorshipInstance));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TutorshipReportRequest {
   TutorshipReportRequest({
+    required this.tutorUser,
     required this.comment,
     required this.subject,
     required this.tutorshipInstance,
-    required this.tutorUser,
   });
 
   factory TutorshipReportRequest.fromJson(Map<String, dynamic> json) =>
@@ -6530,20 +7014,23 @@ class TutorshipReportRequest {
   static const toJsonFactory = _$TutorshipReportRequestToJson;
   Map<String, dynamic> toJson() => _$TutorshipReportRequestToJson(this);
 
+  @JsonKey(name: 'tutor_user')
+  final UserRequest tutorUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'subject')
   final String subject;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
-  @JsonKey(name: 'tutor_user')
-  final int tutorUser;
   static const fromJsonFactory = _$TutorshipReportRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TutorshipReportRequest &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6552,10 +7039,7 @@ class TutorshipReportRequest {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)));
   }
 
   @override
@@ -6563,38 +7047,93 @@ class TutorshipReportRequest {
 
   @override
   int get hashCode =>
+      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipReportRequestExtension on TutorshipReportRequest {
   TutorshipReportRequest copyWith(
-      {String? comment,
+      {UserRequest? tutorUser,
+      String? comment,
       String? subject,
-      int? tutorshipInstance,
-      int? tutorUser}) {
+      int? tutorshipInstance}) {
     return TutorshipReportRequest(
+        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
-        tutorUser: tutorUser ?? this.tutorUser);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorshipReportRequest copyWithWrapped(
-      {Wrapped<String>? comment,
+      {Wrapped<UserRequest>? tutorUser,
+      Wrapped<String>? comment,
       Wrapped<String>? subject,
-      Wrapped<int>? tutorshipInstance,
-      Wrapped<int>? tutorUser}) {
+      Wrapped<int>? tutorshipInstance}) {
     return TutorshipReportRequest(
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
+            : this.tutorshipInstance));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnauthorizedResponse {
+  UnauthorizedResponse({
+    this.statusCode,
+    this.message,
+  });
+
+  factory UnauthorizedResponse.fromJson(Map<String, dynamic> json) =>
+      _$UnauthorizedResponseFromJson(json);
+
+  static const toJsonFactory = _$UnauthorizedResponseToJson;
+  Map<String, dynamic> toJson() => _$UnauthorizedResponseToJson(this);
+
+  @JsonKey(name: 'status_code')
+  final int? statusCode;
+  @JsonKey(name: 'message')
+  final String? message;
+  static const fromJsonFactory = _$UnauthorizedResponseFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UnauthorizedResponse &&
+            (identical(other.statusCode, statusCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.statusCode, statusCode)) &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(statusCode) ^
+      const DeepCollectionEquality().hash(message) ^
+      runtimeType.hashCode;
+}
+
+extension $UnauthorizedResponseExtension on UnauthorizedResponse {
+  UnauthorizedResponse copyWith({int? statusCode, String? message}) {
+    return UnauthorizedResponse(
+        statusCode: statusCode ?? this.statusCode,
+        message: message ?? this.message);
+  }
+
+  UnauthorizedResponse copyWithWrapped(
+      {Wrapped<int?>? statusCode, Wrapped<String?>? message}) {
+    return UnauthorizedResponse(
+        statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+        message: (message != null ? message.value : this.message));
   }
 }
 
@@ -6632,8 +7171,8 @@ class User {
   final String? profilePicture;
   @JsonKey(name: 'roles', defaultValue: <String>[])
   final List<String> roles;
-  @JsonKey(name: 'careers', defaultValue: <String>[])
-  final List<String> careers;
+  @JsonKey(name: 'careers', defaultValue: <UserCareer>[])
+  final List<UserCareer> careers;
   @JsonKey(name: 'academic_year')
   final int academicYear;
   @JsonKey(name: 'areas', defaultValue: <int>[])
@@ -6698,7 +7237,7 @@ extension $UserExtension on User {
       String? lastName,
       String? profilePicture,
       List<String>? roles,
-      List<String>? careers,
+      List<UserCareer>? careers,
       int? academicYear,
       List<int>? areas}) {
     return User(
@@ -6722,7 +7261,7 @@ extension $UserExtension on User {
       Wrapped<String?>? lastName,
       Wrapped<String?>? profilePicture,
       Wrapped<List<String>>? roles,
-      Wrapped<List<String>>? careers,
+      Wrapped<List<UserCareer>>? careers,
       Wrapped<int>? academicYear,
       Wrapped<List<int>>? areas}) {
     return User(
@@ -6739,6 +7278,99 @@ extension $UserExtension on User {
         academicYear:
             (academicYear != null ? academicYear.value : this.academicYear),
         areas: (areas != null ? areas.value : this.areas));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserCareer {
+  UserCareer({
+    required this.id,
+    required this.name,
+  });
+
+  factory UserCareer.fromJson(Map<String, dynamic> json) =>
+      _$UserCareerFromJson(json);
+
+  static const toJsonFactory = _$UserCareerToJson;
+  Map<String, dynamic> toJson() => _$UserCareerToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'name')
+  final String name;
+  static const fromJsonFactory = _$UserCareerFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UserCareer &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
+      runtimeType.hashCode;
+}
+
+extension $UserCareerExtension on UserCareer {
+  UserCareer copyWith({int? id, String? name}) {
+    return UserCareer(id: id ?? this.id, name: name ?? this.name);
+  }
+
+  UserCareer copyWithWrapped({Wrapped<int>? id, Wrapped<String>? name}) {
+    return UserCareer(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserCareerRequest {
+  UserCareerRequest({
+    required this.name,
+  });
+
+  factory UserCareerRequest.fromJson(Map<String, dynamic> json) =>
+      _$UserCareerRequestFromJson(json);
+
+  static const toJsonFactory = _$UserCareerRequestToJson;
+  Map<String, dynamic> toJson() => _$UserCareerRequestToJson(this);
+
+  @JsonKey(name: 'name')
+  final String name;
+  static const fromJsonFactory = _$UserCareerRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UserCareerRequest &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(name) ^ runtimeType.hashCode;
+}
+
+extension $UserCareerRequestExtension on UserCareerRequest {
+  UserCareerRequest copyWith({String? name}) {
+    return UserCareerRequest(name: name ?? this.name);
+  }
+
+  UserCareerRequest copyWithWrapped({Wrapped<String>? name}) {
+    return UserCareerRequest(name: (name != null ? name.value : this.name));
   }
 }
 

@@ -1496,6 +1496,43 @@
                 }
             }
         },
+        "/api/careers/{id}/getAreas/": {
+            "get": {
+                "operationId": "careers_getAreas_retrieve",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this career.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "careers"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Career"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/postulation-x-area/": {
             "get": {
                 "operationId": "postulation_x_area_list",
@@ -1762,7 +1799,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Postulation"
+                                        "$ref": "#/components/schemas/PostulationList"
                                     }
                                 }
                             }
@@ -1844,7 +1881,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Postulation"
+                                    "$ref": "#/components/schemas/PostulationDetail"
                                 }
                             }
                         },
@@ -1986,6 +2023,84 @@
                 "responses": {
                     "204": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/postulations/{id}/close-postulation/": {
+            "post": {
+                "operationId": "postulations_close_postulation_create",
+                "summary": "Approve or Deny a postulation",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this postulation.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "postulations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "409": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -2558,7 +2673,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/No_search_string"
+                                    "$ref": "#/components/schemas/BadRequestResponse"
                                 }
                             }
                         },
@@ -2849,21 +2964,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ReturnAuthUser"
+                                    "$ref": "#/components/schemas/SuccessResponse"
                                 }
                             }
                         },
-                        "description": "Fetched a existing user"
+                        "description": ""
                     },
                     "201": {
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ReturnAuthUser"
+                                    "$ref": "#/components/schemas/CreateResponse"
                                 }
                             }
                         },
-                        "description": "Created a new user with role student"
+                        "description": ""
                     },
                     "400": {
                         "content": {
@@ -2879,7 +2994,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Internal_Server_Error"
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -3717,7 +3832,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Ok_serializer_Disenroll"
+                                    "$ref": "#/components/schemas/SuccessResponse"
                                 }
                             }
                         },
@@ -3727,7 +3842,64 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InternalServerError_Serializer_Disenroll"
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/tutorship-instances/{id}/report-and-reviews/": {
+            "post": {
+                "operationId": "tutorship_instances_report_and_reviews_create",
+                "summary": "Get Report and Reviews for specific Tutorship",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this tutorship instance.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Report-and-Review_"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -3773,7 +3945,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Ok_serializer"
+                                    "$ref": "#/components/schemas/SuccessResponse"
                                 }
                             }
                         },
@@ -3783,7 +3955,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Created_serializer"
+                                    "$ref": "#/components/schemas/CreateResponse"
                                 }
                             }
                         },
@@ -3793,7 +3965,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Conflict_serializer"
+                                    "$ref": "#/components/schemas/ConflictResponse"
                                 }
                             }
                         },
@@ -3803,7 +3975,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InternalServerError_"
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -5230,6 +5402,19 @@
                     }
                 ]
             },
+            "BadRequestResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Solicitud incorrecta"
+                    }
+                }
+            },
             "BadToken": {
                 "type": "object",
                 "properties": {
@@ -5386,16 +5571,52 @@
                     "user"
                 ]
             },
-            "Conflict_serializer": {
+            "Close_Postulation_Request": {
                 "type": "object",
                 "properties": {
-                    "message": {
-                        "type": "string"
+                    "approve": {
+                        "type": "boolean"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {}
                     }
                 },
                 "required": [
-                    "message"
+                    "approve",
+                    "areas"
                 ]
+            },
+            "ConflictResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 409
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Conflicto en la solicitud"
+                    }
+                }
+            },
+            "CreateResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Creado correctamente"
+                    }
+                }
             },
             "Create_DeleteTutorUserSchedule": {
                 "type": "object",
@@ -5480,17 +5701,6 @@
                     "tutor_user"
                 ]
             },
-            "Created_serializer": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
             "CustomArea": {
                 "type": "object",
                 "properties": {
@@ -5542,6 +5752,19 @@
                     "schedule_id"
                 ]
             },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 500
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Error interno del servidor"
+                    }
+                }
+            },
             "Google_Access_TokenRequest": {
                 "type": "object",
                 "properties": {
@@ -5559,80 +5782,6 @@
                 "required": [
                     "origin",
                     "token"
-                ]
-            },
-            "InternalServerError_": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "traceback": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message",
-                    "traceback"
-                ]
-            },
-            "InternalServerError_Serializer_Disenroll": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "traceback": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message",
-                    "traceback"
-                ]
-            },
-            "Internal_Server_Error": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "No_search_string": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "Ok_serializer": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "Ok_serializer_Disenroll": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
                 ]
             },
             "PatchedAcademicUnitRequest": {
@@ -5756,7 +5905,17 @@
             "PatchedPostulationRequest": {
                 "type": "object",
                 "properties": {
-                    "date": {
+                    "student_user": {
+                        "type": "integer"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
+                    "created_date": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -5765,11 +5924,19 @@
                         "minLength": 1,
                         "maxLength": 25
                     },
-                    "student_user": {
-                        "type": "integer"
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
                     },
                     "coordinator_user": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     }
                 }
             },
@@ -5820,6 +5987,12 @@
             "PatchedTutorUserReviewRequest": {
                 "type": "object",
                 "properties": {
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -5836,12 +6009,6 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
-                    },
-                    "student_user": {
-                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -5879,6 +6046,9 @@
             "PatchedTutorshipReportRequest": {
                 "type": "object",
                 "properties": {
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -5890,9 +6060,6 @@
                         "maxLength": 50
                     },
                     "tutorship_instance": {
-                        "type": "integer"
-                    },
-                    "tutor_user": {
                         "type": "integer"
                     }
                 }
@@ -5976,7 +6143,97 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "date": {
+                    "student_user": {
+                        "type": "integer"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "maxLength": 25
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
+                    "coordinator_user": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "areas",
+                    "id",
+                    "student_user"
+                ]
+            },
+            "PostulationDetail": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/PostulationUser"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomArea"
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "maxLength": 25
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
+                    "coordinator_user": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "areas",
+                    "id",
+                    "student_user"
+                ]
+            },
+            "PostulationList": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "created_date": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -5985,24 +6242,28 @@
                         "maxLength": 25
                     },
                     "student_user": {
-                        "type": "integer"
-                    },
-                    "coordinator_user": {
-                        "type": "integer"
+                        "$ref": "#/components/schemas/PostulationUser"
                     }
                 },
                 "required": [
-                    "coordinator_user",
-                    "date",
                     "id",
-                    "status",
                     "student_user"
                 ]
             },
             "PostulationRequest": {
                 "type": "object",
                 "properties": {
-                    "date": {
+                    "student_user": {
+                        "type": "integer"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
+                    "created_date": {
                         "type": "string",
                         "format": "date-time"
                     },
@@ -6011,18 +6272,65 @@
                         "minLength": 1,
                         "maxLength": 25
                     },
-                    "student_user": {
-                        "type": "integer"
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
                     },
                     "coordinator_user": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     }
                 },
                 "required": [
-                    "coordinator_user",
-                    "date",
-                    "status",
+                    "areas",
                     "student_user"
+                ]
+            },
+            "PostulationUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ucc_key": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "careers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "careers",
+                    "id"
                 ]
             },
             "Postulation_X_Area_": {
@@ -6121,23 +6429,25 @@
                     "refresh"
                 ]
             },
-            "ReturnAuthUser": {
+            "Report-and-Review_": {
                 "type": "object",
                 "properties": {
-                    "user": {
-                        "$ref": "#/components/schemas/User"
+                    "reports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TutorshipReport"
+                        }
                     },
-                    "access_token": {
-                        "type": "string"
-                    },
-                    "refresh_token": {
-                        "type": "string"
+                    "reviews": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TutorUserReview"
+                        }
                     }
                 },
                 "required": [
-                    "access_token",
-                    "refresh_token",
-                    "user"
+                    "reports",
+                    "reviews"
                 ]
             },
             "ReturnRefreshToken": {
@@ -6259,6 +6569,19 @@
                     "users"
                 ]
             },
+            "SuccessResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Operación exitosa"
+                    }
+                }
+            },
             "Tag": {
                 "type": "object",
                 "properties": {
@@ -6337,6 +6660,12 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/User"
+                    },
                     "comment": {
                         "type": "string",
                         "maxLength": 500
@@ -6352,12 +6681,6 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
-                    },
-                    "student_user": {
-                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -6377,6 +6700,12 @@
             "TutorUserReviewRequest": {
                 "type": "object",
                 "properties": {
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6393,12 +6722,6 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
-                    },
-                    "student_user": {
-                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -6499,6 +6822,9 @@
                         "type": "integer",
                         "readOnly": true
                     },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/User"
+                    },
                     "comment": {
                         "type": "string",
                         "maxLength": 500
@@ -6508,9 +6834,6 @@
                         "maxLength": 50
                     },
                     "tutorship_instance": {
-                        "type": "integer"
-                    },
-                    "tutor_user": {
                         "type": "integer"
                     }
                 },
@@ -6525,6 +6848,9 @@
             "TutorshipReportRequest": {
                 "type": "object",
                 "properties": {
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/UserRequest"
+                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6537,9 +6863,6 @@
                     },
                     "tutorship_instance": {
                         "type": "integer"
-                    },
-                    "tutor_user": {
-                        "type": "integer"
                     }
                 },
                 "required": [
@@ -6548,6 +6871,19 @@
                     "tutor_user",
                     "tutorship_instance"
                 ]
+            },
+            "UnauthorizedResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 401
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "No autorizado"
+                    }
+                }
             },
             "User": {
                 "type": "object",
@@ -6593,7 +6929,7 @@
                     "careers": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/UserCareer"
                         },
                         "readOnly": true
                     },
@@ -6615,6 +6951,36 @@
                     "email",
                     "id",
                     "roles"
+                ]
+            },
+            "UserCareer": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 50
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
+            },
+            "UserCareerRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                    }
+                },
+                "required": [
+                    "name"
                 ]
             },
             "UserRequest": {
