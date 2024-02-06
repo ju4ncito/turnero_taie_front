@@ -330,7 +330,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                         body: tutoriaRequest,
                       );
                       print(postResult.error);
-                      print('POSTRESULT --> ${postResult}');
+                      print('POSTRESULT --> $postResult');
                       print(
                           "API Response Status Code: ${postResult.statusCode}");
 

@@ -223,7 +223,7 @@ class ScheduleInfo extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             getColorFromStatus(tutorInstance.status))),
                     child: Text(
-                      translateStatusToSpanish(tutorInstance.status),
+                      translateStatusToSpanish(tutorInstance.status!),
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),

@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
         // Handle error
       }
     } catch (error) {
-      // Handle error
+      print('Error fetching academic units: $error');
     }
   }
 

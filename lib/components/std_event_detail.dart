@@ -215,7 +215,7 @@ class EventDetail extends StatelessWidget {
                           getColorFromStatus(event.status)),
                     ),
                     child: Text(
-                      translateStatusToSpanish(event.status ?? ''),
+                      translateStatusToSpanish(event.status!),
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),

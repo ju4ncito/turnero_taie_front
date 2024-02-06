@@ -92,7 +92,7 @@ class StdCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'de ${tutoria.schedule.begin.substring(0, tutoria.schedule.begin.length - 3)} a ${tutoria.schedule.end.substring(0, tutoria.schedule.end.length - 3)} - ${translateStatusToSpanish(tutoria.status)}',
+                          'de ${tutoria.schedule.begin.substring(0, tutoria.schedule.begin.length - 3)} a ${tutoria.schedule.end.substring(0, tutoria.schedule.end.length - 3)} - ${translateStatusToSpanish(tutoria.status!)}',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: Colors.grey[100],

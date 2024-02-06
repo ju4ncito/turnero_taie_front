@@ -153,19 +153,19 @@ class CalendarAlumnoState extends State<CalendarAlumno> {
               final status = events.status;
               Color color;
               switch (status) {
-                case 'Scheduled':
+                case Status3e2Enum.scheduled:
                   color = const Color.fromARGB(255, 29, 69, 140);
                   break;
-                case 'In progress':
+                case Status3e2Enum.inProgress:
                   color = const Color.fromARGB(255, 64, 106, 36);
                   break;
-                case 'Done':
+                case Status3e2Enum.done:
                   color = Colors.grey;
                   break;
-                case 'Cancelled':
+                case Status3e2Enum.cancelled:
                   color = const Color.fromARGB(255, 102, 30, 30);
                   break;
-                case 'Delayed':
+                case Status3e2Enum.delayed:
                   color = const Color.fromARGB(255, 78, 67, 9);
                   break;
                 default:

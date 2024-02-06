@@ -79,61 +79,7 @@ class _TutorSettingsPageState extends State<TutorSettingsPage> {
               },
             ),
             SizedBox(height: 16),
-            Text(
-              'Configuración de Tema',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            DropdownButton<int>(
-              value: selectedThemeIndex,
-              onChanged: (value) {
-                setState(() {
-                  selectedThemeIndex = value!;
-                });
-              },
-              items: List.generate(
-                themes.length,
-                (index) => DropdownMenuItem<int>(
-                  value: index,
-                  child: Text(themes[index]),
-                ),
-              ),
-            ),
             Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 5 / 7,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await signOutGoogle();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 102, 30, 30)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9),
-                        ),
-                      ),
-                      elevation: MaterialStateProperty.all(4),
-                    ),
-                    child: const Text(
-                      'Cerrar sesión',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 40,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -168,6 +114,41 @@ class _TutorSettingsPageState extends State<TutorSettingsPage> {
                     ),
                     child: const Text(
                       'Cambiar a vista de estudiante',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 5 / 7,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await signOutGoogle();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 102, 30, 30)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9),
+                        ),
+                      ),
+                      elevation: MaterialStateProperty.all(4),
+                    ),
+                    child: const Text(
+                      'Cerrar sesión',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
