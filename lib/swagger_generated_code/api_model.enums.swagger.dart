@@ -1,6 +1,66 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 
+enum BlankEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('')
+  $null('');
+
+  final String? value;
+
+  const BlankEnum(this.value);
+}
+
+enum NullEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const NullEnum(this.value);
+}
+
+enum Status3e2Enum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Scheduled')
+  scheduled('Scheduled'),
+  @JsonValue('In progress')
+  inProgress('In progress'),
+  @JsonValue('Done')
+  done('Done'),
+  @JsonValue('Cancelled')
+  cancelled('Cancelled'),
+  @JsonValue('Delayed')
+  delayed('Delayed');
+
+  final String? value;
+
+  const Status3e2Enum(this.value);
+}
+
+enum Status844Enum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Revision')
+  revision('Revision'),
+  @JsonValue('Rejected')
+  rejected('Rejected'),
+  @JsonValue('Approved')
+  approved('Approved');
+
+  final String? value;
+
+  const Status844Enum(this.value);
+}
+
 enum ApiSchemaJsonGetLang {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),

@@ -5430,6 +5430,11 @@
                     "message"
                 ]
             },
+            "BlankEnum": {
+                "enum": [
+                    ""
+                ]
+            },
             "BusquedaTutoriaHorarios": {
                 "type": "object",
                 "properties": {
@@ -5788,6 +5793,11 @@
                     "token"
                 ]
             },
+            "NullEnum": {
+                "enum": [
+                    null
+                ]
+            },
             "PatchedAcademicUnitRequest": {
                 "type": "object",
                 "properties": {
@@ -5925,9 +5935,18 @@
                         "nullable": true
                     },
                     "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Status844Enum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     },
                     "decision_date": {
                         "type": "string",
@@ -6035,9 +6054,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "$ref": "#/components/schemas/Status3e2Enum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6163,8 +6180,18 @@
                         "nullable": true
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Status844Enum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     },
                     "decision_date": {
                         "type": "string",
@@ -6209,8 +6236,18 @@
                         "nullable": true
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Status844Enum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     },
                     "decision_date": {
                         "type": "string",
@@ -6246,8 +6283,18 @@
                         "nullable": true
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Status844Enum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     },
                     "student_user": {
                         "$ref": "#/components/schemas/PostulationUser"
@@ -6277,9 +6324,18 @@
                         "nullable": true
                     },
                     "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Status844Enum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
                     },
                     "decision_date": {
                         "type": "string",
@@ -6601,8 +6657,7 @@
                         "$ref": "#/components/schemas/CustomArea"
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "$ref": "#/components/schemas/Status3e2Enum"
                     },
                     "users": {
                         "type": "array",
@@ -6623,9 +6678,28 @@
                     "date",
                     "id",
                     "schedule",
-                    "status",
                     "users"
                 ]
+            },
+            "Status3e2Enum": {
+                "enum": [
+                    "Scheduled",
+                    "In progress",
+                    "Done",
+                    "Cancelled",
+                    "Delayed"
+                ],
+                "type": "string",
+                "description": "* `Scheduled` - Scheduled\n* `In progress` - In progress\n* `Done` - Done\n* `Cancelled` - Cancelled\n* `Delayed` - Delayed"
+            },
+            "Status844Enum": {
+                "enum": [
+                    "Revision",
+                    "Rejected",
+                    "Approved"
+                ],
+                "type": "string",
+                "description": "* `Revision` - Revision\n* `Rejected` - Rejected\n* `Approved` - Approved"
             },
             "SuccessResponse": {
                 "type": "object",
@@ -6813,8 +6887,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "$ref": "#/components/schemas/Status3e2Enum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6835,7 +6908,6 @@
                     "date",
                     "id",
                     "schedule",
-                    "status",
                     "users"
                 ]
             },
@@ -6854,9 +6926,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "$ref": "#/components/schemas/Status3e2Enum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6869,8 +6939,7 @@
                 "required": [
                     "area",
                     "date",
-                    "schedule",
-                    "status"
+                    "schedule"
                 ]
             },
             "TutorshipReport": {

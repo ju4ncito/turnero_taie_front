@@ -508,7 +508,7 @@ PatchedPostulationRequest _$PatchedPostulationRequestFromJson(
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
-      status: json['status'] as String?,
+      status: json['status'],
       decisionDate: json['decision_date'] == null
           ? null
           : DateTime.parse(json['decision_date'] as String),
@@ -603,7 +603,7 @@ PatchedTutorshipInstanceRequest _$PatchedTutorshipInstanceRequestFromJson(
       schedule: json['schedule'] as int?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      status: json['status'] as String?,
+      status: status3e2EnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
     );
 
@@ -613,7 +613,7 @@ Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': instance.status,
+      'status': status3e2EnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
     };
 
@@ -709,7 +709,7 @@ Postulation _$PostulationFromJson(Map<String, dynamic> json) => Postulation(
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
-      status: json['status'] as String?,
+      status: json['status'],
       decisionDate: json['decision_date'] == null
           ? null
           : DateTime.parse(json['decision_date'] as String),
@@ -741,7 +741,7 @@ PostulationDetail _$PostulationDetailFromJson(Map<String, dynamic> json) =>
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
-      status: json['status'] as String?,
+      status: json['status'],
       decisionDate: json['decision_date'] == null
           ? null
           : DateTime.parse(json['decision_date'] as String),
@@ -767,7 +767,7 @@ PostulationList _$PostulationListFromJson(Map<String, dynamic> json) =>
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
-      status: json['status'] as String?,
+      status: json['status'],
       studentUser: PostulationUser.fromJson(
           json['student_user'] as Map<String, dynamic>),
     );
@@ -789,7 +789,7 @@ PostulationRequest _$PostulationRequestFromJson(Map<String, dynamic> json) =>
       createdDate: json['created_date'] == null
           ? null
           : DateTime.parse(json['created_date'] as String),
-      status: json['status'] as String?,
+      status: json['status'],
       decisionDate: json['decision_date'] == null
           ? null
           : DateTime.parse(json['decision_date'] as String),
@@ -997,7 +997,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
       area: CustomArea.fromJson(json['area'] as Map<String, dynamic>),
-      status: json['status'] as String,
+      status: status3e2EnumFromJson(json['status']),
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
       zoomLink: json['zoom_link'] as String?,
@@ -1009,7 +1009,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
       'area': instance.area.toJson(),
-      'status': instance.status,
+      'status': status3e2EnumToJson(instance.status),
       'users': instance.users,
       'zoom_link': instance.zoomLink,
     };
@@ -1125,7 +1125,7 @@ TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
       area: json['area'] as String,
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
-      status: json['status'] as String,
+      status: status3e2EnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
@@ -1137,7 +1137,7 @@ Map<String, dynamic> _$TutorshipInstanceToJson(TutorshipInstance instance) =>
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': instance.status,
+      'status': status3e2EnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
       'users': instance.users,
     };
@@ -1148,7 +1148,7 @@ TutorshipInstanceRequest _$TutorshipInstanceRequestFromJson(
       area: json['area'] as String,
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
-      status: json['status'] as String,
+      status: status3e2EnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
     );
 
@@ -1158,7 +1158,7 @@ Map<String, dynamic> _$TutorshipInstanceRequestToJson(
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': instance.status,
+      'status': status3e2EnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
     };
 

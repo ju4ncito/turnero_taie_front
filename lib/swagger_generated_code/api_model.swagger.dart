@@ -4158,7 +4158,7 @@ class PatchedPostulationRequest {
   @JsonKey(name: 'created_date')
   final DateTime? createdDate;
   @JsonKey(name: 'status')
-  final String? status;
+  final dynamic status;
   @JsonKey(name: 'decision_date')
   final DateTime? decisionDate;
   @JsonKey(name: 'comment')
@@ -4212,7 +4212,7 @@ extension $PatchedPostulationRequestExtension on PatchedPostulationRequest {
       {int? studentUser,
       List<String>? areas,
       DateTime? createdDate,
-      String? status,
+      dynamic status,
       DateTime? decisionDate,
       String? comment,
       int? coordinatorUser}) {
@@ -4230,7 +4230,7 @@ extension $PatchedPostulationRequestExtension on PatchedPostulationRequest {
       {Wrapped<int?>? studentUser,
       Wrapped<List<String>?>? areas,
       Wrapped<DateTime?>? createdDate,
-      Wrapped<String?>? status,
+      Wrapped<dynamic>? status,
       Wrapped<DateTime?>? decisionDate,
       Wrapped<String?>? comment,
       Wrapped<int?>? coordinatorUser}) {
@@ -4565,8 +4565,12 @@ class PatchedTutorshipInstanceRequest {
   final int? schedule;
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime? date;
-  @JsonKey(name: 'status')
-  final String? status;
+  @JsonKey(
+    name: 'status',
+    toJson: status3e2EnumToJson,
+    fromJson: status3e2EnumFromJson,
+  )
+  final enums.Status3e2Enum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   static const fromJsonFactory = _$PatchedTutorshipInstanceRequestFromJson;
@@ -4608,7 +4612,7 @@ extension $PatchedTutorshipInstanceRequestExtension
       {String? area,
       int? schedule,
       DateTime? date,
-      String? status,
+      enums.Status3e2Enum? status,
       String? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: area ?? this.area,
@@ -4622,7 +4626,7 @@ extension $PatchedTutorshipInstanceRequestExtension
       {Wrapped<String?>? area,
       Wrapped<int?>? schedule,
       Wrapped<DateTime?>? date,
-      Wrapped<String?>? status,
+      Wrapped<enums.Status3e2Enum?>? status,
       Wrapped<String?>? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
@@ -5028,7 +5032,7 @@ class Postulation {
   @JsonKey(name: 'created_date')
   final DateTime? createdDate;
   @JsonKey(name: 'status')
-  final String? status;
+  final dynamic status;
   @JsonKey(name: 'decision_date')
   final DateTime? decisionDate;
   @JsonKey(name: 'comment')
@@ -5086,7 +5090,7 @@ extension $PostulationExtension on Postulation {
       int? studentUser,
       List<String>? areas,
       DateTime? createdDate,
-      String? status,
+      dynamic status,
       DateTime? decisionDate,
       String? comment,
       int? coordinatorUser}) {
@@ -5106,7 +5110,7 @@ extension $PostulationExtension on Postulation {
       Wrapped<int>? studentUser,
       Wrapped<List<String>>? areas,
       Wrapped<DateTime?>? createdDate,
-      Wrapped<String?>? status,
+      Wrapped<dynamic>? status,
       Wrapped<DateTime?>? decisionDate,
       Wrapped<String?>? comment,
       Wrapped<int?>? coordinatorUser}) {
@@ -5155,7 +5159,7 @@ class PostulationDetail {
   @JsonKey(name: 'created_date')
   final DateTime? createdDate;
   @JsonKey(name: 'status')
-  final String? status;
+  final dynamic status;
   @JsonKey(name: 'decision_date')
   final DateTime? decisionDate;
   @JsonKey(name: 'comment')
@@ -5213,7 +5217,7 @@ extension $PostulationDetailExtension on PostulationDetail {
       PostulationUser? studentUser,
       List<CustomArea>? areas,
       DateTime? createdDate,
-      String? status,
+      dynamic status,
       DateTime? decisionDate,
       String? comment,
       int? coordinatorUser}) {
@@ -5233,7 +5237,7 @@ extension $PostulationDetailExtension on PostulationDetail {
       Wrapped<PostulationUser>? studentUser,
       Wrapped<List<CustomArea>>? areas,
       Wrapped<DateTime?>? createdDate,
-      Wrapped<String?>? status,
+      Wrapped<dynamic>? status,
       Wrapped<DateTime?>? decisionDate,
       Wrapped<String?>? comment,
       Wrapped<int?>? coordinatorUser}) {
@@ -5274,7 +5278,7 @@ class PostulationList {
   @JsonKey(name: 'created_date')
   final DateTime? createdDate;
   @JsonKey(name: 'status')
-  final String? status;
+  final dynamic status;
   @JsonKey(name: 'student_user')
   final PostulationUser studentUser;
   static const fromJsonFactory = _$PostulationListFromJson;
@@ -5311,7 +5315,7 @@ extension $PostulationListExtension on PostulationList {
   PostulationList copyWith(
       {int? id,
       DateTime? createdDate,
-      String? status,
+      dynamic status,
       PostulationUser? studentUser}) {
     return PostulationList(
         id: id ?? this.id,
@@ -5323,7 +5327,7 @@ extension $PostulationListExtension on PostulationList {
   PostulationList copyWithWrapped(
       {Wrapped<int>? id,
       Wrapped<DateTime?>? createdDate,
-      Wrapped<String?>? status,
+      Wrapped<dynamic>? status,
       Wrapped<PostulationUser>? studentUser}) {
     return PostulationList(
         id: (id != null ? id.value : this.id),
@@ -5360,7 +5364,7 @@ class PostulationRequest {
   @JsonKey(name: 'created_date')
   final DateTime? createdDate;
   @JsonKey(name: 'status')
-  final String? status;
+  final dynamic status;
   @JsonKey(name: 'decision_date')
   final DateTime? decisionDate;
   @JsonKey(name: 'comment')
@@ -5414,7 +5418,7 @@ extension $PostulationRequestExtension on PostulationRequest {
       {int? studentUser,
       List<String>? areas,
       DateTime? createdDate,
-      String? status,
+      dynamic status,
       DateTime? decisionDate,
       String? comment,
       int? coordinatorUser}) {
@@ -5432,7 +5436,7 @@ extension $PostulationRequestExtension on PostulationRequest {
       {Wrapped<int>? studentUser,
       Wrapped<List<String>>? areas,
       Wrapped<DateTime?>? createdDate,
-      Wrapped<String?>? status,
+      Wrapped<dynamic>? status,
       Wrapped<DateTime?>? decisionDate,
       Wrapped<String?>? comment,
       Wrapped<int?>? coordinatorUser}) {
@@ -6270,7 +6274,7 @@ class SearchTutorship {
     required this.schedule,
     required this.date,
     required this.area,
-    required this.status,
+    this.status,
     required this.users,
     this.zoomLink,
   });
@@ -6289,8 +6293,12 @@ class SearchTutorship {
   final DateTime date;
   @JsonKey(name: 'area')
   final CustomArea area;
-  @JsonKey(name: 'status')
-  final String status;
+  @JsonKey(
+    name: 'status',
+    toJson: status3e2EnumToJson,
+    fromJson: status3e2EnumFromJson,
+  )
+  final enums.Status3e2Enum? status;
   @JsonKey(name: 'users', defaultValue: <int>[])
   final List<int> users;
   @JsonKey(name: 'zoom_link')
@@ -6340,7 +6348,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
       ReadTutorUserSchedule? schedule,
       DateTime? date,
       CustomArea? area,
-      String? status,
+      enums.Status3e2Enum? status,
       List<int>? users,
       String? zoomLink}) {
     return SearchTutorship(
@@ -6358,7 +6366,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
       Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<CustomArea>? area,
-      Wrapped<String>? status,
+      Wrapped<enums.Status3e2Enum?>? status,
       Wrapped<List<int>>? users,
       Wrapped<String?>? zoomLink}) {
     return SearchTutorship(
@@ -6878,7 +6886,7 @@ class TutorshipInstance {
     required this.area,
     required this.schedule,
     required this.date,
-    required this.status,
+    this.status,
     this.zoomLink,
     required this.users,
   });
@@ -6897,8 +6905,12 @@ class TutorshipInstance {
   final int schedule;
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
-  @JsonKey(name: 'status')
-  final String status;
+  @JsonKey(
+    name: 'status',
+    toJson: status3e2EnumToJson,
+    fromJson: status3e2EnumFromJson,
+  )
+  final enums.Status3e2Enum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   @JsonKey(name: 'users', defaultValue: <int>[])
@@ -6948,7 +6960,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       String? area,
       int? schedule,
       DateTime? date,
-      String? status,
+      enums.Status3e2Enum? status,
       String? zoomLink,
       List<int>? users}) {
     return TutorshipInstance(
@@ -6966,7 +6978,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       Wrapped<String>? area,
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<String>? status,
+      Wrapped<enums.Status3e2Enum?>? status,
       Wrapped<String?>? zoomLink,
       Wrapped<List<int>>? users}) {
     return TutorshipInstance(
@@ -6986,7 +6998,7 @@ class TutorshipInstanceRequest {
     required this.area,
     required this.schedule,
     required this.date,
-    required this.status,
+    this.status,
     this.zoomLink,
   });
 
@@ -7002,8 +7014,12 @@ class TutorshipInstanceRequest {
   final int schedule;
   @JsonKey(name: 'date', toJson: _dateToJson)
   final DateTime date;
-  @JsonKey(name: 'status')
-  final String status;
+  @JsonKey(
+    name: 'status',
+    toJson: status3e2EnumToJson,
+    fromJson: status3e2EnumFromJson,
+  )
+  final enums.Status3e2Enum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   static const fromJsonFactory = _$TutorshipInstanceRequestFromJson;
@@ -7044,7 +7060,7 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
       {String? area,
       int? schedule,
       DateTime? date,
-      String? status,
+      enums.Status3e2Enum? status,
       String? zoomLink}) {
     return TutorshipInstanceRequest(
         area: area ?? this.area,
@@ -7058,7 +7074,7 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
       {Wrapped<String>? area,
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<String>? status,
+      Wrapped<enums.Status3e2Enum?>? status,
       Wrapped<String?>? zoomLink}) {
     return TutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
@@ -8009,6 +8025,180 @@ extension $UserXTutorshipInstanceXRoleRequestExtension
             : this.tutorshipInstance),
         role: (role != null ? role.value : this.role));
   }
+}
+
+String? blankEnumToJson(enums.BlankEnum? blankEnum) {
+  return blankEnum?.value;
+}
+
+enums.BlankEnum blankEnumFromJson(
+  Object? blankEnum, [
+  enums.BlankEnum? defaultValue,
+]) {
+  return enums.BlankEnum.values.firstWhereOrNull((e) => e.value == blankEnum) ??
+      defaultValue ??
+      enums.BlankEnum.swaggerGeneratedUnknown;
+}
+
+List<String> blankEnumListToJson(List<enums.BlankEnum>? blankEnum) {
+  if (blankEnum == null) {
+    return [];
+  }
+
+  return blankEnum.map((e) => e.value!).toList();
+}
+
+List<enums.BlankEnum> blankEnumListFromJson(
+  List? blankEnum, [
+  List<enums.BlankEnum>? defaultValue,
+]) {
+  if (blankEnum == null) {
+    return defaultValue ?? [];
+  }
+
+  return blankEnum.map((e) => blankEnumFromJson(e.toString())).toList();
+}
+
+List<enums.BlankEnum>? blankEnumNullableListFromJson(
+  List? blankEnum, [
+  List<enums.BlankEnum>? defaultValue,
+]) {
+  if (blankEnum == null) {
+    return defaultValue;
+  }
+
+  return blankEnum.map((e) => blankEnumFromJson(e.toString())).toList();
+}
+
+String? nullEnumToJson(enums.NullEnum? nullEnum) {
+  return nullEnum?.value;
+}
+
+enums.NullEnum nullEnumFromJson(
+  Object? nullEnum, [
+  enums.NullEnum? defaultValue,
+]) {
+  return enums.NullEnum.values.firstWhereOrNull((e) => e.value == nullEnum) ??
+      defaultValue ??
+      enums.NullEnum.swaggerGeneratedUnknown;
+}
+
+List<String> nullEnumListToJson(List<enums.NullEnum>? nullEnum) {
+  if (nullEnum == null) {
+    return [];
+  }
+
+  return nullEnum.map((e) => e.value!).toList();
+}
+
+List<enums.NullEnum> nullEnumListFromJson(
+  List? nullEnum, [
+  List<enums.NullEnum>? defaultValue,
+]) {
+  if (nullEnum == null) {
+    return defaultValue ?? [];
+  }
+
+  return nullEnum.map((e) => nullEnumFromJson(e.toString())).toList();
+}
+
+List<enums.NullEnum>? nullEnumNullableListFromJson(
+  List? nullEnum, [
+  List<enums.NullEnum>? defaultValue,
+]) {
+  if (nullEnum == null) {
+    return defaultValue;
+  }
+
+  return nullEnum.map((e) => nullEnumFromJson(e.toString())).toList();
+}
+
+String? status3e2EnumToJson(enums.Status3e2Enum? status3e2Enum) {
+  return status3e2Enum?.value;
+}
+
+enums.Status3e2Enum status3e2EnumFromJson(
+  Object? status3e2Enum, [
+  enums.Status3e2Enum? defaultValue,
+]) {
+  return enums.Status3e2Enum.values
+          .firstWhereOrNull((e) => e.value == status3e2Enum) ??
+      defaultValue ??
+      enums.Status3e2Enum.swaggerGeneratedUnknown;
+}
+
+List<String> status3e2EnumListToJson(List<enums.Status3e2Enum>? status3e2Enum) {
+  if (status3e2Enum == null) {
+    return [];
+  }
+
+  return status3e2Enum.map((e) => e.value!).toList();
+}
+
+List<enums.Status3e2Enum> status3e2EnumListFromJson(
+  List? status3e2Enum, [
+  List<enums.Status3e2Enum>? defaultValue,
+]) {
+  if (status3e2Enum == null) {
+    return defaultValue ?? [];
+  }
+
+  return status3e2Enum.map((e) => status3e2EnumFromJson(e.toString())).toList();
+}
+
+List<enums.Status3e2Enum>? status3e2EnumNullableListFromJson(
+  List? status3e2Enum, [
+  List<enums.Status3e2Enum>? defaultValue,
+]) {
+  if (status3e2Enum == null) {
+    return defaultValue;
+  }
+
+  return status3e2Enum.map((e) => status3e2EnumFromJson(e.toString())).toList();
+}
+
+String? status844EnumToJson(enums.Status844Enum? status844Enum) {
+  return status844Enum?.value;
+}
+
+enums.Status844Enum status844EnumFromJson(
+  Object? status844Enum, [
+  enums.Status844Enum? defaultValue,
+]) {
+  return enums.Status844Enum.values
+          .firstWhereOrNull((e) => e.value == status844Enum) ??
+      defaultValue ??
+      enums.Status844Enum.swaggerGeneratedUnknown;
+}
+
+List<String> status844EnumListToJson(List<enums.Status844Enum>? status844Enum) {
+  if (status844Enum == null) {
+    return [];
+  }
+
+  return status844Enum.map((e) => e.value!).toList();
+}
+
+List<enums.Status844Enum> status844EnumListFromJson(
+  List? status844Enum, [
+  List<enums.Status844Enum>? defaultValue,
+]) {
+  if (status844Enum == null) {
+    return defaultValue ?? [];
+  }
+
+  return status844Enum.map((e) => status844EnumFromJson(e.toString())).toList();
+}
+
+List<enums.Status844Enum>? status844EnumNullableListFromJson(
+  List? status844Enum, [
+  List<enums.Status844Enum>? defaultValue,
+]) {
+  if (status844Enum == null) {
+    return defaultValue;
+  }
+
+  return status844Enum.map((e) => status844EnumFromJson(e.toString())).toList();
 }
 
 String? apiSchemaJsonGetLangToJson(
