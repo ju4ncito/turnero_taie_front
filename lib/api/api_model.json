@@ -5798,6 +5798,73 @@
                     null
                 ]
             },
+            "PageUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ucc_key": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "careers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "careers",
+                    "id"
+                ]
+            },
+            "PageUserRequest": {
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ucc_key": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
+                    }
+                }
+            },
             "PatchedAcademicUnitRequest": {
                 "type": "object",
                 "properties": {
@@ -6012,10 +6079,10 @@
                 "type": "object",
                 "properties": {
                     "tutor_user": {
-                        "$ref": "#/components/schemas/UserRequest"
+                        "$ref": "#/components/schemas/PageUserRequest"
                     },
                     "student_user": {
-                        "$ref": "#/components/schemas/UserRequest"
+                        "$ref": "#/components/schemas/PageUserRequest"
                     },
                     "comment": {
                         "type": "string",
@@ -6222,7 +6289,7 @@
                         "readOnly": true
                     },
                     "student_user": {
-                        "$ref": "#/components/schemas/PostulationUser"
+                        "$ref": "#/components/schemas/PageUser"
                     },
                     "areas": {
                         "type": "array",
@@ -6297,7 +6364,7 @@
                         ]
                     },
                     "student_user": {
-                        "$ref": "#/components/schemas/PostulationUser"
+                        "$ref": "#/components/schemas/PageUser"
                     }
                 },
                 "required": [
@@ -6355,47 +6422,6 @@
                 "required": [
                     "areas",
                     "student_user"
-                ]
-            },
-            "PostulationUser": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "readOnly": true
-                    },
-                    "first_name": {
-                        "type": "string",
-                        "title": "Nombre",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "title": "Apellido",
-                        "maxLength": 150
-                    },
-                    "profile_picture": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "ucc_key": {
-                        "type": "integer",
-                        "maximum": 9223372036854775807,
-                        "minimum": 0,
-                        "format": "int64",
-                        "nullable": true
-                    },
-                    "careers": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "readOnly": true
-                    }
-                },
-                "required": [
-                    "careers",
-                    "id"
                 ]
             },
             "Postulation_X_Area_": {
@@ -6490,7 +6516,7 @@
                         "readOnly": true
                     },
                     "tutor_user": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/PageUser"
                     },
                     "comment": {
                         "type": "string",
@@ -6530,7 +6556,7 @@
                     "reports": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/TutorshipReport"
+                            "$ref": "#/components/schemas/ReadTutorshipReport"
                         }
                     },
                     "reviews": {
@@ -6793,10 +6819,10 @@
                         "readOnly": true
                     },
                     "tutor_user": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/PageUser"
                     },
                     "student_user": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/PageUser"
                     },
                     "comment": {
                         "type": "string",
@@ -6833,10 +6859,10 @@
                 "type": "object",
                 "properties": {
                     "tutor_user": {
-                        "$ref": "#/components/schemas/UserRequest"
+                        "$ref": "#/components/schemas/PageUserRequest"
                     },
                     "student_user": {
-                        "$ref": "#/components/schemas/UserRequest"
+                        "$ref": "#/components/schemas/PageUserRequest"
                     },
                     "comment": {
                         "type": "string",

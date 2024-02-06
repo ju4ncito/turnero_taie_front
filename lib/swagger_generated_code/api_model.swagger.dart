@@ -3697,6 +3697,190 @@ extension $GoogleAccessTokenRequestExtension on GoogleAccessTokenRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class PageUser {
+  PageUser({
+    required this.id,
+    this.firstName,
+    this.lastName,
+    this.profilePicture,
+    this.uccKey,
+    required this.careers,
+  });
+
+  factory PageUser.fromJson(Map<String, dynamic> json) =>
+      _$PageUserFromJson(json);
+
+  static const toJsonFactory = _$PageUserToJson;
+  Map<String, dynamic> toJson() => _$PageUserToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
+  @JsonKey(name: 'profile_picture')
+  final String? profilePicture;
+  @JsonKey(name: 'ucc_key')
+  final int? uccKey;
+  @JsonKey(name: 'careers', defaultValue: <String>[])
+  final List<String> careers;
+  static const fromJsonFactory = _$PageUserFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PageUser &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.profilePicture, profilePicture) ||
+                const DeepCollectionEquality()
+                    .equals(other.profilePicture, profilePicture)) &&
+            (identical(other.uccKey, uccKey) ||
+                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
+            (identical(other.careers, careers) ||
+                const DeepCollectionEquality().equals(other.careers, careers)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(profilePicture) ^
+      const DeepCollectionEquality().hash(uccKey) ^
+      const DeepCollectionEquality().hash(careers) ^
+      runtimeType.hashCode;
+}
+
+extension $PageUserExtension on PageUser {
+  PageUser copyWith(
+      {int? id,
+      String? firstName,
+      String? lastName,
+      String? profilePicture,
+      int? uccKey,
+      List<String>? careers}) {
+    return PageUser(
+        id: id ?? this.id,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        profilePicture: profilePicture ?? this.profilePicture,
+        uccKey: uccKey ?? this.uccKey,
+        careers: careers ?? this.careers);
+  }
+
+  PageUser copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
+      Wrapped<String?>? profilePicture,
+      Wrapped<int?>? uccKey,
+      Wrapped<List<String>>? careers}) {
+    return PageUser(
+        id: (id != null ? id.value : this.id),
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
+        profilePicture: (profilePicture != null
+            ? profilePicture.value
+            : this.profilePicture),
+        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
+        careers: (careers != null ? careers.value : this.careers));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class PageUserRequest {
+  PageUserRequest({
+    this.firstName,
+    this.lastName,
+    this.profilePicture,
+    this.uccKey,
+  });
+
+  factory PageUserRequest.fromJson(Map<String, dynamic> json) =>
+      _$PageUserRequestFromJson(json);
+
+  static const toJsonFactory = _$PageUserRequestToJson;
+  Map<String, dynamic> toJson() => _$PageUserRequestToJson(this);
+
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  @JsonKey(name: 'last_name')
+  final String? lastName;
+  @JsonKey(name: 'profile_picture')
+  final String? profilePicture;
+  @JsonKey(name: 'ucc_key')
+  final int? uccKey;
+  static const fromJsonFactory = _$PageUserRequestFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is PageUserRequest &&
+            (identical(other.firstName, firstName) ||
+                const DeepCollectionEquality()
+                    .equals(other.firstName, firstName)) &&
+            (identical(other.lastName, lastName) ||
+                const DeepCollectionEquality()
+                    .equals(other.lastName, lastName)) &&
+            (identical(other.profilePicture, profilePicture) ||
+                const DeepCollectionEquality()
+                    .equals(other.profilePicture, profilePicture)) &&
+            (identical(other.uccKey, uccKey) ||
+                const DeepCollectionEquality().equals(other.uccKey, uccKey)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(firstName) ^
+      const DeepCollectionEquality().hash(lastName) ^
+      const DeepCollectionEquality().hash(profilePicture) ^
+      const DeepCollectionEquality().hash(uccKey) ^
+      runtimeType.hashCode;
+}
+
+extension $PageUserRequestExtension on PageUserRequest {
+  PageUserRequest copyWith(
+      {String? firstName,
+      String? lastName,
+      String? profilePicture,
+      int? uccKey}) {
+    return PageUserRequest(
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        profilePicture: profilePicture ?? this.profilePicture,
+        uccKey: uccKey ?? this.uccKey);
+  }
+
+  PageUserRequest copyWithWrapped(
+      {Wrapped<String?>? firstName,
+      Wrapped<String?>? lastName,
+      Wrapped<String?>? profilePicture,
+      Wrapped<int?>? uccKey}) {
+    return PageUserRequest(
+        firstName: (firstName != null ? firstName.value : this.firstName),
+        lastName: (lastName != null ? lastName.value : this.lastName),
+        profilePicture: (profilePicture != null
+            ? profilePicture.value
+            : this.profilePicture),
+        uccKey: (uccKey != null ? uccKey.value : this.uccKey));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class PatchedAcademicUnitRequest {
   PatchedAcademicUnitRequest({
     this.name,
@@ -4444,9 +4628,9 @@ class PatchedTutorUserReviewRequest {
   Map<String, dynamic> toJson() => _$PatchedTutorUserReviewRequestToJson(this);
 
   @JsonKey(name: 'tutor_user')
-  final UserRequest? tutorUser;
+  final PageUserRequest? tutorUser;
   @JsonKey(name: 'student_user')
-  final UserRequest? studentUser;
+  final PageUserRequest? studentUser;
   @JsonKey(name: 'comment')
   final String? comment;
   @JsonKey(name: 'occurred')
@@ -4503,8 +4687,8 @@ class PatchedTutorUserReviewRequest {
 extension $PatchedTutorUserReviewRequestExtension
     on PatchedTutorUserReviewRequest {
   PatchedTutorUserReviewRequest copyWith(
-      {UserRequest? tutorUser,
-      UserRequest? studentUser,
+      {PageUserRequest? tutorUser,
+      PageUserRequest? studentUser,
       String? comment,
       bool? occurred,
       bool? absent,
@@ -4521,8 +4705,8 @@ extension $PatchedTutorUserReviewRequestExtension
   }
 
   PatchedTutorUserReviewRequest copyWithWrapped(
-      {Wrapped<UserRequest?>? tutorUser,
-      Wrapped<UserRequest?>? studentUser,
+      {Wrapped<PageUserRequest?>? tutorUser,
+      Wrapped<PageUserRequest?>? studentUser,
       Wrapped<String?>? comment,
       Wrapped<bool?>? occurred,
       Wrapped<bool?>? absent,
@@ -5153,7 +5337,7 @@ class PostulationDetail {
   @JsonKey(name: 'id')
   final int id;
   @JsonKey(name: 'student_user')
-  final PostulationUser studentUser;
+  final PageUser studentUser;
   @JsonKey(name: 'areas', defaultValue: <CustomArea>[])
   final List<CustomArea> areas;
   @JsonKey(name: 'created_date')
@@ -5214,7 +5398,7 @@ class PostulationDetail {
 extension $PostulationDetailExtension on PostulationDetail {
   PostulationDetail copyWith(
       {int? id,
-      PostulationUser? studentUser,
+      PageUser? studentUser,
       List<CustomArea>? areas,
       DateTime? createdDate,
       dynamic status,
@@ -5234,7 +5418,7 @@ extension $PostulationDetailExtension on PostulationDetail {
 
   PostulationDetail copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<PostulationUser>? studentUser,
+      Wrapped<PageUser>? studentUser,
       Wrapped<List<CustomArea>>? areas,
       Wrapped<DateTime?>? createdDate,
       Wrapped<dynamic>? status,
@@ -5280,7 +5464,7 @@ class PostulationList {
   @JsonKey(name: 'status')
   final dynamic status;
   @JsonKey(name: 'student_user')
-  final PostulationUser studentUser;
+  final PageUser studentUser;
   static const fromJsonFactory = _$PostulationListFromJson;
 
   @override
@@ -5313,10 +5497,7 @@ class PostulationList {
 
 extension $PostulationListExtension on PostulationList {
   PostulationList copyWith(
-      {int? id,
-      DateTime? createdDate,
-      dynamic status,
-      PostulationUser? studentUser}) {
+      {int? id, DateTime? createdDate, dynamic status, PageUser? studentUser}) {
     return PostulationList(
         id: id ?? this.id,
         createdDate: createdDate ?? this.createdDate,
@@ -5328,7 +5509,7 @@ extension $PostulationListExtension on PostulationList {
       {Wrapped<int>? id,
       Wrapped<DateTime?>? createdDate,
       Wrapped<dynamic>? status,
-      Wrapped<PostulationUser>? studentUser}) {
+      Wrapped<PageUser>? studentUser}) {
     return PostulationList(
         id: (id != null ? id.value : this.id),
         createdDate:
@@ -5453,108 +5634,6 @@ extension $PostulationRequestExtension on PostulationRequest {
         coordinatorUser: (coordinatorUser != null
             ? coordinatorUser.value
             : this.coordinatorUser));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class PostulationUser {
-  PostulationUser({
-    required this.id,
-    this.firstName,
-    this.lastName,
-    this.profilePicture,
-    this.uccKey,
-    required this.careers,
-  });
-
-  factory PostulationUser.fromJson(Map<String, dynamic> json) =>
-      _$PostulationUserFromJson(json);
-
-  static const toJsonFactory = _$PostulationUserToJson;
-  Map<String, dynamic> toJson() => _$PostulationUserToJson(this);
-
-  @JsonKey(name: 'id')
-  final int id;
-  @JsonKey(name: 'first_name')
-  final String? firstName;
-  @JsonKey(name: 'last_name')
-  final String? lastName;
-  @JsonKey(name: 'profile_picture')
-  final String? profilePicture;
-  @JsonKey(name: 'ucc_key')
-  final int? uccKey;
-  @JsonKey(name: 'careers', defaultValue: <String>[])
-  final List<String> careers;
-  static const fromJsonFactory = _$PostulationUserFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is PostulationUser &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.firstName, firstName) ||
-                const DeepCollectionEquality()
-                    .equals(other.firstName, firstName)) &&
-            (identical(other.lastName, lastName) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastName, lastName)) &&
-            (identical(other.profilePicture, profilePicture) ||
-                const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)) &&
-            (identical(other.uccKey, uccKey) ||
-                const DeepCollectionEquality().equals(other.uccKey, uccKey)) &&
-            (identical(other.careers, careers) ||
-                const DeepCollectionEquality().equals(other.careers, careers)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(firstName) ^
-      const DeepCollectionEquality().hash(lastName) ^
-      const DeepCollectionEquality().hash(profilePicture) ^
-      const DeepCollectionEquality().hash(uccKey) ^
-      const DeepCollectionEquality().hash(careers) ^
-      runtimeType.hashCode;
-}
-
-extension $PostulationUserExtension on PostulationUser {
-  PostulationUser copyWith(
-      {int? id,
-      String? firstName,
-      String? lastName,
-      String? profilePicture,
-      int? uccKey,
-      List<String>? careers}) {
-    return PostulationUser(
-        id: id ?? this.id,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        profilePicture: profilePicture ?? this.profilePicture,
-        uccKey: uccKey ?? this.uccKey,
-        careers: careers ?? this.careers);
-  }
-
-  PostulationUser copyWithWrapped(
-      {Wrapped<int>? id,
-      Wrapped<String?>? firstName,
-      Wrapped<String?>? lastName,
-      Wrapped<String?>? profilePicture,
-      Wrapped<int?>? uccKey,
-      Wrapped<List<String>>? careers}) {
-    return PostulationUser(
-        id: (id != null ? id.value : this.id),
-        firstName: (firstName != null ? firstName.value : this.firstName),
-        lastName: (lastName != null ? lastName.value : this.lastName),
-        profilePicture: (profilePicture != null
-            ? profilePicture.value
-            : this.profilePicture),
-        uccKey: (uccKey != null ? uccKey.value : this.uccKey),
-        careers: (careers != null ? careers.value : this.careers));
   }
 }
 
@@ -5818,7 +5897,7 @@ class ReadTutorshipReport {
   @JsonKey(name: 'id')
   final int id;
   @JsonKey(name: 'tutor_user')
-  final User tutorUser;
+  final PageUser tutorUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'subject')
@@ -5863,7 +5942,7 @@ class ReadTutorshipReport {
 extension $ReadTutorshipReportExtension on ReadTutorshipReport {
   ReadTutorshipReport copyWith(
       {int? id,
-      User? tutorUser,
+      PageUser? tutorUser,
       String? comment,
       String? subject,
       int? tutorshipInstance}) {
@@ -5877,7 +5956,7 @@ extension $ReadTutorshipReportExtension on ReadTutorshipReport {
 
   ReadTutorshipReport copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<User>? tutorUser,
+      Wrapped<PageUser>? tutorUser,
       Wrapped<String>? comment,
       Wrapped<String>? subject,
       Wrapped<int>? tutorshipInstance}) {
@@ -5948,8 +6027,8 @@ class ReportAndReview {
   static const toJsonFactory = _$ReportAndReviewToJson;
   Map<String, dynamic> toJson() => _$ReportAndReviewToJson(this);
 
-  @JsonKey(name: 'reports', defaultValue: <TutorshipReport>[])
-  final List<TutorshipReport> reports;
+  @JsonKey(name: 'reports', defaultValue: <ReadTutorshipReport>[])
+  final List<ReadTutorshipReport> reports;
   @JsonKey(name: 'reviews', defaultValue: <TutorUserReview>[])
   final List<TutorUserReview> reviews;
   static const fromJsonFactory = _$ReportAndReviewFromJson;
@@ -5977,13 +6056,13 @@ class ReportAndReview {
 
 extension $ReportAndReviewExtension on ReportAndReview {
   ReportAndReview copyWith(
-      {List<TutorshipReport>? reports, List<TutorUserReview>? reviews}) {
+      {List<ReadTutorshipReport>? reports, List<TutorUserReview>? reviews}) {
     return ReportAndReview(
         reports: reports ?? this.reports, reviews: reviews ?? this.reviews);
   }
 
   ReportAndReview copyWithWrapped(
-      {Wrapped<List<TutorshipReport>>? reports,
+      {Wrapped<List<ReadTutorshipReport>>? reports,
       Wrapped<List<TutorUserReview>>? reviews}) {
     return ReportAndReview(
         reports: (reports != null ? reports.value : this.reports),
@@ -6659,9 +6738,9 @@ class TutorUserReview {
   @JsonKey(name: 'id')
   final int id;
   @JsonKey(name: 'tutor_user')
-  final User tutorUser;
+  final PageUser tutorUser;
   @JsonKey(name: 'student_user')
-  final User studentUser;
+  final PageUser studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6721,8 +6800,8 @@ class TutorUserReview {
 extension $TutorUserReviewExtension on TutorUserReview {
   TutorUserReview copyWith(
       {int? id,
-      User? tutorUser,
-      User? studentUser,
+      PageUser? tutorUser,
+      PageUser? studentUser,
       String? comment,
       bool? occurred,
       bool? absent,
@@ -6741,8 +6820,8 @@ extension $TutorUserReviewExtension on TutorUserReview {
 
   TutorUserReview copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<User>? tutorUser,
-      Wrapped<User>? studentUser,
+      Wrapped<PageUser>? tutorUser,
+      Wrapped<PageUser>? studentUser,
       Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,
@@ -6782,9 +6861,9 @@ class TutorUserReviewRequest {
   Map<String, dynamic> toJson() => _$TutorUserReviewRequestToJson(this);
 
   @JsonKey(name: 'tutor_user')
-  final UserRequest tutorUser;
+  final PageUserRequest tutorUser;
   @JsonKey(name: 'student_user')
-  final UserRequest studentUser;
+  final PageUserRequest studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6840,8 +6919,8 @@ class TutorUserReviewRequest {
 
 extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
   TutorUserReviewRequest copyWith(
-      {UserRequest? tutorUser,
-      UserRequest? studentUser,
+      {PageUserRequest? tutorUser,
+      PageUserRequest? studentUser,
       String? comment,
       bool? occurred,
       bool? absent,
@@ -6858,8 +6937,8 @@ extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
   }
 
   TutorUserReviewRequest copyWithWrapped(
-      {Wrapped<UserRequest>? tutorUser,
-      Wrapped<UserRequest>? studentUser,
+      {Wrapped<PageUserRequest>? tutorUser,
+      Wrapped<PageUserRequest>? studentUser,
       Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,

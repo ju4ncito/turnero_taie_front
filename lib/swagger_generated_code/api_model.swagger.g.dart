@@ -387,6 +387,43 @@ Map<String, dynamic> _$GoogleAccessTokenRequestToJson(
       'origin': instance.origin,
     };
 
+PageUser _$PageUserFromJson(Map<String, dynamic> json) => PageUser(
+      id: json['id'] as int,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      profilePicture: json['profile_picture'] as String?,
+      uccKey: json['ucc_key'] as int?,
+      careers: (json['careers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+    );
+
+Map<String, dynamic> _$PageUserToJson(PageUser instance) => <String, dynamic>{
+      'id': instance.id,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'profile_picture': instance.profilePicture,
+      'ucc_key': instance.uccKey,
+      'careers': instance.careers,
+    };
+
+PageUserRequest _$PageUserRequestFromJson(Map<String, dynamic> json) =>
+    PageUserRequest(
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      profilePicture: json['profile_picture'] as String?,
+      uccKey: json['ucc_key'] as int?,
+    );
+
+Map<String, dynamic> _$PageUserRequestToJson(PageUserRequest instance) =>
+    <String, dynamic>{
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
+      'profile_picture': instance.profilePicture,
+      'ucc_key': instance.uccKey,
+    };
+
 PatchedAcademicUnitRequest _$PatchedAcademicUnitRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedAcademicUnitRequest(
@@ -573,10 +610,12 @@ PatchedTutorUserReviewRequest _$PatchedTutorUserReviewRequestFromJson(
     PatchedTutorUserReviewRequest(
       tutorUser: json['tutor_user'] == null
           ? null
-          : UserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
+          : PageUserRequest.fromJson(
+              json['tutor_user'] as Map<String, dynamic>),
       studentUser: json['student_user'] == null
           ? null
-          : UserRequest.fromJson(json['student_user'] as Map<String, dynamic>),
+          : PageUserRequest.fromJson(
+              json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String?,
       occurred: json['occurred'] as bool?,
       absent: json['absent'] as bool?,
@@ -732,8 +771,8 @@ Map<String, dynamic> _$PostulationToJson(Postulation instance) =>
 PostulationDetail _$PostulationDetailFromJson(Map<String, dynamic> json) =>
     PostulationDetail(
       id: json['id'] as int,
-      studentUser: PostulationUser.fromJson(
-          json['student_user'] as Map<String, dynamic>),
+      studentUser:
+          PageUser.fromJson(json['student_user'] as Map<String, dynamic>),
       areas: (json['areas'] as List<dynamic>?)
               ?.map((e) => CustomArea.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -768,8 +807,8 @@ PostulationList _$PostulationListFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['created_date'] as String),
       status: json['status'],
-      studentUser: PostulationUser.fromJson(
-          json['student_user'] as Map<String, dynamic>),
+      studentUser:
+          PageUser.fromJson(json['student_user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PostulationListToJson(PostulationList instance) =>
@@ -806,29 +845,6 @@ Map<String, dynamic> _$PostulationRequestToJson(PostulationRequest instance) =>
       'decision_date': instance.decisionDate?.toIso8601String(),
       'comment': instance.comment,
       'coordinator_user': instance.coordinatorUser,
-    };
-
-PostulationUser _$PostulationUserFromJson(Map<String, dynamic> json) =>
-    PostulationUser(
-      id: json['id'] as int,
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
-      profilePicture: json['profile_picture'] as String?,
-      uccKey: json['ucc_key'] as int?,
-      careers: (json['careers'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$PostulationUserToJson(PostulationUser instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'profile_picture': instance.profilePicture,
-      'ucc_key': instance.uccKey,
-      'careers': instance.careers,
     };
 
 PostulationXArea _$PostulationXAreaFromJson(Map<String, dynamic> json) =>
@@ -889,7 +905,7 @@ Map<String, dynamic> _$ReadTutorUserScheduleToJson(
 ReadTutorshipReport _$ReadTutorshipReportFromJson(Map<String, dynamic> json) =>
     ReadTutorshipReport(
       id: json['id'] as int,
-      tutorUser: User.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      tutorUser: PageUser.fromJson(json['tutor_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       subject: json['subject'] as String,
       tutorshipInstance: json['tutorship_instance'] as int,
@@ -919,7 +935,8 @@ Map<String, dynamic> _$RefreshTokenRequestToJson(
 ReportAndReview _$ReportAndReviewFromJson(Map<String, dynamic> json) =>
     ReportAndReview(
       reports: (json['reports'] as List<dynamic>?)
-              ?.map((e) => TutorshipReport.fromJson(e as Map<String, dynamic>))
+              ?.map((e) =>
+                  ReadTutorshipReport.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       reviews: (json['reviews'] as List<dynamic>?)
@@ -1072,8 +1089,9 @@ Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
 TutorUserReview _$TutorUserReviewFromJson(Map<String, dynamic> json) =>
     TutorUserReview(
       id: json['id'] as int,
-      tutorUser: User.fromJson(json['tutor_user'] as Map<String, dynamic>),
-      studentUser: User.fromJson(json['student_user'] as Map<String, dynamic>),
+      tutorUser: PageUser.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      studentUser:
+          PageUser.fromJson(json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       occurred: json['occurred'] as bool,
       absent: json['absent'] as bool,
@@ -1097,9 +1115,9 @@ TutorUserReviewRequest _$TutorUserReviewRequestFromJson(
         Map<String, dynamic> json) =>
     TutorUserReviewRequest(
       tutorUser:
-          UserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
-      studentUser:
-          UserRequest.fromJson(json['student_user'] as Map<String, dynamic>),
+          PageUserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      studentUser: PageUserRequest.fromJson(
+          json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       occurred: json['occurred'] as bool,
       absent: json['absent'] as bool,
