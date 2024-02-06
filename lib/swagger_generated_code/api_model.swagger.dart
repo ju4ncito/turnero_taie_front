@@ -1543,16 +1543,16 @@ abstract class ApiModel extends ChopperService {
           {@Body() required EnrollRequest? body});
 
   ///
-  Future<chopper.Response<List<TutorshipReport>>> apiTutorshipReportsGet() {
+  Future<chopper.Response<List<ReadTutorshipReport>>> apiTutorshipReportsGet() {
     generatedMapping.putIfAbsent(
-        TutorshipReport, () => TutorshipReport.fromJsonFactory);
+        ReadTutorshipReport, () => ReadTutorshipReport.fromJsonFactory);
 
     return _apiTutorshipReportsGet();
   }
 
   ///
   @Get(path: '/api/tutorship-reports/')
-  Future<chopper.Response<List<TutorshipReport>>> _apiTutorshipReportsGet();
+  Future<chopper.Response<List<ReadTutorshipReport>>> _apiTutorshipReportsGet();
 
   ///
   Future<chopper.Response<TutorshipReport>> apiTutorshipReportsPost(
@@ -1573,10 +1573,10 @@ abstract class ApiModel extends ChopperService {
 
   ///
   ///@param id A unique integer value identifying this tutorship report.
-  Future<chopper.Response<TutorshipReport>> apiTutorshipReportsIdGet(
+  Future<chopper.Response<ReadTutorshipReport>> apiTutorshipReportsIdGet(
       {required int? id}) {
     generatedMapping.putIfAbsent(
-        TutorshipReport, () => TutorshipReport.fromJsonFactory);
+        ReadTutorshipReport, () => ReadTutorshipReport.fromJsonFactory);
 
     return _apiTutorshipReportsIdGet(id: id);
   }
@@ -1584,7 +1584,7 @@ abstract class ApiModel extends ChopperService {
   ///
   ///@param id A unique integer value identifying this tutorship report.
   @Get(path: '/api/tutorship-reports/{id}/')
-  Future<chopper.Response<TutorshipReport>> _apiTutorshipReportsIdGet(
+  Future<chopper.Response<ReadTutorshipReport>> _apiTutorshipReportsIdGet(
       {@Path('id') required int? id});
 
   ///
@@ -4635,10 +4635,10 @@ extension $PatchedTutorshipInstanceRequestExtension
 @JsonSerializable(explicitToJson: true)
 class PatchedTutorshipReportRequest {
   PatchedTutorshipReportRequest({
-    this.tutorUser,
     this.comment,
     this.subject,
     this.tutorshipInstance,
+    this.tutorUser,
   });
 
   factory PatchedTutorshipReportRequest.fromJson(Map<String, dynamic> json) =>
@@ -4647,23 +4647,20 @@ class PatchedTutorshipReportRequest {
   static const toJsonFactory = _$PatchedTutorshipReportRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedTutorshipReportRequestToJson(this);
 
-  @JsonKey(name: 'tutor_user')
-  final UserRequest? tutorUser;
   @JsonKey(name: 'comment')
   final String? comment;
   @JsonKey(name: 'subject')
   final String? subject;
   @JsonKey(name: 'tutorship_instance')
   final int? tutorshipInstance;
+  @JsonKey(name: 'tutor_user')
+  final int? tutorUser;
   static const fromJsonFactory = _$PatchedTutorshipReportRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedTutorshipReportRequest &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -4672,7 +4669,10 @@ class PatchedTutorshipReportRequest {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)));
   }
 
   @override
@@ -4680,39 +4680,39 @@ class PatchedTutorshipReportRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $PatchedTutorshipReportRequestExtension
     on PatchedTutorshipReportRequest {
   PatchedTutorshipReportRequest copyWith(
-      {UserRequest? tutorUser,
-      String? comment,
+      {String? comment,
       String? subject,
-      int? tutorshipInstance}) {
+      int? tutorshipInstance,
+      int? tutorUser}) {
     return PatchedTutorshipReportRequest(
-        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
+        tutorUser: tutorUser ?? this.tutorUser);
   }
 
   PatchedTutorshipReportRequest copyWithWrapped(
-      {Wrapped<UserRequest?>? tutorUser,
-      Wrapped<String?>? comment,
+      {Wrapped<String?>? comment,
       Wrapped<String?>? subject,
-      Wrapped<int?>? tutorshipInstance}) {
+      Wrapped<int?>? tutorshipInstance,
+      Wrapped<int?>? tutorUser}) {
     return PatchedTutorshipReportRequest(
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance));
+            : this.tutorshipInstance),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
   }
 }
 
@@ -5791,6 +5791,99 @@ extension $ReadTutorUserScheduleExtension on ReadTutorUserSchedule {
         begin: (begin != null ? begin.value : this.begin),
         end: (end != null ? end.value : this.end),
         capacity: (capacity != null ? capacity.value : this.capacity));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReadTutorshipReport {
+  ReadTutorshipReport({
+    required this.id,
+    required this.tutorUser,
+    required this.comment,
+    required this.subject,
+    required this.tutorshipInstance,
+  });
+
+  factory ReadTutorshipReport.fromJson(Map<String, dynamic> json) =>
+      _$ReadTutorshipReportFromJson(json);
+
+  static const toJsonFactory = _$ReadTutorshipReportToJson;
+  Map<String, dynamic> toJson() => _$ReadTutorshipReportToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'tutor_user')
+  final User tutorUser;
+  @JsonKey(name: 'comment')
+  final String comment;
+  @JsonKey(name: 'subject')
+  final String subject;
+  @JsonKey(name: 'tutorship_instance')
+  final int tutorshipInstance;
+  static const fromJsonFactory = _$ReadTutorshipReportFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ReadTutorshipReport &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
+            (identical(other.subject, subject) ||
+                const DeepCollectionEquality()
+                    .equals(other.subject, subject)) &&
+            (identical(other.tutorshipInstance, tutorshipInstance) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorshipInstance, tutorshipInstance)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(comment) ^
+      const DeepCollectionEquality().hash(subject) ^
+      const DeepCollectionEquality().hash(tutorshipInstance) ^
+      runtimeType.hashCode;
+}
+
+extension $ReadTutorshipReportExtension on ReadTutorshipReport {
+  ReadTutorshipReport copyWith(
+      {int? id,
+      User? tutorUser,
+      String? comment,
+      String? subject,
+      int? tutorshipInstance}) {
+    return ReadTutorshipReport(
+        id: id ?? this.id,
+        tutorUser: tutorUser ?? this.tutorUser,
+        comment: comment ?? this.comment,
+        subject: subject ?? this.subject,
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
+  }
+
+  ReadTutorshipReport copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<User>? tutorUser,
+      Wrapped<String>? comment,
+      Wrapped<String>? subject,
+      Wrapped<int>? tutorshipInstance}) {
+    return ReadTutorshipReport(
+        id: (id != null ? id.value : this.id),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        comment: (comment != null ? comment.value : this.comment),
+        subject: (subject != null ? subject.value : this.subject),
+        tutorshipInstance: (tutorshipInstance != null
+            ? tutorshipInstance.value
+            : this.tutorshipInstance));
   }
 }
 
@@ -6979,10 +7072,10 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
 class TutorshipReport {
   TutorshipReport({
     required this.id,
-    required this.tutorUser,
     required this.comment,
     required this.subject,
     required this.tutorshipInstance,
+    required this.tutorUser,
   });
 
   factory TutorshipReport.fromJson(Map<String, dynamic> json) =>
@@ -6993,14 +7086,14 @@ class TutorshipReport {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'tutor_user')
-  final User tutorUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'subject')
   final String subject;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
+  @JsonKey(name: 'tutor_user')
+  final int tutorUser;
   static const fromJsonFactory = _$TutorshipReportFromJson;
 
   @override
@@ -7009,9 +7102,6 @@ class TutorshipReport {
         (other is TutorshipReport &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -7020,7 +7110,10 @@ class TutorshipReport {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)));
   }
 
   @override
@@ -7029,52 +7122,52 @@ class TutorshipReport {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipReportExtension on TutorshipReport {
   TutorshipReport copyWith(
       {int? id,
-      User? tutorUser,
       String? comment,
       String? subject,
-      int? tutorshipInstance}) {
+      int? tutorshipInstance,
+      int? tutorUser}) {
     return TutorshipReport(
         id: id ?? this.id,
-        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
+        tutorUser: tutorUser ?? this.tutorUser);
   }
 
   TutorshipReport copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<User>? tutorUser,
       Wrapped<String>? comment,
       Wrapped<String>? subject,
-      Wrapped<int>? tutorshipInstance}) {
+      Wrapped<int>? tutorshipInstance,
+      Wrapped<int>? tutorUser}) {
     return TutorshipReport(
         id: (id != null ? id.value : this.id),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance));
+            : this.tutorshipInstance),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TutorshipReportRequest {
   TutorshipReportRequest({
-    required this.tutorUser,
     required this.comment,
     required this.subject,
     required this.tutorshipInstance,
+    required this.tutorUser,
   });
 
   factory TutorshipReportRequest.fromJson(Map<String, dynamic> json) =>
@@ -7083,23 +7176,20 @@ class TutorshipReportRequest {
   static const toJsonFactory = _$TutorshipReportRequestToJson;
   Map<String, dynamic> toJson() => _$TutorshipReportRequestToJson(this);
 
-  @JsonKey(name: 'tutor_user')
-  final UserRequest tutorUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'subject')
   final String subject;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
+  @JsonKey(name: 'tutor_user')
+  final int tutorUser;
   static const fromJsonFactory = _$TutorshipReportRequestFromJson;
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TutorshipReportRequest &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -7108,7 +7198,10 @@ class TutorshipReportRequest {
                     .equals(other.subject, subject)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
-                    .equals(other.tutorshipInstance, tutorshipInstance)));
+                    .equals(other.tutorshipInstance, tutorshipInstance)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)));
   }
 
   @override
@@ -7116,38 +7209,38 @@ class TutorshipReportRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(tutorUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
       runtimeType.hashCode;
 }
 
 extension $TutorshipReportRequestExtension on TutorshipReportRequest {
   TutorshipReportRequest copyWith(
-      {UserRequest? tutorUser,
-      String? comment,
+      {String? comment,
       String? subject,
-      int? tutorshipInstance}) {
+      int? tutorshipInstance,
+      int? tutorUser}) {
     return TutorshipReportRequest(
-        tutorUser: tutorUser ?? this.tutorUser,
         comment: comment ?? this.comment,
         subject: subject ?? this.subject,
-        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance,
+        tutorUser: tutorUser ?? this.tutorUser);
   }
 
   TutorshipReportRequest copyWithWrapped(
-      {Wrapped<UserRequest>? tutorUser,
-      Wrapped<String>? comment,
+      {Wrapped<String>? comment,
       Wrapped<String>? subject,
-      Wrapped<int>? tutorshipInstance}) {
+      Wrapped<int>? tutorshipInstance,
+      Wrapped<int>? tutorUser}) {
     return TutorshipReportRequest(
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
         comment: (comment != null ? comment.value : this.comment),
         subject: (subject != null ? subject.value : this.subject),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
-            : this.tutorshipInstance));
+            : this.tutorshipInstance),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser));
   }
 }
 

@@ -620,21 +620,19 @@ Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
 PatchedTutorshipReportRequest _$PatchedTutorshipReportRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedTutorshipReportRequest(
-      tutorUser: json['tutor_user'] == null
-          ? null
-          : UserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
       comment: json['comment'] as String?,
       subject: json['subject'] as String?,
       tutorshipInstance: json['tutorship_instance'] as int?,
+      tutorUser: json['tutor_user'] as int?,
     );
 
 Map<String, dynamic> _$PatchedTutorshipReportRequestToJson(
         PatchedTutorshipReportRequest instance) =>
     <String, dynamic>{
-      'tutor_user': instance.tutorUser?.toJson(),
       'comment': instance.comment,
       'subject': instance.subject,
       'tutorship_instance': instance.tutorshipInstance,
+      'tutor_user': instance.tutorUser,
     };
 
 PatchedUserRequest _$PatchedUserRequestFromJson(Map<String, dynamic> json) =>
@@ -886,6 +884,25 @@ Map<String, dynamic> _$ReadTutorUserScheduleToJson(
       'begin': instance.begin,
       'end': instance.end,
       'capacity': instance.capacity,
+    };
+
+ReadTutorshipReport _$ReadTutorshipReportFromJson(Map<String, dynamic> json) =>
+    ReadTutorshipReport(
+      id: json['id'] as int,
+      tutorUser: User.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      comment: json['comment'] as String,
+      subject: json['subject'] as String,
+      tutorshipInstance: json['tutorship_instance'] as int,
+    );
+
+Map<String, dynamic> _$ReadTutorshipReportToJson(
+        ReadTutorshipReport instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'tutor_user': instance.tutorUser.toJson(),
+      'comment': instance.comment,
+      'subject': instance.subject,
+      'tutorship_instance': instance.tutorshipInstance,
     };
 
 RefreshTokenRequest _$RefreshTokenRequestFromJson(Map<String, dynamic> json) =>
@@ -1148,38 +1165,37 @@ Map<String, dynamic> _$TutorshipInstanceRequestToJson(
 TutorshipReport _$TutorshipReportFromJson(Map<String, dynamic> json) =>
     TutorshipReport(
       id: json['id'] as int,
-      tutorUser: User.fromJson(json['tutor_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       subject: json['subject'] as String,
       tutorshipInstance: json['tutorship_instance'] as int,
+      tutorUser: json['tutor_user'] as int,
     );
 
 Map<String, dynamic> _$TutorshipReportToJson(TutorshipReport instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'tutor_user': instance.tutorUser.toJson(),
       'comment': instance.comment,
       'subject': instance.subject,
       'tutorship_instance': instance.tutorshipInstance,
+      'tutor_user': instance.tutorUser,
     };
 
 TutorshipReportRequest _$TutorshipReportRequestFromJson(
         Map<String, dynamic> json) =>
     TutorshipReportRequest(
-      tutorUser:
-          UserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       subject: json['subject'] as String,
       tutorshipInstance: json['tutorship_instance'] as int,
+      tutorUser: json['tutor_user'] as int,
     );
 
 Map<String, dynamic> _$TutorshipReportRequestToJson(
         TutorshipReportRequest instance) =>
     <String, dynamic>{
-      'tutor_user': instance.tutorUser.toJson(),
       'comment': instance.comment,
       'subject': instance.subject,
       'tutorship_instance': instance.tutorshipInstance,
+      'tutor_user': instance.tutorUser,
     };
 
 UnauthorizedResponse _$UnauthorizedResponseFromJson(

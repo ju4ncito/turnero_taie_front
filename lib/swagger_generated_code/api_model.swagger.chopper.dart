@@ -1197,14 +1197,15 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<TutorshipReport>>> _apiTutorshipReportsGet() {
+  Future<Response<List<ReadTutorshipReport>>> _apiTutorshipReportsGet() {
     final Uri $url = Uri.parse('/api/tutorship-reports/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<TutorshipReport>, TutorshipReport>($request);
+    return client
+        .send<List<ReadTutorshipReport>, ReadTutorshipReport>($request);
   }
 
   @override
@@ -1222,7 +1223,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorshipReport>> _apiTutorshipReportsIdGet(
+  Future<Response<ReadTutorshipReport>> _apiTutorshipReportsIdGet(
       {required int? id}) {
     final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
     final Request $request = Request(
@@ -1230,7 +1231,7 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<TutorshipReport, TutorshipReport>($request);
+    return client.send<ReadTutorshipReport, ReadTutorshipReport>($request);
   }
 
   @override

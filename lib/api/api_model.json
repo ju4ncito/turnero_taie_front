@@ -4003,7 +4003,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorshipReport"
+                                        "$ref": "#/components/schemas/ReadTutorshipReport"
                                     }
                                 }
                             }
@@ -4085,7 +4085,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorshipReport"
+                                    "$ref": "#/components/schemas/ReadTutorshipReport"
                                 }
                             }
                         },
@@ -6046,9 +6046,6 @@
             "PatchedTutorshipReportRequest": {
                 "type": "object",
                 "properties": {
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/UserRequest"
-                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6060,6 +6057,9 @@
                         "maxLength": 50
                     },
                     "tutorship_instance": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
                         "type": "integer"
                     }
                 }
@@ -6415,6 +6415,36 @@
                     "id",
                     "modality",
                     "tutor_user"
+                ]
+            },
+            "ReadTutorshipReport": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "maxLength": 500
+                    },
+                    "subject": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "tutorship_instance": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "comment",
+                    "id",
+                    "subject",
+                    "tutor_user",
+                    "tutorship_instance"
                 ]
             },
             "Refresh_tokenRequest": {
@@ -6841,9 +6871,6 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/User"
-                    },
                     "comment": {
                         "type": "string",
                         "maxLength": 500
@@ -6853,6 +6880,9 @@
                         "maxLength": 50
                     },
                     "tutorship_instance": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
                         "type": "integer"
                     }
                 },
@@ -6867,9 +6897,6 @@
             "TutorshipReportRequest": {
                 "type": "object",
                 "properties": {
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/UserRequest"
-                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6881,6 +6908,9 @@
                         "maxLength": 50
                     },
                     "tutorship_instance": {
+                        "type": "integer"
+                    },
+                    "tutor_user": {
                         "type": "integer"
                     }
                 },
