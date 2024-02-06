@@ -2964,21 +2964,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SuccessResponse"
+                                    "$ref": "#/components/schemas/ReturnAuthUser"
                                 }
                             }
                         },
-                        "description": ""
+                        "description": "Fetched a existing user"
                     },
                     "201": {
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CreateResponse"
+                                    "$ref": "#/components/schemas/ReturnAuthUser"
                                 }
                             }
                         },
-                        "description": ""
+                        "description": "Created a new user with role student"
                     },
                     "400": {
                         "content": {
@@ -6448,6 +6448,25 @@
                 "required": [
                     "reports",
                     "reviews"
+                ]
+            },
+            "ReturnAuthUser": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "access_token": {
+                        "type": "string"
+                    },
+                    "refresh_token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "access_token",
+                    "refresh_token",
+                    "user"
                 ]
             },
             "ReturnRefreshToken": {

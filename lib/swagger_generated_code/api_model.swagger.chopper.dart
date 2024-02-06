@@ -876,7 +876,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<SuccessResponse>> _apiTokenAuthPost(
+  Future<Response<ReturnAuthUser>> _apiTokenAuthPost(
       {required GoogleAccessTokenRequest? body}) {
     final Uri $url = Uri.parse('/api/token/auth/');
     final $body = body;
@@ -886,7 +886,7 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<SuccessResponse, SuccessResponse>($request);
+    return client.send<ReturnAuthUser, ReturnAuthUser>($request);
   }
 
   @override

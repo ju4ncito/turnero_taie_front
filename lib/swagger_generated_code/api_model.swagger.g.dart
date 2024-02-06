@@ -917,6 +917,20 @@ Map<String, dynamic> _$ReportAndReviewToJson(ReportAndReview instance) =>
       'reviews': instance.reviews.map((e) => e.toJson()).toList(),
     };
 
+ReturnAuthUser _$ReturnAuthUserFromJson(Map<String, dynamic> json) =>
+    ReturnAuthUser(
+      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      accessToken: json['access_token'] as String,
+      refreshToken: json['refresh_token'] as String,
+    );
+
+Map<String, dynamic> _$ReturnAuthUserToJson(ReturnAuthUser instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+      'access_token': instance.accessToken,
+      'refresh_token': instance.refreshToken,
+    };
+
 ReturnRefreshToken _$ReturnRefreshTokenFromJson(Map<String, dynamic> json) =>
     ReturnRefreshToken(
       access: json['access'] as String,

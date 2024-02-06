@@ -1124,10 +1124,10 @@ abstract class ApiModel extends ChopperService {
       {@Path('name') required String? name});
 
   ///Authentication Endpoint
-  Future<chopper.Response<SuccessResponse>> apiTokenAuthPost(
+  Future<chopper.Response<ReturnAuthUser>> apiTokenAuthPost(
       {required GoogleAccessTokenRequest? body}) {
     generatedMapping.putIfAbsent(
-        SuccessResponse, () => SuccessResponse.fromJsonFactory);
+        ReturnAuthUser, () => ReturnAuthUser.fromJsonFactory);
 
     return _apiTokenAuthPost(body: body);
   }
@@ -1137,7 +1137,7 @@ abstract class ApiModel extends ChopperService {
     path: '/api/token/auth/',
     optionalBody: true,
   )
-  Future<chopper.Response<SuccessResponse>> _apiTokenAuthPost(
+  Future<chopper.Response<ReturnAuthUser>> _apiTokenAuthPost(
       {@Body() required GoogleAccessTokenRequest? body});
 
   ///Refresh JWT Endpoint
@@ -5890,6 +5890,75 @@ extension $ReportAndReviewExtension on ReportAndReview {
     return ReportAndReview(
         reports: (reports != null ? reports.value : this.reports),
         reviews: (reviews != null ? reviews.value : this.reviews));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReturnAuthUser {
+  ReturnAuthUser({
+    required this.user,
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
+  factory ReturnAuthUser.fromJson(Map<String, dynamic> json) =>
+      _$ReturnAuthUserFromJson(json);
+
+  static const toJsonFactory = _$ReturnAuthUserToJson;
+  Map<String, dynamic> toJson() => _$ReturnAuthUserToJson(this);
+
+  @JsonKey(name: 'user')
+  final User user;
+  @JsonKey(name: 'access_token')
+  final String accessToken;
+  @JsonKey(name: 'refresh_token')
+  final String refreshToken;
+  static const fromJsonFactory = _$ReturnAuthUserFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ReturnAuthUser &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)) &&
+            (identical(other.accessToken, accessToken) ||
+                const DeepCollectionEquality()
+                    .equals(other.accessToken, accessToken)) &&
+            (identical(other.refreshToken, refreshToken) ||
+                const DeepCollectionEquality()
+                    .equals(other.refreshToken, refreshToken)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(user) ^
+      const DeepCollectionEquality().hash(accessToken) ^
+      const DeepCollectionEquality().hash(refreshToken) ^
+      runtimeType.hashCode;
+}
+
+extension $ReturnAuthUserExtension on ReturnAuthUser {
+  ReturnAuthUser copyWith(
+      {User? user, String? accessToken, String? refreshToken}) {
+    return ReturnAuthUser(
+        user: user ?? this.user,
+        accessToken: accessToken ?? this.accessToken,
+        refreshToken: refreshToken ?? this.refreshToken);
+  }
+
+  ReturnAuthUser copyWithWrapped(
+      {Wrapped<User>? user,
+      Wrapped<String>? accessToken,
+      Wrapped<String>? refreshToken}) {
+    return ReturnAuthUser(
+        user: (user != null ? user.value : this.user),
+        accessToken:
+            (accessToken != null ? accessToken.value : this.accessToken),
+        refreshToken:
+            (refreshToken != null ? refreshToken.value : this.refreshToken));
   }
 }
 
