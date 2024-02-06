@@ -490,14 +490,15 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Career>> _apiCareersIdGetAreasGet({required int? id}) {
+  Future<Response<List<CustomArea>>> _apiCareersIdGetAreasGet(
+      {required int? id}) {
     final Uri $url = Uri.parse('/api/careers/${id}/getAreas/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<Career, Career>($request);
+    return client.send<List<CustomArea>, CustomArea>($request);
   }
 
   @override

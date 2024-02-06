@@ -645,8 +645,9 @@ abstract class ApiModel extends ChopperService {
 
   ///
   ///@param id A unique integer value identifying this career.
-  Future<chopper.Response<Career>> apiCareersIdGetAreasGet({required int? id}) {
-    generatedMapping.putIfAbsent(Career, () => Career.fromJsonFactory);
+  Future<chopper.Response<List<CustomArea>>> apiCareersIdGetAreasGet(
+      {required int? id}) {
+    generatedMapping.putIfAbsent(CustomArea, () => CustomArea.fromJsonFactory);
 
     return _apiCareersIdGetAreasGet(id: id);
   }
@@ -654,7 +655,7 @@ abstract class ApiModel extends ChopperService {
   ///
   ///@param id A unique integer value identifying this career.
   @Get(path: '/api/careers/{id}/getAreas/')
-  Future<chopper.Response<Career>> _apiCareersIdGetAreasGet(
+  Future<chopper.Response<List<CustomArea>>> _apiCareersIdGetAreasGet(
       {@Path('id') required int? id});
 
   ///

@@ -1498,7 +1498,8 @@
         },
         "/api/careers/{id}/getAreas/": {
             "get": {
-                "operationId": "careers_getAreas_retrieve",
+                "operationId": "careers_getAreas_list",
+                "description": "Get all areas of a career from its id",
                 "parameters": [
                     {
                         "in": "path",
@@ -1524,7 +1525,10 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Career"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomArea"
+                                    }
                                 }
                             }
                         },
