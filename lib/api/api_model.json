@@ -5921,7 +5921,8 @@
                     },
                     "created_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "status": {
                         "type": "string",
@@ -6158,7 +6159,8 @@
                     },
                     "created_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "status": {
                         "type": "string",
@@ -6203,7 +6205,8 @@
                     },
                     "created_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "status": {
                         "type": "string",
@@ -6239,7 +6242,8 @@
                     },
                     "created_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "status": {
                         "type": "string",
@@ -6269,7 +6273,8 @@
                     },
                     "created_date": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "status": {
                         "type": "string",
