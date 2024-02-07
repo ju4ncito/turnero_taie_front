@@ -2086,11 +2086,11 @@
                         },
                         "description": ""
                     },
-                    "409": {
+                    "400": {
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConflictResponse"
+                                    "$ref": "#/components/schemas/BadRequestResponse"
                                 }
                             }
                         },
