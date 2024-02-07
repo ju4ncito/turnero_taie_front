@@ -266,6 +266,9 @@ class _PostulationPageState extends State<PostulationPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
+          if (careerIdMap.isEmpty) {
+            populateCareerIdMap();
+          }
           print(widget.currentUser);
 
           print('lista final de areas seleccionadas: $selectedAreas');
