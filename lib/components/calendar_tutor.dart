@@ -156,19 +156,19 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               final status = events.status;
               Color color;
               switch (status) {
-                case Status3e2Enum.scheduled:
+                case TutorshipInstanceStatusEnum.scheduled:
                   color = const Color.fromARGB(255, 29, 69, 140);
                   break;
-                case Status3e2Enum.inProgress:
+                case TutorshipInstanceStatusEnum.inProgress:
                   color = const Color.fromARGB(255, 64, 106, 36);
                   break;
-                case Status3e2Enum.done:
+                case TutorshipInstanceStatusEnum.done:
                   color = Colors.grey;
                   break;
-                case Status3e2Enum.cancelled:
+                case TutorshipInstanceStatusEnum.cancelled:
                   color = const Color.fromARGB(255, 102, 30, 30);
                   break;
-                case Status3e2Enum.delayed:
+                case TutorshipInstanceStatusEnum.delayed:
                   color = const Color.fromARGB(255, 78, 67, 9);
                   break;
                 default:

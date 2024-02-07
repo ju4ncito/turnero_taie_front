@@ -7,8 +7,13 @@ import 'helper_functions.dart';
 class StdReportCard extends StatelessWidget {
   final SearchTutorship report;
   final Future<void> Function() fetchFn;
+  final User? currentUser;
 
-  const StdReportCard({Key? key, required this.report, required this.fetchFn})
+  const StdReportCard(
+      {Key? key,
+      required this.report,
+      required this.fetchFn,
+      required this.currentUser})
       : super(key: key);
 
   @override
@@ -108,6 +113,7 @@ class StdReportCard extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => StdReportInfo(
                   report: report,
+                  currentUser: currentUser,
                 ),
               ),
             ).then((value) {

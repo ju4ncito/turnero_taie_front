@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../api/api_manager.dart';
 import 'event.dart';
 import 'helper_functions.dart';
@@ -10,6 +11,14 @@ class EventInfo extends StatelessWidget {
   final Event event;
 
   EventInfo({required this.event});
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +63,35 @@ class EventInfo extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Link de la reunion: ',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        getColorFromStatus(event.status))),
+                child: Text(
+                  '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
               const Spacer(),
               Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (event.status == Status3e2Enum.scheduled ||
-                          event.status == Status3e2Enum.delayed)
+                      if (event.status ==
+                              TutorshipInstanceStatusEnum.scheduled ||
+                          event.status == TutorshipInstanceStatusEnum.delayed)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 2,
@@ -72,7 +102,8 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: Status3e2Enum.inProgress,
+                                  status:
+                                      TutorshipInstanceStatusEnum.inProgress,
                                   date: event.date,
                                 );
 
@@ -124,7 +155,8 @@ class EventInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (event.status == Status3e2Enum.inProgress)
+                      if (event.status ==
+                          TutorshipInstanceStatusEnum.inProgress)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 2,
@@ -135,7 +167,7 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: Status3e2Enum.done,
+                                  status: TutorshipInstanceStatusEnum.done,
                                   date: event.date,
                                 );
 
@@ -187,7 +219,7 @@ class EventInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (event.status == Status3e2Enum.scheduled)
+                      if (event.status == TutorshipInstanceStatusEnum.scheduled)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 3,
@@ -198,7 +230,7 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: Status3e2Enum.delayed,
+                                  status: TutorshipInstanceStatusEnum.delayed,
                                   date: event.date,
                                 );
 
@@ -253,8 +285,8 @@ class EventInfo extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  if (event.status != Status3e2Enum.done &&
-                      event.status != Status3e2Enum.cancelled)
+                  if (event.status != TutorshipInstanceStatusEnum.done &&
+                      event.status != TutorshipInstanceStatusEnum.cancelled)
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 6 / 7,
@@ -265,7 +297,7 @@ class EventInfo extends StatelessWidget {
                                 PatchedTutorshipInstanceRequest(
                               area: event.area,
                               schedule: event.schedule!.id,
-                              status: Status3e2Enum.cancelled,
+                              status: TutorshipInstanceStatusEnum.cancelled,
                               date: event.date,
                               zoomLink: event.zoomLink,
                             );
@@ -317,7 +349,7 @@ class EventInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (event.status == Status3e2Enum.done)
+                  if (event.status == TutorshipInstanceStatusEnum.done)
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(28.0),
@@ -331,7 +363,7 @@ class EventInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (event.status == Status3e2Enum.cancelled)
+                  if (event.status == TutorshipInstanceStatusEnum.cancelled)
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(28.0),
