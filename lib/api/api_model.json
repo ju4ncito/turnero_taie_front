@@ -6101,7 +6101,6 @@
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "minLength": 1,
                         "maxLength": 200
                     }
                 }
@@ -6965,7 +6964,6 @@
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "minLength": 1,
                         "maxLength": 200
                     }
                 },
