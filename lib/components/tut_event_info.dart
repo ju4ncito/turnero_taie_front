@@ -22,6 +22,26 @@ class EventInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('Event: $event');
+    // print('Event area: ${event.area}');
+    // print('Event schedule: ${event.schedule}');
+    // print('Event users: ${event.users}');
+    // print('Event status: ${event.status}');
+    // print('Event zoomLink: ${event.zoomLink}');
+    // print('Event tutorshipId: ${event.tutorshipId}');
+
+    // // Check for null event or its properties
+    // if (event == null ||
+    //     event.area == null ||
+    //     event.schedule == null ||
+    //     event.users == null ||
+    //     event.status == null ||
+    //     event.zoomLink == null ||
+    //     event.tutorshipId == null) {
+    //   print('Error: One or more properties of event are null');
+    //   return Container(); // Return an empty widget or handle the error in another way
+    // }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalle del evento'),
@@ -79,7 +99,9 @@ class EventInfo extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all<Color>(
                         getColorFromStatus(event.status))),
                 child: Text(
-                  '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
+                  event.zoomLink != null && event.zoomLink!.isNotEmpty
+                      ? '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}'
+                      : 'No zoom link',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),

@@ -282,6 +282,8 @@ class _LoginPageState extends State<LoginPage> {
             bool allPostsSuccessful = true;
 
             if (selectedCareerIds.isEmpty) {
+              fetchAcademicUnits();
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
