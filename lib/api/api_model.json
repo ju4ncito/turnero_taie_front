@@ -3078,7 +3078,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorUserReview"
+                                        "$ref": "#/components/schemas/ReadTutorUserReview"
                                     }
                                 }
                             }
@@ -3160,7 +3160,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserReview"
+                                    "$ref": "#/components/schemas/ReadTutorUserReview"
                                 }
                             }
                         },
@@ -5839,32 +5839,6 @@
                     "id"
                 ]
             },
-            "PageUserRequest": {
-                "type": "object",
-                "properties": {
-                    "first_name": {
-                        "type": "string",
-                        "title": "Nombre",
-                        "maxLength": 150
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "title": "Apellido",
-                        "maxLength": 150
-                    },
-                    "profile_picture": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "ucc_key": {
-                        "type": "integer",
-                        "maximum": 9223372036854775807,
-                        "minimum": 0,
-                        "format": "int64",
-                        "nullable": true
-                    }
-                }
-            },
             "PatchedAcademicUnitRequest": {
                 "type": "object",
                 "properties": {
@@ -6005,7 +5979,7 @@
                         "nullable": true,
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/Status844Enum"
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
                             },
                             {
                                 "$ref": "#/components/schemas/BlankEnum"
@@ -6078,12 +6052,6 @@
             "PatchedTutorUserReviewRequest": {
                 "type": "object",
                 "properties": {
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/PageUserRequest"
-                    },
-                    "student_user": {
-                        "$ref": "#/components/schemas/PageUserRequest"
-                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6100,6 +6068,12 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
+                    },
+                    "tutor_user": {
+                        "type": "integer"
+                    },
+                    "student_user": {
+                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -6121,7 +6095,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "$ref": "#/components/schemas/Status3e2Enum"
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6250,7 +6224,7 @@
                         "nullable": true,
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/Status844Enum"
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
                             },
                             {
                                 "$ref": "#/components/schemas/BlankEnum"
@@ -6306,7 +6280,7 @@
                         "nullable": true,
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/Status844Enum"
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
                             },
                             {
                                 "$ref": "#/components/schemas/BlankEnum"
@@ -6353,7 +6327,7 @@
                         "nullable": true,
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/Status844Enum"
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
                             },
                             {
                                 "$ref": "#/components/schemas/BlankEnum"
@@ -6394,7 +6368,7 @@
                         "nullable": true,
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/Status844Enum"
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
                             },
                             {
                                 "$ref": "#/components/schemas/BlankEnum"
@@ -6423,6 +6397,15 @@
                     "areas",
                     "student_user"
                 ]
+            },
+            "PostulationStatusEnum": {
+                "enum": [
+                    "Revision",
+                    "Rejected",
+                    "Approved"
+                ],
+                "type": "string",
+                "description": "* `Revision` - Revision\n* `Rejected` - Rejected\n* `Approved` - Approved"
             },
             "Postulation_X_Area_": {
                 "type": "object",
@@ -6457,6 +6440,50 @@
                 "required": [
                     "area",
                     "postulation"
+                ]
+            },
+            "ReadTutorUserReview": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "maxLength": 500
+                    },
+                    "occurred": {
+                        "type": "boolean"
+                    },
+                    "absent": {
+                        "type": "boolean"
+                    },
+                    "utility": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
+                    },
+                    "tutorship_instance": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "absent",
+                    "comment",
+                    "id",
+                    "occurred",
+                    "student_user",
+                    "tutor_user",
+                    "tutorship_instance",
+                    "utility"
                 ]
             },
             "ReadTutorUserSchedule": {
@@ -6562,7 +6589,7 @@
                     "reviews": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/TutorUserReview"
+                            "$ref": "#/components/schemas/ReadTutorUserReview"
                         }
                     }
                 },
@@ -6683,7 +6710,7 @@
                         "$ref": "#/components/schemas/CustomArea"
                     },
                     "status": {
-                        "$ref": "#/components/schemas/Status3e2Enum"
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
                     },
                     "users": {
                         "type": "array",
@@ -6706,26 +6733,6 @@
                     "schedule",
                     "users"
                 ]
-            },
-            "Status3e2Enum": {
-                "enum": [
-                    "Scheduled",
-                    "In progress",
-                    "Done",
-                    "Cancelled",
-                    "Delayed"
-                ],
-                "type": "string",
-                "description": "* `Scheduled` - Scheduled\n* `In progress` - In progress\n* `Done` - Done\n* `Cancelled` - Cancelled\n* `Delayed` - Delayed"
-            },
-            "Status844Enum": {
-                "enum": [
-                    "Revision",
-                    "Rejected",
-                    "Approved"
-                ],
-                "type": "string",
-                "description": "* `Revision` - Revision\n* `Rejected` - Rejected\n* `Approved` - Approved"
             },
             "SuccessResponse": {
                 "type": "object",
@@ -6818,12 +6825,6 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/PageUser"
-                    },
-                    "student_user": {
-                        "$ref": "#/components/schemas/PageUser"
-                    },
                     "comment": {
                         "type": "string",
                         "maxLength": 500
@@ -6839,6 +6840,12 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
+                    },
+                    "tutor_user": {
+                        "type": "integer"
+                    },
+                    "student_user": {
+                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -6858,12 +6865,6 @@
             "TutorUserReviewRequest": {
                 "type": "object",
                 "properties": {
-                    "tutor_user": {
-                        "$ref": "#/components/schemas/PageUserRequest"
-                    },
-                    "student_user": {
-                        "$ref": "#/components/schemas/PageUserRequest"
-                    },
                     "comment": {
                         "type": "string",
                         "minLength": 1,
@@ -6880,6 +6881,12 @@
                         "maximum": 9223372036854775807,
                         "minimum": 0,
                         "format": "int64"
+                    },
+                    "tutor_user": {
+                        "type": "integer"
+                    },
+                    "student_user": {
+                        "type": "integer"
                     },
                     "tutorship_instance": {
                         "type": "integer"
@@ -6913,7 +6920,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "$ref": "#/components/schemas/Status3e2Enum"
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6952,7 +6959,7 @@
                         "format": "date"
                     },
                     "status": {
-                        "$ref": "#/components/schemas/Status3e2Enum"
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
                     },
                     "zoom_link": {
                         "type": "string",
@@ -6967,6 +6974,17 @@
                     "date",
                     "schedule"
                 ]
+            },
+            "TutorshipInstanceStatusEnum": {
+                "enum": [
+                    "Scheduled",
+                    "In progress",
+                    "Done",
+                    "Cancelled",
+                    "Delayed"
+                ],
+                "type": "string",
+                "description": "* `Scheduled` - Scheduled\n* `In progress` - In progress\n* `Done` - Done\n* `Cancelled` - Cancelled\n* `Delayed` - Delayed"
             },
             "TutorshipReport": {
                 "type": "object",

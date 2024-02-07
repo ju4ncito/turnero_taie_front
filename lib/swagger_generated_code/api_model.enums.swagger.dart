@@ -25,7 +25,23 @@ enum NullEnum {
   const NullEnum(this.value);
 }
 
-enum Status3e2Enum {
+enum PostulationStatusEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Revision')
+  revision('Revision'),
+  @JsonValue('Rejected')
+  rejected('Rejected'),
+  @JsonValue('Approved')
+  approved('Approved');
+
+  final String? value;
+
+  const PostulationStatusEnum(this.value);
+}
+
+enum TutorshipInstanceStatusEnum {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
 
@@ -42,23 +58,7 @@ enum Status3e2Enum {
 
   final String? value;
 
-  const Status3e2Enum(this.value);
-}
-
-enum Status844Enum {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('Revision')
-  revision('Revision'),
-  @JsonValue('Rejected')
-  rejected('Rejected'),
-  @JsonValue('Approved')
-  approved('Approved');
-
-  final String? value;
-
-  const Status844Enum(this.value);
+  const TutorshipInstanceStatusEnum(this.value);
 }
 
 enum ApiSchemaJsonGetLang {

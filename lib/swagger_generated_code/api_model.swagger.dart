@@ -1159,16 +1159,16 @@ abstract class ApiModel extends ChopperService {
       {@Body() required RefreshTokenRequest? body});
 
   ///
-  Future<chopper.Response<List<TutorUserReview>>> apiTutorUserReviewGet() {
+  Future<chopper.Response<List<ReadTutorUserReview>>> apiTutorUserReviewGet() {
     generatedMapping.putIfAbsent(
-        TutorUserReview, () => TutorUserReview.fromJsonFactory);
+        ReadTutorUserReview, () => ReadTutorUserReview.fromJsonFactory);
 
     return _apiTutorUserReviewGet();
   }
 
   ///
   @Get(path: '/api/tutor-user-review/')
-  Future<chopper.Response<List<TutorUserReview>>> _apiTutorUserReviewGet();
+  Future<chopper.Response<List<ReadTutorUserReview>>> _apiTutorUserReviewGet();
 
   ///
   Future<chopper.Response<TutorUserReview>> apiTutorUserReviewPost(
@@ -1189,10 +1189,10 @@ abstract class ApiModel extends ChopperService {
 
   ///
   ///@param id A unique integer value identifying this tutor user review.
-  Future<chopper.Response<TutorUserReview>> apiTutorUserReviewIdGet(
+  Future<chopper.Response<ReadTutorUserReview>> apiTutorUserReviewIdGet(
       {required int? id}) {
     generatedMapping.putIfAbsent(
-        TutorUserReview, () => TutorUserReview.fromJsonFactory);
+        ReadTutorUserReview, () => ReadTutorUserReview.fromJsonFactory);
 
     return _apiTutorUserReviewIdGet(id: id);
   }
@@ -1200,7 +1200,7 @@ abstract class ApiModel extends ChopperService {
   ///
   ///@param id A unique integer value identifying this tutor user review.
   @Get(path: '/api/tutor-user-review/{id}/')
-  Future<chopper.Response<TutorUserReview>> _apiTutorUserReviewIdGet(
+  Future<chopper.Response<ReadTutorUserReview>> _apiTutorUserReviewIdGet(
       {@Path('id') required int? id});
 
   ///
@@ -3799,88 +3799,6 @@ extension $PageUserExtension on PageUser {
 }
 
 @JsonSerializable(explicitToJson: true)
-class PageUserRequest {
-  PageUserRequest({
-    this.firstName,
-    this.lastName,
-    this.profilePicture,
-    this.uccKey,
-  });
-
-  factory PageUserRequest.fromJson(Map<String, dynamic> json) =>
-      _$PageUserRequestFromJson(json);
-
-  static const toJsonFactory = _$PageUserRequestToJson;
-  Map<String, dynamic> toJson() => _$PageUserRequestToJson(this);
-
-  @JsonKey(name: 'first_name')
-  final String? firstName;
-  @JsonKey(name: 'last_name')
-  final String? lastName;
-  @JsonKey(name: 'profile_picture')
-  final String? profilePicture;
-  @JsonKey(name: 'ucc_key')
-  final int? uccKey;
-  static const fromJsonFactory = _$PageUserRequestFromJson;
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is PageUserRequest &&
-            (identical(other.firstName, firstName) ||
-                const DeepCollectionEquality()
-                    .equals(other.firstName, firstName)) &&
-            (identical(other.lastName, lastName) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastName, lastName)) &&
-            (identical(other.profilePicture, profilePicture) ||
-                const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)) &&
-            (identical(other.uccKey, uccKey) ||
-                const DeepCollectionEquality().equals(other.uccKey, uccKey)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(firstName) ^
-      const DeepCollectionEquality().hash(lastName) ^
-      const DeepCollectionEquality().hash(profilePicture) ^
-      const DeepCollectionEquality().hash(uccKey) ^
-      runtimeType.hashCode;
-}
-
-extension $PageUserRequestExtension on PageUserRequest {
-  PageUserRequest copyWith(
-      {String? firstName,
-      String? lastName,
-      String? profilePicture,
-      int? uccKey}) {
-    return PageUserRequest(
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        profilePicture: profilePicture ?? this.profilePicture,
-        uccKey: uccKey ?? this.uccKey);
-  }
-
-  PageUserRequest copyWithWrapped(
-      {Wrapped<String?>? firstName,
-      Wrapped<String?>? lastName,
-      Wrapped<String?>? profilePicture,
-      Wrapped<int?>? uccKey}) {
-    return PageUserRequest(
-        firstName: (firstName != null ? firstName.value : this.firstName),
-        lastName: (lastName != null ? lastName.value : this.lastName),
-        profilePicture: (profilePicture != null
-            ? profilePicture.value
-            : this.profilePicture),
-        uccKey: (uccKey != null ? uccKey.value : this.uccKey));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
 class PatchedAcademicUnitRequest {
   PatchedAcademicUnitRequest({
     this.name,
@@ -4612,12 +4530,12 @@ extension $PatchedTagRequestExtension on PatchedTagRequest {
 @JsonSerializable(explicitToJson: true)
 class PatchedTutorUserReviewRequest {
   PatchedTutorUserReviewRequest({
-    this.tutorUser,
-    this.studentUser,
     this.comment,
     this.occurred,
     this.absent,
     this.utility,
+    this.tutorUser,
+    this.studentUser,
     this.tutorshipInstance,
   });
 
@@ -4627,10 +4545,6 @@ class PatchedTutorUserReviewRequest {
   static const toJsonFactory = _$PatchedTutorUserReviewRequestToJson;
   Map<String, dynamic> toJson() => _$PatchedTutorUserReviewRequestToJson(this);
 
-  @JsonKey(name: 'tutor_user')
-  final PageUserRequest? tutorUser;
-  @JsonKey(name: 'student_user')
-  final PageUserRequest? studentUser;
   @JsonKey(name: 'comment')
   final String? comment;
   @JsonKey(name: 'occurred')
@@ -4639,6 +4553,10 @@ class PatchedTutorUserReviewRequest {
   final bool? absent;
   @JsonKey(name: 'utility')
   final int? utility;
+  @JsonKey(name: 'tutor_user')
+  final int? tutorUser;
+  @JsonKey(name: 'student_user')
+  final int? studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int? tutorshipInstance;
   static const fromJsonFactory = _$PatchedTutorUserReviewRequestFromJson;
@@ -4647,12 +4565,6 @@ class PatchedTutorUserReviewRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is PatchedTutorUserReviewRequest &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -4664,6 +4576,12 @@ class PatchedTutorUserReviewRequest {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -4674,12 +4592,12 @@ class PatchedTutorUserReviewRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
@@ -4687,39 +4605,39 @@ class PatchedTutorUserReviewRequest {
 extension $PatchedTutorUserReviewRequestExtension
     on PatchedTutorUserReviewRequest {
   PatchedTutorUserReviewRequest copyWith(
-      {PageUserRequest? tutorUser,
-      PageUserRequest? studentUser,
-      String? comment,
+      {String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
+      int? tutorUser,
+      int? studentUser,
       int? tutorshipInstance}) {
     return PatchedTutorUserReviewRequest(
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   PatchedTutorUserReviewRequest copyWithWrapped(
-      {Wrapped<PageUserRequest?>? tutorUser,
-      Wrapped<PageUserRequest?>? studentUser,
-      Wrapped<String?>? comment,
+      {Wrapped<String?>? comment,
       Wrapped<bool?>? occurred,
       Wrapped<bool?>? absent,
       Wrapped<int?>? utility,
+      Wrapped<int?>? tutorUser,
+      Wrapped<int?>? studentUser,
       Wrapped<int?>? tutorshipInstance}) {
     return PatchedTutorUserReviewRequest(
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -4751,10 +4669,10 @@ class PatchedTutorshipInstanceRequest {
   final DateTime? date;
   @JsonKey(
     name: 'status',
-    toJson: status3e2EnumToJson,
-    fromJson: status3e2EnumFromJson,
+    toJson: tutorshipInstanceStatusEnumToJson,
+    fromJson: tutorshipInstanceStatusEnumFromJson,
   )
-  final enums.Status3e2Enum? status;
+  final enums.TutorshipInstanceStatusEnum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   static const fromJsonFactory = _$PatchedTutorshipInstanceRequestFromJson;
@@ -4796,7 +4714,7 @@ extension $PatchedTutorshipInstanceRequestExtension
       {String? area,
       int? schedule,
       DateTime? date,
-      enums.Status3e2Enum? status,
+      enums.TutorshipInstanceStatusEnum? status,
       String? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: area ?? this.area,
@@ -4810,7 +4728,7 @@ extension $PatchedTutorshipInstanceRequestExtension
       {Wrapped<String?>? area,
       Wrapped<int?>? schedule,
       Wrapped<DateTime?>? date,
-      Wrapped<enums.Status3e2Enum?>? status,
+      Wrapped<enums.TutorshipInstanceStatusEnum?>? status,
       Wrapped<String?>? zoomLink}) {
     return PatchedTutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
@@ -5757,6 +5675,132 @@ extension $PostulationXAreaRequestExtension on PostulationXAreaRequest {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ReadTutorUserReview {
+  ReadTutorUserReview({
+    required this.id,
+    required this.tutorUser,
+    required this.studentUser,
+    required this.comment,
+    required this.occurred,
+    required this.absent,
+    required this.utility,
+    required this.tutorshipInstance,
+  });
+
+  factory ReadTutorUserReview.fromJson(Map<String, dynamic> json) =>
+      _$ReadTutorUserReviewFromJson(json);
+
+  static const toJsonFactory = _$ReadTutorUserReviewToJson;
+  Map<String, dynamic> toJson() => _$ReadTutorUserReviewToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'tutor_user')
+  final PageUser tutorUser;
+  @JsonKey(name: 'student_user')
+  final PageUser studentUser;
+  @JsonKey(name: 'comment')
+  final String comment;
+  @JsonKey(name: 'occurred')
+  final bool occurred;
+  @JsonKey(name: 'absent')
+  final bool absent;
+  @JsonKey(name: 'utility')
+  final int utility;
+  @JsonKey(name: 'tutorship_instance')
+  final int tutorshipInstance;
+  static const fromJsonFactory = _$ReadTutorUserReviewFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is ReadTutorUserReview &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
+            (identical(other.comment, comment) ||
+                const DeepCollectionEquality()
+                    .equals(other.comment, comment)) &&
+            (identical(other.occurred, occurred) ||
+                const DeepCollectionEquality()
+                    .equals(other.occurred, occurred)) &&
+            (identical(other.absent, absent) ||
+                const DeepCollectionEquality().equals(other.absent, absent)) &&
+            (identical(other.utility, utility) ||
+                const DeepCollectionEquality()
+                    .equals(other.utility, utility)) &&
+            (identical(other.tutorshipInstance, tutorshipInstance) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorshipInstance, tutorshipInstance)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
+      const DeepCollectionEquality().hash(comment) ^
+      const DeepCollectionEquality().hash(occurred) ^
+      const DeepCollectionEquality().hash(absent) ^
+      const DeepCollectionEquality().hash(utility) ^
+      const DeepCollectionEquality().hash(tutorshipInstance) ^
+      runtimeType.hashCode;
+}
+
+extension $ReadTutorUserReviewExtension on ReadTutorUserReview {
+  ReadTutorUserReview copyWith(
+      {int? id,
+      PageUser? tutorUser,
+      PageUser? studentUser,
+      String? comment,
+      bool? occurred,
+      bool? absent,
+      int? utility,
+      int? tutorshipInstance}) {
+    return ReadTutorUserReview(
+        id: id ?? this.id,
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
+        comment: comment ?? this.comment,
+        occurred: occurred ?? this.occurred,
+        absent: absent ?? this.absent,
+        utility: utility ?? this.utility,
+        tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
+  }
+
+  ReadTutorUserReview copyWithWrapped(
+      {Wrapped<int>? id,
+      Wrapped<PageUser>? tutorUser,
+      Wrapped<PageUser>? studentUser,
+      Wrapped<String>? comment,
+      Wrapped<bool>? occurred,
+      Wrapped<bool>? absent,
+      Wrapped<int>? utility,
+      Wrapped<int>? tutorshipInstance}) {
+    return ReadTutorUserReview(
+        id: (id != null ? id.value : this.id),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
+        comment: (comment != null ? comment.value : this.comment),
+        occurred: (occurred != null ? occurred.value : this.occurred),
+        absent: (absent != null ? absent.value : this.absent),
+        utility: (utility != null ? utility.value : this.utility),
+        tutorshipInstance: (tutorshipInstance != null
+            ? tutorshipInstance.value
+            : this.tutorshipInstance));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
 class ReadTutorUserSchedule {
   ReadTutorUserSchedule({
     required this.id,
@@ -6029,8 +6073,8 @@ class ReportAndReview {
 
   @JsonKey(name: 'reports', defaultValue: <ReadTutorshipReport>[])
   final List<ReadTutorshipReport> reports;
-  @JsonKey(name: 'reviews', defaultValue: <TutorUserReview>[])
-  final List<TutorUserReview> reviews;
+  @JsonKey(name: 'reviews', defaultValue: <ReadTutorUserReview>[])
+  final List<ReadTutorUserReview> reviews;
   static const fromJsonFactory = _$ReportAndReviewFromJson;
 
   @override
@@ -6056,14 +6100,15 @@ class ReportAndReview {
 
 extension $ReportAndReviewExtension on ReportAndReview {
   ReportAndReview copyWith(
-      {List<ReadTutorshipReport>? reports, List<TutorUserReview>? reviews}) {
+      {List<ReadTutorshipReport>? reports,
+      List<ReadTutorUserReview>? reviews}) {
     return ReportAndReview(
         reports: reports ?? this.reports, reviews: reviews ?? this.reviews);
   }
 
   ReportAndReview copyWithWrapped(
       {Wrapped<List<ReadTutorshipReport>>? reports,
-      Wrapped<List<TutorUserReview>>? reviews}) {
+      Wrapped<List<ReadTutorUserReview>>? reviews}) {
     return ReportAndReview(
         reports: (reports != null ? reports.value : this.reports),
         reviews: (reviews != null ? reviews.value : this.reviews));
@@ -6374,10 +6419,10 @@ class SearchTutorship {
   final CustomArea area;
   @JsonKey(
     name: 'status',
-    toJson: status3e2EnumToJson,
-    fromJson: status3e2EnumFromJson,
+    toJson: tutorshipInstanceStatusEnumToJson,
+    fromJson: tutorshipInstanceStatusEnumFromJson,
   )
-  final enums.Status3e2Enum? status;
+  final enums.TutorshipInstanceStatusEnum? status;
   @JsonKey(name: 'users', defaultValue: <int>[])
   final List<int> users;
   @JsonKey(name: 'zoom_link')
@@ -6427,7 +6472,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
       ReadTutorUserSchedule? schedule,
       DateTime? date,
       CustomArea? area,
-      enums.Status3e2Enum? status,
+      enums.TutorshipInstanceStatusEnum? status,
       List<int>? users,
       String? zoomLink}) {
     return SearchTutorship(
@@ -6445,7 +6490,7 @@ extension $SearchTutorshipExtension on SearchTutorship {
       Wrapped<ReadTutorUserSchedule>? schedule,
       Wrapped<DateTime>? date,
       Wrapped<CustomArea>? area,
-      Wrapped<enums.Status3e2Enum?>? status,
+      Wrapped<enums.TutorshipInstanceStatusEnum?>? status,
       Wrapped<List<int>>? users,
       Wrapped<String?>? zoomLink}) {
     return SearchTutorship(
@@ -6720,12 +6765,12 @@ extension $TutorAreasExtension on TutorAreas {
 class TutorUserReview {
   TutorUserReview({
     required this.id,
-    required this.tutorUser,
-    required this.studentUser,
     required this.comment,
     required this.occurred,
     required this.absent,
     required this.utility,
+    required this.tutorUser,
+    required this.studentUser,
     required this.tutorshipInstance,
   });
 
@@ -6737,10 +6782,6 @@ class TutorUserReview {
 
   @JsonKey(name: 'id')
   final int id;
-  @JsonKey(name: 'tutor_user')
-  final PageUser tutorUser;
-  @JsonKey(name: 'student_user')
-  final PageUser studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6749,6 +6790,10 @@ class TutorUserReview {
   final bool absent;
   @JsonKey(name: 'utility')
   final int utility;
+  @JsonKey(name: 'tutor_user')
+  final int tutorUser;
+  @JsonKey(name: 'student_user')
+  final int studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
   static const fromJsonFactory = _$TutorUserReviewFromJson;
@@ -6759,12 +6804,6 @@ class TutorUserReview {
         (other is TutorUserReview &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6776,6 +6815,12 @@ class TutorUserReview {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -6787,12 +6832,12 @@ class TutorUserReview {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
@@ -6800,42 +6845,42 @@ class TutorUserReview {
 extension $TutorUserReviewExtension on TutorUserReview {
   TutorUserReview copyWith(
       {int? id,
-      PageUser? tutorUser,
-      PageUser? studentUser,
       String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
+      int? tutorUser,
+      int? studentUser,
       int? tutorshipInstance}) {
     return TutorUserReview(
         id: id ?? this.id,
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorUserReview copyWithWrapped(
       {Wrapped<int>? id,
-      Wrapped<PageUser>? tutorUser,
-      Wrapped<PageUser>? studentUser,
       Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,
       Wrapped<int>? utility,
+      Wrapped<int>? tutorUser,
+      Wrapped<int>? studentUser,
       Wrapped<int>? tutorshipInstance}) {
     return TutorUserReview(
         id: (id != null ? id.value : this.id),
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -6845,12 +6890,12 @@ extension $TutorUserReviewExtension on TutorUserReview {
 @JsonSerializable(explicitToJson: true)
 class TutorUserReviewRequest {
   TutorUserReviewRequest({
-    required this.tutorUser,
-    required this.studentUser,
     required this.comment,
     required this.occurred,
     required this.absent,
     required this.utility,
+    required this.tutorUser,
+    required this.studentUser,
     required this.tutorshipInstance,
   });
 
@@ -6860,10 +6905,6 @@ class TutorUserReviewRequest {
   static const toJsonFactory = _$TutorUserReviewRequestToJson;
   Map<String, dynamic> toJson() => _$TutorUserReviewRequestToJson(this);
 
-  @JsonKey(name: 'tutor_user')
-  final PageUserRequest tutorUser;
-  @JsonKey(name: 'student_user')
-  final PageUserRequest studentUser;
   @JsonKey(name: 'comment')
   final String comment;
   @JsonKey(name: 'occurred')
@@ -6872,6 +6913,10 @@ class TutorUserReviewRequest {
   final bool absent;
   @JsonKey(name: 'utility')
   final int utility;
+  @JsonKey(name: 'tutor_user')
+  final int tutorUser;
+  @JsonKey(name: 'student_user')
+  final int studentUser;
   @JsonKey(name: 'tutorship_instance')
   final int tutorshipInstance;
   static const fromJsonFactory = _$TutorUserReviewRequestFromJson;
@@ -6880,12 +6925,6 @@ class TutorUserReviewRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is TutorUserReviewRequest &&
-            (identical(other.tutorUser, tutorUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.tutorUser, tutorUser)) &&
-            (identical(other.studentUser, studentUser) ||
-                const DeepCollectionEquality()
-                    .equals(other.studentUser, studentUser)) &&
             (identical(other.comment, comment) ||
                 const DeepCollectionEquality()
                     .equals(other.comment, comment)) &&
@@ -6897,6 +6936,12 @@ class TutorUserReviewRequest {
             (identical(other.utility, utility) ||
                 const DeepCollectionEquality()
                     .equals(other.utility, utility)) &&
+            (identical(other.tutorUser, tutorUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.tutorUser, tutorUser)) &&
+            (identical(other.studentUser, studentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.studentUser, studentUser)) &&
             (identical(other.tutorshipInstance, tutorshipInstance) ||
                 const DeepCollectionEquality()
                     .equals(other.tutorshipInstance, tutorshipInstance)));
@@ -6907,51 +6952,51 @@ class TutorUserReviewRequest {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(tutorUser) ^
-      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(comment) ^
       const DeepCollectionEquality().hash(occurred) ^
       const DeepCollectionEquality().hash(absent) ^
       const DeepCollectionEquality().hash(utility) ^
+      const DeepCollectionEquality().hash(tutorUser) ^
+      const DeepCollectionEquality().hash(studentUser) ^
       const DeepCollectionEquality().hash(tutorshipInstance) ^
       runtimeType.hashCode;
 }
 
 extension $TutorUserReviewRequestExtension on TutorUserReviewRequest {
   TutorUserReviewRequest copyWith(
-      {PageUserRequest? tutorUser,
-      PageUserRequest? studentUser,
-      String? comment,
+      {String? comment,
       bool? occurred,
       bool? absent,
       int? utility,
+      int? tutorUser,
+      int? studentUser,
       int? tutorshipInstance}) {
     return TutorUserReviewRequest(
-        tutorUser: tutorUser ?? this.tutorUser,
-        studentUser: studentUser ?? this.studentUser,
         comment: comment ?? this.comment,
         occurred: occurred ?? this.occurred,
         absent: absent ?? this.absent,
         utility: utility ?? this.utility,
+        tutorUser: tutorUser ?? this.tutorUser,
+        studentUser: studentUser ?? this.studentUser,
         tutorshipInstance: tutorshipInstance ?? this.tutorshipInstance);
   }
 
   TutorUserReviewRequest copyWithWrapped(
-      {Wrapped<PageUserRequest>? tutorUser,
-      Wrapped<PageUserRequest>? studentUser,
-      Wrapped<String>? comment,
+      {Wrapped<String>? comment,
       Wrapped<bool>? occurred,
       Wrapped<bool>? absent,
       Wrapped<int>? utility,
+      Wrapped<int>? tutorUser,
+      Wrapped<int>? studentUser,
       Wrapped<int>? tutorshipInstance}) {
     return TutorUserReviewRequest(
-        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
-        studentUser:
-            (studentUser != null ? studentUser.value : this.studentUser),
         comment: (comment != null ? comment.value : this.comment),
         occurred: (occurred != null ? occurred.value : this.occurred),
         absent: (absent != null ? absent.value : this.absent),
         utility: (utility != null ? utility.value : this.utility),
+        tutorUser: (tutorUser != null ? tutorUser.value : this.tutorUser),
+        studentUser:
+            (studentUser != null ? studentUser.value : this.studentUser),
         tutorshipInstance: (tutorshipInstance != null
             ? tutorshipInstance.value
             : this.tutorshipInstance));
@@ -6986,10 +7031,10 @@ class TutorshipInstance {
   final DateTime date;
   @JsonKey(
     name: 'status',
-    toJson: status3e2EnumToJson,
-    fromJson: status3e2EnumFromJson,
+    toJson: tutorshipInstanceStatusEnumToJson,
+    fromJson: tutorshipInstanceStatusEnumFromJson,
   )
-  final enums.Status3e2Enum? status;
+  final enums.TutorshipInstanceStatusEnum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   @JsonKey(name: 'users', defaultValue: <int>[])
@@ -7039,7 +7084,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       String? area,
       int? schedule,
       DateTime? date,
-      enums.Status3e2Enum? status,
+      enums.TutorshipInstanceStatusEnum? status,
       String? zoomLink,
       List<int>? users}) {
     return TutorshipInstance(
@@ -7057,7 +7102,7 @@ extension $TutorshipInstanceExtension on TutorshipInstance {
       Wrapped<String>? area,
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<enums.Status3e2Enum?>? status,
+      Wrapped<enums.TutorshipInstanceStatusEnum?>? status,
       Wrapped<String?>? zoomLink,
       Wrapped<List<int>>? users}) {
     return TutorshipInstance(
@@ -7095,10 +7140,10 @@ class TutorshipInstanceRequest {
   final DateTime date;
   @JsonKey(
     name: 'status',
-    toJson: status3e2EnumToJson,
-    fromJson: status3e2EnumFromJson,
+    toJson: tutorshipInstanceStatusEnumToJson,
+    fromJson: tutorshipInstanceStatusEnumFromJson,
   )
-  final enums.Status3e2Enum? status;
+  final enums.TutorshipInstanceStatusEnum? status;
   @JsonKey(name: 'zoom_link')
   final String? zoomLink;
   static const fromJsonFactory = _$TutorshipInstanceRequestFromJson;
@@ -7139,7 +7184,7 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
       {String? area,
       int? schedule,
       DateTime? date,
-      enums.Status3e2Enum? status,
+      enums.TutorshipInstanceStatusEnum? status,
       String? zoomLink}) {
     return TutorshipInstanceRequest(
         area: area ?? this.area,
@@ -7153,7 +7198,7 @@ extension $TutorshipInstanceRequestExtension on TutorshipInstanceRequest {
       {Wrapped<String>? area,
       Wrapped<int>? schedule,
       Wrapped<DateTime>? date,
-      Wrapped<enums.Status3e2Enum?>? status,
+      Wrapped<enums.TutorshipInstanceStatusEnum?>? status,
       Wrapped<String?>? zoomLink}) {
     return TutorshipInstanceRequest(
         area: (area != null ? area.value : this.area),
@@ -8192,92 +8237,105 @@ List<enums.NullEnum>? nullEnumNullableListFromJson(
   return nullEnum.map((e) => nullEnumFromJson(e.toString())).toList();
 }
 
-String? status3e2EnumToJson(enums.Status3e2Enum? status3e2Enum) {
-  return status3e2Enum?.value;
+String? postulationStatusEnumToJson(
+    enums.PostulationStatusEnum? postulationStatusEnum) {
+  return postulationStatusEnum?.value;
 }
 
-enums.Status3e2Enum status3e2EnumFromJson(
-  Object? status3e2Enum, [
-  enums.Status3e2Enum? defaultValue,
+enums.PostulationStatusEnum postulationStatusEnumFromJson(
+  Object? postulationStatusEnum, [
+  enums.PostulationStatusEnum? defaultValue,
 ]) {
-  return enums.Status3e2Enum.values
-          .firstWhereOrNull((e) => e.value == status3e2Enum) ??
+  return enums.PostulationStatusEnum.values
+          .firstWhereOrNull((e) => e.value == postulationStatusEnum) ??
       defaultValue ??
-      enums.Status3e2Enum.swaggerGeneratedUnknown;
+      enums.PostulationStatusEnum.swaggerGeneratedUnknown;
 }
 
-List<String> status3e2EnumListToJson(List<enums.Status3e2Enum>? status3e2Enum) {
-  if (status3e2Enum == null) {
+List<String> postulationStatusEnumListToJson(
+    List<enums.PostulationStatusEnum>? postulationStatusEnum) {
+  if (postulationStatusEnum == null) {
     return [];
   }
 
-  return status3e2Enum.map((e) => e.value!).toList();
+  return postulationStatusEnum.map((e) => e.value!).toList();
 }
 
-List<enums.Status3e2Enum> status3e2EnumListFromJson(
-  List? status3e2Enum, [
-  List<enums.Status3e2Enum>? defaultValue,
+List<enums.PostulationStatusEnum> postulationStatusEnumListFromJson(
+  List? postulationStatusEnum, [
+  List<enums.PostulationStatusEnum>? defaultValue,
 ]) {
-  if (status3e2Enum == null) {
+  if (postulationStatusEnum == null) {
     return defaultValue ?? [];
   }
 
-  return status3e2Enum.map((e) => status3e2EnumFromJson(e.toString())).toList();
+  return postulationStatusEnum
+      .map((e) => postulationStatusEnumFromJson(e.toString()))
+      .toList();
 }
 
-List<enums.Status3e2Enum>? status3e2EnumNullableListFromJson(
-  List? status3e2Enum, [
-  List<enums.Status3e2Enum>? defaultValue,
+List<enums.PostulationStatusEnum>? postulationStatusEnumNullableListFromJson(
+  List? postulationStatusEnum, [
+  List<enums.PostulationStatusEnum>? defaultValue,
 ]) {
-  if (status3e2Enum == null) {
+  if (postulationStatusEnum == null) {
     return defaultValue;
   }
 
-  return status3e2Enum.map((e) => status3e2EnumFromJson(e.toString())).toList();
+  return postulationStatusEnum
+      .map((e) => postulationStatusEnumFromJson(e.toString()))
+      .toList();
 }
 
-String? status844EnumToJson(enums.Status844Enum? status844Enum) {
-  return status844Enum?.value;
+String? tutorshipInstanceStatusEnumToJson(
+    enums.TutorshipInstanceStatusEnum? tutorshipInstanceStatusEnum) {
+  return tutorshipInstanceStatusEnum?.value;
 }
 
-enums.Status844Enum status844EnumFromJson(
-  Object? status844Enum, [
-  enums.Status844Enum? defaultValue,
+enums.TutorshipInstanceStatusEnum tutorshipInstanceStatusEnumFromJson(
+  Object? tutorshipInstanceStatusEnum, [
+  enums.TutorshipInstanceStatusEnum? defaultValue,
 ]) {
-  return enums.Status844Enum.values
-          .firstWhereOrNull((e) => e.value == status844Enum) ??
+  return enums.TutorshipInstanceStatusEnum.values
+          .firstWhereOrNull((e) => e.value == tutorshipInstanceStatusEnum) ??
       defaultValue ??
-      enums.Status844Enum.swaggerGeneratedUnknown;
+      enums.TutorshipInstanceStatusEnum.swaggerGeneratedUnknown;
 }
 
-List<String> status844EnumListToJson(List<enums.Status844Enum>? status844Enum) {
-  if (status844Enum == null) {
+List<String> tutorshipInstanceStatusEnumListToJson(
+    List<enums.TutorshipInstanceStatusEnum>? tutorshipInstanceStatusEnum) {
+  if (tutorshipInstanceStatusEnum == null) {
     return [];
   }
 
-  return status844Enum.map((e) => e.value!).toList();
+  return tutorshipInstanceStatusEnum.map((e) => e.value!).toList();
 }
 
-List<enums.Status844Enum> status844EnumListFromJson(
-  List? status844Enum, [
-  List<enums.Status844Enum>? defaultValue,
+List<enums.TutorshipInstanceStatusEnum> tutorshipInstanceStatusEnumListFromJson(
+  List? tutorshipInstanceStatusEnum, [
+  List<enums.TutorshipInstanceStatusEnum>? defaultValue,
 ]) {
-  if (status844Enum == null) {
+  if (tutorshipInstanceStatusEnum == null) {
     return defaultValue ?? [];
   }
 
-  return status844Enum.map((e) => status844EnumFromJson(e.toString())).toList();
+  return tutorshipInstanceStatusEnum
+      .map((e) => tutorshipInstanceStatusEnumFromJson(e.toString()))
+      .toList();
 }
 
-List<enums.Status844Enum>? status844EnumNullableListFromJson(
-  List? status844Enum, [
-  List<enums.Status844Enum>? defaultValue,
+List<enums.TutorshipInstanceStatusEnum>?
+    tutorshipInstanceStatusEnumNullableListFromJson(
+  List? tutorshipInstanceStatusEnum, [
+  List<enums.TutorshipInstanceStatusEnum>? defaultValue,
 ]) {
-  if (status844Enum == null) {
+  if (tutorshipInstanceStatusEnum == null) {
     return defaultValue;
   }
 
-  return status844Enum.map((e) => status844EnumFromJson(e.toString())).toList();
+  return tutorshipInstanceStatusEnum
+      .map((e) => tutorshipInstanceStatusEnumFromJson(e.toString()))
+      .toList();
 }
 
 String? apiSchemaJsonGetLangToJson(

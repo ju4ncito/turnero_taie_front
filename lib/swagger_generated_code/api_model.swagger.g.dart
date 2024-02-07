@@ -408,22 +408,6 @@ Map<String, dynamic> _$PageUserToJson(PageUser instance) => <String, dynamic>{
       'careers': instance.careers,
     };
 
-PageUserRequest _$PageUserRequestFromJson(Map<String, dynamic> json) =>
-    PageUserRequest(
-      firstName: json['first_name'] as String?,
-      lastName: json['last_name'] as String?,
-      profilePicture: json['profile_picture'] as String?,
-      uccKey: json['ucc_key'] as int?,
-    );
-
-Map<String, dynamic> _$PageUserRequestToJson(PageUserRequest instance) =>
-    <String, dynamic>{
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'profile_picture': instance.profilePicture,
-      'ucc_key': instance.uccKey,
-    };
-
 PatchedAcademicUnitRequest _$PatchedAcademicUnitRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedAcademicUnitRequest(
@@ -608,30 +592,24 @@ Map<String, dynamic> _$PatchedTagRequestToJson(PatchedTagRequest instance) =>
 PatchedTutorUserReviewRequest _$PatchedTutorUserReviewRequestFromJson(
         Map<String, dynamic> json) =>
     PatchedTutorUserReviewRequest(
-      tutorUser: json['tutor_user'] == null
-          ? null
-          : PageUserRequest.fromJson(
-              json['tutor_user'] as Map<String, dynamic>),
-      studentUser: json['student_user'] == null
-          ? null
-          : PageUserRequest.fromJson(
-              json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String?,
       occurred: json['occurred'] as bool?,
       absent: json['absent'] as bool?,
       utility: json['utility'] as int?,
+      tutorUser: json['tutor_user'] as int?,
+      studentUser: json['student_user'] as int?,
       tutorshipInstance: json['tutorship_instance'] as int?,
     );
 
 Map<String, dynamic> _$PatchedTutorUserReviewRequestToJson(
         PatchedTutorUserReviewRequest instance) =>
     <String, dynamic>{
-      'tutor_user': instance.tutorUser?.toJson(),
-      'student_user': instance.studentUser?.toJson(),
       'comment': instance.comment,
       'occurred': instance.occurred,
       'absent': instance.absent,
       'utility': instance.utility,
+      'tutor_user': instance.tutorUser,
+      'student_user': instance.studentUser,
       'tutorship_instance': instance.tutorshipInstance,
     };
 
@@ -642,7 +620,7 @@ PatchedTutorshipInstanceRequest _$PatchedTutorshipInstanceRequestFromJson(
       schedule: json['schedule'] as int?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      status: status3e2EnumFromJson(json['status']),
+      status: tutorshipInstanceStatusEnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
     );
 
@@ -652,7 +630,7 @@ Map<String, dynamic> _$PatchedTutorshipInstanceRequestToJson(
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': status3e2EnumToJson(instance.status),
+      'status': tutorshipInstanceStatusEnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
     };
 
@@ -875,6 +853,32 @@ Map<String, dynamic> _$PostulationXAreaRequestToJson(
       'area': instance.area,
     };
 
+ReadTutorUserReview _$ReadTutorUserReviewFromJson(Map<String, dynamic> json) =>
+    ReadTutorUserReview(
+      id: json['id'] as int,
+      tutorUser: PageUser.fromJson(json['tutor_user'] as Map<String, dynamic>),
+      studentUser:
+          PageUser.fromJson(json['student_user'] as Map<String, dynamic>),
+      comment: json['comment'] as String,
+      occurred: json['occurred'] as bool,
+      absent: json['absent'] as bool,
+      utility: json['utility'] as int,
+      tutorshipInstance: json['tutorship_instance'] as int,
+    );
+
+Map<String, dynamic> _$ReadTutorUserReviewToJson(
+        ReadTutorUserReview instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'tutor_user': instance.tutorUser.toJson(),
+      'student_user': instance.studentUser.toJson(),
+      'comment': instance.comment,
+      'occurred': instance.occurred,
+      'absent': instance.absent,
+      'utility': instance.utility,
+      'tutorship_instance': instance.tutorshipInstance,
+    };
+
 ReadTutorUserSchedule _$ReadTutorUserScheduleFromJson(
         Map<String, dynamic> json) =>
     ReadTutorUserSchedule(
@@ -940,7 +944,8 @@ ReportAndReview _$ReportAndReviewFromJson(Map<String, dynamic> json) =>
               .toList() ??
           [],
       reviews: (json['reviews'] as List<dynamic>?)
-              ?.map((e) => TutorUserReview.fromJson(e as Map<String, dynamic>))
+              ?.map((e) =>
+                  ReadTutorUserReview.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
@@ -1014,7 +1019,7 @@ SearchTutorship _$SearchTutorshipFromJson(Map<String, dynamic> json) =>
           json['schedule'] as Map<String, dynamic>),
       date: DateTime.parse(json['date'] as String),
       area: CustomArea.fromJson(json['area'] as Map<String, dynamic>),
-      status: status3e2EnumFromJson(json['status']),
+      status: tutorshipInstanceStatusEnumFromJson(json['status']),
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
       zoomLink: json['zoom_link'] as String?,
@@ -1026,7 +1031,7 @@ Map<String, dynamic> _$SearchTutorshipToJson(SearchTutorship instance) =>
       'schedule': instance.schedule.toJson(),
       'date': _dateToJson(instance.date),
       'area': instance.area.toJson(),
-      'status': status3e2EnumToJson(instance.status),
+      'status': tutorshipInstanceStatusEnumToJson(instance.status),
       'users': instance.users,
       'zoom_link': instance.zoomLink,
     };
@@ -1089,51 +1094,48 @@ Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
 TutorUserReview _$TutorUserReviewFromJson(Map<String, dynamic> json) =>
     TutorUserReview(
       id: json['id'] as int,
-      tutorUser: PageUser.fromJson(json['tutor_user'] as Map<String, dynamic>),
-      studentUser:
-          PageUser.fromJson(json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       occurred: json['occurred'] as bool,
       absent: json['absent'] as bool,
       utility: json['utility'] as int,
+      tutorUser: json['tutor_user'] as int,
+      studentUser: json['student_user'] as int,
       tutorshipInstance: json['tutorship_instance'] as int,
     );
 
 Map<String, dynamic> _$TutorUserReviewToJson(TutorUserReview instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'tutor_user': instance.tutorUser.toJson(),
-      'student_user': instance.studentUser.toJson(),
       'comment': instance.comment,
       'occurred': instance.occurred,
       'absent': instance.absent,
       'utility': instance.utility,
+      'tutor_user': instance.tutorUser,
+      'student_user': instance.studentUser,
       'tutorship_instance': instance.tutorshipInstance,
     };
 
 TutorUserReviewRequest _$TutorUserReviewRequestFromJson(
         Map<String, dynamic> json) =>
     TutorUserReviewRequest(
-      tutorUser:
-          PageUserRequest.fromJson(json['tutor_user'] as Map<String, dynamic>),
-      studentUser: PageUserRequest.fromJson(
-          json['student_user'] as Map<String, dynamic>),
       comment: json['comment'] as String,
       occurred: json['occurred'] as bool,
       absent: json['absent'] as bool,
       utility: json['utility'] as int,
+      tutorUser: json['tutor_user'] as int,
+      studentUser: json['student_user'] as int,
       tutorshipInstance: json['tutorship_instance'] as int,
     );
 
 Map<String, dynamic> _$TutorUserReviewRequestToJson(
         TutorUserReviewRequest instance) =>
     <String, dynamic>{
-      'tutor_user': instance.tutorUser.toJson(),
-      'student_user': instance.studentUser.toJson(),
       'comment': instance.comment,
       'occurred': instance.occurred,
       'absent': instance.absent,
       'utility': instance.utility,
+      'tutor_user': instance.tutorUser,
+      'student_user': instance.studentUser,
       'tutorship_instance': instance.tutorshipInstance,
     };
 
@@ -1143,7 +1145,7 @@ TutorshipInstance _$TutorshipInstanceFromJson(Map<String, dynamic> json) =>
       area: json['area'] as String,
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
-      status: status3e2EnumFromJson(json['status']),
+      status: tutorshipInstanceStatusEnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
       users: (json['users'] as List<dynamic>?)?.map((e) => e as int).toList() ??
           [],
@@ -1155,7 +1157,7 @@ Map<String, dynamic> _$TutorshipInstanceToJson(TutorshipInstance instance) =>
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': status3e2EnumToJson(instance.status),
+      'status': tutorshipInstanceStatusEnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
       'users': instance.users,
     };
@@ -1166,7 +1168,7 @@ TutorshipInstanceRequest _$TutorshipInstanceRequestFromJson(
       area: json['area'] as String,
       schedule: json['schedule'] as int,
       date: DateTime.parse(json['date'] as String),
-      status: status3e2EnumFromJson(json['status']),
+      status: tutorshipInstanceStatusEnumFromJson(json['status']),
       zoomLink: json['zoom_link'] as String?,
     );
 
@@ -1176,7 +1178,7 @@ Map<String, dynamic> _$TutorshipInstanceRequestToJson(
       'area': instance.area,
       'schedule': instance.schedule,
       'date': _dateToJson(instance.date),
-      'status': status3e2EnumToJson(instance.status),
+      'status': tutorshipInstanceStatusEnumToJson(instance.status),
       'zoom_link': instance.zoomLink,
     };
 
