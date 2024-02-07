@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'helper_functions.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleInfo extends StatelessWidget {
   final apiManager = AuthenticatedApiManager();
@@ -9,6 +10,14 @@ class ScheduleInfo extends StatelessWidget {
   final SearchTutorship tutorInstance;
 
   ScheduleInfo({Key? key, required this.tutorInstance}) : super(key: key);
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,13 +223,37 @@ class ScheduleInfo extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             getColorFromStatus(tutorInstance.status))),
                     child: Text(
-                      translateStatusToSpanish(tutorInstance.status),
+                      translateStatusToSpanish(tutorInstance.status!),
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+              if (tutorInstance.zoomLink != null)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Unirse a la reunión',
+                      style: TextStyle(
+                          color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                      onPressed: () =>
+                          _launchURL(Uri.parse(tutorInstance.zoomLink!)),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              getColorFromStatus(tutorInstance.status))),
+                      child: Text(
+                        '${tutorInstance.zoomLink!.substring(0, 16)}...${tutorInstance.zoomLink!.substring(tutorInstance.zoomLink!.length - 8)}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               Spacer(),
               Center(
                 child: Container(

@@ -1,33 +1,30 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../api/api_manager.dart';
 import 'event.dart';
+import 'helper_functions.dart';
 
 class EventInfo extends StatelessWidget {
   final Event event;
 
   EventInfo({required this.event});
 
-  String? translateStatusToSpanish(String? status) {
-    Map<String, String> statusTranslations = {
-      'Scheduled': 'Programada',
-      'In progress': 'En curso',
-      'Done': 'Finalizada',
-      'Delayed': 'Demorada',
-      'Cancelled': 'Cancelada',
-    };
-
-    // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
-    return statusTranslations.containsKey(status)
-        ? statusTranslations[status]!
-        : status;
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalle del evento'),
+        title: const Text('Detalle del evento'),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(
@@ -45,34 +42,56 @@ class EventInfo extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 'Dictada por ti, ${event.schedule!.tutorUser.firstName}',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 20),
               Text('Con un total de ${event.users!.length - 1} alumnos',
-                  style: TextStyle(fontSize: 16)),
+                  style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Esta clase se encuentra ',
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    '${translateStatusToSpanish(event.status)}',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    '${translateStatusToSpanish(event.status!)}',
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Spacer(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Link de la reunion: ',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        getColorFromStatus(event.status))),
+                child: Text(
+                  '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+              const Spacer(),
               Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      if (event.status == 'Scheduled' ||
-                          event.status == 'Delayed')
+                      if (event.status ==
+                              TutorshipInstanceStatusEnum.scheduled ||
+                          event.status == TutorshipInstanceStatusEnum.delayed)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 2,
@@ -83,7 +102,8 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: 'In progress',
+                                  status:
+                                      TutorshipInstanceStatusEnum.inProgress,
                                   date: event.date,
                                 );
 
@@ -99,6 +119,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -130,7 +155,8 @@ class EventInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (event.status == 'In progress')
+                      if (event.status ==
+                          TutorshipInstanceStatusEnum.inProgress)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 2,
@@ -141,7 +167,7 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: 'Done',
+                                  status: TutorshipInstanceStatusEnum.done,
                                   date: event.date,
                                 );
 
@@ -157,6 +183,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -167,7 +198,7 @@ class EventInfo extends StatelessWidget {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 19, 88, 53),
+                                  const Color.fromARGB(255, 19, 88, 53),
                                 ),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
@@ -188,7 +219,7 @@ class EventInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (event.status == 'Scheduled')
+                      if (event.status == TutorshipInstanceStatusEnum.scheduled)
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 1 / 3,
@@ -199,7 +230,7 @@ class EventInfo extends StatelessWidget {
                                     PatchedTutorshipInstanceRequest(
                                   area: event.area,
                                   schedule: event.schedule!.id,
-                                  status: 'Delayed',
+                                  status: TutorshipInstanceStatusEnum.delayed,
                                   date: event.date,
                                 );
 
@@ -215,6 +246,11 @@ class EventInfo extends StatelessWidget {
 
                                 print('id ${event.tutorshipId}');
                                 if (postResult.error == null) {
+                                  final localContext = context;
+
+                                  if (context.mounted) {
+                                    Navigator.pop(localContext, true);
+                                  }
                                   print(
                                       "API Response Status Code: ${postResult.statusCode}");
                                 } else {
@@ -225,7 +261,7 @@ class EventInfo extends StatelessWidget {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 78, 67, 9),
+                                  const Color.fromARGB(255, 78, 67, 9),
                                 ),
                                 shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
@@ -249,7 +285,8 @@ class EventInfo extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  if (event.status != 'Done' && event.status != 'Cancelled')
+                  if (event.status != TutorshipInstanceStatusEnum.done &&
+                      event.status != TutorshipInstanceStatusEnum.cancelled)
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 6 / 7,
@@ -260,8 +297,9 @@ class EventInfo extends StatelessWidget {
                                 PatchedTutorshipInstanceRequest(
                               area: event.area,
                               schedule: event.schedule!.id,
-                              status: 'Cancelled',
+                              status: TutorshipInstanceStatusEnum.cancelled,
                               date: event.date,
+                              zoomLink: event.zoomLink,
                             );
 
                             print(
@@ -276,6 +314,11 @@ class EventInfo extends StatelessWidget {
 
                             print('id ${event.tutorshipId}');
                             if (postResult.error == null) {
+                              final localContext = context;
+
+                              if (context.mounted) {
+                                Navigator.pop(localContext, true);
+                              }
                               print(
                                   "API Response Status Code: ${postResult.statusCode}");
                             } else {
@@ -285,7 +328,7 @@ class EventInfo extends StatelessWidget {
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                              Color.fromARGB(255, 102, 30, 30),
+                              const Color.fromARGB(255, 102, 30, 30),
                             ),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
@@ -306,7 +349,7 @@ class EventInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (event.status == 'Done')
+                  if (event.status == TutorshipInstanceStatusEnum.done)
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(28.0),
@@ -320,7 +363,7 @@ class EventInfo extends StatelessWidget {
                         ),
                       ),
                     ),
-                  if (event.status == 'Cancelled')
+                  if (event.status == TutorshipInstanceStatusEnum.cancelled)
                     const Center(
                       child: Padding(
                         padding: EdgeInsets.all(28.0),
@@ -336,7 +379,7 @@ class EventInfo extends StatelessWidget {
                     )
                 ],
               ),
-              SizedBox(height: 80),
+              const SizedBox(height: 80),
             ],
           ),
         ),

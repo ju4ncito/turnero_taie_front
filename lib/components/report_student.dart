@@ -96,6 +96,7 @@ class _StudentReportWidgetState extends State<StudentReportWidget> {
                       return StdReportCard(
                         report: report,
                         fetchFn: fetchReports,
+                        currentUser: widget.currentUser,
                       );
                     },
                   ),

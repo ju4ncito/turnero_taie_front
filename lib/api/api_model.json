@@ -334,7 +334,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -368,7 +371,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -422,7 +428,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -475,7 +484,10 @@
                         "in": "path",
                         "name": "year",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "maximum": 9223372036854775807,
+                            "minimum": 0,
+                            "format": "int64"
                         },
                         "required": true
                     }
@@ -1484,6 +1496,47 @@
                 }
             }
         },
+        "/api/careers/{id}/getAreas/": {
+            "get": {
+                "operationId": "careers_getAreas_list",
+                "description": "Get all areas of a career from its id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this career.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "careers"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CustomArea"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/api/postulation-x-area/": {
             "get": {
                 "operationId": "postulation_x_area_list",
@@ -1750,7 +1803,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Postulation"
+                                        "$ref": "#/components/schemas/PostulationList"
                                     }
                                 }
                             }
@@ -1832,7 +1885,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Postulation"
+                                    "$ref": "#/components/schemas/PostulationDetail"
                                 }
                             }
                         },
@@ -1974,6 +2027,84 @@
                 "responses": {
                     "204": {
                         "description": "No response body"
+                    }
+                }
+            }
+        },
+        "/api/postulations/{id}/close-postulation/": {
+            "post": {
+                "operationId": "postulations_close_postulation_create",
+                "summary": "Approve or Deny a postulation",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this postulation.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "postulations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Close_Postulation_Request"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "security": [
+                    {
+                        "jwtAuth": []
+                    },
+                    {}
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "409": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": ""
                     }
                 }
             }
@@ -2324,6 +2455,7 @@
                                 "tr",
                                 "tt",
                                 "udm",
+                                "ug",
                                 "uk",
                                 "ur",
                                 "uz",
@@ -2467,6 +2599,7 @@
                                 "tr",
                                 "tt",
                                 "udm",
+                                "ug",
                                 "uk",
                                 "ur",
                                 "uz",
@@ -2544,7 +2677,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/No_search_string"
+                                    "$ref": "#/components/schemas/BadRequestResponse"
                                 }
                             }
                         },
@@ -2799,7 +2932,7 @@
         "/api/token/auth/": {
             "post": {
                 "operationId": "token_auth_create",
-                "description": "This endpoint works recieving an access_token generated by Google. \n        The endpoint check if access_token is valid and retrieves account information, then check if user exist with email recieved and returns user information, a JWT and a Refresh Token.\n        If user does not exist, the endpoint creates a new student user and returns the information, a JWT and a Refresh Token",
+                "description": "This endpoint works recieving an access_token generated by Google and a \"origin\" String. \n        The endpoint check if access_token is valid and retrieves account information, then check if user exist with email recieved and returns user information, a JWT and a Refresh Token.\n        If origin is \"page\", users will not be generated, instead it will only give access to users with TUTOR role.\n        If origin is \"app\", users will be generated with STUDENT role.\n        ",
                 "summary": "Authentication Endpoint",
                 "tags": [
                     "token"
@@ -2865,7 +2998,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Internal_Server_Error"
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -2945,7 +3078,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorUserReview"
+                                        "$ref": "#/components/schemas/ReadTutorUserReview"
                                     }
                                 }
                             }
@@ -3027,7 +3160,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorUserReview"
+                                    "$ref": "#/components/schemas/ReadTutorUserReview"
                                 }
                             }
                         },
@@ -3424,7 +3557,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The page to filter by, value can be home, report or calendar ",
+                        "description": "The page to filter by, value can be home, report, calendar or tutorship_page",
                         "required": true
                     },
                     {
@@ -3433,7 +3566,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "The role to filter by, value can be STD or TUTOR ",
+                        "description": "The role to filter by, value can be STD, TUTOR or COORD",
                         "required": true
                     }
                 ],
@@ -3703,7 +3836,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Ok_serializer_Disenroll"
+                                    "$ref": "#/components/schemas/SuccessResponse"
                                 }
                             }
                         },
@@ -3713,7 +3846,64 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InternalServerError_Serializer_Disenroll"
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/api/tutorship-instances/{id}/report-and-reviews/": {
+            "get": {
+                "operationId": "tutorship_instances_report_and_reviews_retrieve",
+                "summary": "Get Report and Reviews for specific Tutorship",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "A unique integer value identifying this tutorship instance.",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "tutorship-instances"
+                ],
+                "security": [
+                    {
+                        "jwtAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Report-and-Review_"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedResponse"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -3759,7 +3949,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Ok_serializer"
+                                    "$ref": "#/components/schemas/SuccessResponse"
                                 }
                             }
                         },
@@ -3769,7 +3959,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Created_serializer"
+                                    "$ref": "#/components/schemas/CreateResponse"
                                 }
                             }
                         },
@@ -3779,7 +3969,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Conflict_serializer"
+                                    "$ref": "#/components/schemas/ConflictResponse"
                                 }
                             }
                         },
@@ -3789,7 +3979,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/InternalServerError_"
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         },
@@ -3817,7 +4007,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TutorshipReport"
+                                        "$ref": "#/components/schemas/ReadTutorshipReport"
                                     }
                                 }
                             }
@@ -3899,7 +4089,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TutorshipReport"
+                                    "$ref": "#/components/schemas/ReadTutorshipReport"
                                 }
                             }
                         },
@@ -5085,7 +5275,10 @@
                         "readOnly": true
                     },
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5107,7 +5300,10 @@
                 "type": "object",
                 "properties": {
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5210,6 +5406,19 @@
                     }
                 ]
             },
+            "BadRequestResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 400
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Solicitud incorrecta"
+                    }
+                }
+            },
             "BadToken": {
                 "type": "object",
                 "properties": {
@@ -5219,6 +5428,11 @@
                 },
                 "required": [
                     "message"
+                ]
+            },
+            "BlankEnum": {
+                "enum": [
+                    ""
                 ]
             },
             "BusquedaTutoriaHorarios": {
@@ -5366,16 +5580,52 @@
                     "user"
                 ]
             },
-            "Conflict_serializer": {
+            "Close_Postulation_Request": {
                 "type": "object",
                 "properties": {
-                    "message": {
-                        "type": "string"
+                    "approve": {
+                        "type": "boolean"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1000
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {}
                     }
                 },
                 "required": [
-                    "message"
+                    "approve",
+                    "areas"
                 ]
+            },
+            "ConflictResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 409
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Conflicto en la solicitud"
+                    }
+                }
+            },
+            "CreateResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 201
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Creado correctamente"
+                    }
+                }
             },
             "Create_DeleteTutorUserSchedule": {
                 "type": "object",
@@ -5401,7 +5651,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5439,7 +5692,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5452,17 +5708,6 @@
                     "end",
                     "modality",
                     "tutor_user"
-                ]
-            },
-            "Created_serializer": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
                 ]
             },
             "CustomArea": {
@@ -5516,6 +5761,19 @@
                     "schedule_id"
                 ]
             },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 500
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Error interno del servidor"
+                    }
+                }
+            },
             "Google_Access_TokenRequest": {
                 "type": "object",
                 "properties": {
@@ -5523,84 +5781,62 @@
                         "type": "string",
                         "minLength": 1,
                         "description": "The JWT token obtained from Google."
+                    },
+                    "origin": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "The JWT token obtained from Google."
                     }
                 },
                 "required": [
+                    "origin",
                     "token"
                 ]
             },
-            "InternalServerError_": {
+            "NullEnum": {
+                "enum": [
+                    null
+                ]
+            },
+            "PageUser": {
                 "type": "object",
                 "properties": {
-                    "message": {
-                        "type": "string"
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
                     },
-                    "traceback": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message",
-                    "traceback"
-                ]
-            },
-            "InternalServerError_Serializer_Disenroll": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
+                    "first_name": {
+                        "type": "string",
+                        "title": "Nombre",
+                        "maxLength": 150
                     },
-                    "traceback": {
-                        "type": "string"
+                    "last_name": {
+                        "type": "string",
+                        "title": "Apellido",
+                        "maxLength": 150
+                    },
+                    "profile_picture": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ucc_key": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
+                    },
+                    "careers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "readOnly": true
                     }
                 },
                 "required": [
-                    "message",
-                    "traceback"
-                ]
-            },
-            "Internal_Server_Error": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "No_search_string": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "Ok_serializer": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
-                ]
-            },
-            "Ok_serializer_Disenroll": {
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "message"
+                    "careers",
+                    "id"
                 ]
             },
             "PatchedAcademicUnitRequest": {
@@ -5622,7 +5858,10 @@
                 "type": "object",
                 "properties": {
                     "year": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "start": {
                         "type": "string",
@@ -5708,7 +5947,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5718,20 +5960,48 @@
             "PatchedPostulationRequest": {
                 "type": "object",
                 "properties": {
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
-                    },
                     "student_user": {
                         "type": "integer"
                     },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "status": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
                     "coordinator_user": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     }
                 }
             },
@@ -5794,7 +6064,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -5822,9 +6095,13 @@
                         "format": "date"
                     },
                     "status": {
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
+                    },
+                    "zoom_link": {
                         "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
                     }
                 }
             },
@@ -5853,13 +6130,17 @@
                 "type": "object",
                 "properties": {
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
                         "minLength": 1,
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -5924,54 +6205,206 @@
                         "type": "integer",
                         "readOnly": true
                     },
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "status": {
-                        "type": "string",
-                        "maxLength": 25
-                    },
                     "student_user": {
                         "type": "integer"
                     },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "status": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
                     "coordinator_user": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     }
                 },
                 "required": [
-                    "coordinator_user",
-                    "date",
+                    "areas",
                     "id",
-                    "status",
+                    "student_user"
+                ]
+            },
+            "PostulationDetail": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CustomArea"
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "status": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
+                    "coordinator_user": {
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "areas",
+                    "id",
+                    "student_user"
+                ]
+            },
+            "PostulationList": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "status": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    }
+                },
+                "required": [
+                    "id",
                     "student_user"
                 ]
             },
             "PostulationRequest": {
                 "type": "object",
                 "properties": {
-                    "date": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "status": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
-                    },
                     "student_user": {
                         "type": "integer"
                     },
+                    "areas": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1
+                        }
+                    },
+                    "created_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "status": {
+                        "nullable": true,
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PostulationStatusEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BlankEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/NullEnum"
+                            }
+                        ]
+                    },
+                    "decision_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "comment": {
+                        "type": "string",
+                        "nullable": true,
+                        "maxLength": 1000
+                    },
                     "coordinator_user": {
-                        "type": "integer"
+                        "type": "integer",
+                        "nullable": true
                     }
                 },
                 "required": [
-                    "coordinator_user",
-                    "date",
-                    "status",
+                    "areas",
                     "student_user"
                 ]
+            },
+            "PostulationStatusEnum": {
+                "enum": [
+                    "Revision",
+                    "Rejected",
+                    "Approved"
+                ],
+                "type": "string",
+                "description": "* `Revision` - Revision\n* `Rejected` - Rejected\n* `Approved` - Approved"
             },
             "Postulation_X_Area_": {
                 "type": "object",
@@ -6008,6 +6441,50 @@
                     "postulation"
                 ]
             },
+            "ReadTutorUserReview": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "student_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "maxLength": 500
+                    },
+                    "occurred": {
+                        "type": "boolean"
+                    },
+                    "absent": {
+                        "type": "boolean"
+                    },
+                    "utility": {
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
+                    },
+                    "tutorship_instance": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "absent",
+                    "comment",
+                    "id",
+                    "occurred",
+                    "student_user",
+                    "tutor_user",
+                    "tutorship_instance",
+                    "utility"
+                ]
+            },
             "ReadTutorUserSchedule": {
                 "type": "object",
                 "properties": {
@@ -6040,7 +6517,10 @@
                         "format": "time"
                     },
                     "capacity": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     }
                 },
                 "required": [
@@ -6054,6 +6534,36 @@
                     "tutor_user"
                 ]
             },
+            "ReadTutorshipReport": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "tutor_user": {
+                        "$ref": "#/components/schemas/PageUser"
+                    },
+                    "comment": {
+                        "type": "string",
+                        "maxLength": 500
+                    },
+                    "subject": {
+                        "type": "string",
+                        "maxLength": 50
+                    },
+                    "tutorship_instance": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "comment",
+                    "id",
+                    "subject",
+                    "tutor_user",
+                    "tutorship_instance"
+                ]
+            },
             "Refresh_tokenRequest": {
                 "type": "object",
                 "properties": {
@@ -6064,6 +6574,27 @@
                 },
                 "required": [
                     "refresh"
+                ]
+            },
+            "Report-and-Review_": {
+                "type": "object",
+                "properties": {
+                    "reports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadTutorshipReport"
+                        }
+                    },
+                    "reviews": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadTutorUserReview"
+                        }
+                    }
+                },
+                "required": [
+                    "reports",
+                    "reviews"
                 ]
             },
             "ReturnAuthUser": {
@@ -6178,8 +6709,7 @@
                         "$ref": "#/components/schemas/CustomArea"
                     },
                     "status": {
-                        "type": "string",
-                        "maxLength": 25
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
                     },
                     "users": {
                         "type": "array",
@@ -6187,6 +6717,12 @@
                             "type": "integer"
                         },
                         "readOnly": true
+                    },
+                    "zoom_link": {
+                        "type": "string",
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
                     }
                 },
                 "required": [
@@ -6194,9 +6730,21 @@
                     "date",
                     "id",
                     "schedule",
-                    "status",
                     "users"
                 ]
+            },
+            "SuccessResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "Operación exitosa"
+                    }
+                }
             },
             "Tag": {
                 "type": "object",
@@ -6287,7 +6835,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -6325,7 +6876,10 @@
                         "type": "boolean"
                     },
                     "utility": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64"
                     },
                     "tutor_user": {
                         "type": "integer"
@@ -6365,8 +6919,13 @@
                         "format": "date"
                     },
                     "status": {
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
+                    },
+                    "zoom_link": {
                         "type": "string",
-                        "maxLength": 25
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
                     },
                     "users": {
                         "type": "array",
@@ -6381,7 +6940,6 @@
                     "date",
                     "id",
                     "schedule",
-                    "status",
                     "users"
                 ]
             },
@@ -6400,17 +6958,31 @@
                         "format": "date"
                     },
                     "status": {
+                        "$ref": "#/components/schemas/TutorshipInstanceStatusEnum"
+                    },
+                    "zoom_link": {
                         "type": "string",
-                        "minLength": 1,
-                        "maxLength": 25
+                        "format": "uri",
+                        "nullable": true,
+                        "maxLength": 200
                     }
                 },
                 "required": [
                     "area",
                     "date",
-                    "schedule",
-                    "status"
+                    "schedule"
                 ]
+            },
+            "TutorshipInstanceStatusEnum": {
+                "enum": [
+                    "Scheduled",
+                    "In progress",
+                    "Done",
+                    "Cancelled",
+                    "Delayed"
+                ],
+                "type": "string",
+                "description": "* `Scheduled` - Scheduled\n* `In progress` - In progress\n* `Done` - Done\n* `Cancelled` - Cancelled\n* `Delayed` - Delayed"
             },
             "TutorshipReport": {
                 "type": "object",
@@ -6469,6 +7041,19 @@
                     "tutorship_instance"
                 ]
             },
+            "UnauthorizedResponse": {
+                "type": "object",
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "default": 401
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "No autorizado"
+                    }
+                }
+            },
             "User": {
                 "type": "object",
                 "properties": {
@@ -6477,12 +7062,16 @@
                         "readOnly": true
                     },
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -6509,7 +7098,7 @@
                     "careers": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/UserCareer"
                         },
                         "readOnly": true
                     },
@@ -6530,21 +7119,54 @@
                     "careers",
                     "email",
                     "id",
-                    "roles",
-                    "ucc_key"
+                    "roles"
+                ]
+            },
+            "UserCareer": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 50
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
+            },
+            "UserCareerRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                    }
+                },
+                "required": [
+                    "name"
                 ]
             },
             "UserRequest": {
                 "type": "object",
                 "properties": {
                     "ucc_key": {
-                        "type": "integer"
+                        "type": "integer",
+                        "maximum": 9223372036854775807,
+                        "minimum": 0,
+                        "format": "int64",
+                        "nullable": true
                     },
                     "email": {
                         "type": "string",
                         "format": "email",
                         "minLength": 1,
-                        "pattern": "^\\d+@ucc.edu.ar$",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
                         "maxLength": 254
                     },
                     "first_name": {
@@ -6567,8 +7189,7 @@
                 },
                 "required": [
                     "academic_year",
-                    "email",
-                    "ucc_key"
+                    "email"
                 ]
             },
             "User_X_Area_": {

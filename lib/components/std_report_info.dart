@@ -8,14 +8,21 @@ class StdReportInfo extends StatefulWidget {
   final apiManager = AuthenticatedApiManager();
   final SearchTutorship report;
   final TextEditingController commentsController = TextEditingController();
+  final TextEditingController subjectController = TextEditingController();
+  final User? currentUser;
 
-  StdReportInfo({Key? key, required this.report}) : super(key: key);
+  StdReportInfo({Key? key, required this.report, required this.currentUser})
+      : super(key: key);
 
   @override
   _StdReportInfoState createState() => _StdReportInfoState();
 }
 
 class _StdReportInfoState extends State<StdReportInfo> {
+  bool isAbsent = false;
+  bool occurred = false;
+  int rating = 0; // Declare a variable to hold the rating value
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,61 +53,38 @@ class _StdReportInfoState extends State<StdReportInfo> {
               Row(
                 children: [
                   Text(
-                    'La clase fue dictada por:',
+                    '¿Qué temas se abordaron en la clase? ',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    ClipOval(
-                      child: Image(
-                        image: widget
-                                    .report.schedule.tutorUser.profilePicture !=
-                                null
-                            ? NetworkImage(widget
-                                .report.schedule.tutorUser.profilePicture!)
-                            : const AssetImage(
-                                    'assets/images/default_profile_picture.png')
-                                as ImageProvider,
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${widget.report.schedule.tutorUser.firstName} ${widget.report.schedule.tutorUser.lastName}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          widget.report.area.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(height: 15),
-              Text(
-                'Feedback del tutor',
-                style: TextStyle(fontSize: 17),
-              ),
+
               const SizedBox(height: 10),
+              // Checkboxes for 'absent' and 'occurred'
+              Row(
+                children: [
+                  Checkbox(
+                    value: isAbsent,
+                    onChanged: (value) {
+                      setState(() {
+                        isAbsent = value!;
+                      });
+                    },
+                  ),
+                  Text('No estuve presente'),
+                  SizedBox(width: 20),
+                  Checkbox(
+                    value: occurred,
+                    onChanged: (value) {
+                      setState(() {
+                        occurred = value!;
+                      });
+                    },
+                  ),
+                  Text('La clase se dictó'),
+                ],
+              ),
               Text(
                 '¿Cómo evaluarías la clase en general?',
                 style: TextStyle(fontSize: 15),
@@ -111,9 +95,9 @@ class _StdReportInfoState extends State<StdReportInfo> {
                 children: [
                   RatingBar.builder(
                     initialRating: 3,
-                    minRating: 0.5,
+                    minRating: 0,
                     direction: Axis.horizontal,
-                    allowHalfRating: true,
+                    allowHalfRating: false,
                     unratedColor: Color.fromARGB(82, 91, 94, 97),
                     itemCount: 5,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -121,8 +105,11 @@ class _StdReportInfoState extends State<StdReportInfo> {
                       Icons.star_rounded,
                       color: Color.fromARGB(255, 19, 45, 88),
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
+                    onRatingUpdate: (newRating) {
+                      setState(() {
+                        rating = newRating.round();
+                        print(rating); // Update the rating variable
+                      });
                     },
                   ),
                 ],
@@ -142,44 +129,10 @@ class _StdReportInfoState extends State<StdReportInfo> {
                 ],
               ),
               const SizedBox(height: 20),
-              Text(
-                '¿El contenido fue claro y comprensible?',
-                style: TextStyle(fontSize: 15),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Sí'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Parcialmente'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('No'),
-                ],
-              ),
+
               const SizedBox(height: 10),
               Text(
-                '¿El tutor resolvió tus dudas?',
-                style: TextStyle(fontSize: 15),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Sí'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('Parcialmente'),
-                  const SizedBox(width: 10),
-                  Checkbox(value: false, onChanged: (value) {}),
-                  Text('No'),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Comentarios sobre la clase (opcional)',
+                'Comentarios sobre la clase',
                 style: TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 10),
@@ -199,7 +152,33 @@ class _StdReportInfoState extends State<StdReportInfo> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // Your action when the button is pressed
+                    final reviewRequest = TutorUserReviewRequest(
+                      absent: isAbsent,
+                      occurred: occurred,
+                      studentUser: widget.currentUser!.id,
+                      utility: rating,
+                      comment: widget.commentsController.text,
+                      tutorUser: widget.report.schedule.tutorUser.id,
+                      tutorshipInstance: widget.report.id,
+                    );
+
+                    print("reviewRequest Body: ${reviewRequest.toJson()}");
+
+                    final localContext = context;
+                    final apiManager = AuthenticatedApiManager();
+                    final postResult =
+                        await apiManager.apiModel.apiTutorUserReviewPost(
+                      body: reviewRequest,
+                    );
+
+                    print(postResult.error);
+                    print(postResult);
+                    print(
+                        "API INscripcion a instancia Response Status Code: ${postResult.statusCode}");
+
+                    if (context.mounted) {
+                      Navigator.pop(localContext);
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

@@ -490,6 +490,18 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
+  Future<Response<List<CustomArea>>> _apiCareersIdGetAreasGet(
+      {required int? id}) {
+    final Uri $url = Uri.parse('/api/careers/${id}/getAreas/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<List<CustomArea>, CustomArea>($request);
+  }
+
+  @override
   Future<Response<List<PostulationXArea>>> _apiPostulationXAreaGet() {
     final Uri $url = Uri.parse('/api/postulation-x-area/');
     final Request $request = Request(
@@ -570,14 +582,14 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<Postulation>>> _apiPostulationsGet() {
+  Future<Response<List<PostulationList>>> _apiPostulationsGet() {
     final Uri $url = Uri.parse('/api/postulations/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<Postulation>, Postulation>($request);
+    return client.send<List<PostulationList>, PostulationList>($request);
   }
 
   @override
@@ -595,14 +607,15 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<Postulation>> _apiPostulationsIdGet({required int? id}) {
+  Future<Response<PostulationDetail>> _apiPostulationsIdGet(
+      {required int? id}) {
     final Uri $url = Uri.parse('/api/postulations/${id}/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<Postulation, Postulation>($request);
+    return client.send<PostulationDetail, PostulationDetail>($request);
   }
 
   @override
@@ -646,6 +659,22 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<SuccessResponse>> _apiPostulationsIdClosePostulationPost({
+    required int? id,
+    required ClosePostulationRequest? body,
+  }) {
+    final Uri $url = Uri.parse('/api/postulations/${id}/close-postulation/');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<SuccessResponse, SuccessResponse>($request);
   }
 
   @override
@@ -876,14 +905,15 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<List<TutorUserReview>>> _apiTutorUserReviewGet() {
+  Future<Response<List<ReadTutorUserReview>>> _apiTutorUserReviewGet() {
     final Uri $url = Uri.parse('/api/tutor-user-review/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<TutorUserReview>, TutorUserReview>($request);
+    return client
+        .send<List<ReadTutorUserReview>, ReadTutorUserReview>($request);
   }
 
   @override
@@ -901,7 +931,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorUserReview>> _apiTutorUserReviewIdGet(
+  Future<Response<ReadTutorUserReview>> _apiTutorUserReviewIdGet(
       {required int? id}) {
     final Uri $url = Uri.parse('/api/tutor-user-review/${id}/');
     final Request $request = Request(
@@ -909,7 +939,7 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<TutorUserReview, TutorUserReview>($request);
+    return client.send<ReadTutorUserReview, ReadTutorUserReview>($request);
   }
 
   @override
@@ -1129,7 +1159,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<OkSerializerDisenroll>>
+  Future<Response<SuccessResponse>>
       _apiTutorshipInstancesIdDisenrollTutorshipPost({required int? id}) {
     final Uri $url =
         Uri.parse('/api/tutorship-instances/${id}/disenroll-tutorship/');
@@ -1138,11 +1168,24 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<OkSerializerDisenroll, OkSerializerDisenroll>($request);
+    return client.send<SuccessResponse, SuccessResponse>($request);
   }
 
   @override
-  Future<Response<OkSerializer>> _apiTutorshipInstancesEnrollTutorshipPost(
+  Future<Response<ReportAndReview>> _apiTutorshipInstancesIdReportAndReviewsGet(
+      {required int? id}) {
+    final Uri $url =
+        Uri.parse('/api/tutorship-instances/${id}/report-and-reviews/');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<ReportAndReview, ReportAndReview>($request);
+  }
+
+  @override
+  Future<Response<SuccessResponse>> _apiTutorshipInstancesEnrollTutorshipPost(
       {required EnrollRequest? body}) {
     final Uri $url = Uri.parse('/api/tutorship-instances/enroll-tutorship/');
     final $body = body;
@@ -1152,18 +1195,19 @@ class _$ApiModel extends ApiModel {
       client.baseUrl,
       body: $body,
     );
-    return client.send<OkSerializer, OkSerializer>($request);
+    return client.send<SuccessResponse, SuccessResponse>($request);
   }
 
   @override
-  Future<Response<List<TutorshipReport>>> _apiTutorshipReportsGet() {
+  Future<Response<List<ReadTutorshipReport>>> _apiTutorshipReportsGet() {
     final Uri $url = Uri.parse('/api/tutorship-reports/');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<List<TutorshipReport>, TutorshipReport>($request);
+    return client
+        .send<List<ReadTutorshipReport>, ReadTutorshipReport>($request);
   }
 
   @override
@@ -1181,7 +1225,7 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<TutorshipReport>> _apiTutorshipReportsIdGet(
+  Future<Response<ReadTutorshipReport>> _apiTutorshipReportsIdGet(
       {required int? id}) {
     final Uri $url = Uri.parse('/api/tutorship-reports/${id}/');
     final Request $request = Request(
@@ -1189,7 +1233,7 @@ class _$ApiModel extends ApiModel {
       $url,
       client.baseUrl,
     );
-    return client.send<TutorshipReport, TutorshipReport>($request);
+    return client.send<ReadTutorshipReport, ReadTutorshipReport>($request);
   }
 
   @override

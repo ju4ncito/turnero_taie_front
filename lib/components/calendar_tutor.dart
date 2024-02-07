@@ -78,7 +78,8 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                   instance.users,
                   instance.id,
                   instance.date,
-                  instance.area.id),
+                  instance.area.id,
+                  instance.zoomLink),
             );
           }
         });
@@ -155,19 +156,19 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               final status = events.status;
               Color color;
               switch (status) {
-                case 'Scheduled':
+                case TutorshipInstanceStatusEnum.scheduled:
                   color = const Color.fromARGB(255, 29, 69, 140);
                   break;
-                case 'In progress':
+                case TutorshipInstanceStatusEnum.inProgress:
                   color = const Color.fromARGB(255, 64, 106, 36);
                   break;
-                case 'Done':
+                case TutorshipInstanceStatusEnum.done:
                   color = Colors.grey;
                   break;
-                case 'Cancelled':
+                case TutorshipInstanceStatusEnum.cancelled:
                   color = const Color.fromARGB(255, 102, 30, 30);
                   break;
-                case 'Delayed':
+                case TutorshipInstanceStatusEnum.delayed:
                   color = const Color.fromARGB(255, 78, 67, 9);
                   break;
                 default:

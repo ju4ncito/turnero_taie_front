@@ -4,32 +4,32 @@ import 'package:turnero_taie_front/api/api_manager.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'event.dart';
 
-String translateStatusToSpanish(String status) {
-  Map<String, String> statusTranslations = {
-    'Scheduled': 'Programada',
-    'In progress': 'En curso',
-    'Done': 'Finalizada',
-    'Cancelled': 'Cancelada',
-    'Delayed': 'Demorada',
+String translateStatusToSpanish(status) {
+  Map<TutorshipInstanceStatusEnum, String> statusTranslations = {
+    TutorshipInstanceStatusEnum.scheduled: 'Programada',
+    TutorshipInstanceStatusEnum.inProgress: 'En curso',
+    TutorshipInstanceStatusEnum.done: 'Finalizada',
+    TutorshipInstanceStatusEnum.cancelled: 'Cancelada',
+    TutorshipInstanceStatusEnum.delayed: 'Demorada',
   };
 
   // Traduce el estado o devuelve el mismo estado si no hay una traducción disponible
   return statusTranslations.containsKey(status)
       ? statusTranslations[status]!
-      : status;
+      : status.toString();
 }
 
-Color getColorFromStatus(String? status) {
+Color getColorFromStatus(TutorshipInstanceStatusEnum? status) {
   switch (status) {
-    case 'Scheduled':
+    case TutorshipInstanceStatusEnum.scheduled:
       return const Color.fromARGB(255, 63, 92, 143);
-    case 'In progress':
+    case TutorshipInstanceStatusEnum.inProgress:
       return const Color.fromARGB(255, 69, 92, 54);
-    case 'Done':
+    case TutorshipInstanceStatusEnum.done:
       return Colors.grey;
-    case 'Cancelled':
+    case TutorshipInstanceStatusEnum.cancelled:
       return const Color.fromARGB(255, 102, 30, 30);
-    case 'Delayed':
+    case TutorshipInstanceStatusEnum.delayed:
       return const Color.fromARGB(255, 78, 67, 9);
     default:
       return Colors.black;
@@ -38,7 +38,7 @@ Color getColorFromStatus(String? status) {
 
 String getDayAbbreviation(DateTime date) {
   String weekday = DateFormat('EEEE', 'es_ES').format(date).toUpperCase();
-
+  print(weekday);
   switch (weekday) {
     case 'LUNES':
       return 'LUN';

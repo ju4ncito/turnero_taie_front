@@ -1,6 +1,66 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 
+enum BlankEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('')
+  $null('');
+
+  final String? value;
+
+  const BlankEnum(this.value);
+}
+
+enum NullEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('null')
+  $null('null');
+
+  final String? value;
+
+  const NullEnum(this.value);
+}
+
+enum PostulationStatusEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Revision')
+  revision('Revision'),
+  @JsonValue('Rejected')
+  rejected('Rejected'),
+  @JsonValue('Approved')
+  approved('Approved');
+
+  final String? value;
+
+  const PostulationStatusEnum(this.value);
+}
+
+enum TutorshipInstanceStatusEnum {
+  @JsonValue(null)
+  swaggerGeneratedUnknown(null),
+
+  @JsonValue('Scheduled')
+  scheduled('Scheduled'),
+  @JsonValue('In progress')
+  inProgress('In progress'),
+  @JsonValue('Done')
+  done('Done'),
+  @JsonValue('Cancelled')
+  cancelled('Cancelled'),
+  @JsonValue('Delayed')
+  delayed('Delayed');
+
+  final String? value;
+
+  const TutorshipInstanceStatusEnum(this.value);
+}
+
 enum ApiSchemaJsonGetLang {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -189,6 +249,8 @@ enum ApiSchemaJsonGetLang {
   tt('tt'),
   @JsonValue('udm')
   udm('udm'),
+  @JsonValue('ug')
+  ug('ug'),
   @JsonValue('uk')
   uk('uk'),
   @JsonValue('ur')
@@ -395,6 +457,8 @@ enum ApiSchemaYamlGetLang {
   tt('tt'),
   @JsonValue('udm')
   udm('udm'),
+  @JsonValue('ug')
+  ug('ug'),
   @JsonValue('uk')
   uk('uk'),
   @JsonValue('ur')

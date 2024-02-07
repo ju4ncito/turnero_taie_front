@@ -29,7 +29,8 @@ class LandingPage extends StatelessWidget {
 
         if (googleAccessToken != null) {
           final apiAuth = await apiManager.apiModel.apiTokenAuthPost(
-              body: GoogleAccessTokenRequest(token: googleAccessToken));
+              body: GoogleAccessTokenRequest(
+                  token: googleAccessToken, origin: 'app'));
           print('apiAuth = ${apiAuth.statusCode}');
           // print(' Careers esta vacio? ${apiAuth.body!.user.careers.isEmpty}');
 
