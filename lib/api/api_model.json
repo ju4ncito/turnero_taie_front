@@ -3856,8 +3856,8 @@
             }
         },
         "/api/tutorship-instances/{id}/report-and-reviews/": {
-            "post": {
-                "operationId": "tutorship_instances_report_and_reviews_create",
+            "get": {
+                "operationId": "tutorship_instances_report_and_reviews_retrieve",
                 "summary": "Get Report and Reviews for specific Tutorship",
                 "parameters": [
                     {

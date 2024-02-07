@@ -1172,12 +1172,12 @@ class _$ApiModel extends ApiModel {
   }
 
   @override
-  Future<Response<ReportAndReview>>
-      _apiTutorshipInstancesIdReportAndReviewsPost({required int? id}) {
+  Future<Response<ReportAndReview>> _apiTutorshipInstancesIdReportAndReviewsGet(
+      {required int? id}) {
     final Uri $url =
         Uri.parse('/api/tutorship-instances/${id}/report-and-reviews/');
     final Request $request = Request(
-      'POST',
+      'GET',
       $url,
       client.baseUrl,
     );

@@ -1508,21 +1508,18 @@ abstract class ApiModel extends ChopperService {
   ///Get Report and Reviews for specific Tutorship
   ///@param id A unique integer value identifying this tutorship instance.
   Future<chopper.Response<ReportAndReview>>
-      apiTutorshipInstancesIdReportAndReviewsPost({required int? id}) {
+      apiTutorshipInstancesIdReportAndReviewsGet({required int? id}) {
     generatedMapping.putIfAbsent(
         ReportAndReview, () => ReportAndReview.fromJsonFactory);
 
-    return _apiTutorshipInstancesIdReportAndReviewsPost(id: id);
+    return _apiTutorshipInstancesIdReportAndReviewsGet(id: id);
   }
 
   ///Get Report and Reviews for specific Tutorship
   ///@param id A unique integer value identifying this tutorship instance.
-  @Post(
-    path: '/api/tutorship-instances/{id}/report-and-reviews/',
-    optionalBody: true,
-  )
+  @Get(path: '/api/tutorship-instances/{id}/report-and-reviews/')
   Future<chopper.Response<ReportAndReview>>
-      _apiTutorshipInstancesIdReportAndReviewsPost(
+      _apiTutorshipInstancesIdReportAndReviewsGet(
           {@Path('id') required int? id});
 
   ///Enroll a student to an existing o new tutorship
