@@ -64,14 +64,7 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
               ),
               const SizedBox(height: 10),
               Text(
-                'Asistencia de alumnos',
-                style: TextStyle(fontSize: 17),
-              ),
-              const SizedBox(height: 10),
-              // Modulo asistencia
-              const SizedBox(height: 10),
-              Text(
-                'Comentarios sobre la clase (opcional)',
+                'Comentarios sobre la clase',
                 style: TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 10),
@@ -91,6 +84,16 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (widget.subjectController.text.isEmpty ||
+                        widget.commentsController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Debes completar todos los campos'),
+                        ),
+                      );
+                      return; // Return early if either field is empty
+                    }
+
                     final reportRequest = TutorshipReportRequest(
                       subject: widget.subjectController.text,
                       comment: widget.commentsController.text,
