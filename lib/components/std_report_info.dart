@@ -64,70 +64,88 @@ class _StdReportInfoState extends State<StdReportInfo> {
               // Checkboxes for 'absent' and 'occurred'
               Row(
                 children: [
-                  Checkbox(
+                  Text('Falté a la clase'),
+                  SizedBox(width: 20),
+                  Switch(
                     value: isAbsent,
                     onChanged: (value) {
                       setState(() {
-                        isAbsent = value!;
+                        isAbsent = value;
                       });
                     },
                   ),
-                  Text('No estuve presente'),
-                  SizedBox(width: 20),
-                  Checkbox(
-                    value: occurred,
-                    onChanged: (value) {
-                      setState(() {
-                        occurred = value!;
-                      });
-                    },
-                  ),
+                  SizedBox(width: 5),
+                  Text(isAbsent
+                      ? 'SI'
+                      : 'NO'), // Muestra 'SI' si isAbsent es true, 'NO' si es false
+                ],
+              ),
+              Row(
+                children: [
                   Text('La clase se dictó'),
+                  SizedBox(width: 20),
+                  Switch(
+                    value: occurred,
+                    onChanged: isAbsent
+                        ? null // Si isAbsent es true, el onChanged estará deshabilitado
+                        : (value) {
+                            setState(() {
+                              occurred = value;
+                            });
+                          },
+                  ),
+                  SizedBox(width: 5),
+                  Text(occurred
+                      ? 'SI'
+                      : 'NO'), // Muestra 'SI' si occurred es true, 'NO' si es false
                 ],
               ),
-              Text(
-                '¿Cómo evaluarías la clase en general?',
-                style: TextStyle(fontSize: 15),
-              ),
+              if (!isAbsent)
+                Text(
+                  '¿Cómo evaluarías la clase en general?',
+                  style: TextStyle(fontSize: 15),
+                ),
               const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 0,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    unratedColor: Color.fromARGB(82, 91, 94, 97),
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star_rounded,
-                      color: Color.fromARGB(255, 19, 45, 88),
+              if (!isAbsent)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RatingBar.builder(
+                      initialRating: 1,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      unratedColor: Color.fromARGB(82, 91, 94, 97),
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star_rounded,
+                        color: Color.fromARGB(255, 19, 45, 88),
+                      ),
+                      onRatingUpdate: (newRating) {
+                        setState(() {
+                          rating = newRating.round();
+                          print(rating); // Update the rating variable
+                        });
+                      },
                     ),
-                    onRatingUpdate: (newRating) {
-                      setState(() {
-                        rating = newRating.round();
-                        print(rating); // Update the rating variable
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Insuficiente',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  SizedBox(width: 45),
-                  Text(
-                    'Excelente',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              if (!isAbsent)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Insuficiente',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    SizedBox(width: 45),
+                    Text(
+                      'Excelente',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
               const SizedBox(height: 20),
 
               const SizedBox(height: 10),
@@ -144,7 +162,9 @@ class _StdReportInfoState extends State<StdReportInfo> {
                   hintText: 'Máximo 160 caracteres',
                   border: OutlineInputBorder(),
                 ),
+                enabled: !isAbsent, // Deshabilita el campo si isAbsent es true
               ),
+
               const SizedBox(height: 20),
               Spacer(),
               SizedBox(
@@ -152,6 +172,20 @@ class _StdReportInfoState extends State<StdReportInfo> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (widget.commentsController.text.isEmpty && !isAbsent) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              'Debes dejar un comentario para enviar el reporte'),
+                        ),
+                      );
+                      return; // Return early if either field is empty or if both checkboxes are unchecked
+                    }
+
+                    if (isAbsent) {
+                      widget.commentsController.text = 'Falté a la clase';
+                      rating = 1;
+                    }
                     final reviewRequest = TutorUserReviewRequest(
                       absent: isAbsent,
                       occurred: occurred,
