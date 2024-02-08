@@ -53,7 +53,7 @@ class _StdReportInfoState extends State<StdReportInfo> {
               Row(
                 children: [
                   Text(
-                    '¿Qué temas se abordaron en la clase? ',
+                    'Selecciona según corresponda:',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
