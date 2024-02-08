@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:turnero_taie_front/api/api_manager.dart';
+import 'package:turnero_taie_front/components/report_student.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'event.dart';
 import 'helper_functions.dart';
@@ -223,50 +224,82 @@ class EventDetail extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 6 / 7,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      final localContext = context;
-                      final apiManager = AuthenticatedApiManager();
-                      final postResult = await apiManager.apiModel
-                          .apiTutorshipInstancesIdDisenrollTutorshipPost(
-                        id: event.tutorshipId,
-                      );
+              if (event.status != TutorshipInstanceStatusEnum.done)
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 6 / 7,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final localContext = context;
+                        final apiManager = AuthenticatedApiManager();
+                        final postResult = await apiManager.apiModel
+                            .apiTutorshipInstancesIdDisenrollTutorshipPost(
+                          id: event.tutorshipId,
+                        );
 
-                      print(postResult.error);
-                      print(postResult.body);
-                      print(
-                          "API disenroll Status Code: ${postResult.statusCode}");
+                        print(postResult.error);
+                        print(postResult.body);
+                        print(
+                            "API disenroll Status Code: ${postResult.statusCode}");
 
-                      if (context.mounted) {
-                        Navigator.pop(localContext, true);
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 102, 30, 30),
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9),
+                        if (context.mounted) {
+                          Navigator.pop(localContext, true);
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 102, 30, 30),
                         ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9),
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all(4),
                       ),
-                      elevation: MaterialStateProperty.all(4),
-                    ),
-                    child: const Text(
-                      'Darme de baja',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      child: const Text(
+                        'Darme de baja',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              if (event.status == TutorshipInstanceStatusEnum.done)
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 6 / 7,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () async {},
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.grey,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9),
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all(4),
+                      ),
+                      child: const Text(
+                        'Esta tutoría ya ha finalizado',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               SizedBox(
                 height: 40,
               ),
