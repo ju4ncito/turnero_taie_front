@@ -127,6 +127,7 @@ class EventInfo extends StatelessWidget {
                                   status:
                                       TutorshipInstanceStatusEnum.inProgress,
                                   date: event.date,
+                                  zoomLink: event.zoomLink,
                                 );
 
                                 print(
@@ -191,6 +192,7 @@ class EventInfo extends StatelessWidget {
                                   schedule: event.schedule!.id,
                                   status: TutorshipInstanceStatusEnum.done,
                                   date: event.date,
+                                  zoomLink: event.zoomLink,
                                 );
 
                                 print(
@@ -254,6 +256,7 @@ class EventInfo extends StatelessWidget {
                                   schedule: event.schedule!.id,
                                   status: TutorshipInstanceStatusEnum.delayed,
                                   date: event.date,
+                                  zoomLink: event.zoomLink,
                                 );
 
                                 print(
