@@ -83,28 +83,34 @@ class EventInfo extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Link de la reunion: ',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        getColorFromStatus(event.status))),
-                child: Text(
-                  event.zoomLink != null && event.zoomLink!.isNotEmpty
-                      ? '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}'
-                      : 'No zoom link',
-                  style: const TextStyle(color: Colors.white),
+              if (event.status != TutorshipInstanceStatusEnum.done &&
+                  event.status != TutorshipInstanceStatusEnum.cancelled)
+                Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Link de la reunion: ',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              getColorFromStatus(event.status))),
+                      child: Text(
+                        event.zoomLink != null && event.zoomLink!.isNotEmpty
+                            ? '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}'
+                            : 'No zoom link',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
               const Spacer(),
               Column(
                 children: [

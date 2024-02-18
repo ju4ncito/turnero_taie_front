@@ -52,20 +52,7 @@ class _TutorReportWidgetState extends State<TutorReportWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          children: const [
-            Text('Reportes'),
-            SizedBox(height: 4),
-            Text(
-              'Informa sobre las clases que dictaste',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white54,
-              ),
-            ),
-            SizedBox(height: 8),
-          ],
-        ),
+        title: const Text('Reportes'),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(

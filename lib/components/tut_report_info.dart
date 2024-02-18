@@ -20,20 +20,12 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          false, // This line prevents the body from resizing
+
       appBar: AppBar(
-        title: Column(
-          children: [
-            Text('Informe'),
-            SizedBox(height: 4),
-            Text(
-              '${widget.report.area.name} - ${DateFormat('dd-MM-yyyy').format(widget.report.date)}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white54,
-              ),
-            ),
-            SizedBox(height: 8),
-          ],
+        title: Text(
+          '${widget.report.area.name} - ${DateFormat('dd-MM-yyyy').format(widget.report.date)}',
         ),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
@@ -140,9 +132,9 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
+              // SizedBox(
+              //   height: 40,
+              // ),
             ],
           ),
         ),
