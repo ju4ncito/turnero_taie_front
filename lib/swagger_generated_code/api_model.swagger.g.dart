@@ -1080,6 +1080,7 @@ TutorAreas _$TutorAreasFromJson(Map<String, dynamic> json) => TutorAreas(
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       profilePicture: json['profile_picture'] as String?,
+      email: json['email'] as String,
     );
 
 Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
@@ -1089,6 +1090,7 @@ Map<String, dynamic> _$TutorAreasToJson(TutorAreas instance) =>
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'profile_picture': instance.profilePicture,
+      'email': instance.email,
     };
 
 TutorUserReview _$TutorUserReviewFromJson(Map<String, dynamic> json) =>

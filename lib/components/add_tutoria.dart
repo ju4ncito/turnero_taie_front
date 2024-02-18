@@ -143,6 +143,7 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Agregar un horario'),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
@@ -361,9 +362,9 @@ class _AddTutoriaPageState extends State<AddTutoriaPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 60,
-              ),
+              // SizedBox(
+              //   height: 60,
+              // ),
             ],
           ),
         ),

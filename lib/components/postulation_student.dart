@@ -300,6 +300,18 @@ class _PostulationPageState extends State<PostulationPage> {
             print(
                 '--La inscripcion salio con error: ${postulationResult.error}');
 
+            if (postulationResult.statusCode == 400) {
+              if (mounted) {
+                // Check if the widget is still mounted
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Ya existe una postulación que posee al menos una de las áreas seleccionadas.'),
+                  ),
+                );
+              }
+              return;
+            }
             if (postulationResult.statusCode == 201 && context.mounted) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(

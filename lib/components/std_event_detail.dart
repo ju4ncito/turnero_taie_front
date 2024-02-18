@@ -5,12 +5,21 @@ import 'package:turnero_taie_front/components/report_student.dart';
 import 'package:turnero_taie_front/swagger_generated_code/api_model.swagger.dart';
 import 'event.dart';
 import 'helper_functions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventDetail extends StatelessWidget {
   final Event event;
   final apiManager = AuthenticatedApiManager();
 
   EventDetail({required this.event});
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +104,7 @@ class EventDetail extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${event.area}',
+                          '${event.schedule!.tutorUser.email}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
@@ -199,7 +208,7 @@ class EventDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,6 +232,30 @@ class EventDetail extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 5),
+              if (event.status != TutorshipInstanceStatusEnum.done &&
+                  event.status != TutorshipInstanceStatusEnum.cancelled)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Unirse a la reunión',
+                      style: TextStyle(
+                          color: Colors.blueGrey, fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              getColorFromStatus(event.status))),
+                      child: Text(
+                        '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               Spacer(),
               if (event.status != TutorshipInstanceStatusEnum.done)
                 Center(

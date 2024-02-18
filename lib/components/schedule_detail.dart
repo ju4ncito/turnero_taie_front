@@ -662,7 +662,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                 backgroundColor: Colors.green,
                               ),
                               child: const Text(
-                                'Guardar Cambios',
+                                'Guardar',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,

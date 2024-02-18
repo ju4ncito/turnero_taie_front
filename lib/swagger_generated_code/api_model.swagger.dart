@@ -6674,6 +6674,7 @@ class TutorAreas {
     this.firstName,
     this.lastName,
     this.profilePicture,
+    required this.email,
   });
 
   factory TutorAreas.fromJson(Map<String, dynamic> json) =>
@@ -6692,6 +6693,8 @@ class TutorAreas {
   final String? lastName;
   @JsonKey(name: 'profile_picture')
   final String? profilePicture;
+  @JsonKey(name: 'email')
+  final String email;
   static const fromJsonFactory = _$TutorAreasFromJson;
 
   @override
@@ -6710,7 +6713,9 @@ class TutorAreas {
                     .equals(other.lastName, lastName)) &&
             (identical(other.profilePicture, profilePicture) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)));
+                    .equals(other.profilePicture, profilePicture)) &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)));
   }
 
   @override
@@ -6723,6 +6728,7 @@ class TutorAreas {
       const DeepCollectionEquality().hash(firstName) ^
       const DeepCollectionEquality().hash(lastName) ^
       const DeepCollectionEquality().hash(profilePicture) ^
+      const DeepCollectionEquality().hash(email) ^
       runtimeType.hashCode;
 }
 
@@ -6732,13 +6738,15 @@ extension $TutorAreasExtension on TutorAreas {
       List<CustomArea>? areas,
       String? firstName,
       String? lastName,
-      String? profilePicture}) {
+      String? profilePicture,
+      String? email}) {
     return TutorAreas(
         id: id ?? this.id,
         areas: areas ?? this.areas,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
-        profilePicture: profilePicture ?? this.profilePicture);
+        profilePicture: profilePicture ?? this.profilePicture,
+        email: email ?? this.email);
   }
 
   TutorAreas copyWithWrapped(
@@ -6746,7 +6754,8 @@ extension $TutorAreasExtension on TutorAreas {
       Wrapped<List<CustomArea>>? areas,
       Wrapped<String?>? firstName,
       Wrapped<String?>? lastName,
-      Wrapped<String?>? profilePicture}) {
+      Wrapped<String?>? profilePicture,
+      Wrapped<String>? email}) {
     return TutorAreas(
         id: (id != null ? id.value : this.id),
         areas: (areas != null ? areas.value : this.areas),
@@ -6754,7 +6763,8 @@ extension $TutorAreasExtension on TutorAreas {
         lastName: (lastName != null ? lastName.value : this.lastName),
         profilePicture: (profilePicture != null
             ? profilePicture.value
-            : this.profilePicture));
+            : this.profilePicture),
+        email: (email != null ? email.value : this.email));
   }
 }
 

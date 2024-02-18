@@ -148,6 +148,11 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                         const SizedBox(height: 5),
+                        Text(
+                          '${tutorUserSchedule.tutorUser.email}',
+                          style:
+                              const TextStyle(fontSize: 16, color: Colors.grey),
+                        ),
                         // Text(
                         //   ,
                         //   style:
@@ -346,9 +351,9 @@ class _SearchSchedulePageState extends State<SearchSchedulePage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              // const SizedBox(
+              //   height: 40,
+              // ),
             ],
           ),
         ),

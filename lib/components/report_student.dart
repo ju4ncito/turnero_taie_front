@@ -53,20 +53,7 @@ class _StudentReportWidgetState extends State<StudentReportWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          children: const [
-            Text('Reportes'),
-            SizedBox(height: 4),
-            Text(
-              'Evalua tutorías asistidas',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white54,
-              ),
-            ),
-            SizedBox(height: 8),
-          ],
-        ),
+        title: const Text('Reportes'),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
       body: Padding(

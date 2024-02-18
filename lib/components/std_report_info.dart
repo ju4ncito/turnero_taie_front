@@ -20,26 +20,16 @@ class StdReportInfo extends StatefulWidget {
 
 class _StdReportInfoState extends State<StdReportInfo> {
   bool isAbsent = false;
-  bool occurred = false;
+  bool occurred = true;
   int rating = 0; // Declare a variable to hold the rating value
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Column(
-          children: [
-            Text('Informe'),
-            SizedBox(height: 4),
-            Text(
-              '${widget.report.area.name} - ${DateFormat('dd-MM-yyyy').format(widget.report.date)}',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white54,
-              ),
-            ),
-            SizedBox(height: 8),
-          ],
+        title: Text(
+          '${widget.report.area.name} - ${DateFormat('dd-MM-yyyy').format(widget.report.date)}',
         ),
         backgroundColor: const Color.fromARGB(255, 19, 45, 88),
       ),
@@ -50,16 +40,32 @@ class _StdReportInfoState extends State<StdReportInfo> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Column(
                 children: [
-                  Text(
-                    'Selecciona según corresponda:',
-                    style: const TextStyle(fontSize: 16),
+                  Row(
+                    children: [
+                      Text(
+                        'Tutor: ',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      Text(
+                        '${widget.report.schedule.tutorUser.firstName} ${widget.report.schedule.tutorUser.lastName} (${widget.report.schedule.tutorUser.email})',
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        'Selecciona según corresponda:',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 15),
-
               const SizedBox(height: 10),
               // Checkboxes for 'absent' and 'occurred'
               Row(
@@ -235,9 +241,9 @@ class _StdReportInfoState extends State<StdReportInfo> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
+              // SizedBox(
+              //   height: 40,
+              // ),
             ],
           ),
         ),

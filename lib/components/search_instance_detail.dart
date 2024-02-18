@@ -94,7 +94,7 @@ class SearchInstancePage extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.schedule.tutorUser.areas[0].name}',
+                          '${tutorInstance.schedule.tutorUser.email}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
@@ -249,9 +249,9 @@ class SearchInstancePage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
+              // SizedBox(
+              //   height: 40,
+              // ),
             ],
           ),
         ),

@@ -6810,10 +6810,17 @@
                     "profile_picture": {
                         "type": "string",
                         "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "pattern": "^.+@ucc\\.edu\\.ar$",
+                        "maxLength": 254
                     }
                 },
                 "required": [
                     "areas",
+                    "email",
                     "id"
                 ]
             },

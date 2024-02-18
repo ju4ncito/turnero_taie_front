@@ -103,7 +103,7 @@ class ScheduleInfo extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          '${tutorInstance.area.name}',
+                          '${tutorInstance.schedule.tutorUser.email}',
                           style:
                               const TextStyle(fontSize: 16, color: Colors.grey),
                         ),
@@ -306,9 +306,9 @@ class ScheduleInfo extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.05,
+              // ),
             ],
           ),
         ),
