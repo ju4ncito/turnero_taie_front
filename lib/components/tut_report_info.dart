@@ -42,6 +42,7 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
                     '¿Qué temas se abordaron en la clase? ',
                     style: const TextStyle(fontSize: 16),
                   ),
+                  Text(' *', style: TextStyle(fontSize: 16, color: Colors.red))
                 ],
               ),
               const SizedBox(height: 15),
@@ -55,9 +56,14 @@ class _TutorReportInfoState extends State<TutorReportInfo> {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                'Comentarios sobre la clase',
-                style: TextStyle(fontSize: 15),
+              Row(
+                children: [
+                  Text(
+                    'Comentarios sobre la clase',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(' *', style: TextStyle(fontSize: 16, color: Colors.red))
+                ],
               ),
               const SizedBox(height: 10),
               TextFormField(

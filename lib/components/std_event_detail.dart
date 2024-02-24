@@ -239,21 +239,24 @@ class EventDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Unirse a la reunión',
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontWeight: FontWeight.bold),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              getColorFromStatus(event.status))),
-                      child: Text(
-                        '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
-                        style: const TextStyle(color: Colors.white),
+                    if (event.zoomLink != null)
+                      const Text(
+                        'Unirse a la reunión',
+                        style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
+                    if (event.zoomLink != null)
+                      ElevatedButton(
+                        onPressed: () => _launchURL(Uri.parse(event.zoomLink!)),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                getColorFromStatus(event.status))),
+                        child: Text(
+                          '${event.zoomLink!.substring(0, 16)}...${event.zoomLink!.substring(event.zoomLink!.length - 8)}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
                   ],
                 ),
               Spacer(),
@@ -333,9 +336,6 @@ class EventDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-              SizedBox(
-                height: 40,
-              ),
             ],
           ),
         ),

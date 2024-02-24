@@ -284,12 +284,12 @@ class _PostulationPageState extends State<PostulationPage> {
             }
 
             final postulationPost = PostulationRequest(
-              studentUser: widget.currentUser!.id,
-              areas:
-                  selectedAreas, // Assuming this is the correct format for the areas field
-              createdDate:
-                  DateTime.now(), // Example of setting a current timestamp
-            );
+                studentUser: widget.currentUser!.id,
+                areas:
+                    selectedAreas, // Assuming this is the correct format for the areas field
+                createdDate:
+                    DateTime.now(), // Example of setting a current timestamp
+                status: 'Revision');
 
             print('postulation post body: ${postulationPost.toJson()}');
             final postulationResult = await apiManager.apiModel
